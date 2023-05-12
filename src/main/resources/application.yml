@@ -9,14 +9,14 @@ spring:
       enabled: false
   mvc:
     view:
-      prefix: /WEB-INF/views
+      prefix: /WEB-INF/view
       suffix: .jsp
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.0.84:3306/dodam
+    url: jdbc:mysql://192.168.0.84:3306/dodam?serverTimezone=Asia/Seoul
     username: dodam
-    password: asd1234
+    password: dodam1234
 
 #  jpa:
 #    open-in-view: true
