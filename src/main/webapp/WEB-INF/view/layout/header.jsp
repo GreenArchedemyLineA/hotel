@@ -17,14 +17,14 @@
 </head>
 <body>
 	<div class="header--container">
-		<div>
-			<img alt="로고이미지" src="/images/logo.png" id="logo">
-		</div>
 			<ul class="header--ul">
 				<li><a href="#"><span class="material-symbols-outlined">login</span>로그인</a></li>
 				<li><a href="#"><span class="material-symbols-outlined">person</span>마이페이지</a></li>
 				<li><a href="#"><span class="material-symbols-outlined">card_membership</span>멤버쉽</a></li>
 			</ul>
+		<div class="logo--container">
+			<img alt="로고이미지" src="/images/logo.png">
+		</div>
 	</div>
 	<div class="navi--container">
 		<ul class="navi--ul">

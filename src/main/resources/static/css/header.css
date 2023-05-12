@@ -5,25 +5,24 @@
 }
 
 .header--container {
-	display: flex;
 	height: 200px;
-	justify-content: center;
-	text-align: center;
 }
 .navi--container {
 	background-color: #ccc;
 	height: 50px;	
 }
-#logo {
-	height: 200px;
-	margin-left: 850px;
+.logo--container {
+	display: flex;
+	justify-content: center;
+	margin-left: 70px;
 }
 .header--ul, .navi--ul {
 	display: flex;
 }
 
 .header--ul {
-	margin-left: 450px;
+	justify-content: flex-end;
+	margin-right: 40px;
 }
 
 .navi--ul {
@@ -37,8 +36,8 @@
 }
 
 .header--ul li {
-	margin-left: 20px;
 	font-size: 20px;
+	margin: 10px 0 -30px 30px;
 }
 
 .navi--ul li {
