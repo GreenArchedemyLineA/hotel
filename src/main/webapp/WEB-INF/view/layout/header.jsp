@@ -18,7 +18,7 @@
 <body>
 	<div class="header--container">
 			<ul class="header--ul">
-				<li><a href="#"><span class="material-symbols-outlined">login</span>로그인</a></li>
+				<li><a href="/join"><span class="material-symbols-outlined">login</span>로그인</a></li>
 				<li><a href="#"><span class="material-symbols-outlined">person</span>마이페이지</a></li>
 				<li><a href="#"><span class="material-symbols-outlined">card_membership</span>멤버쉽</a></li>
 			</ul>
@@ -34,5 +34,11 @@
 			<li>예약</li>
 			<li>FAQ</li>
 		</ul>
+	</div>
+	<div>
+		체크인 & 체크아웃 <input type="text">
+		성인 
+		어린이
+		유아
 	</div>
 	

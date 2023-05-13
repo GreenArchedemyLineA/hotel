@@ -38,3 +38,9 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+
+mybatis:
+  mapper-locations:        
+  - classpath:mapper/**.xml 
+  configuration:
+    map-underscore-to-camel-case: true # DB의 underscore(snake case) 방식을 Java의 camel case 방식과 매핑
