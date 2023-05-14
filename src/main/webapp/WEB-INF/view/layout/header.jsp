@@ -10,9 +10,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<link rel="stylesheet" href="/css/header.css"/>
+<link rel="stylesheet" href="/css/header.css" />
 <style>
-
 </style>
 </head>
 <body>
@@ -20,11 +19,11 @@
 		<div>
 			<img alt="로고이미지" src="/images/logo.png" id="logo">
 		</div>
-			<ul class="header--ul">
-				<li><a href="#"><span class="material-symbols-outlined">login</span>로그인</a></li>
-				<li><a href="#"><span class="material-symbols-outlined">person</span>마이페이지</a></li>
-				<li><a href="#"><span class="material-symbols-outlined">card_membership</span>멤버쉽</a></li>
-			</ul>
+		<ul class="header--ul">
+			<li><a href="#"><span class="material-symbols-outlined">login</span>로그인</a></li>
+			<li><a href="#"><span class="material-symbols-outlined">person</span>마이페이지</a></li>
+			<li><a href="#"><span class="material-symbols-outlined">card_membership</span>멤버쉽</a></li>
+		</ul>
 	</div>
 	<div class="navi--container">
 		<ul class="navi--ul">
@@ -35,4 +34,3 @@
 			<li>FAQ</li>
 		</ul>
 	</div>
-	
