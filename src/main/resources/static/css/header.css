@@ -8,8 +8,11 @@
 	height: 200px;
 }
 .navi--container {
-	background-color: #ccc;
+	background-color: #F9FCF2;
 	height: 50px;	
+}
+.toggle--container {
+	display: none;
 }
 .logo--container {
 	display: flex;
@@ -19,7 +22,9 @@
 .header--ul, .navi--ul {
 	display: flex;
 }
-
+#logo:hover {
+	cursor: pointer;
+}
 .header--ul {
 	justify-content: flex-end;
 	margin-right: 40px;
@@ -30,9 +35,19 @@
 	justify-content: center;
 	padding-top: 8px;
 }
-
-.header--ul li, .navi--ul li {
+.toggle--ul {
+	font-size: 20px;
+	justify-content: center;
+	padding-top: 8px;
+}
+.header--ul li, .navi--ul li, .toggle--ul li {
 	list-style: none;
+}
+.header--ul li a {
+	color: black;
+}
+.header--ul li a:hover {
+	text-decoration: none;
 }
 
 .header--ul li {
@@ -41,7 +56,10 @@
 }
 
 .navi--ul li {
-	margin: 0 80px;
-	justify-content: center;
 	font-weight: bold;
+	margin: 0 80px;
+}
+.toggle--ul li {
+	text-align: center;
+	margin: 0 45px;
 }

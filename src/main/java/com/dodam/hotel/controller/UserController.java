@@ -34,6 +34,11 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/membership")
+	// 멤버쉽 페이지 (성희)
+	public String membership() {
+		return "/membership";
+	}
 	
 	
 } // end of class
