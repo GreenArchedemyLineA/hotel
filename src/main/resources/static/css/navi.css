@@ -19,6 +19,8 @@
 	padding: 20px;
 	margin: 30px;
 	border-radius: 10px;
+	position:sticky;
+    top:200px;
 }
 
 .navi--bar--ul {

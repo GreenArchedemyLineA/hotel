@@ -32,8 +32,10 @@
 
 .navi--ul {
 	font-size: 17px;
-	justify-content: center;
 	padding-top: 10px;
+	width: 1500px;
+	display: flex;
+	margin: 0 auto;
 }
 .toggle--ul {
 	font-size: 20px;
@@ -53,6 +55,10 @@
 .header--ul li {
 	font-size: 20px;
 	margin: 10px 0 -30px 30px;
+}
+.navi--ul li {
+	flex: 0.2;
+	text-align: center;
 }
 
 .navi--ul li a{
