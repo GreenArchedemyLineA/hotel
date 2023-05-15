@@ -34,25 +34,25 @@
 }
 </style>
 <div class="reserve--container">
-	<form action="#" method="get">
-		체크인 & 체크아웃 <input class="dateSelector" placeholder="Select Date">
+	<form action="../reserve" method="get">
+		체크인 & 체크아웃 <input class="dateSelector" placeholder="Select Date" name="date">
 
 		성인 
-		<select name="">
-			<option>1</option>
-			<option>2</option>
+		<select name="countPerson">
+			<option value="1">1</option>
+			<option value="2">2</option>
 		</select> 
 		어린이 
-		<select name="">
-			<option>0</option>
-			<option>1</option>
-			<option>2</option>
+		<select name="countChild">
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
 		</select> 
 		유아 
-		<select name="">
-			<option>0</option>
-			<option>1</option>
-			<option>2</option>
+		<select name="countBaby">
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
 		</select>
 		<button type="submit">예약</button>
 	</form>

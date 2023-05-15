@@ -25,8 +25,8 @@
 <body>
 	<div class="header--container">
 			<ul class="header--ul">
-				<li><a href="/join"><span class="material-symbols-outlined">login</span>로그인</a></li>
-				<li><a href="#"><span class="material-symbols-outlined">person</span>마이페이지</a></li>
+				<li><a href="/login"><span class="material-symbols-outlined">login</span>로그인</a></li>
+				<li><a href="/myPage"><span class="material-symbols-outlined">person</span>마이페이지</a></li>
 				<li><a href="/membership"><span class="material-symbols-outlined">card_membership</span>멤버쉽</a></li>
 			</ul>
 		<div class="logo--container">
@@ -37,8 +37,21 @@
 	</div>
 		<div class="navi--container">
 		<ul class="navi--ul">
-			<li>스페셜</li>
-			<li>객실</li>
+			<li>
+			스페셜
+				<ul class="toggle--ul">
+				<li>패키지</li>
+				<li>이벤트</li>
+			</ul>
+			</li>
+			<li>객실
+				<ul class="toggle--ul">
+				<li>스탠다드</li>
+				<li>프리미어</li>
+				<li>스위트</li>
+				<li>전체객실보기</li>
+			</ul>
+			</li>
 			<li>다이닝</li>
 			<li>부대시설</li>
 			<li>예약</li>
