@@ -8,7 +8,7 @@
 	height: 200px;
 }
 .navi--container {
-	background-color: #F9FCF2;
+	background-color: #1F5B25;
 	height: 50px;	
 }
 .toggle--container {
@@ -31,9 +31,11 @@
 }
 
 .navi--ul {
-	font-size: 20px;
-	justify-content: center;
-	padding-top: 8px;
+	font-size: 17px;
+	padding-top: 10px;
+	width: 1500px;
+	display: flex;
+	margin: 0 auto;
 }
 .toggle--ul {
 	font-size: 20px;
@@ -46,7 +48,7 @@
 .header--ul li a {
 	color: black;
 }
-.header--ul li a:hover {
+.header--ul li a, .navi--ul li a:hover {
 	text-decoration: none;
 }
 
@@ -54,10 +56,14 @@
 	font-size: 20px;
 	margin: 10px 0 -30px 30px;
 }
-
 .navi--ul li {
-	font-weight: bold;
+	flex: 0.2;
+	text-align: center;
+}
+
+.navi--ul li a{
 	margin: 0 80px;
+	color: white;
 }
 .toggle--ul li {
 	text-align: center;
