@@ -38,18 +38,18 @@
 		체크인 & 체크아웃 <input class="dateSelector" placeholder="Select Date">
 
 		성인 
-		<select>
+		<select name="">
 			<option>1</option>
 			<option>2</option>
 		</select> 
 		어린이 
-		<select>
+		<select name="">
 			<option>0</option>
 			<option>1</option>
 			<option>2</option>
 		</select> 
 		유아 
-		<select>
+		<select name="">
 			<option>0</option>
 			<option>1</option>
 			<option>2</option>
