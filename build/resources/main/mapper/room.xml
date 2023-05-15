@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dodam.hotel.repository.interfaces.RoomRepository">
+    <!-- writer: 이현서 -->
+    <!--
+    private String name;
+    private Integer price;
+    private Boolean availability;
+    private String description;
+    private String image;
+    private String status_desc;
+    private Integer number_of_p;
+    -->
+    <select id="findAllRoomList" resultType="com.dodam.hotel.repository.model.Room">
+        select * from room_tb;
+    </select>
+    <select id="findById" resultType="com.dodam.hotel.repository.model.Room">
+        select * from room_tb where id = #{roomId};
+    </select>
+
+    <select id="findOptionSearchOneRoomList" resultType="com.dodam.hotel.repository.model.Room">
+        select * from room_tb
+                 where availability = #{roomStatus}
+                   or number_of_p = #{numberOfp}
+                   or price = #{price};
+    </select>
+
+    <select id="findOptionStatusAndNumberOfpRoomList" resultType="com.dodam.hotel.repository.model.Room">
+        select * from room_tb
+        where availability = #{roomStatus}
+          and number_of_p = #{numberOfp};
+    </select>
+    <select id="findOptionStatusAndPriceRoomList" resultType="com.dodam.hotel.repository.model.Room">
+        select * from room_tb
+        where availability = #{roomStatus}
+          and price = #{price};
+    </select>
+    <select id="findOptionNumberOfpAndPriceRoomList" resultType="com.dodam.hotel.repository.model.Room">
+        select * from room_tb
+        where number_of_p = #{numberOfp}
+          and price = #{price};
+    </select>
+    <select id="findAllOptionRoomList" resultType="com.dodam.hotel.repository.model.Room">
+        select * from room_tb
+        where availability = #{roomStatus}
+          and number_of_p = #{numberOfp}
+          and price = #{price};
+    </select>
+
+    <insert id="insertRoom">
+        insert into room_tb(name, price, description, availability, image, status_desc, number_of_p)
+        values(#{name}, #{price}, #{description}, #{availability}, #{image}, #{statusDesc}, #{numberOfp})
+    </insert>
+
+
+</mapper>

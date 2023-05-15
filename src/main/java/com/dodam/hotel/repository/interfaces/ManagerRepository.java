@@ -1,4 +1,4 @@
-package com.dodam.hotel.repository;
+package com.dodam.hotel.repository.interfaces;
 
 import org.apache.ibatis.annotations.Mapper;
 
