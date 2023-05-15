@@ -3,12 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<main>
 		<form action="/myPage" method="post">
-			<input type="email" name="email" readonly="readonly" value="${responseDto.email}">
-			<input type="password" name="password" value="${responseDto.password}">
-			<input type="text" name="name" readonly="readonly" value="${responseDto.name}">
-			<input type="text" name="gender" readonly="readonly" value="${responseDto.gender}">
-			<input type="text" name="birth" readonly="readonly" value="${responseDto.birth}">
-			<input type="text" name="tel" value="${responseDto.tel}">
+			<input type="email" name="email" readonly="readonly" value="${responseUser.email}">
+			<input type="password" name="password" value="${responseUser.password}">
+			<input type="text" name="name" readonly="readonly" value="${responseUser.name}">
+			<input type="text" name="gender" readonly="readonly" value="${responseUser.gender}">
+			<input type="text" name="birth" readonly="readonly" value="${responseUser.birth}">
+			<input type="text" name="tel" value="${responseUser.tel}">
 			<input type="submit" value="update">
 		</form>
 	</main>

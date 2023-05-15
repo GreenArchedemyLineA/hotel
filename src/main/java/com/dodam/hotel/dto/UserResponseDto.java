@@ -1,5 +1,7 @@
 package com.dodam.hotel.dto;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
@@ -18,7 +20,7 @@ public class UserResponseDto {
 		private String password;
 		private String name;
 		private String gender;
-		private Integer birth;
+		private Date birth;
 		private String tel;
 	}
 	
