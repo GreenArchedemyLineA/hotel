@@ -1,36 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="layout/header.jsp" %>
+
 <style>
-	* {
-	font-family: 'Noto Sans KR', monospace;
-	}
-	.body--container {
-		display: flex;
-	}
-	.navi--bar {
-		background-color: #D0DFBE;
-		width: 300px;
-		height: 500px;
-		padding: 20px;
-		margin: 30px;
-		border-radius: 10px;
-	}
-	.navi--bar--ul {
-		padding: 0;
-	}
-	.navi--bar--ul li{
-		text-align: center;
-		list-style: none;
-		font-size: 20px;
-		padding: 15px 0;
-	}
-	.main--container {
-		background-color: beige;
-		width: 100%;
-		display: flex;
-		justify-content: center;
-	}
+
 </style>
 <div class="body--container">
 	<div class="navi--bar">

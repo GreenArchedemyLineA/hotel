@@ -12,7 +12,7 @@
 }
 .image--1 {
 	width: 100%;
-	height: 400px;
+	height: 600px;
 }
 .recommend--container {
 	margin: 10px;
@@ -34,9 +34,8 @@
 }
 </style>
 <div class="reserve--container">
-	<form action="../reserve" method="get">
+	<form action="/reserve" method="get">
 		체크인 & 체크아웃 <input class="dateSelector" placeholder="Select Date" name="date">
-
 		성인 
 		<select name="countPerson">
 			<option value="1">1</option>
@@ -76,6 +75,24 @@
 		<img alt="" src="https://picsum.photos/200/200" class="">
 		Sweet Moment
 	</div>
+</div>
+
+<p class="title--container">도담 멤버쉽<p>
+<div class="recommend--container">
+	
+	<div class="room--box">
+		<img alt="" src="https://picsum.photos/200/200" class="">
+		Sweet Moment
+	</div>
+	<div class="room--box">
+		<img alt="" src="https://picsum.photos/200/200" class="">
+		Sweet Moment
+	</div>
+	<div class="room--box">
+		<img alt="" src="https://picsum.photos/200/200" class="">
+		Sweet Moment
+	</div>
+	<a href="/membership">자세히 보기</a>
 </div>
 
 

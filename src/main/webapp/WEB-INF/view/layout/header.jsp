@@ -11,6 +11,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <link rel="stylesheet" href="/css/header.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <style>
 </style>
 <script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -25,7 +27,8 @@
 <body>
 	<div class="header--container">
 			<ul class="header--ul">
-				<li><a href="/login"><span class="material-symbols-outlined">login</span>로그인</a></li>
+				<li><a href="/login"><span class="material-symbols-outlined">login</span></a></li>
+				<li><a href="/login">로그인</a></li>
 				<li><a href="/myPage"><span class="material-symbols-outlined">person</span>마이페이지</a></li>
 				<li><a href="/membership"><span class="material-symbols-outlined">card_membership</span>멤버쉽</a></li>
 			</ul>
@@ -37,25 +40,12 @@
 	</div>
 		<div class="navi--container">
 		<ul class="navi--ul">
-			<li>
-			스페셜
-				<ul class="toggle--ul">
-				<li>패키지</li>
-				<li>이벤트</li>
-			</ul>
-			</li>
-			<li>객실
-				<ul class="toggle--ul">
-				<li>스탠다드</li>
-				<li>프리미어</li>
-				<li>스위트</li>
-				<li>전체객실보기</li>
-			</ul>
-			</li>
-			<li>다이닝</li>
-			<li>부대시설</li>
-			<li>예약</li>
-			<li>FAQ</li>
+			<li><a href="/package">스페셜</a></li>
+			<li><a href="/room">객실</a></li>
+			<li><a href="/dining">다이닝</a></li>
+			<li><a href="/facilites">부대시설</a></li>
+			<li><a href="/reservation">예약</a></li>
+			<li><a href="/question">FAQ</a></li>
 		</ul>
 	</div>
 	<div class="toggle--hidden--container">
