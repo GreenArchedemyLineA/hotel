@@ -51,11 +51,15 @@ public class UserService {
 	public void createUser(UserRequestDto.insertDto insertDto) {
 		// 중복 회원가입 검사
 		// 조회 돌리기
-		System.out.println(insertDto.toString());
 		int resultRowCount = userRepository.insert(insertDto);
 		if (resultRowCount != 1) {
 			System.out.println("회원가입 서비스 오류");
 		}
+		// 회원가입 id 검색
+		int userId = userRepository.findIdOrderById(insertDto);
+		
+		// 등급 부여
+		int result = userRepository.insertGrade(userId);
 	}
 	
 }

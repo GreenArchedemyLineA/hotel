@@ -25,6 +25,7 @@ public class UserRequestDto {
 	
 	@Data
 	public static class insertDto {
+		private Integer id;
 		private String email;
 		private String password;
 		private String name;
