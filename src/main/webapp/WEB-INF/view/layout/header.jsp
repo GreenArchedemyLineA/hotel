@@ -13,20 +13,31 @@
 <link rel="stylesheet" href="/css/header.css" />
 <style>
 </style>
+<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+     // $( document ).ready( function() {
+      //  $( '.navi--ul' ).hover( function() {
+      //    $( '.toggle--container' ).slideToggle('slow');
+     //   } );
+    //  } );
+    </script>
 </head>
 <body>
 	<div class="header--container">
-		<div>
+			<ul class="header--ul">
+				<li><a href="/join"><span class="material-symbols-outlined">login</span>로그인</a></li>
+				<li><a href="#"><span class="material-symbols-outlined">person</span>마이페이지</a></li>
+				<li><a href="/membership"><span class="material-symbols-outlined">card_membership</span>멤버쉽</a></li>
+			</ul>
+		<div class="logo--container">
+			<a href="/">
 			<img alt="로고이미지" src="/images/logo.png" id="logo">
+			</a>
 		</div>
-		<ul class="header--ul">
-			<li><a href="#"><span class="material-symbols-outlined">login</span>로그인</a></li>
-			<li><a href="#"><span class="material-symbols-outlined">person</span>마이페이지</a></li>
-			<li><a href="#"><span class="material-symbols-outlined">card_membership</span>멤버쉽</a></li>
-		</ul>
 	</div>
-	<div class="navi--container">
+		<div class="navi--container">
 		<ul class="navi--ul">
+			<li>스페셜</li>
 			<li>객실</li>
 			<li>다이닝</li>
 			<li>부대시설</li>
@@ -34,3 +45,35 @@
 			<li>FAQ</li>
 		</ul>
 	</div>
+	<div class="toggle--hidden--container">
+		<div class="toggle--container">
+			<ul class="toggle--ul">
+				<li>패키지</li>
+				<li>이벤트</li>
+			</ul>
+			<ul class="toggle--ul">
+				<li>스탠다드</li>
+				<li>프리미어</li>
+				<li>스위트</li>
+				<li>전체객실보기</li>
+			</ul>
+			<ul class="toggle--ul">
+				<li>레스토랑</li>
+				<li>라운지 & 바</li>
+			</ul>
+			<ul class="toggle--ul">
+				<li>부대시설</li>
+				<li>피트니스</li>
+				<li>수영장</li>
+				<li>스파</li>
+			</ul>
+			<ul class="toggle--ul">
+				<li>예약</li>
+				<li>다이닝</li>
+			</ul>
+			<ul class="toggle--ul">
+				<li>자주묻는질문</li>
+			</ul>	
+		</div>	
+	</div>
+

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.dodam.hotel.repository.interfaces.UserRepository">
 	<select id="findUserByLoginFormDto" resultType="com.dodam.hotel.dto.UserResponseDto$LoginResponseDto">
 		select *
@@ -21,4 +20,8 @@
 		where email = #{email}
 	</select>
 	
+	<insert id="insert">
+	INSERT INTO user_tb (email, password, name, gender, birth, tel)
+	VALUES (#{email}, #{password}, #{name}, #{gender}, #{birth}, #{tel})
+</insert>
 </mapper>

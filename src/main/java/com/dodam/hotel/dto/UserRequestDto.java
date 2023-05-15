@@ -4,13 +4,13 @@ import lombok.Data;
 
 @Data
 public class UserRequestDto {
-	
+
 	@Data
 	public static class LoginFormDto {
 		private String email;
 		private String password;
 	}
-	
+
 	@Data
 	public static class MyPageFormDto {
 		private String email;
@@ -21,4 +21,14 @@ public class UserRequestDto {
 		private String tel;
 	}
 	
-} // end of class
+	@Data
+	public static class insertDto {
+		private String email;
+		private String password;
+		private String name;
+		private String gender;
+		private Integer birth;
+		private String tel;
+	}
+
+}

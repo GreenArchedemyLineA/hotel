@@ -9,6 +9,7 @@ import com.dodam.hotel.repository.model.User;
 @Mapper
 public interface UserRepository {
 	
+
 	// 로그인용 select
 	public UserResponseDto.LoginResponseDto findUserByLoginFormDto(UserRequestDto.LoginFormDto user);
 
@@ -18,5 +19,6 @@ public interface UserRepository {
 	// 특정 유저 정보 찾기
 	public User findUserByEmail(String email);
 	
-	
+	// 회원가입
+	public int insert(UserRequestDto.insertDto insertDto);
 }

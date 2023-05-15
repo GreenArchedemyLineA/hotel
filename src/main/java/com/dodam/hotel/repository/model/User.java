@@ -18,5 +18,5 @@ public class User {
 	private Boolean blacklist;
 	private Boolean withdrawal;
 	private Timestamp created_at;
-	
-} // end of class
+}
+
