@@ -23,7 +23,7 @@
 						<td>${user.email}</td>
 						<td>${user.tel}</td>
 						<td>${user.birth}</td>
-						<td><button onclick="userInfoUpdate(${user.id})">수정</button></td>
+						<td><button onclick="userDetail(${user.id})">상세보기/수정</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -31,9 +31,9 @@
 	</div>
 </div>
 <script>
-	function userInfoUpdate(id){
-		// 유저 정보 수정할수있는 페이지로
-		location.href = "/"+id; 
+	function userDetail(id){
+		// 유저 정보 확인과 등급 수정 할수 있는 페이지로
+		location.href = "/manager/userDetail/"+id; 
 	}
 </script>
 </body>

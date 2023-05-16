@@ -6,10 +6,12 @@ import com.dodam.hotel.repository.interfaces.RoomRepository;
 import com.dodam.hotel.repository.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.dodam.hotel.dto.ManagerSignInFormDto;
 import com.dodam.hotel.repository.interfaces.MUserRepository;
 import com.dodam.hotel.repository.interfaces.ManagerRepository;
+import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
 
@@ -70,15 +72,27 @@ public class ManagerService {
         Room room = roomRepository.findById(roomId);
         return room;
     }
+    //매니저 로그인
 	public Manager managerSign(ManagerSignInFormDto managerSignInFormDto) {
 		System.out.println(managerSignInFormDto);
 		Manager managerEntity = managerRepository.findByManagernameAndPassword(managerSignInFormDto);
 		return managerEntity;
 	}
 	// 이름으로 회원 검색
-	public List<MUser> ManagerUserList(String name){
-		List<MUser> UserList = mUserRepository.findByname(name); 
+	public List<MUser> managerUserList(String name){
+		List<MUser> userList = mUserRepository.findByname(name); 
 		
-		return UserList;
+		return userList;
 	}
+	
+	public GradeInfo selectUserGrade(Integer id) {
+		GradeInfo userGradeEntity = mUserRepository.findByUserId(id);
+		return userGradeEntity;
+	}
+	
+	public int changeGradeByUserIdAndGradeId(Integer gradeId ,Integer id) {
+		int resultRowCount = mUserRepository.updateGrade(gradeId, id);
+		return resultRowCount;
+	}
+	
 }
