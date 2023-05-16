@@ -1,4 +1,4 @@
-package com.dodam.hotel.dto;
+package com.dodam.hotel.dto.kakao;
 
 import lombok.Data;
 

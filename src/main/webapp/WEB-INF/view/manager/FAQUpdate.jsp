@@ -15,21 +15,11 @@
     <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
 </head>
 <body>
-<div>
-    <form>
-        <label for="roomname">방 이름</label>
-        <input type="text" name="roomname" id="roomname" value="${room.name}">
-        <label for="roomprice">방 가격</label>
-        <input type="text" name="roomprice" id="roomprice" value="${room.price}">
-        <label for="roomavailability">방 사용 여부 가능</label>
-        <input type="text" name="roomavailability" id="roomavailability" value="${room.availability}">
-        <label for="description">방 내용</label>
-        <input type="text" name="roomdescription" id="description" value="${room.description}">
-        <label for="roomnumber_of_p">방 수용 인원</label>
-        <input type="text" name="roomnumber_of_p" id="roomnumber_of_p" value="${room.numberOfp}">
-        <button type="submit">수정</button>
-    </form>
-</div>
-
+<form method="post" action="/manager/faq/update-proc">
+    <input type="hidden" name="id" value="${faq.id}">
+    <input type="text" name="title" value="${faq.title}">
+    <input type="text" name="content" value="${faq.content}">
+    <button>수정</button>
+</form>
 </body>
 </html>

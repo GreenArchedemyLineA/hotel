@@ -3,6 +3,10 @@ package com.dodam.hotel.repository.model;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * @Author lhs-devloper
+ * Room Data
+ */
 @Data
 public class Room {
     private Integer id;
