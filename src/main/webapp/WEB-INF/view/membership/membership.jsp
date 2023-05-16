@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="layout/header.jsp" %>
 
 <style>
 
@@ -18,7 +17,7 @@
 	가입 시, 1박 무료 숙박 쿠폰 제공
 	멤버쉽 전용 패키지 이용 가능
 	</div>
-	<form></form>
+		<button type="submit" class="sub--button">가입하기</button>
 </div>
 </body>
 </html>

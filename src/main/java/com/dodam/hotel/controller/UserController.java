@@ -78,9 +78,16 @@ public class UserController {
 	
 	// 멤버쉽 페이지 (성희)
 	@GetMapping("/membership")
-	public String membership() {
-		return "/membership";
+	public String membershipPage() {
+		return "/membership/membership";
 	}
 	
+	// 멤버쉽 가입 처리 (성희)
+	@PostMapping("/membership")
+	public String membership() {
+		// 로그인 처리
+		
+		return "redirect:/";
+	}
 	
 } // end of class

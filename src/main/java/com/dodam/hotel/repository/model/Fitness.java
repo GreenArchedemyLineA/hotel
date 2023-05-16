@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class Fitness {
 
-	private int id;
+	private Integer id;
 	private String hours;
-	private boolean availability;
+	private Boolean availability;
 	private String status_desc;
 	private Facilities facilities;
 	private FacilitiesDesc facilitiesDesc;

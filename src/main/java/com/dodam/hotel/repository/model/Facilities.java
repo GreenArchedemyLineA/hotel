@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Facilities {
-	private int id;
+	private Integer id;
 	private String name;
 	private String location;
 	private String image1;
