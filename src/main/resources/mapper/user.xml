@@ -23,5 +23,20 @@
 	<insert id="insert">
 	INSERT INTO user_tb (email, password, name, gender, birth, tel)
 	VALUES (#{email}, #{password}, #{name}, #{gender}, #{birth}, #{tel})
-</insert>
+	</insert>
+	
+	<!-- 제일 최근 가입 회원 조회 -->
+	<select id="findIdOrderById" resultType="integer">
+		SELECT id FROM user_tb 
+		where email=#{email} and password=#{password} and name=#{name} and gender=#{gender} and 
+		birth=#{birth} and tel=#{tel}
+	</select>
+	
+	<!-- 회원가입 시 등급 insert -->
+	<insert id="insertGrade">
+		INSERT INTO grade_info_tb (user_id)
+		VALUES (#{userId})
+	</insert>
+	
+	
 </mapper>

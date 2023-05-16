@@ -43,7 +43,7 @@
 			<li><a href="/package">스페셜</a></li>
 			<li><a href="/room">객실</a></li>
 			<li><a href="/dining">다이닝</a></li>
-			<li><a href="/facilites">부대시설</a></li>
+			<li><a href="/facilities">부대시설</a></li>
 			<li><a href="/reservation">예약</a></li>
 			<li><a href="/question">FAQ</a></li>
 		</ul>
