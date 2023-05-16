@@ -1,4 +1,4 @@
-package com.dodam.hotel.manager;
+package com.dodam.hotel.repository;
 
 import com.dodam.hotel.repository.interfaces.RoomRepository;
 import com.dodam.hotel.repository.model.Room;
@@ -9,13 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 
+/**
+ * @Author lhs-devloper
+ * MyBatis-testCode(room insertCode)
+ */
 @MybatisTest
-// 실 b
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(Room.class)
-public class ManagerTest {
+public class ManagerRepositoryTest {
     @Autowired
     private RoomRepository roomRepository;
+    // Room Insert TestCode
     @Test
     public void insertData(){
         // given
@@ -34,4 +38,6 @@ public class ManagerTest {
         // then
         Assertions.assertEquals(1, result);
     }
+
+
 }

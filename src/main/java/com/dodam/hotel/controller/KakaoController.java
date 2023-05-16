@@ -1,8 +1,7 @@
 package com.dodam.hotel.controller;
 
-import com.dodam.hotel.dto.KakaoResponseToken;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.dodam.hotel.dto.kakao.KakaoResponseToken;
+import com.dodam.hotel.dto.kakao.KakaoUserInfo;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
@@ -10,7 +9,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -34,7 +32,7 @@ public class KakaoController {
         String CLIENT_ID = "20543122589b138f374315f3bbd94eb6";
         String REDIRECT_URI = "http://localhost:8080/auth/kakaoLogin";
         String CLIENT_SECRET = "qdGGE9cr0gs6XB8exvWJWuqyA7k864ZM";
-
+        String APP_ADMIN_KEY = "74e472b2d495ed6df25464561df4bf71";
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -56,13 +54,31 @@ public class KakaoController {
         formData.add("code", code);
         formData.add("client_secret", CLIENT_SECRET);
 
-        httpHeaders.add("Content-type", "application/json; charset=UTF-8");
+//        httpHeaders.add("Content-type", "application/json; charset=UTF-8");
         HttpEntity<MultiValueMap<String, String>> reqEntity = new HttpEntity<>(formData, httpHeaders);
 
-        ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.POST, reqEntity, String.class);
+        ResponseEntity<KakaoResponseToken> response = restTemplate.exchange(uri, HttpMethod.POST, reqEntity, KakaoResponseToken.class);
 
         System.out.println("token:" + response.getBody());
+        // AccessToken
+        String accessToken = response.getBody().getAccess_token();
+        System.out.println(accessToken);
+        URI userInfoUri = UriComponentsBuilder
+                .fromUriString("https://kapi.kakao.com")
+                .path("/v2/user/me")
+                .encode()
+                .build()
+                .toUri();
 
+
+        HttpHeaders httpUserInfoHeaders = new HttpHeaders();
+        httpUserInfoHeaders.set("Authorization", "Bearer " + accessToken);
+//        httpUserInfoHeaders.set("Content-type", "application/json; charset=UTF-8");
+
+        HttpEntity reqUserEntity = new HttpEntity(httpUserInfoHeaders);
+
+        ResponseEntity<KakaoUserInfo> responseUser = restTemplate.exchange(userInfoUri, HttpMethod.GET, reqUserEntity, KakaoUserInfo.class);
+        System.out.println(responseUser.getBody().getKakao_account());
         return null;
     }
 }
