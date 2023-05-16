@@ -15,7 +15,7 @@ public class RoomService {
 	private RoomRepository roomRepository;
 	
 	public List<Room> readAllRoom(String type) {
-		String name = type + "%";
+		String name = "%" + type + "%";
 		List<Room> rooms = roomRepository.findAllRoom(type, name);
 		
 		return rooms;
