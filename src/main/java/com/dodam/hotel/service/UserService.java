@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.repository.interfaces.MembershipRepository;
 import com.dodam.hotel.repository.interfaces.UserRepository;
 import com.dodam.hotel.repository.model.User;
 
@@ -15,6 +16,8 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private MembershipRepository membershipRepository;
 	
 
 	public UserResponseDto.LoginResponseDto readUserByIdAndPassword(UserRequestDto.LoginFormDto user) {
@@ -49,7 +52,7 @@ public class UserService {
 	 */
 	@Transactional
 	public void createUser(UserRequestDto.insertDto insertDto) {
-		// 중복 회원가입 검사
+		// 중복 회원가입 검사 (todo)
 		// 조회 돌리기
 		int resultRowCount = userRepository.insert(insertDto);
 		if (resultRowCount != 1) {
@@ -62,5 +65,11 @@ public class UserService {
 		int result = userRepository.insertGrade(userId);
 	}
 	
+	/**
+	 *  멤버쉽 가입 서비스 (성희)
+	 */
+	public void createMembership(Integer id) {
+		int resultRowCount = membershipRepository.insert(id);
+	}
 }
 

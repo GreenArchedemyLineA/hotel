@@ -83,10 +83,11 @@ public class UserController {
 	}
 	
 	// 멤버쉽 가입 처리 (성희)
-	@PostMapping("/membership")
+	@GetMapping("/joinMembership")
 	public String membership() {
-		// 로그인 처리
-		
+		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
+		userService.createMembership(responseUser.getId());
 		return "redirect:/";
 	}
 	

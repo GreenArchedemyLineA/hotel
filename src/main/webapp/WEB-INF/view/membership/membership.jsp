@@ -17,7 +17,7 @@
 	가입 시, 1박 무료 숙박 쿠폰 제공
 	멤버쉽 전용 패키지 이용 가능
 	</div>
-		<button type="submit" class="sub--button">가입하기</button>
+		<a href="/joinMembership"><button type="submit" class="sub--button">가입하기</button></a>
 </div>
 </body>
 </html>

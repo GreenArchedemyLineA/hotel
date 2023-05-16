@@ -8,7 +8,11 @@ import com.dodam.hotel.repository.interfaces.FacilitiesRepository;
 import com.dodam.hotel.repository.model.Fitness;
 import com.dodam.hotel.repository.model.Pool;
 import com.dodam.hotel.repository.model.Spa;
-
+/**
+ * 
+ * @author 성희
+ * 부대시설 서비스
+ */
 @Service
 public class FacilitiesService {
 	

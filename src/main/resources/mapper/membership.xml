@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dodam.hotel.repository.interfaces.MembershipRepository">
+<mapper
+	namespace="com.dodam.hotel.repository.interfaces.MembershipRepository">
 	<!-- 멤버쉽 -->
 	<resultMap type="com.dodam.hotel.repository.model.Membership" id="Membership">
 		<result column="id" property="id" />
 		<result column="price" property="price" />
 	</resultMap>
-	
+
 	<!-- membership info -->
 	<resultMap type="com.dodam.hotel.repository.model.MembershipInfo" id="MembershipInfo">
 		<result column="updated_at" property="updatedAt" />
@@ -15,4 +16,10 @@
 		<association property="membership" resultMap="Membership"></association>
 	</resultMap>
 	
+	<!-- 멤버쉽 등록 -->
+	<insert id="insert">
+		INSERT INTO membership_info_tb (user_id)
+		VALUES (#{userId});
+	</insert>
+
 </mapper>
