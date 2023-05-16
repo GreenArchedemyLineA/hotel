@@ -3,6 +3,7 @@ package com.dodam.hotel.repository.interfaces;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.dodam.hotel.dto.FacilitiesDto;
+import com.dodam.hotel.repository.model.Facilities;
 import com.dodam.hotel.repository.model.Fitness;
 import com.dodam.hotel.repository.model.Pool;
 import com.dodam.hotel.repository.model.Spa;

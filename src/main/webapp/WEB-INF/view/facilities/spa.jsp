@@ -14,12 +14,18 @@
 	</div>
 	<div class="main--container">
 		<div>
-			<a href="#"> <img alt="" src="https://picsum.photos/id/169/1000/500">
-			</a> <a href="#">
-				<p>수용 가능 인원 : ${spa.facilities.name}</p>
-				<p>수용 가능 인원 : ${spa.hours}</p>
-				<p>수용 가능 인원 : ${spa.facilitiesDesc.titleDesc}</p>
-			</a>
+			<img alt="" src="https://picsum.photos/id/169/1000/500">
+				<p> ${spa.facilities.name}</p>
+				<p> ${spa.facilities.location}</p>
+				<p> ${spa.hours}</p>
+				<p> ${spa.facilitiesDesc.titleDesc}</p>
+				<p> ${spa.facilitiesDesc.contentDesc1}</p>
+				<p> ${spa.facilitiesDesc.contentDesc2}</p>
+				<p> ${spa.facilitiesDesc.contentDesc3}</p>
+				<p> ${spa.facilitiesDesc.contentDesc4}</p>
+				<p> ${spa.facilitiesDesc.contentDesc5}</p>
+				<p> ${spa.facilitiesDesc.contentDesc6}</p>
+				<p> ${spa.facilitiesDesc.contentDesc7}</p>
 		</div>
 </div>
 <form></form>

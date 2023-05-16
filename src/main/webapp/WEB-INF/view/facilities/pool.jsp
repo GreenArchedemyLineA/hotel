@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../layout/header.jsp"%>
 <link rel="stylesheet" href="/css/navi.css" />
@@ -15,19 +14,23 @@
 		</ul>
 	</div>
 	<div class="main--container">
-					<div>
-						<a href="#"> 
-							<img alt="" src="https://picsum.photos/id/169/1000/500">
-						</a> 
-						<a href="#">
-							<p>수용 가능 인원 : ${pool.facilities.name}</p>
-							<p>수용 가능 인원 : ${pool.hours}</p>
-							<p>수용 가능 인원 : ${pool.facilitiesDesc.titleDesc}</p>
-						</a>
-					</div>
+		<div>
+			<img alt="" src="https://picsum.photos/id/169/1000/500">
+				<p> ${pool.facilities.name}</p>
+				<p> ${pool.facilities.location}</p>
+				<p> ${pool.hours}</p>
+				<p> ${pool.facilitiesDesc.titleDesc}</p>
+				<p> ${pool.facilitiesDesc.contentDesc1}</p>
+				<p> ${pool.facilitiesDesc.contentDesc2}</p>
+				<p> ${pool.facilitiesDesc.contentDesc3}</p>
+				<p> ${pool.facilitiesDesc.contentDesc4}</p>
+				<p> ${pool.facilitiesDesc.contentDesc5}</p>
+				<p> ${pool.facilitiesDesc.contentDesc6}</p>
+				<p> ${pool.facilitiesDesc.contentDesc7}</p>
+		</div>
 	</div>
 	<form></form>
 </div>
-	
+
 </body>
 </html>

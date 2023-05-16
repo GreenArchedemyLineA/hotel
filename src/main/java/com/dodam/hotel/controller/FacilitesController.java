@@ -18,13 +18,19 @@ import com.dodam.hotel.service.FacilitiesService;
  */
 @Controller
 public class FacilitesController {
-	
+
 	@Autowired
 	private FacilitiesService facilitiesService;
 
 	// 부대시설 페이지
 	@GetMapping("/facilities")
-	public String facilitesPage() {
+	public String facilitesPage(Model model) {
+		Pool pool = facilitiesService.readPoolAll();
+		Spa spa = facilitiesService.readSpaAll();
+		Fitness fitness = facilitiesService.readFitnessAll();
+		model.addAttribute("pool", pool);
+		model.addAttribute("spa", spa);
+		model.addAttribute("fitness", fitness);
 		return "/facilities/info";
 	}
 
