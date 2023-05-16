@@ -53,28 +53,29 @@
 	<div class="body--container">
 		<div class="navi--bar">
 			<ul class="navi--bar--ul">
-			    <li><a href="/room">전체 보기</a></li>
-				<li><a href="/room?type=디럭스">디럭스</a></li>
-				<li><a href="/room?type=프리미엄">프리미엄</a></li>
-				<li><a href="/room?type=스위트">스위트</a></li>
+			    <li><a href="/dining">전체 보기</a></li>
+			    <li><a href="/dining?type=레스토랑">레스토랑</a></li>
+				<li><a href="/dining?type=라운지">라운지 & 바</a></li>
 			</ul>
 		</div>
 		<div class="main--container">
-			<div>
-				<h2>객실</h2>
-				<div>zz</div>
-			</div>
-			<div>
-				<c:forEach var="roomList" items="${roomList}">
-						<div>
-							<a href="/detailRoom/${roomList.id}">
-								<img alt="객실 사진" src="https://picsum.photos/id/169/1000/500">
-							</a>
-							<h3><a href="/detailRoom/${roomList.id}">${roomList.name}</a></h3>
-							<p><a href="/detailRoom/${roomList.id}">수용 가능 인원 : ${roomList.numberOfP}</a></p>
-						</div>
-				</c:forEach>
-			</div>
+			<h2>다이닝</h2>
+			<c:forEach var="list" items="${diningList}">
+				<div>
+					<a href="#">
+						<img alt="객실 사진" src="https://picsum.photos/id/169/1000/500">
+					</a>
+					<h3><a href="#">${list.dining.name}</a></h3>
+						<p><a href="#">위치 : ${list.dining.location}</a></p>
+					<c:if test="${type != 'All'}">
+						<p><a href="#">시간 : ${list.dining.hours}</a></p>
+						<p><a href="#">설명1 : ${list.contentDesc1}</a></p>
+						<p><a href="#">설명2 : ${list.contentDesc2}</a></p>
+						<p><a href="#">설명3 : ${list.contentDesc3}</a></p>
+						<p><a href="#">설명4 : ${list.contentDesc4}</a></p>
+					</c:if>
+				</div>
+			</c:forEach>
 		</div>
 	</div>
 </body>

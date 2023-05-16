@@ -14,11 +14,16 @@ public class RoomService {
 	@Autowired
 	private RoomRepository roomRepository;
 	
-	public List<Room> readAllRoom() {
-		
-		List<Room> rooms = roomRepository.findAllRoom();
+	public List<Room> readAllRoom(String type) {
+		String name = type + "%";
+		List<Room> rooms = roomRepository.findAllRoom(type, name);
 		
 		return rooms;
+	}
+	
+	public Room readRoomById(Integer id) {
+		Room roomEntity = roomRepository.findRoomById(id);
+		return roomEntity;
 	}
 	
 } // end of class

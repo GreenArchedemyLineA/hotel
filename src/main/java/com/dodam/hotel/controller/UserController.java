@@ -13,6 +13,7 @@ import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.UserService;
+import com.dodam.hotel.util.Define;
 
 @Controller
 public class UserController {
@@ -35,7 +36,7 @@ public class UserController {
 	
 	@GetMapping("/myPage")
 	public String myPage(Model model) {
-		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute("principal");
+		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
 		model.addAttribute("responseUser", responseUser);
 		return "/user/myPage";
@@ -44,14 +45,14 @@ public class UserController {
 	@PostMapping("/loginProc")
 	public String loginProc(UserRequestDto.LoginFormDto loginDto) {
 		UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(loginDto);
-		session.setAttribute("principal", principal);
+		session.setAttribute(Define.PRINCIPAL, principal);
 		return "redirect:/myPage";
 	}
 	
 	// 회원정보 수정 처리 (김현우)
 	@PostMapping("/myPageProc")
 	public String myPageProc(UserRequestDto.MyPageFormDto myPageDto) {
-		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute("principal");
+		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		User responseUser = userService.updateUser(myPageDto);
 		
 		// 비밀번호 수정 시, DB 비밀번호랑 맞는지 확인 (암호화 처리 예정) - 다를경우 바뀐 비밀번호로 세팅

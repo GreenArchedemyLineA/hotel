@@ -65,15 +65,11 @@
 				<div>zz</div>
 			</div>
 			<div>
-				<c:forEach var="roomList" items="${roomList}">
-						<div>
-							<a href="/detailRoom/${roomList.id}">
-								<img alt="객실 사진" src="https://picsum.photos/id/169/1000/500">
-							</a>
-							<h3><a href="/detailRoom/${roomList.id}">${roomList.name}</a></h3>
-							<p><a href="/detailRoom/${roomList.id}">수용 가능 인원 : ${roomList.numberOfP}</a></p>
-						</div>
-				</c:forEach>
+				<img alt="객실 사진" src="https://picsum.photos/id/169/1000/500">
+				<h3>${room.name}</h3>
+				<p>${room.numberOfP}</p>
+				<p>${room.price}</p>
+				<p>${room.description}</p>
 			</div>
 		</div>
 	</div>
