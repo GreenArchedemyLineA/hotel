@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.interfaces.MembershipRepository;
 import com.dodam.hotel.repository.interfaces.UserRepository;
 import com.dodam.hotel.repository.model.User;
@@ -18,6 +19,8 @@ public class UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private MembershipRepository membershipRepository;
+	@Autowired
+	private GradeRepository gradeRepository; 
 	
 
 	public UserResponseDto.LoginResponseDto readUserByIdAndPassword(UserRequestDto.LoginFormDto user) {
@@ -62,7 +65,7 @@ public class UserService {
 		int userId = userRepository.findIdOrderById(insertDto);
 		
 		// 등급 부여
-		int result = userRepository.insertGrade(userId);
+		int result = gradeRepository.insertGrade(userId);
 	}
 	
 	/**

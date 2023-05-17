@@ -29,11 +29,13 @@ public class UserController {
 		return "/main";
 	}
 	
+	// 로그인 페이지 (현우)
 	@GetMapping("/login")
 	public String loginPage() {
 		return "/user/login";
 	}
 	
+	// 내정보 페이지 (현우)
 	@GetMapping("/myPage")
 	public String myPage(Model model) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
@@ -42,6 +44,7 @@ public class UserController {
 		return "/user/myPage";
 	}
 	
+	// 로그인 기능 구현 (현우)
 	@PostMapping("/loginProc")
 	public String loginProc(UserRequestDto.LoginFormDto loginDto) {
 		UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(loginDto);
