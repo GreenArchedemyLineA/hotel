@@ -19,7 +19,12 @@
 	<!-- 멤버쉽 등록 -->
 	<insert id="insert">
 		INSERT INTO membership_info_tb (user_id)
-		VALUES (#{userId});
+		VALUES (#{userId})
 	</insert>
+	
+	<!-- 멤버쉽 삭제 -->
+	<delete id="delete">
+		DELETE FROM membership_tb where user_id = #{userId}
+	</delete>
 
 </mapper>
