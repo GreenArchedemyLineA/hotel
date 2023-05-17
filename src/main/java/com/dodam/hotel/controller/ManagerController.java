@@ -3,19 +3,25 @@ package com.dodam.hotel.controller;
 import javax.servlet.http.HttpSession;
 
 import com.dodam.hotel.dto.StatusParams;
+import com.dodam.hotel.dto.UserListDto;
 import com.dodam.hotel.repository.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.dodam.hotel.dto.InsertDto;
 import com.dodam.hotel.dto.ManagerSignInFormDto;
 import com.dodam.hotel.repository.interfaces.ManagerRepository;
+import com.dodam.hotel.repository.model.GradeInfo;
+import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.service.ManagerService;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -35,7 +41,21 @@ public class ManagerController {
 
 		return "/test";
 	}
-
+	
+	// 이름으로 유저 조회;
+	@GetMapping("/userList")
+	public String mUserList(String name,Model model){
+		List<MUser> userList = managerService.managerUserList(name);
+		System.out.println(userList);
+		if(userList != null) {
+			model.addAttribute("userList",userList);
+		}else {
+			model.addAttribute("userList",userList);			
+		}
+		return "/manager/userList";
+	}
+	
+	//매니저 로그인
 	@PostMapping("/managerSignInProc")
 	public String managersign(ManagerSignInFormDto managerSignInFormDto) {
 
@@ -46,17 +66,7 @@ public class ManagerController {
 		if (principal != null) {
 			session.setAttribute("principal", principal);
 		}
-		return "redirect:/";
-	}
-
-	@PostMapping("/managerInsert")
-	public String insert(InsertDto insertDto) {
-
-		int insert = managerRepository.insert(insertDto);
-		if (insert == 0) {
-			return "/test";
-		}
-		return "redirect:/";
+		return "redirect:/manager/userList";
 	}
 
 	public String Check(StatusParams statusParams, Model model) {
@@ -83,5 +93,20 @@ public class ManagerController {
 
 		model.addAttribute("room", room);
 		return "/manager/roomDetailStatus";
+	}
+	
+	//회원 정보 상세 조회 or 
+	@GetMapping("/userDetail/{id}")
+	public String userDetail(@PathVariable Integer id,Model model) {
+		GradeInfo userGradeDetail = managerService.selectUserGrade(id);
+		model.addAttribute("userDetail",userGradeDetail);
+		return "/manager/userDetail";
+	}
+	//등급 수정 버튼
+	@PostMapping("/updateGrade/{id}")
+	public String updateGrade(@PathVariable Integer id ,Integer gradeId) {
+		
+		managerService.changeGradeByUserIdAndGradeId(gradeId, id);
+		return "redirect:/manager/userDetail/" + id;
 	}
 }
