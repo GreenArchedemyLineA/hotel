@@ -80,16 +80,22 @@ public class ManagerService {
 	}
 	// 이름으로 회원 검색
 	public List<MUser> managerUserList(String name){
-		List<MUser> userList = mUserRepository.findByname(name); 
+		List<MUser> userListEntity = mUserRepository.findByname(name); 
 		
-		return userList;
+		return userListEntity;
 	}
-	
+	//블랙리스트
+	public List<MUser> managerUserBlackList(int blackList){
+		List<MUser> userBlackListEntity = mUserRepository.findByBlackList(blackList); 
+		
+		return userBlackListEntity;
+	}
+	//회원등급 조회
 	public GradeInfo selectUserGrade(Integer id) {
 		GradeInfo userGradeEntity = mUserRepository.findByUserId(id);
 		return userGradeEntity;
 	}
-	
+	//회원 등급 수정() 
 	public int changeGradeByUserIdAndGradeId(Integer gradeId ,Integer id) {
 		int resultRowCount = mUserRepository.updateGrade(gradeId, id);
 		return resultRowCount;

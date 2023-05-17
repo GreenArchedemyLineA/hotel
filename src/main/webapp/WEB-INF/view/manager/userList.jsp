@@ -3,9 +3,13 @@
 
 <div class="d-flex align-items-start">
 	<div class="flex-grow-1">
-		<form>
+		<form action="/manager/userList" method="get">
 			<input type="text" name="name">
-			<button type="submit">검색</button>
+			<button type="submit">회원 이름 검색</button>
+		</form>
+		<form action="/manager/blackList" method="get">
+			<input type="text" name="blackList">
+			<button type="submit">블랙리스트 유저 검색</button>
 		</form>
 		<table class="table">
 			<thead>

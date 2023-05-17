@@ -39,22 +39,29 @@ public class ManagerController {
 	@GetMapping("/managerPage")
 	public String managerPage() {
 
-		return "/test";
+		return "/manager/managerLogin";
 	}
 	
 	// 이름으로 유저 조회;
 	@GetMapping("/userList")
 	public String mUserList(String name,Model model){
+		
 		List<MUser> userList = managerService.managerUserList(name);
 		System.out.println(userList);
 		if(userList != null) {
 			model.addAttribute("userList",userList);
-		}else {
-			model.addAttribute("userList",userList);			
 		}
 		return "/manager/userList";
 	}
-	
+	@GetMapping("/blackList")
+	public String mUserList(Model model,int blackList){
+		List<MUser> userBlackList = managerService.managerUserBlackList(blackList);
+		System.out.println(userBlackList);
+		if(userBlackList != null) {
+			model.addAttribute("userList",userBlackList);
+		}
+		return "/manager/userList";
+	}
 	//매니저 로그인
 	@PostMapping("/managerSignInProc")
 	public String managersign(ManagerSignInFormDto managerSignInFormDto) {
@@ -69,6 +76,7 @@ public class ManagerController {
 		return "redirect:/manager/userList";
 	}
 
+	@GetMapping("/roomStatus")
 	public String Check(StatusParams statusParams, Model model) {
 		List<Room> rooms;
 		System.out.println(statusParams);
@@ -100,13 +108,23 @@ public class ManagerController {
 	public String userDetail(@PathVariable Integer id,Model model) {
 		GradeInfo userGradeDetail = managerService.selectUserGrade(id);
 		model.addAttribute("userDetail",userGradeDetail);
+		System.out.println(userGradeDetail.getGrade());
+		System.out.println(userGradeDetail.getMuser());
 		return "/manager/userDetail";
 	}
 	//등급 수정 버튼
 	@PostMapping("/updateGrade/{id}")
-	public String updateGrade(@PathVariable Integer id ,Integer gradeId) {
+	public String updateGradeProc(@PathVariable Integer id ,Integer gradeId) {
 		
+		// 서비스
+		// 유저 회원변경 서비스 => updateUserGrade
+		
+		// GetMapping(Controller) getUser
+		// 특정유저에대해서 찾는거(서비스) => findUser
+		// 저장소 => findUserById()
 		managerService.changeGradeByUserIdAndGradeId(gradeId, id);
 		return "redirect:/manager/userDetail/" + id;
 	}
+
+
 }
