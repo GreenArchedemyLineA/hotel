@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.dodam.hotel.dto.ReservationRequestDto;
+import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.service.RoomService;
 
@@ -32,6 +34,21 @@ public class RoomController {
 		Room responseRoom = roomService.readRoomById(id);
 		model.addAttribute("room", responseRoom);
 		return "/room/roomDetail";
+	}
+	
+	// 예약 가능 객실 조회
+	@GetMapping("/search")
+	public String roomAvailable(Model model, ReservationRequestDto reservationRequestDto) {
+		String[] array = reservationRequestDto.getDate().split(" to ");
+		for (int i = 0; i < array.length; i++) {
+			reservationRequestDto.setStartDate(array[0]);
+			reservationRequestDto.setEndDate(array[1]);
+		}
+		System.out.println(reservationRequestDto.getStartDate() + reservationRequestDto.getEndDate());
+		List<Room> roomList = roomService.readRoomAvailablebyDate(reservationRequestDto.getStartDate(), reservationRequestDto.getEndDate());
+		System.out.println(roomList);
+		model.addAttribute("roomList", roomList);
+		return "/reservation/searchRoom";
 	}
 	
 } // end of class

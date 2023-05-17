@@ -26,4 +26,9 @@ public class DiningController {
 		return "/facilities/dining";
 	}
 	
+	@GetMapping("/reserveDining")
+	public String reserveDining() {
+		return "/reservation/reserveDining";
+	}
+	
 } // end of class

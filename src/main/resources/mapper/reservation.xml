@@ -1,0 +1,44 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dodam.hotel.repository.interfaces.ReservationRepository">
+
+	<!-- room -->
+	<resultMap id="room"
+		type="com.dodam.hotel.repository.model.Room">
+		<id property="id" column="room_id" />
+		<result property="name" column="room_name" />
+	</resultMap>
+
+	<!-- spa -->
+	<resultMap id="spa"
+		type="com.dodam.hotel.repository.model.Spa">
+		<id property="id" column="spa_id" />
+		<result property="hours" column="spa_hours" />
+		<result property="availability" column="spa_availability" />
+		<result property="statusDesc" column="spa_status_desc" />
+	</resultMap>
+
+	<!-- pool -->
+	<resultMap id="pool"
+		type="com.dodam.hotel.repository.model.Pool">
+		<id property="id" column="pool_id" />
+		<result property="hours" column="pool_hours" />
+		<result property="availability" column="pool_availability" />
+		<result property="statusDesc" column="pool_status_desc" />
+	</resultMap>
+
+	<!-- fitness -->
+	<resultMap id="fitness"
+		type="com.dodam.hotel.repository.model.Fitness">
+		<id property="id" column="id" />
+		<result property="hours" column="fitness_hours" />
+		<result property="availability" column="fitness_availability" />
+		<result property="statusDesc" column="fitness_status_desc" />
+	</resultMap>
+
+	
+	
+
+	<!-- insert into dining_tb(name, description, location, availability, status_desc, 
+		image) values ("test", "test", "test", true, "test", null) -->
+</mapper>

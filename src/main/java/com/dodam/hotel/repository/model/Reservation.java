@@ -6,8 +6,8 @@ import lombok.Data;
 public class Reservation {
 	
 	private Integer id;
-	private String start_date;
-	private String end_date;
+	private String startDate;
+	private String endDate;
 	private Integer numberOfP;
 	private Integer userId;
 	private Integer roomId;

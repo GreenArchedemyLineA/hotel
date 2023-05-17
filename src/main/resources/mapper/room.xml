@@ -34,4 +34,18 @@
 		where id = #{id}
 	</select>
 	
+	<!-- 예약 가능 객실 조회 -->
+	<select id="findRoombyDate" resultType="com.dodam.hotel.repository.model.Room">
+		select *
+		from room_tb
+		where id != any(
+		select re.room_id
+		from reservation_tb as re
+		where
+		start_date <![CDATA[<]]> #{startDate} and
+		#{startDate} <![CDATA[<]]> end_date or
+		start_date <![CDATA[<]]> #{endDate} and
+		#{endDate} <![CDATA[<]]> end_date)
+		group by name
+	</select>
 </mapper>
