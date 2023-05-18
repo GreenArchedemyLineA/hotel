@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.repository.interfaces.CouponRepository;
 import com.dodam.hotel.repository.interfaces.MembershipRepository;
 import com.dodam.hotel.repository.interfaces.UserRepository;
 import com.dodam.hotel.repository.model.User;
@@ -18,6 +19,8 @@ public class UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private MembershipRepository membershipRepository;
+	@Autowired
+	private CouponRepository couponRepository;
 	
 
 	public UserResponseDto.LoginResponseDto readUserByIdAndPassword(UserRequestDto.LoginFormDto user) {
@@ -70,6 +73,8 @@ public class UserService {
 	 */
 	public void createMembership(Integer id) {
 		int resultRowCount = membershipRepository.insert(id);
+		// 숙박 쿠폰 자동 등록 처리
+		int couponCount = couponRepository.insert(id);
 	}
 }
 
