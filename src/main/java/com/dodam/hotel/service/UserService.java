@@ -66,6 +66,7 @@ public class UserService {
 		
 		// 등급 부여
 		int result = gradeRepository.insertGrade(userId);
+		
 	}
 	
 	/**
