@@ -4,6 +4,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <style type="text/css">
 	.calender--container {
 		width: 100vh;
@@ -66,7 +72,7 @@
 </head>
 <body>
 	<div class="calender--container">
-		<form action="/search" method="get">
+		<form action="/dining" method="post">
 			<input type="text" class="dateSelector" id="calender" name="date">
 			<div class="count--container">
 				성인 <select name="countPerson">
@@ -92,7 +98,7 @@
 	$(".dateSelector").flatpickr({
 		enableTime : false,
 		dateFormat : "Y-m-d",
-		mode: "range",
+		mode: "single",
 	    minDate: "today",
 	    inline: true
 	});	

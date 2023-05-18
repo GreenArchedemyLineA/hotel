@@ -28,15 +28,17 @@
 	</resultMap>
 
 	<!-- fitness -->
-	<resultMap id="fitness"
-		type="com.dodam.hotel.repository.model.Fitness">
+	<resultMap id="fitness" type="com.dodam.hotel.repository.model.Fitness">
 		<id property="id" column="id" />
 		<result property="hours" column="fitness_hours" />
 		<result property="availability" column="fitness_availability" />
 		<result property="statusDesc" column="fitness_status_desc" />
 	</resultMap>
 
-	
+	<insert id="insertReserveDining">
+		INSERT INTO reservation_tb (start_date, end_date, number_of_p, user_id, dining_id)
+		VALUES (#{startDate}, #{endDate}, #{numberOfP}, #{userId}, 1);
+	</insert>
 	
 
 	<!-- insert into dining_tb(name, description, location, availability, status_desc, 

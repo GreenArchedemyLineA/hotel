@@ -26,9 +26,11 @@ public class DiningController {
 		return "/facilities/dining";
 	}
 	
+	// dining 예약 페이지 
 	@GetMapping("/reserveDining")
-	public String reserveDining() {
+	public String reserve() {
 		return "/reservation/reserveDining";
 	}
+	
 	
 } // end of class

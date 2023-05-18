@@ -12,5 +12,6 @@ public class ReservationRequestDto {
 	private Integer countPerson;
 	private Integer countChild;
 	private Integer countBaby;
-	
+	private Integer userId;
+	private Integer diningId;
 }

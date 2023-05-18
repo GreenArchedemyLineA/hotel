@@ -10,5 +10,4 @@ import com.dodam.hotel.repository.model.DiningDesc;
 public interface DiningRepository {
 	
 	public List<DiningDesc> findAllDining(String type);
-	
 } // end of class
