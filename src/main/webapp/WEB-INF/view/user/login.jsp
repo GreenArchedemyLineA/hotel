@@ -82,9 +82,9 @@
 			<div class="check--box"><input type="checkbox"> ID 저장 </div>
 			<p> 아직 도담 회원이 아니세요? </p>
 			<p> 회원가입하고 도담의 다양한 혜택을 누려보세요 </p>
-			<a href="/join"><button class="join--button">회원가입</button></a>
-			<a href="#"><button class="find--button">아이디/비밀번호 찾기</button></a>
 		</form>
+			<button class="join--button" onclick="location.href='/join'">회원가입</button>
+			<button class="find--button" onclick="location.href='/join'">아이디/비밀번호 찾기</button>
 	</div>
 </main>
 </body>

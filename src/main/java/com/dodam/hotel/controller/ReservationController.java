@@ -35,7 +35,6 @@ public class ReservationController {
 			requestDto.setStartDate(array[0]);
 			requestDto.setEndDate(array[1]);
 		}
-		System.out.println(requestDto);
 		return null;
 	}
 

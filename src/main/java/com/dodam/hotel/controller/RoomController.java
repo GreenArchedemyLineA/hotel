@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
@@ -22,9 +23,7 @@ public class RoomController {
 	
 	@GetMapping("/room")
 	public String roomPage(Model model, @RequestParam(name = "type", defaultValue = "All", required = false) String type) {
-		 System.out.println(type);
 		 List<Room> rooms = roomService.readAllRoom(type);
-		 System.out.println(rooms);
 		 model.addAttribute("roomList", rooms);
 		return "/room/list";
 	}
@@ -37,16 +36,10 @@ public class RoomController {
 	}
 	
 	// 예약 가능 객실 조회
-	@GetMapping("/search")
-	public String roomAvailable(Model model, ReservationRequestDto reservationRequestDto) {
-		String[] array = reservationRequestDto.getDate().split(" to ");
-		for (int i = 0; i < array.length; i++) {
-			reservationRequestDto.setStartDate(array[0]);
-			reservationRequestDto.setEndDate(array[1]);
-		}
-		System.out.println(reservationRequestDto.getStartDate() + reservationRequestDto.getEndDate());
-		List<Room> roomList = roomService.readRoomAvailablebyDate(reservationRequestDto.getStartDate(), reservationRequestDto.getEndDate());
-		System.out.println(roomList);
+	@PostMapping("/search")
+	public String roomAvailable(Model model, ReservationRequestDto requestDto) {
+		System.out.println(requestDto);
+		List<Room> roomList = roomService.readRoomAvailablebyDate(requestDto);
 		model.addAttribute("roomList", roomList);
 		return "/reservation/searchRoom";
 	}

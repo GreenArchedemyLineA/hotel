@@ -24,9 +24,6 @@ public class PackageController {
 	@GetMapping("/package")
 	public String packagePage(Model model) {
 		List<PackageDto> h_package = packageService.readPackageAll();
-		for (int i = 0; i < h_package.size(); i++) {
-			System.out.println(h_package.get(i));
-		}
 		model.addAttribute("h_package", h_package);
 		return "/room/package";
 	}

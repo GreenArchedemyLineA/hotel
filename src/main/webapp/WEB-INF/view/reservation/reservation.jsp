@@ -73,7 +73,7 @@
 </head>
 <body>
 	<div class="calender--container">
-		<form action="/search" method="get">
+		<form action="/search" method="post">
 		 <input type="text" class="dateSelector" id="calender" name="date">
 		 <div class="count--container">
 			성인 
