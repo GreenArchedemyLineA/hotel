@@ -18,6 +18,44 @@
 			<input type="text" name="tel" value="${responseUser.tel}">
 			<input type="submit" value="update">
 		</form>
+		<div>
+			<div>
+			<h2>쿠폰 정보</h2>
+			<c:forEach var="coupons" items="${coupons}">
+				${coupons.name}
+				${coupons.content}
+				${coupons.startDate}
+				${coupons.endDate}
+			</c:forEach>
+			</div>
+		</div>
+		<div>
+			<h2>예약 정보</h2>
+			<c:forEach var="list" items="${reservations}">
+				${list.user.name}
+				${list.startDate}
+				${list.endDate}
+				${list.numberOfP}
+				${list.room.name}
+				${list.room.price}
+				${list.dining.name}
+				${list.spa.name}
+				${list.fitness.name}
+				${list.h_package.name}
+				${list.pool.name}
+			</c:forEach>
+		</div>
+		<div>
+			<h2>내가 한 질문 리스트</h2>
+			<c:forEach var="questions" items="${questions}">
+				<div>
+					${questions.title}
+					${questions.content}
+					${questions.createdAt}
+					<br>
+				</div>
+			</c:forEach>
+		</div>
 	</main>
 </body>
 </html>

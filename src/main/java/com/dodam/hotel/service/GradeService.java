@@ -1,10 +1,12 @@
 package com.dodam.hotel.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.model.GradeInfo;
 
+@Service
 public class GradeService {
 	
 	@Autowired

@@ -1,46 +1,172 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dodam.hotel.repository.interfaces.ReservationRepository">
+	
+	<!-- 피트니스 -->
+	<resultMap type="com.dodam.hotel.repository.model.Fitness" id="Fitness">
+		<result column="id" property="id" />
+		<result column="availability" property="availability" />
+		<result column="hours" property="hours" />
+		<result column="price" property="price" />
+		<result column="status_desc" property="statusDesc" />
+		<association property="facilities" resultMap="Facilities"></association>
+		<association property="facilitiesDesc" resultMap="FacilitiesDesc" />
+	</resultMap>
 
+	<resultMap type="com.dodam.hotel.repository.model.Facilities" id="Facilities">
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="location" property="location" />
+		<result column="image1" property="image1" />
+		<result column="image2" property="image2" />
+		<result column="image3" property="image3" />
+	</resultMap>
+	
+	<resultMap type="com.dodam.hotel.repository.model.FacilitiesDesc" id="FacilitiesDesc">
+		<result column="id" property="id" />
+		<result column="title_desc" property="titleDesc" />
+		<result column="content_desc1" property="contentDesc1" />
+		<result column="content_desc2" property="contentDesc2" />
+		<result column="content_desc3" property="contentDesc3" />
+		<result column="content_desc4" property="contentDesc4" />
+		<result column="content_desc5" property="contentDesc5" />
+		<result column="content_desc6" property="contentDesc6" />
+		<result column="content_desc7" property="contentDesc7" />
+		<result column="content_desc8" property="contentDesc8" />
+		<result column="content_desc9" property="contentDesc9" />
+		<result column="content_desc10" property="contentDesc10" />
+		<association property="facilities" resultMap="Facilities"></association>
+	</resultMap>
+	
+	<resultMap type="com.dodam.hotel.repository.model.Reservation" id="Reservation">
+		<result column="r_id" property="id" />
+		<result column="r_start_date" property="startDate" />
+		<result column="r_end_date" property="endDate" />
+		<result column="r_number_of_p" property="numberOfP" />
+		<result column="r_created_at" property="createdAt" />
+		<result column="total_price" property="price" />
+		<collection property="user" resultMap="User"></collection>
+		<collection property="room" resultMap="Room"></collection>
+		<collection property="dining" resultMap="Dining"></collection>
+		<collection property="h_package" resultMap="Package"></collection>
+		<collection property="fitness" resultMap="Fitness"></collection>
+		<collection property="pool" resultMap="Pool"></collection>
+		<collection property="spa" resultMap="Spa"></collection>
+	</resultMap>
+	
 	<!-- room -->
-	<resultMap id="room"
-		type="com.dodam.hotel.repository.model.Room">
-		<id property="id" column="room_id" />
-		<result property="name" column="room_name" />
+	<resultMap id="Room" type="com.dodam.hotel.repository.model.Room">
+		<result column="ro_id" property="id" />
+		<result column="ro_name" property="name" />
+		<result column="ro_price" property="price" />
+		<result column="ro_availability" property="availability" />
+		<result column="description" property="description" />
+		<result column="image" property="image" />
+		<result column="status_desc" property="statusDesc" />
+		<result column="number_of_p" property="numberOfP" />
 	</resultMap>
-
-	<!-- spa -->
-	<resultMap id="spa"
-		type="com.dodam.hotel.repository.model.Spa">
-		<id property="id" column="spa_id" />
-		<result property="hours" column="spa_hours" />
-		<result property="availability" column="spa_availability" />
-		<result property="statusDesc" column="spa_status_desc" />
+	
+	<resultMap type="com.dodam.hotel.repository.model.Package" id="Package">
+		<result column="p_id" property="id" />
+		<result column="p_name" property="name" />
+		<result column="p_price" property="price" />
+		<collection property="room" resultMap="Room"></collection>
+		<collection property="dining" resultMap="Dining"></collection>
+		<collection property="fitness" resultMap="Fitness"></collection>
+		<collection property="pool" resultMap="Pool"></collection>
+		<collection property="spa" resultMap="Spa"></collection>
 	</resultMap>
-
-	<!-- pool -->
-	<resultMap id="pool"
-		type="com.dodam.hotel.repository.model.Pool">
-		<id property="id" column="pool_id" />
-		<result property="hours" column="pool_hours" />
-		<result property="availability" column="pool_availability" />
-		<result property="statusDesc" column="pool_status_desc" />
+	
+	<resultMap type="com.dodam.hotel.repository.model.Dining" id="Dining">
+		<result column="d_id" property="id" />
+		<result column="d_name" property="name" />
+		<result column="hours" property="hours" />
+		<result column="location" property="location" />
+		<result column="availability" property="availability" />
+		<result column="status_desc" property="statusDesc" />
+		<result column="image1" property="image1" />
+		<result column="image2" property="image2" />
+		<result column="image3" property="image3" />
 	</resultMap>
-
-	<!-- fitness -->
-	<resultMap id="fitness" type="com.dodam.hotel.repository.model.Fitness">
-		<id property="id" column="id" />
-		<result property="hours" column="fitness_hours" />
-		<result property="availability" column="fitness_availability" />
-		<result property="statusDesc" column="fitness_status_desc" />
+	
+	<!-- 스파 -->
+	<resultMap type="com.dodam.hotel.repository.model.Spa" id="Spa">
+		<result column="s_id" property="id" />
+		<result column="availability" property="availability" />
+		<result column="s_price" property="price" />
+		<result column="hours" property="hours" />
+		<result column="status_desc" property="statusDesc" />
+		<association property="facilities" resultMap="Facilities"></association>
+		<association property="facilitiesDesc" resultMap="FacilitiesDesc" />
+	</resultMap>
+	
+	<!-- 수영장 -->
+	<resultMap type="com.dodam.hotel.repository.model.Pool" id="Pool">
+		<result column="po_id" property="id" />
+		<result column="po_pirce" property="price" />
+		<result column="availability" property="availability" />
+		<result column="hours" property="hours" />
+		<result column="status_desc" property="statusDesc" />
+		<association property="facilities" resultMap="Facilities"></association>
+		<association property="facilitiesDesc" resultMap="FacilitiesDesc" />
+	</resultMap>
+	
+	<resultMap type="com.dodam.hotel.repository.model.User" id="User">
+		<result column="u_id" property="id"/>
+		<result column="email" property="email"/>
+		<result column="password" property="password"/>
+		<result column="u_name" property="name"/>
+		<result column="gender" property="gender"/>
+		<result column="birth" property="birth"/>
+		<result column="tel" property="tel"/>
+		<result column="blacklist" property="blacklist"/>
+		<result column="withdrawal" property="withdrawal"/>
+		<result column="created_at" property="createdAt"/>
 	</resultMap>
 
 	<insert id="insertReserveDining">
 		INSERT INTO reservation_tb (start_date, end_date, number_of_p, user_id, dining_id)
-		VALUES (#{startDate}, #{endDate}, #{numberOfP}, #{userId}, 1);
+		VALUES (#{startDate}, #{endDate}, #{numberOfP}, #{userId}, 1)
 	</insert>
-	
 
-	<!-- insert into dining_tb(name, description, location, availability, status_desc, 
-		image) values ("test", "test", "test", true, "test", null) -->
+	<select id="findAllReservationByUserId" resultMap="Reservation">
+		select
+			r.id as r_id,
+			r.start_date as r_start_date,
+			r.end_date as r_end_date,
+			r.number_of_p as r_number_of_p,
+			r.created_at as r_created_at,
+			ro.id as ro_id,
+			ro.name as ro_name,
+			ro.price as ro_price,
+			ro.availability as ro_availability,
+			p.id as p_id,
+			p.name as p_name,
+			p.price as p_price,
+			d.id as d_id,
+			d.name as d_name,
+			s.id as s_id,
+			s.price as s_price,
+			po.id as po_id,
+			po.price as po_pirce,
+			u.id as u_id,
+			u.name as u_name
+		from reservation_tb as r
+		left join user_tb as u
+		on r.user_id = u.id
+		left join room_tb as ro
+		on r.room_id = ro.id
+		left join dining_tb as d
+		on r.dining_id = d.id
+		left join package_tb as p
+		on r.package_id = p.id
+		left join fitness_tb as f
+		on r.fitness_id = f.id
+		left join pool_tb as po
+		on r.pool_id = po.id
+		left join spa_tb as s
+		on r.spa_id = s.id
+		where r.user_id = #{userId}
+	</select>
+
 </mapper>

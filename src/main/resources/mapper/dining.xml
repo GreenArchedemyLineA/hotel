@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-	namespace="com.dodam.hotel.repository.interfaces.DiningRepository">
+<mapper namespace="com.dodam.hotel.repository.interfaces.DiningRepository">
 
-	<resultMap type="com.dodam.hotel.repository.model.Dining"
-		id="Dining">
+	<resultMap type="com.dodam.hotel.repository.model.Dining" id="Dining">
 		<result column="id" property="id" />
 		<result column="name" property="name" />
 		<result column="hours" property="hours" />
@@ -17,8 +15,7 @@
 		<result column="image3" property="image3" />
 	</resultMap>
 
-	<resultMap type="com.dodam.hotel.repository.model.DiningDesc"
-		id="DiningDesc">
+	<resultMap type="com.dodam.hotel.repository.model.DiningDesc" id="DiningDesc">
 		<result column="id" property="id" />
 		<result column="title_desc" property="titleDesc" />
 		<result column="content_desc1" property="contentDesc1" />

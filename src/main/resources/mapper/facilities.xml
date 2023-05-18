@@ -55,7 +55,6 @@
 		<result column="content_desc8" property="contentDesc8" />
 		<result column="content_desc9" property="contentDesc9" />
 		<result column="content_desc10" property="contentDesc10" />
-		<!-- <result column="facilities_id" property="facilitiesId" /> -->
 		<association property="facilities" resultMap="Facilities"></association>
 	</resultMap>
 	

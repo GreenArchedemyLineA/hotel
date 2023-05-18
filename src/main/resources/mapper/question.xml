@@ -10,7 +10,7 @@
 		<result column="category" property="category"/>
 		<result column="file" property="file"/>
 		<result column="status" property="status"/>
-		<collection property="User" resultMap="User"></collection>
+		<collection property="user" resultMap="User"></collection>
 	</resultMap>
 	
 	<resultMap type="com.dodam.hotel.repository.model.User" id="User">
@@ -23,7 +23,7 @@
 		<result column="tel" property="tel"/>
 		<result column="blacklist" property="blacklist"/>
 		<result column="withdrawal" property="withdrawal"/>
-		<result column="created_at" property="created_at"/>
+		<result column="created_at" property="createdAt"/>
 	</resultMap>
 	
 	<insert id="insertQuestion">
@@ -31,4 +31,12 @@
 		values
 			(#{title}, #{content}, #{userId}, #{category}, #{uploadFile}, #{originFile});
 	</insert>
+	
+	<select id="selectQuestionByUserId" resultMap="Question">
+		select q.*
+		from question_tb as q
+		inner join user_tb as u
+		on q.user_id = u.id
+		where user_id = #{userId}
+	</select>
 </mapper>

@@ -1,6 +1,8 @@
 package com.dodam.hotel.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
+import com.dodam.hotel.repository.model.Coupon;
 import com.dodam.hotel.repository.model.GradeInfo;
+import com.dodam.hotel.repository.model.Question;
+import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.User;
+import com.dodam.hotel.service.CouponService;
+import com.dodam.hotel.service.GradeService;
+import com.dodam.hotel.service.QuestionService;
+import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.Define;
 
@@ -22,11 +31,21 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
 	@Autowired
 	private HttpSession session;
 	
 	@Autowired
-	private GradeRepository gradeRepository;
+	private GradeService gradeService;
+	
+	@Autowired
+	private CouponService couponService;
+	
+	@Autowired
+	private ReservationService reservationService;
+	
+	@Autowired
+	private QuestionService questionService;
 	
 	// 메인 페이지 (성희)
 	@GetMapping({"","/"})
@@ -47,12 +66,18 @@ public class UserController {
 		// 회원 정보 불러오기
 		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
 		// 등급 정보 불러오기
-		GradeInfo responseGrade = gradeRepository.findGradeByUserId(principal.getId());
-		
+		GradeInfo responseGrade = gradeService.readGradeByUserId(principal.getId());
 		// 쿠폰 정보 불러오기
-		
+		List<Coupon> coupons = couponService.readByUserId(principal.getId());
+		// 예약 정보 불러오기
+		List<Reservation> reservations = reservationService.readAllReservationByUserId(principal.getId());
+		// 내가 한 질문 리스트 가져오기
+		List<Question> questions = questionService.readQuestionByUserId(principal.getId());
 		model.addAttribute("responseUser", responseUser);
 		model.addAttribute("responseGrade", responseGrade);
+		model.addAttribute("coupons", coupons);
+		model.addAttribute("reservations", reservations);
+		model.addAttribute("questions", questions);
 		return "/user/myPage";
 	}
 	
