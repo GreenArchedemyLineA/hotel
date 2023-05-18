@@ -32,11 +32,4 @@
 		birth=#{birth} and tel=#{tel}
 	</select>
 	
-	<!-- 회원가입 시 등급 insert -->
-	<insert id="insertGrade">
-		INSERT INTO grade_info_tb (user_id)
-		VALUES (#{userId})
-	</insert>
-	
-	
 </mapper>

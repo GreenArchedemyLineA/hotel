@@ -25,6 +25,4 @@ public interface UserRepository {
 	// 제일 최근 가입 회원 ID 찾기
 	public Integer findIdOrderById(UserRequestDto.insertDto insertDto);
 	
-	// 회원가입 시 등급 부여
-	public int insertGrade(Integer id);
 }

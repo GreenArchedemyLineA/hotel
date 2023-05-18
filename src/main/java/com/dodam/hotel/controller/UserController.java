@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.repository.interfaces.GradeRepository;
+import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.Define;
@@ -23,25 +25,38 @@ public class UserController {
 	@Autowired
 	private HttpSession session;
 	
+	@Autowired
+	private GradeRepository gradeRepository;
+	
 	// 메인 페이지 (성희)
 	@GetMapping({"","/"})
 	public String mainPage() {
 		return "/main";
 	}
 	
+	// 로그인 페이지 (현우)
 	@GetMapping("/login")
 	public String loginPage() {
 		return "/user/login";
 	}
 	
+	// 내정보 페이지 (현우)
 	@GetMapping("/myPage")
 	public String myPage(Model model) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+		// 회원 정보 불러오기
 		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
+		// 등급 정보 불러오기
+		GradeInfo responseGrade = gradeRepository.findGradeByUserId(principal.getId());
+		
+		// 쿠폰 정보 불러오기
+		
 		model.addAttribute("responseUser", responseUser);
+		model.addAttribute("responseGrade", responseGrade);
 		return "/user/myPage";
 	}
 	
+	// 로그인 기능 구현 (현우)
 	@PostMapping("/loginProc")
 	public String loginProc(UserRequestDto.LoginFormDto loginDto) {
 		UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(loginDto);

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
-import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.Define;

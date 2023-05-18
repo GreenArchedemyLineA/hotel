@@ -17,6 +17,6 @@ public class User {
 	private String tel;
 	private Boolean blacklist;
 	private Boolean withdrawal;
-	private Timestamp created_at;
+	private Timestamp createdAt;
 }
 

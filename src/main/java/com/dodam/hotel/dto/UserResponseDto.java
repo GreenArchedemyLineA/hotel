@@ -9,6 +9,7 @@ public class UserResponseDto {
 	
 	@Data
 	public static class LoginResponseDto {
+		private Integer id;
 		private String email;
 		private String password;
 	}
