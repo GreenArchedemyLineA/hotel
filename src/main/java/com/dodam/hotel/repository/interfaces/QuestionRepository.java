@@ -17,4 +17,5 @@ public interface QuestionRepository {
 	public List<TestQuestion> findAllQuestion();
 	public TestQuestion findById(Integer id);
 	public int updateById(Integer id); 
+	public List<TestQuestion> findByCategory(String category);
 }

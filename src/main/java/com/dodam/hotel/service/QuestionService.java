@@ -18,12 +18,12 @@ public class QuestionService {
 	@Autowired
 	private ReplyRepository replyRepository;
 	
-	
+	// 문의 전부 보기
 	public List<TestQuestion> findAllQuestionList(){
 		List<TestQuestion> questionListEntity = questionRepository.findAllQuestion(); 
 		return questionListEntity;
 	}
-	
+	// 문의 아이디로 검색후 상세보기
 	public TestQuestion findById(Integer id) {
 		TestQuestion questionEntity = questionRepository.findById(id);
 		return questionEntity;
@@ -38,5 +38,9 @@ public class QuestionService {
 		int insertReplyEntity = replyRepository.insert(content, questionId, managerId); 
 		return insertReplyEntity; 
 	}
-	
+	// 문의 카테고리로 검색
+	public List<TestQuestion> findByCategory(String category){
+		List<TestQuestion> questionCategoryEntity = questionRepository.findByCategory(category);
+		return questionCategoryEntity;
+	}
 }

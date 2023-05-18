@@ -43,10 +43,21 @@ public class ManagerController {
 	}
 	
 	// 이름으로 유저 조회;
-	@GetMapping("/userList")
+	@GetMapping("/userNameList")
 	public String mUserList(String name,Model model){
 		
 		List<MUser> userList = managerService.managerUserList(name);
+		System.out.println(userList);
+		if(userList != null) {
+			model.addAttribute("userList",userList);
+		}
+		return "/manager/userList";
+	}
+	//유저 조회;
+	@GetMapping("/userList")
+	public String mUserListAll(Model model){
+		
+		List<MUser> userList = managerService.managerUserListAll();
 		System.out.println(userList);
 		if(userList != null) {
 			model.addAttribute("userList",userList);

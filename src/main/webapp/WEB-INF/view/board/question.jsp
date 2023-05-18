@@ -3,8 +3,8 @@
 	
 	<div class="d-flex align-items-start">
 	<div class="flex-grow-1">
-		<form>
-			<input type="text" name="name">
+		<form action="/question/category" method="get">
+			<input type="text" name="category">
 			<button type="submit">카테고리 검색</button>
 		</form>
 		<table class="table">

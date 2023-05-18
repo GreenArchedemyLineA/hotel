@@ -3,7 +3,7 @@
 
 <div class="d-flex align-items-start">
 	<div class="flex-grow-1">
-		<form action="/manager/userList" method="get">
+		<form action="/manager/userNameList" method="get">
 			<input type="text" name="name">
 			<button type="submit">회원 이름 검색</button>
 		</form>

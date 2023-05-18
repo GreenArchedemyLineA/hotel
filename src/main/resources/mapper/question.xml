@@ -43,13 +43,20 @@
 		from question_tb
 		where id = #{id};
 	</select>
+
+	<select id="findByCategory" resultType="com.dodam.hotel.repository.model.TestQuestion">
+		select *
+		from question_tb
+		where category = #{category};
+	</select>
 	
 	<update id="updateById">
 		UPDATE question_tb
         SET status = true 
         WHERE id=#{id};
 	</update>
-
+	
+	
 	
 	
 </mapper>

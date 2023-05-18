@@ -8,6 +8,10 @@
 		where name = #{name};
 	</select>
 	
+	<select id="findByAll" resultType="com.dodam.hotel.repository.model.MUser">
+		select * from user_tb;
+	</select>
+	
 	<select id="findByBlackList" resultType="com.dodam.hotel.repository.model.MUser">
 		select * from user_tb
 		where blacklist = #{blacklist};

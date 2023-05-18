@@ -56,4 +56,14 @@ public class QuestionController {
 	public String questionDelete(){
 		return null;
 	}
+	
+	@GetMapping("/category")
+	public String questionCategory(String category,Model model) {
+		List<TestQuestion> questionList = questionService.findByCategory(category);
+		if(questionList != null) {
+			model.addAttribute("questionList",questionList);
+		}
+		return "/board/question";
+	}
+	
 }

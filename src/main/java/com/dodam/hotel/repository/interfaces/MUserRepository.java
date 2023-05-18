@@ -13,6 +13,7 @@ import com.dodam.hotel.repository.model.MUser;
 public interface MUserRepository {
 	
 	public int updateGrade(@Param("gradeId") Integer gradeId,@Param("id") Integer id);
+	public List<MUser> findByAll();
 	public List<MUser> findByname(String name);
 	public List<MUser> findByBlackList(int blackList);
 	public GradeInfo findByUserId(Integer id);
