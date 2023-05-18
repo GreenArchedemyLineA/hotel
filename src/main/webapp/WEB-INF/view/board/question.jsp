@@ -4,7 +4,20 @@
 	<div class="d-flex align-items-start">
 	<div class="flex-grow-1">
 		<form action="/question/category" method="get">
-			<input type="text" name="category">
+			<select name="category">
+				<option value="호텔건의">
+					호텔건의
+				</option>
+				<option value="회원문의">
+					회원문의
+				</option>
+				<option value="부대시설문의">
+					부대시설문의
+				</option>
+				<option value="예약문의">
+					예약문의
+				</option>
+			</select>
 			<button type="submit">카테고리 검색</button>
 		</form>
 		<table class="table">
@@ -12,6 +25,7 @@
 				<tr>
 					<th scope="col">문의 제목</th>
 					<th scope="col">문의자 아이디</th>
+					<th scope="col">답변 상태값</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -34,7 +48,7 @@
 		location.href = "/question/questionDetail/"+id; 
 	}
 	function questionDelete(id){
-		// 유저 정보 확인과 등급 수정 할수 있는 페이지로
+		// 문의 정보 삭제 기능
 		location.href = "/question/questionDelete/"+id; 
 	}
 </script>

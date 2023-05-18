@@ -15,7 +15,7 @@ public interface MUserRepository {
 	public int updateGrade(@Param("gradeId") Integer gradeId,@Param("id") Integer id);
 	public List<MUser> findByAll();
 	public List<MUser> findByname(String name);
-	public List<MUser> findByBlackList(int blackList);
+	public List<MUser> findByBlackList();
 	public GradeInfo findByUserId(Integer id);
-	
+	public int deleteBlackList(Integer id);
 }

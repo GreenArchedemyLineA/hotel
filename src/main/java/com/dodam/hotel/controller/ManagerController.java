@@ -28,13 +28,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {
+	
 	@Autowired
 	private ManagerService managerService;
 	@Autowired
 	private HttpSession session;
 
-	@Autowired
-	private ManagerRepository managerRepository;
 
 	@GetMapping("/managerPage")
 	public String managerPage() {
@@ -42,6 +41,17 @@ public class ManagerController {
 		return "/manager/managerLogin";
 	}
 	
+	//유저 리스트
+	@GetMapping("/userList")
+	public String mUserListAll(Model model){
+		
+		List<MUser> userList = managerService.managerUserListAll();
+		System.out.println(userList);
+		if(userList != null) {
+			model.addAttribute("userList",userList);
+		}
+		return "/manager/userList";
+	}
 	// 이름으로 유저 조회;
 	@GetMapping("/userNameList")
 	public String mUserList(String name,Model model){
@@ -53,25 +63,21 @@ public class ManagerController {
 		}
 		return "/manager/userList";
 	}
-	//유저 조회;
-	@GetMapping("/userList")
-	public String mUserListAll(Model model){
-		
-		List<MUser> userList = managerService.managerUserListAll();
-		System.out.println(userList);
-		if(userList != null) {
-			model.addAttribute("userList",userList);
-		}
-		return "/manager/userList";
-	}
+
+	//블랙리스트 조회
 	@GetMapping("/blackList")
-	public String mUserList(Model model,int blackList){
-		List<MUser> userBlackList = managerService.managerUserBlackList(blackList);
+	public String mUserBlackList(Model model){
+		List<MUser> userBlackList = managerService.managerUserBlackList();
 		System.out.println(userBlackList);
 		if(userBlackList != null) {
 			model.addAttribute("userList",userBlackList);
 		}
-		return "/manager/userList";
+		return "/manager/userBlackList";
+	}
+	@GetMapping("/deleteBlackList/{id}")
+	public String deleteBlackList(@PathVariable Integer id) {
+		int deleteBlackList = managerService.deleteBlackListUser(id);
+		return "redirect:/manager/blackList";
 	}
 	//매니저 로그인
 	@PostMapping("/managerSignInProc")
@@ -118,9 +124,10 @@ public class ManagerController {
 	@GetMapping("/userDetail/{id}")
 	public String userDetail(@PathVariable Integer id,Model model) {
 		GradeInfo userGradeDetail = managerService.selectUserGrade(id);
-		model.addAttribute("userDetail",userGradeDetail);
-		System.out.println(userGradeDetail.getGrade());
-		System.out.println(userGradeDetail.getMuser());
+		System.out.println(userGradeDetail);
+		if(userGradeDetail != null) {
+			model.addAttribute("userDetail",userGradeDetail);
+		}
 		return "/manager/userDetail";
 	}
 	//등급 수정 버튼
@@ -136,6 +143,10 @@ public class ManagerController {
 		managerService.changeGradeByUserIdAndGradeId(gradeId, id);
 		return "redirect:/manager/userDetail/" + id;
 	}
-
+	@GetMapping("/userSecession")
+	public String userSecession() {
+		
+		return null;
+	}
 
 }

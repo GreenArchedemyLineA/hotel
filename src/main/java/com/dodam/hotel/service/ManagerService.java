@@ -93,11 +93,17 @@ public class ManagerService {
 	}
 
 	// 블랙리스트
-	public List<MUser> managerUserBlackList(int blackList) {
-		List<MUser> userBlackListEntity = mUserRepository.findByBlackList(blackList);
+	public List<MUser> managerUserBlackList() {
+		List<MUser> userBlackListEntity = mUserRepository.findByBlackList();
 
 		return userBlackListEntity;
 	}
+	// 블랙 리스트 삭제
+	public int deleteBlackListUser(Integer id) {
+		int blackListUser = mUserRepository.deleteBlackList(id);
+		return blackListUser;
+	}
+	
 
 	// 회원등급 조회
 	public GradeInfo selectUserGrade(Integer id) {
