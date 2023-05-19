@@ -28,33 +28,57 @@ import java.util.List;
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {
+	
 	@Autowired
 	private ManagerService managerService;
 	@Autowired
 	private HttpSession session;
 
-	@Autowired
-	private ManagerRepository managerRepository;
 
 	@GetMapping("/managerPage")
 	public String managerPage() {
 
-		return "/test";
+		return "/manager/managerLogin";
 	}
 	
-	// 이름으로 유저 조회;
+	//유저 리스트
 	@GetMapping("/userList")
+	public String mUserListAll(Model model){
+		
+		List<MUser> userList = managerService.managerUserListAll();
+		System.out.println(userList);
+		if(userList != null) {
+			model.addAttribute("userList",userList);
+		}
+		return "/manager/userList";
+	}
+	// 이름으로 유저 조회;
+	@GetMapping("/userNameList")
 	public String mUserList(String name,Model model){
+		
 		List<MUser> userList = managerService.managerUserList(name);
 		System.out.println(userList);
 		if(userList != null) {
 			model.addAttribute("userList",userList);
-		}else {
-			model.addAttribute("userList",userList);			
 		}
 		return "/manager/userList";
 	}
-	
+
+	//블랙리스트 조회
+	@GetMapping("/blackList")
+	public String mUserBlackList(Model model){
+		List<MUser> userBlackList = managerService.managerUserBlackList();
+		System.out.println(userBlackList);
+		if(userBlackList != null) {
+			model.addAttribute("userList",userBlackList);
+		}
+		return "/manager/userBlackList";
+	}
+	@GetMapping("/deleteBlackList/{id}")
+	public String deleteBlackList(@PathVariable Integer id) {
+		int deleteBlackList = managerService.deleteBlackListUser(id);
+		return "redirect:/manager/blackList";
+	}
 	//매니저 로그인
 	@PostMapping("/managerSignInProc")
 	public String managersign(ManagerSignInFormDto managerSignInFormDto) {
@@ -69,6 +93,7 @@ public class ManagerController {
 		return "redirect:/manager/userList";
 	}
 
+	@GetMapping("/roomStatus")
 	public String Check(StatusParams statusParams, Model model) {
 		List<Room> rooms;
 		System.out.println(statusParams);
@@ -99,14 +124,29 @@ public class ManagerController {
 	@GetMapping("/userDetail/{id}")
 	public String userDetail(@PathVariable Integer id,Model model) {
 		GradeInfo userGradeDetail = managerService.selectUserGrade(id);
-		model.addAttribute("userDetail",userGradeDetail);
+		System.out.println(userGradeDetail);
+		if(userGradeDetail != null) {
+			model.addAttribute("userDetail",userGradeDetail);
+		}
 		return "/manager/userDetail";
 	}
 	//등급 수정 버튼
 	@PostMapping("/updateGrade/{id}")
-	public String updateGrade(@PathVariable Integer id ,Integer gradeId) {
+	public String updateGradeProc(@PathVariable Integer id ,Integer gradeId) {
 		
+		// 서비스
+		// 유저 회원변경 서비스 => updateUserGrade
+		
+		// GetMapping(Controller) getUser
+		// 특정유저에대해서 찾는거(서비스) => findUser
+		// 저장소 => findUserById()
 		managerService.changeGradeByUserIdAndGradeId(gradeId, id);
 		return "redirect:/manager/userDetail/" + id;
 	}
+	@GetMapping("/userSecession")
+	public String userSecession() {
+		
+		return null;
+	}
+
 }

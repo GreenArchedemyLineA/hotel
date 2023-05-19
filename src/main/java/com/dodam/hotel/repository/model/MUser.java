@@ -15,8 +15,8 @@ public class MUser {
 	private String gender;
 	private String tel;
 	private Date birth;
-	private boolean blacklist;
-	private boolean withdrawal;
+	private int blacklist;
+	private int withdrawal;
 	private Timestamp createdAt;
 	
 	

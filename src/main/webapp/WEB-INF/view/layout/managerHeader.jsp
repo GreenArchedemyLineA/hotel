@@ -22,8 +22,8 @@
 			<img alt="로고이미지" src="/images/logo.png" id="logo">
 		</div>
 			<ul class="header--ul">
-				<li><a href="/manager/"><span class="material-symbols-outlined">login</span>회원조회</a></li>
-				<li><a href="#"><span class="material-symbols-outlined">person</span>마이페이지</a></li>
+				<li><a href="/manager/userList"><span class="material-symbols-outlined">login</span>회원조회</a></li>
+				<li><a href="/question/questionList"><span class="material-symbols-outlined">person</span>문의 사항 확인</a></li>
 				<li><a href="#"><span class="material-symbols-outlined">card_membership</span>멤버쉽</a></li>
 			</ul>
 	</div>

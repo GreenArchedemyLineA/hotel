@@ -38,10 +38,16 @@
 				<input type="text" name="gradeId">
 				<button type="submit" class="btn btn-danger">등급 수정</button>
 				</form>
+
 				</div>
-				
 		</div>
 	</div>
 </div>
+<script>
+	function userSecession(id){
+		// 유저 정보 확인과 등급 수정 할수 있는 페이지로
+		location.href = "/manager/userSecession/"+id; 
+	}
+</script>
 </body>
 </html>
