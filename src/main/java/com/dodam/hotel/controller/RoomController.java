@@ -20,6 +20,7 @@ public class RoomController {
 	@Autowired
 	private RoomService roomService;
 	
+	// 객실 페이지로 이동
 	@GetMapping("/room")
 	public String roomPage(Model model, @RequestParam(name = "type", defaultValue = "All", required = false) String type) {
 		 System.out.println(type);
@@ -29,6 +30,7 @@ public class RoomController {
 		return "/room/list";
 	}
 	
+	// 객실 상세 페이지
 	@GetMapping("/detailRoom/{id}")
 	public String roomDetailPage(Model model, @PathVariable Integer id) {
 		Room responseRoom = roomService.readRoomById(id);

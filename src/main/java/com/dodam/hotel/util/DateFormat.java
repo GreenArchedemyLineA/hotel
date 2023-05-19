@@ -1,20 +1,16 @@
 package com.dodam.hotel.util;
 
-import java.text.ParseException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class DateFormat {
 
-	public static Date dateFormat(String date) {
-		SimpleDateFormat formatter = new SimpleDateFormat(date);
+	public static String dateFormat(Timestamp date) {
 		
-		Date formatDate = null;
-		try {
-			formatDate = formatter.parse(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		
+		String formatDate = sdf.format(date);
+		
 		return formatDate;
 	}
 	

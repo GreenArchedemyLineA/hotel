@@ -29,12 +29,28 @@ public class UserService {
 	@Autowired
 	private GradeRepository gradeRepository; 
 	
-
+	// 로그인용
+	@Transactional
 	public UserResponseDto.LoginResponseDto readUserByIdAndPassword(UserRequestDto.LoginFormDto user) {
 		UserResponseDto.LoginResponseDto responseUser = userRepository.findUserByLoginFormDto(user);
+		System.out.println(responseUser);
+		if(responseUser.getBlacklist()) {
+			// 블랙당한 user
+			// 예외 처리
+			System.out.println("111111111111111111111");
+			return null;
+		}
+		if(responseUser.getWithdrawal()) {
+			// 탈퇴한 유저
+			// 예외처리
+			System.out.println("222222222222222222");
+			return null;
+		}
 		return responseUser;
 	}
 	
+	// 내정보 페이지에 회원 정보 출력
+	@Transactional
 	public UserResponseDto.MyPageResponseDto readUserByEmail(String email) {
 		User userEntity = userRepository.findUserByEmail(email);
 		UserResponseDto.MyPageResponseDto responseDto = new UserResponseDto.MyPageResponseDto();
@@ -48,6 +64,8 @@ public class UserService {
 		return responseDto;
 	}
 	
+	// 회원 정보 수정
+	@Transactional
 	public User updateUser(UserRequestDto.MyPageFormDto user) {
 		int resultRow = userRepository.updateUserByEmail(user);
 		if (resultRow != 1) {
@@ -79,6 +97,7 @@ public class UserService {
 	/**
 	 *  멤버쉽 가입 서비스 (성희)
 	 */
+	@Transactional
 	public void createMembership(Integer id) {
 		int resultRowCount = membershipRepository.insert(id);
 		// 숙박 쿠폰 자동 등록 처리

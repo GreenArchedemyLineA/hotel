@@ -12,6 +12,10 @@ public class UserResponseDto {
 		private Integer id;
 		private String email;
 		private String password;
+		private String name;
+		private Boolean blacklist;
+		private Boolean withdrawal;
+		private String origin_email;
 	}
 	
 	@Data

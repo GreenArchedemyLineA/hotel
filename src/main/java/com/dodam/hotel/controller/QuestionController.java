@@ -1,26 +1,28 @@
 package com.dodam.hotel.controller;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.dto.QuestionRequestDto.InsertQuestionRequestDto;
-import com.dodam.hotel.repository.model.User;
+import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.repository.model.Faq;
 import com.dodam.hotel.service.QuestionService;
 import com.dodam.hotel.util.Define;
 
 /**
  * 
- * @author 성희
- * 자주묻는 질문 controller
+ * @author 현우
+ * faq, 문의 controller
  *
  */
 @Controller
@@ -32,8 +34,11 @@ public class QuestionController {
 	@Autowired
 	private HttpSession session;
 	
+	// faq로 이동
 	@GetMapping("/question")
-	public String questionPage( ) {
+	public String questionPage(Model model) {
+		List<Faq> faqList = questionService.readAllFaq();
+		model.addAttribute("faqList", faqList);
 		return "/question/question";
 	}
 	

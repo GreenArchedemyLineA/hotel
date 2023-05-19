@@ -3,6 +3,7 @@ package com.dodam.hotel.repository.model;
 import java.sql.Timestamp;
 
 import com.dodam.hotel.enums.QuestionCategory;
+import com.dodam.hotel.util.DateFormat;
 
 import lombok.Data;
 
@@ -23,5 +24,10 @@ public class Question {
 	private QuestionCategory category;
 	private String file;
 	private Boolean status;
+	
+	public String formatDate() {
+		String returnDate = DateFormat.dateFormat(this.createdAt);
+		return returnDate;
+	}
 	
 } // end of class

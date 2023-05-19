@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class QuestionRequestDto {
 	
+	// 문의 등록 dto
 	@Data
 	public static class InsertQuestionRequestDto {
 		

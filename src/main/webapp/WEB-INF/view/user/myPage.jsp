@@ -47,11 +47,12 @@
 		</div>
 		<div>
 			<h2>내가 한 질문 리스트</h2>
-			<c:forEach var="questions" items="${questions}">
+			<c:forEach var="qna" items="${qna}">
 				<div>
-					${questions.title}
-					${questions.content}
-					${questions.createdAt}
+					${qna.question.title}
+					${qna.question.content}
+					${qna.question.formatDate()}
+					${qna.content}
 					<br>
 				</div>
 			</c:forEach>

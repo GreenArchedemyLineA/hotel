@@ -2,6 +2,7 @@ package com.dodam.hotel.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.hotel.dto.FacilitiesDto;
 import com.dodam.hotel.repository.interfaces.FacilitiesRepository;
@@ -23,6 +24,7 @@ public class FacilitiesService {
 	 * 
 	 * @return 수영장 조회 서비스
 	 */
+	@Transactional
 	public Pool readPoolAll() {
 		Pool pool = facilitiesRepository.findPool();
 		return pool;
@@ -32,6 +34,7 @@ public class FacilitiesService {
 	 * 
 	 * @return 스파 조회 서비스
 	 */
+	@Transactional
 	public Spa readSpaAll() {
 		Spa spa = facilitiesRepository.findSpa();
 		return spa;
@@ -41,6 +44,7 @@ public class FacilitiesService {
 	 * 
 	 * @return 피트니스 조회 서비스
 	 */
+	@Transactional
 	public Fitness readFitnessAll() {
 		Fitness fitness = facilitiesRepository.findFitness();
 		return fitness;

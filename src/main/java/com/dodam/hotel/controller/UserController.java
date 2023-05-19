@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
-import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.model.Coupon;
 import com.dodam.hotel.repository.model.GradeInfo;
-import com.dodam.hotel.repository.model.Question;
+import com.dodam.hotel.repository.model.Reply;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.CouponService;
@@ -67,17 +66,23 @@ public class UserController {
 		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
 		// 등급 정보 불러오기
 		GradeInfo responseGrade = gradeService.readGradeByUserId(principal.getId());
-		// 쿠폰 정보 불러오기
+		// todo
+		// 비동기처리 -> restController로 이동
+		// 쿠폰 정보 불러오기 
 		List<Coupon> coupons = couponService.readByUserId(principal.getId());
+		// todo
+		// 비동기처리 -> restController로 이동
 		// 예약 정보 불러오기
 		List<Reservation> reservations = reservationService.readAllReservationByUserId(principal.getId());
 		// 내가 한 질문 리스트 가져오기
-		List<Question> questions = questionService.readQuestionByUserId(principal.getId());
+		// todo
+		// 비동기처리 -> restController로 이동
+		List<Reply> qna = questionService.readQuestionByUserId(principal.getId());
 		model.addAttribute("responseUser", responseUser);
 		model.addAttribute("responseGrade", responseGrade);
 		model.addAttribute("coupons", coupons);
 		model.addAttribute("reservations", reservations);
-		model.addAttribute("questions", questions);
+		model.addAttribute("qna", qna);
 		return "/user/myPage";
 	}
 	
@@ -129,6 +134,12 @@ public class UserController {
 		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
 		userService.createMembership(responseUser.getId());
 		return "redirect:/";
+	}
+	
+	// 아이디, 비밀번호 찾기
+	@GetMapping("/findIdPw")
+	public String findIdPw() {
+		return "/user/inquiry";
 	}
 	
 } // end of class
