@@ -18,6 +18,20 @@ spring:
     username: dodam
     password: dodam1234
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: #내 이메일 주소
+    password: twxsuigcdadqnfon
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+            
+# smtp.naver.com
 #  jpa:
 #    open-in-view: true
 #    hibernate:
@@ -37,3 +51,9 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+      
+mybatis:
+  mapper-locations:
+  - classpath:mapper/**.xml
+  configuration:
+    map-underscore-to-camel-case: true
