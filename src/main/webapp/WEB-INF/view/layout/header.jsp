@@ -44,7 +44,7 @@
 			<li><a href="/room">객실</a></li>
 			<li><a href="/dining">다이닝</a></li>
 			<li><a href="/facilities">부대시설</a></li>
-			<li><a href="/reservePage">예약</a></li>
+			<li><a href="/selectDate">예약</a></li>
 			<li><a href="/question">FAQ</a></li>
 		</ul>
 	</div>

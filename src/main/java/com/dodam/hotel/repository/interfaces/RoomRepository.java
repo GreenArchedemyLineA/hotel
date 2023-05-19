@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.repository.model.Room;
 
 @Mapper
@@ -17,6 +18,6 @@ public interface RoomRepository {
 	public Room findRoomById(Integer id);
 	
 	// 예약된 객실 조회
-	public List<Room> findRoombyDate(@Param("startDate")String startDate, @Param("endDate")String endDate); 
+	public List<Room> findRoombyDate(ReservationRequestDto reservationRequestDto); 
 	
 } // end of class

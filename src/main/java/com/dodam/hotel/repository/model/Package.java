@@ -15,3 +15,5 @@ public class Package {
 	private Fitness fitness;
 	
 } // end of class
+
+
