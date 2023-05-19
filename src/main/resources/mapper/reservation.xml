@@ -5,8 +5,12 @@
 
 	<insert id="insertReserveDining">
 		INSERT INTO reservation_tb (start_date, end_date, number_of_p, user_id, dining_id)
-		VALUES (#{startDate}, #{endDate}, #{numberOfP}, #{userId}, 1);
+		VALUES (#{startDate}, #{endDate}, #{numberOfP}, #{userId}, 1)
 	</insert>
 	
-	
+	<insert id="insertReserveRoom">
+		INSERT INTO (total_price, start_date, end_date, number_of_p, user_id, room_id, dining_id, fitness_id, pool_id, spa_id)
+		VALUES
+		(#{totalPrice}, #{startDate}, #{endDate}, #{numberOfP}, #{userId}, #{roomId}, #{diningId}, #{fitnessId}, #{poolId}, #{spaId})
+	</insert>
 </mapper>

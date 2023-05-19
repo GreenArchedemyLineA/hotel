@@ -1,17 +1,16 @@
 package com.dodam.hotel.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
-import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.service.RoomService;
 
@@ -36,11 +35,12 @@ public class RoomController {
 	}
 	
 	// 예약 가능 객실 조회
-	@PostMapping("/search")
+	@GetMapping("/search")
 	public String roomAvailable(Model model, ReservationRequestDto requestDto) {
-		System.out.println(requestDto);
-		List<Room> roomList = roomService.readRoomAvailablebyDate(requestDto);
-		model.addAttribute("roomList", roomList);
+		Map<String, Object> selectList = roomService.readRoomAvailablebyDate(requestDto);
+		// Stream API , map, filter, foreach.. 이런 방법도 있다..~~!!
+		model.addAttribute("roomList", selectList.get("roomList"));
+		model.addAttribute("searchDto", selectList.get("searchDto"));
 		return "/reservation/searchRoom";
 	}
 	

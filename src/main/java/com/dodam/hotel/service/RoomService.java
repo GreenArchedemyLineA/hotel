@@ -1,6 +1,8 @@
 package com.dodam.hotel.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,7 @@ public class RoomService {
 	/**
 	 *  전체 예약 객실 조회 (성희)
 	 */
-	public List<Room> readRoomAvailablebyDate(ReservationRequestDto requestDto) {
+	public Map<String, Object> readRoomAvailablebyDate(ReservationRequestDto requestDto) {
 		String[] array = requestDto.getDate().split(" to ");
 		Integer countAll = requestDto.getCountPerson() + requestDto.getCountChild() + requestDto.getCountBaby();
 		requestDto.setNumberOfP(countAll);
@@ -41,7 +43,11 @@ public class RoomService {
 			requestDto.setEndDate(array[1]);
 		}
 		List<Room> roomList = roomRepository.findRoombyDate(requestDto);
-		return roomList;
+		Map<String, Object> selectList = new HashMap<>();
+		selectList.put("roomList", roomList);
+		selectList.put("searchDto", requestDto);
+		
+		return selectList;
 	}
 	
 } // end of class
