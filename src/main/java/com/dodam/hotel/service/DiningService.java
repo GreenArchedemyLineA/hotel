@@ -17,7 +17,7 @@ public class DiningService {
 	
 	@Transactional
 	public List<DiningDesc> readAllDining(String type) {
-		List<DiningDesc> diningDescEntitiys = diningRepository.findAllDining(type);
+		List<DiningDesc> diningDescEntitiys = diningRepository.findByTypeAllDining(type);
 		return diningDescEntitiys;
 	}
 	

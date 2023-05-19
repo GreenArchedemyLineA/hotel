@@ -9,5 +9,7 @@ public class Reply {
 	private String content;
 	private Question question;
 	private Manager manager;
+	private Integer questionId;
+	private Integer managerId;
 	
 } // end of class

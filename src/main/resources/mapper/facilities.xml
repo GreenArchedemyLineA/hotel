@@ -92,5 +92,15 @@
 		ON d.facilities_id = f.id;
 	</select>
 	
+	<select id="findAllFitness" resultType="com.dodam.hotel.repository.model.Fitness">
+        select * from fitness_tb;
+    </select>
+    
+    <select id="findAllPool" resultType="com.dodam.hotel.repository.model.Pool">
+        select * from pool_tb;
+    </select>
+	<select id="findAllSpa" resultType="com.dodam.hotel.repository.model.Spa">
+        select * from spa_tb;
+    </select>
 	
 </mapper>

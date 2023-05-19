@@ -25,7 +25,7 @@
 		<association property="dining" resultMap="Dining"></association>
 	</resultMap>
 
-	<select id="findAllDining" resultMap="DiningDesc">
+	<select id="findByTypeAllDining" resultMap="DiningDesc">
 		<if test="type=='All'">
 			select *
 			from dining_desc_tb as dd
@@ -47,5 +47,9 @@
 			where dd.id = 2
 		</if>
 	</select>
+	
+	<select id="findAllDining" resultType="com.dodam.hotel.repository.model.Dining">
+        select * from dining_tb;
+    </select>
 
 </mapper>

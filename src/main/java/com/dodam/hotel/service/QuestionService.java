@@ -8,19 +8,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.hotel.dto.QuestionRequestDto.InsertQuestionRequestDto;
 import com.dodam.hotel.repository.interfaces.QuestionRepository;
-import com.dodam.hotel.repository.model.Faq;
-/**
- * 
- * @author 김현우
- *
- */
-import com.dodam.hotel.repository.model.Question;
+import com.dodam.hotel.repository.interfaces.ReplyRepository;
+import com.dodam.hotel.repository.model.FAQ;
 import com.dodam.hotel.repository.model.Reply;
+import com.dodam.hotel.repository.model.TestQuestion;
 @Service
 public class QuestionService {
 	
 	@Autowired
 	private QuestionRepository questionRepository;
+	
+	@Autowired
+	private ReplyRepository replyRepository;
 	
 	// 질문 등록 처리 (현우)
 	@Transactional
@@ -33,8 +32,8 @@ public class QuestionService {
 	}
 	
 	// 모든 자주 묻는 질문 조회
-	public List<Faq> readAllFaq() {
-		List<Faq> faqEntitys = questionRepository.selectAllFaq();
+	public List<FAQ> readAllFaq() {
+		List<FAQ> faqEntitys = questionRepository.selectAllFaq();
 		return faqEntitys;
 	}
 	
@@ -44,5 +43,30 @@ public class QuestionService {
 		List<Reply> questionEntitys = questionRepository.selectQuestionByUserId(userId);
 		return questionEntitys;
 	}
-	
-} // end of class
+
+	// 문의 전부 보기
+	public List<TestQuestion> findAllQuestionList(){
+		List<TestQuestion> questionListEntity = questionRepository.findAllQuestion(); 
+		return questionListEntity;
+	}
+	// 문의 아이디로 검색후 상세보기
+	public TestQuestion findById(Integer id) {
+		TestQuestion questionEntity = questionRepository.findById(id);
+		return questionEntity;
+	}
+	// 댓글 상태값 변경
+	public int updateStatusById(Integer id) {
+		int updateStatusEntity = questionRepository.updateById(id);
+		return updateStatusEntity;
+	}
+	//댓긓작성
+	public int insertReply(String content,Integer questionId,Integer managerId) {
+		int insertReplyEntity = replyRepository.insert(content, questionId, managerId); 
+		return insertReplyEntity; 
+	}
+	// 문의 카테고리로 검색
+	public List<TestQuestion> findByCategory(String category){
+		List<TestQuestion> questionCategoryEntity = questionRepository.findByCategory(category);
+		return questionCategoryEntity;
+	}
+}

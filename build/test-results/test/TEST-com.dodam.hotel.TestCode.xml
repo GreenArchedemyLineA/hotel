@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dodam.hotel.TestCode" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-05-19T03:32:50" hostname="ihyeonseoui-MacBookAir.local" time="0.065">
+  <properties/>
+  <testcase name="kakaoMapCheckTest()" classname="com.dodam.hotel.TestCode" time="0.065"/>
+  <system-out><![CDATA[{grant_type=[authorization_code], redirect_uri=[http://localhost:8080/auth/kakaoLogin], client_id=[20543122589b138f374315f3bbd94eb6], client_secret=[qdGGE9cr0gs6XB8exvWJWuqyA7k864ZM]}
+<{grant_type=[authorization_code], redirect_uri=[http://localhost:8080/auth/kakaoLogin], client_id=[20543122589b138f374315f3bbd94eb6], client_secret=[qdGGE9cr0gs6XB8exvWJWuqyA7k864ZM]},[Content-Type:"application/x-www-form-urlencoded"]>
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.repository.model.Coupon;
@@ -24,6 +25,8 @@ import com.dodam.hotel.service.QuestionService;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.Define;
+
+import com.dodam.hotel.dto.TestDto;
 
 @Controller
 public class UserController {
@@ -142,4 +145,16 @@ public class UserController {
 		return "/user/inquiry";
 	}
 	
+	@PostMapping("/test")
+	public String test(TestDto dto) {
+		System.out.println(dto.getUsername());
+		System.out.println(dto.getPassword());
+		System.out.println();
+		return "/";
+		
+	}
+	
+	public String managerLogin() {
+		return "";
+	}
 } // end of class

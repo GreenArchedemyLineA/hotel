@@ -19,10 +19,12 @@ public class Question {
 	private Integer id;
 	private String title;
 	private String content;
+	private Integer userId;
 	private User user;
 	private Timestamp createdAt;
 	private QuestionCategory category;
-	private String file;
+	private String originFile;
+	private String uploadFile;
 	private Boolean status;
 	
 	public String formatDate() {

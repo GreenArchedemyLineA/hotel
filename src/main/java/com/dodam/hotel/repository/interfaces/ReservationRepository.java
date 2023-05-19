@@ -20,6 +20,11 @@ public interface ReservationRepository {
 
 	// 객실 예약 (성희)
 	public int insertReserveRoom(ReservationRequestDto reservationRequestDto);
-
 	
+	List<Reservation> findReservationByUserId(Integer userId);
+    List<Reservation> findAllReservation();
+    int updateReservation(Reservation reservation);
+    int deleteReservation(Integer id);
+
+    Reservation findReservationById(Integer id);
 }

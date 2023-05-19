@@ -6,9 +6,9 @@ import lombok.Data;
 
 @Data
 public class GradeInfo {
-	
+	private Integer userId;
+	private Integer gradeId;
 	private User user;
 	private Grade grade;
-	private Timestamp updatedAt;
-	
-} // end of class
+	private Timestamp updatedAt;	
+}

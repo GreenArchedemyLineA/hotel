@@ -4,11 +4,11 @@
 	
 	<!-- 피트니스 -->
 	<resultMap type="com.dodam.hotel.repository.model.Fitness" id="Fitness">
-		<result column="id" property="id" />
-		<result column="availability" property="availability" />
-		<result column="hours" property="hours" />
-		<result column="price" property="price" />
-		<result column="status_desc" property="statusDesc" />
+		<result column="fitness_id" property="id" />
+		<result column="fitness_availability" property="availability" />
+		<result column="fitness_hours" property="hours" />
+		<result column="fitness_price" property="price" />
+		<result column="fitness_status_desc" property="statusDesc" />
 		<association property="facilities" resultMap="Facilities"></association>
 		<association property="facilitiesDesc" resultMap="FacilitiesDesc" />
 	</resultMap>
@@ -56,20 +56,20 @@
 	
 	<!-- room -->
 	<resultMap id="Room" type="com.dodam.hotel.repository.model.Room">
-		<result column="ro_id" property="id" />
-		<result column="ro_name" property="name" />
-		<result column="ro_price" property="price" />
-		<result column="ro_availability" property="availability" />
-		<result column="description" property="description" />
-		<result column="image" property="image" />
-		<result column="status_desc" property="statusDesc" />
-		<result column="number_of_p" property="numberOfP" />
+		<result column="room_id" property="id" />
+		<result column="room_name" property="name" />
+		<result column="room_price" property="price" />
+		<result column="room_availability" property="availability" />
+		<result column="room_description" property="description" />
+		<result column="room_image" property="image" />
+		<result column="room_status_desc" property="statusDesc" />
+		<result column="room_number_of_p" property="numberOfP" />
 	</resultMap>
 	
 	<resultMap type="com.dodam.hotel.repository.model.Package" id="Package">
-		<result column="p_id" property="id" />
-		<result column="p_name" property="name" />
-		<result column="p_price" property="price" />
+		<result column="package_id" property="id" />
+		<result column="package_name" property="name" />
+		<result column="package_price" property="price" />
 		<collection property="room" resultMap="Room"></collection>
 		<collection property="dining" resultMap="Dining"></collection>
 		<collection property="fitness" resultMap="Fitness"></collection>
@@ -78,9 +78,9 @@
 	</resultMap>
 	
 	<resultMap type="com.dodam.hotel.repository.model.Dining" id="Dining">
-		<result column="d_id" property="id" />
-		<result column="d_name" property="name" />
-		<result column="hours" property="hours" />
+		<result column="dining_id" property="id" />
+		<result column="dining_name" property="name" />
+		<result column="dining_hours" property="hours" />
 		<result column="location" property="location" />
 		<result column="availability" property="availability" />
 		<result column="status_desc" property="statusDesc" />
@@ -91,36 +91,36 @@
 	
 	<!-- 스파 -->
 	<resultMap type="com.dodam.hotel.repository.model.Spa" id="Spa">
-		<result column="s_id" property="id" />
-		<result column="availability" property="availability" />
-		<result column="s_price" property="price" />
-		<result column="hours" property="hours" />
-		<result column="status_desc" property="statusDesc" />
+		<result column="spa_id" property="id" />
+		<result column="spa_availability" property="availability" />
+		<result column="spa_price" property="price" />
+		<result column="spa_hours" property="hours" />
+		<result column="spa_status_desc" property="statusDesc" />
 		<association property="facilities" resultMap="Facilities"></association>
 		<association property="facilitiesDesc" resultMap="FacilitiesDesc" />
 	</resultMap>
 	
 	<!-- 수영장 -->
 	<resultMap type="com.dodam.hotel.repository.model.Pool" id="Pool">
-		<result column="po_id" property="id" />
-		<result column="po_pirce" property="price" />
-		<result column="availability" property="availability" />
-		<result column="hours" property="hours" />
-		<result column="status_desc" property="statusDesc" />
+		<result column="pool_id" property="id" />
+		<result column="pool_pirce" property="price" />
+		<result column="pool_availability" property="availability" />
+		<result column="pool_hours" property="hours" />
+		<result column="pool_status_desc" property="statusDesc" />
 		<association property="facilities" resultMap="Facilities"></association>
 		<association property="facilitiesDesc" resultMap="FacilitiesDesc" />
 	</resultMap>
 	
 	<resultMap type="com.dodam.hotel.repository.model.User" id="User">
-		<result column="u_id" property="id"/>
+		<result column="user_id" property="id"/>
 		<result column="email" property="email"/>
 		<result column="password" property="password"/>
-		<result column="u_name" property="name"/>
-		<result column="gender" property="gender"/>
+		<result column="user_name" property="name"/>
+		<result column="user_gender" property="gender"/>
 		<result column="birth" property="birth"/>
-		<result column="tel" property="tel"/>
-		<result column="blacklist" property="blacklist"/>
-		<result column="withdrawal" property="withdrawal"/>
+		<result column="user_tel" property="tel"/>
+		<result column="user_blacklist" property="blacklist"/>
+		<result column="user_withdrawal" property="withdrawal"/>
 		<result column="created_at" property="createdAt"/>
 	</resultMap>
 
@@ -139,21 +139,21 @@
 			r.end_date as r_end_date,
 			r.number_of_p as r_number_of_p,
 			r.created_at as r_created_at,
-			ro.id as ro_id,
-			ro.name as ro_name,
-			ro.price as ro_price,
-			ro.availability as ro_availability,
-			p.id as p_id,
-			p.name as p_name,
-			p.price as p_price,
-			d.id as d_id,
-			d.name as d_name,
-			s.id as s_id,
-			s.price as s_price,
-			po.id as po_id,
-			po.price as po_pirce,
-			u.id as u_id,
-			u.name as u_name
+			ro.id as room_id,
+			ro.name as room_name,
+			ro.price as room_price,
+			ro.availability as room_availability,
+			p.id as pool_id,
+			p.name as pool_name,
+			p.price as pool_price,
+			d.id as dining_id,
+			d.name as dining_name,
+			s.id as spa_id,
+			s.price as spa_price,
+			po.id as pool_id,
+			po.price as pool_pirce,
+			u.id as user_id,
+			u.name as user_name
 		from reservation_tb as r
 		left join user_tb as u
 		on r.user_id = u.id
@@ -171,6 +171,120 @@
 		on r.spa_id = s.id
 		where r.user_id = #{userId}
 	</select>
+	
+	<select id="findAllReservation" resultMap="Reservation">
+        select
+            re.*,
+
+            u.id as user_id,
+            u.name as user_name,
+            u.gender as user_gender,
+            u.tel as user_tel,
+            u.blacklist as user_blacklist,
+            u.withdrawal as user_withdrawal,
+
+            r.id as room_id,
+            r.name as room_name,
+
+            d.id as dining_id,
+            d.hours as dining_hours,
+            d.name as dining_name,
+
+            pack.id as package_id,
+            pack.name as package_name,
+
+            f.id as fitness_id,
+            f.hours as fitness_hours,
+            f.availability as fitness_availability,
+            f.status_desc as fitness_status_desc,
+
+            p.id as pool_id,
+            p.hours as pool_hours,
+            p.availability as pool_availability,
+            p.status_desc as pool_status_desc,
+
+            s.id as spa_id,
+            s.hours as spa_hours,
+            s.availability as spa_availability,
+            s.status_desc as spa_status_desc
+
+            from reservation_tb as re
+                left join user_tb as u
+                    on re.user_id = u.id
+                left join room_tb as r
+                    on re.room_id = r.id
+                left join dining_tb as d
+                    on re.dining_id = d.id
+                left join package_tb as pack
+                    on re.package_id = pack.id
+                left join fitness_tb as f
+                    on re.fitness_id = f.id
+                left join pool_tb as p
+                    on re.pool_id = p.id
+                left join spa_tb as s
+                    on re.spa_id = s.id
+
+            where
+                date_format(start_date, "%Y-%m-%d") = curdate()
+
+    </select>
+	
+	<select id="findReservationByUserId" resultMap="Reservation">
+        select
+            re.*,
+
+            u.id as user_id,
+            u.name as user_name,
+            u.gender as user_gender,
+            u.tel as user_tel,
+            u.blacklist as user_blacklist,
+            u.withdrawal as user_withdrawal,
+
+            r.id as room_id,
+            r.name as room_name,
+
+            d.id as dining_id,
+            d.hours as dining_hours,
+            d.name as dining_name,
+
+            pack.id as package_id,
+            pack.name as package_name,
+
+            f.id as fitness_id,
+            f.hours as fitness_hours,
+            f.availability as fitness_availability,
+            f.status_desc as fitness_status_desc,
+
+            p.id as pool_id,
+            p.hours as pool_hours,
+            p.availability as pool_availability,
+            p.status_desc as pool_status_desc,
+
+            s.id as spa_id,
+            s.hours as spa_hours,
+            s.availability as spa_availability,
+            s.status_desc as spa_status_desc
+
+        from reservation_tb as re
+            left join user_tb as u
+                on re.user_id = u.id
+            left join room_tb as r
+                on re.room_id = r.id
+            left join dining_tb as d
+                on re.dining_id = d.id
+            left join package_tb as pack
+                on re.package_id = pack.id
+            left join fitness_tb as f
+                on re.fitness_id = f.id
+            left join pool_tb as p
+                on re.pool_id = p.id
+            left join spa_tb as s
+                on re.spa_id = s.id
+
+        where
+            user_id = #{userId} and
+            start_date >= curdate()
+    </select>
 
 	
 	<insert id="insertReserveRoom">
@@ -178,4 +292,49 @@
 		VALUES
 		(#{totalPrice}, #{startDate}, #{endDate}, #{numberOfP}, #{userId}, #{roomId}, #{diningId}, #{fitnessId}, #{poolId}, #{spaId})
 	</insert>
+	
+	 <select id="findReservationById" resultMap="Reservation">
+        select
+            re.*,
+            u.id as user_id,
+            u.name as user_name
+            from reservation_tb as re
+                left join user_tb as u
+                    on re.user_id = u.id
+                left join room_tb as r
+                    on re.room_id = r.id
+                left join dining_tb as d
+                    on re.dining_id = d.id
+                left join package_tb as pack
+                    on re.package_id = pack.id
+                left join fitness_tb as f
+                    on re.fitness_id = f.id
+                left join pool_tb as p
+                    on re.pool_id = p.id
+                left join spa_tb as s
+                    on re.spa_id = s.id
+            where re.id = #{id}
+    </select>
+
+    <update id="updateReservation">
+        update
+            reservation_tb
+        set
+            start_date = #{startDate},
+            end_date = #{endDate},
+            number_of_p = #{numberOfp},
+            room_id = #{roomId},
+            dining_id = #{diningId},
+            package_id = #{packageId},
+            fitness_id = #{fitnessId},
+            pool_id = #{poolId},
+            spa_id = #{spaId}
+        where
+            id = #{id};
+    </update>
+    <delete id="deleteReservation">
+        delete from reservation_tb
+        where id = #{id};
+    </delete>
+    
 </mapper>
