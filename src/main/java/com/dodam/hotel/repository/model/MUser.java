@@ -18,6 +18,6 @@ public class MUser {
 	private int blacklist;
 	private int withdrawal;
 	private Timestamp createdAt;
-	
+	private String originEmail;
 	
 }

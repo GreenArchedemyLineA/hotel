@@ -26,6 +26,26 @@
 		update grade_info_tb set grade_id = #{gradeId} where user_id = #{id};	
 	</update>
 	
+	<update id="updateBlackList">
+		update user_tb set blackList = 1 where id = #{id};
+	</update>
+
+	<update id="updateWhiteList">
+		update user_tb set blackList = 0 where id = #{id};
+	</update>
+	
+	<update id="updateWithdrawal">
+		update user_tb set withdrawal = 1 where id = #{id}; 
+	</update>
+	
+	<update id="updateOriginEmail">
+		update user_tb set origin_email = #{email} where id = #{id}; 
+	</update>
+	
+	<update id="updateWithdrawalEmail">
+		update user_tb set email = #{email} where id = #{id};
+	</update>
+	
 	<resultMap type="com.dodam.hotel.repository.model.GradeInfo" id="GradeInfo">
 		<result column="user_id" property="userId"/>
 		<result column="grade_id" property="gradeId"/>

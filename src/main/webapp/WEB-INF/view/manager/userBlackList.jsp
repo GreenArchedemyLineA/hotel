@@ -13,6 +13,8 @@
 					<th scope="col">이메일</th>
 					<th scope="col">전화번호</th>
 					<th scope="col">생년월일</th>
+					<th scope="col">탈퇴 유무</th>
+					<th scope="col">탈퇴시 생성되는 고유의 이메일</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -22,7 +24,16 @@
 						<td>${user.email}</td>
 						<td>${user.tel}</td>
 						<td>${user.birth}</td>
-						<td><button onclick="userDelete(${user.id})">탈퇴 처리</button></td>
+						<td>${user.withdrawal}</td>
+						<td>${user.originEmail}</td>
+						<c:choose>
+							<c:when test="${user.withdrawal == 0}">
+						<td><button onclick="userDelete(${user.id},'${user.email}')">탈퇴 처리</button></td>
+							</c:when>
+							<c:otherwise>
+						<td>탈퇴된 회원 입니다.</td>							
+							</c:otherwise>						
+						</c:choose>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -30,9 +41,8 @@
 	</div>
 </div>
 <script>
-	function userDelete(id){
-		// 유저 정보 확인과 등급 수정 할수 있는 페이지로
-		location.href = "/manager/deleteBlackList/"+id; 
+	function userDelete(id,email){
+		location.href = "/manager/userWithdrawal/"+id+"/"+email; 
 	}
 </script>
 </body>

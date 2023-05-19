@@ -24,7 +24,7 @@
 			<ul class="header--ul">
 				<li><a href="/manager/userList"><span class="material-symbols-outlined">login</span>회원조회</a></li>
 				<li><a href="/question/questionList"><span class="material-symbols-outlined">person</span>문의 사항 확인</a></li>
-				<li><a href="#"><span class="material-symbols-outlined">card_membership</span>멤버쉽</a></li>
+				<li><a href="/event/notice"><span class="material-symbols-outlined">card_membership</span>호텔 일정</a></li>
 			</ul>
 	</div>
 	<div class="navi--container">

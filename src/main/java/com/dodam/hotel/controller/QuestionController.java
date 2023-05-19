@@ -54,6 +54,7 @@ public class QuestionController {
 	
 	@GetMapping("questionDelete")
 	public String questionDelete(){
+		
 		return null;
 	}
 	

@@ -33,6 +33,22 @@
 					<label class="form-label">birth</label> 
 					<input type="text" class="form-control" name="birth" value="${userDetail.muser.birth}">
 				</div>
+				<div class="col-md-6">
+					<label class="form-label">black</label> 
+					<input type="text" class="form-control" name="birth" value="${userDetail.muser.blacklist}">
+					<c:choose>
+					<c:when test="${userDetail.muser.blacklist == 0}">
+					<form action="/manager/updateBlack/${userDetail.muser.id}" method="get">
+					<button type="submit" class="btn btn-danger">블랙리스트 지정</button>
+					</form>
+					</c:when>
+					<c:otherwise>
+					<form action="/manager/updateWhite/${userDetail.muser.id}" method="get">
+					<button type="submit" class="btn btn-primary">블랙리스트 해제</button>
+					</form>						
+					</c:otherwise>
+				</c:choose>
+				</div>
 				<form action="/manager/updateGrade/${userDetail.muser.id}" method="post" class="col-md-6">
 				<label>수정 하실 등급 번호</label>
 				<input type="text" name="gradeId">

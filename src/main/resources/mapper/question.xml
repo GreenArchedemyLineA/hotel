@@ -56,7 +56,9 @@
         WHERE id=#{id};
 	</update>
 	
-	
+	<delete id="">
+		
+	</delete>
 	
 	
 </mapper>

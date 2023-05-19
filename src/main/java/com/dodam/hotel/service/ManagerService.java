@@ -6,6 +6,7 @@ import com.dodam.hotel.repository.interfaces.RoomRepository;
 import com.dodam.hotel.repository.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.dodam.hotel.dto.ManagerSignInFormDto;
@@ -88,23 +89,44 @@ public class ManagerService {
 	// 이름으로 회원 검색
 	public List<MUser> managerUserList(String name) {
 		List<MUser> userListEntity = mUserRepository.findByname(name);
-
 		return userListEntity;
 	}
-
-	// 블랙리스트
-	public List<MUser> managerUserBlackList() {
-		List<MUser> userBlackListEntity = mUserRepository.findByBlackList();
-
-		return userBlackListEntity;
-	}
-	// 블랙 리스트 삭제
-	public int deleteBlackListUser(Integer id) {
-		int blackListUser = mUserRepository.deleteBlackList(id);
-		return blackListUser;
+	
+	//블랙 리스트로 지정
+	public int updateBlackList(Integer id) {
+		int updateBlackList = mUserRepository.updateBlackList(id);
+		return updateBlackList;
 	}
 	
-
+	//블랙 리스트로 해제
+	public int updateWhiteList(Integer id) {
+		int updateBlackList = mUserRepository.updateWhiteList(id);
+		return updateBlackList;
+	}
+	
+	// 블랙리스트 조회
+	public List<MUser> managerUserBlackList() {
+		List<MUser> userBlackListEntity = mUserRepository.findByBlackList();
+		return userBlackListEntity;
+	}
+	
+	// 블랙 리스트 탈퇴 상태 값 변경
+	public int userUpdateWithdrawal(Integer id) {
+		int userWithdrawalEntity = mUserRepository.updateWithdrawal(id);
+		return userWithdrawalEntity;
+	}
+	// 블랙리스트 탈퇴시 넣어줄 오리진 이메일
+	public int userUpdateOriginEmail(String email, Integer id) {
+		int userUpdateOriginEmailEntity = mUserRepository.updateOriginEmail(email, id);
+		return userUpdateOriginEmailEntity;
+	}
+	//블랙리스트 탈퇴 처리시 이메일 수정
+	public int withdrawalEmail(String email,Integer id) {
+		int withdrawalUserEmailEntity = mUserRepository.updateWithdrawalEmail(email, id);
+		return withdrawalUserEmailEntity;
+	}
+	
+	
 	// 회원등급 조회
 	public GradeInfo selectUserGrade(Integer id) {
 		GradeInfo userGradeEntity = mUserRepository.findByUserId(id);
@@ -114,6 +136,7 @@ public class ManagerService {
 	// 회원 등급 수정()
 	public int changeGradeByUserIdAndGradeId(Integer gradeId, Integer id) {
 		int resultRowCount = mUserRepository.updateGrade(gradeId, id);
+		
 		return resultRowCount;
 	}
 

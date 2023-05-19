@@ -7,6 +7,7 @@ import com.dodam.hotel.dto.UserListDto;
 import com.dodam.hotel.repository.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,11 +75,20 @@ public class ManagerController {
 		}
 		return "/manager/userBlackList";
 	}
-	@GetMapping("/deleteBlackList/{id}")
-	public String deleteBlackList(@PathVariable Integer id) {
-		int deleteBlackList = managerService.deleteBlackListUser(id);
+	
+	//블랙리스트 탈퇴처리
+	@GetMapping("/userWithdrawal/{id}/{email}")
+	@Transactional
+	public String userWithdrawal(@PathVariable Integer id,@PathVariable String email) {
+		
+		int userWithdrawal = managerService.userUpdateWithdrawal(id);
+		int userOriginEmail = managerService.userUpdateOriginEmail(email, id);
+		int WithdrawalEmail = managerService.withdrawalEmail(email+"/", id);
+		System.out.println(id);
+		System.out.println(email);
 		return "redirect:/manager/blackList";
 	}
+	
 	//매니저 로그인
 	@PostMapping("/managerSignInProc")
 	public String managersign(ManagerSignInFormDto managerSignInFormDto) {
@@ -130,7 +140,20 @@ public class ManagerController {
 		}
 		return "/manager/userDetail";
 	}
-	//등급 수정 버튼
+	//블랙 리스트 지정
+	@GetMapping("/updateBlack/{id}")
+	public String updateBlackList(@PathVariable Integer id) {
+		int blackList = managerService.updateBlackList(id);
+		return "redirect:/manager/userDetail/{id}";
+	}
+	
+	//블랙 리스트 해제
+	@GetMapping("/updateWhite/{id}")
+	public String updateWhiteList(@PathVariable Integer id) {
+		int blackList = managerService.updateWhiteList(id);
+		return "redirect:/manager/userDetail/{id}";
+	}
+	//등급 수정 
 	@PostMapping("/updateGrade/{id}")
 	public String updateGradeProc(@PathVariable Integer id ,Integer gradeId) {
 		
@@ -143,10 +166,10 @@ public class ManagerController {
 		managerService.changeGradeByUserIdAndGradeId(gradeId, id);
 		return "redirect:/manager/userDetail/" + id;
 	}
-	@GetMapping("/userSecession")
-	public String userSecession() {
+	@GetMapping("/deleteBlackList")
+	public String deleteBlackList() {
 		
-		return null;
+		return "redirect:/manager/";
 	}
 
 }

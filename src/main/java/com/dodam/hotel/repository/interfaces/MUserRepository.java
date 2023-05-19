@@ -18,4 +18,10 @@ public interface MUserRepository {
 	public List<MUser> findByBlackList();
 	public GradeInfo findByUserId(Integer id);
 	public int deleteBlackList(Integer id);
+	public int updateBlackList(Integer id);
+	public int updateWhiteList(Integer id);
+	
+	public int updateWithdrawal(Integer id);
+	public int updateOriginEmail(@Param("email") String email,@Param("id") Integer id);
+	public int updateWithdrawalEmail(@Param("email") String email,@Param("id") Integer id);
 }
