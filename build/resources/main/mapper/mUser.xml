@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dodam.hotel.repository.interfaces.MUserRepository">
+	
+	<select id="findByname" resultType="com.dodam.hotel.repository.model.MUser">
+		select * from user_tb
+		where name = #{name};
+	</select>
+	
+	<select id="findByAll" resultType="com.dodam.hotel.repository.model.MUser">
+		select * from user_tb;
+	</select>
+	
+	<select id="findByBlackList" resultType="com.dodam.hotel.repository.model.MUser">
+		select * from user_tb
+		where blacklist = 1;
+	</select>
+	
+	<delete id="deleteBlackList">
+		DELETE FROM user_tb
+		WHERE id = #{id};
+	</delete>
+	
+	<update id="updateGrade">
+		update grade_info_tb set grade_id = #{gradeId} where user_id = #{id};	
+	</update>
+	
+	<resultMap type="com.dodam.hotel.repository.model.GradeInfo" id="GradeInfo">
+		<result column="user_id" property="userId"/>
+		<result column="grade_id" property="gradeId"/>
+		<result column="update_at" property="updateAt"/>
+		<association property="grade"  resultMap="Grade"/>
+		<association property="muser" resultMap="MUser"/>
+	</resultMap>
+	
+	<resultMap type="com.dodam.hotel.repository.model.Grade" id="Grade">
+			<result column="id" property="id" />
+			<result column="g_name" property="name" />
+			<result column="description" property="description" />	
+	</resultMap>
+	
+	<resultMap type="com.dodam.hotel.repository.model.MUser" id="MUser">
+		<result column="id" property="id"/>
+		<result column="email" property="email"/>
+		<result column="password" property="password"/>
+		<result column="name" property="name"/>
+		<result column="gender" property="gender"/>
+		<result column="tel" property="tel"/>
+		<result column="birth" property="birth"/>
+		<result column="blacklist" property="blacklist"/>
+		<result column="withdrawal" property="withdrawal"/>
+		<result column="created_at" property="createdAt"/>
+	</resultMap>
+	
+	<select id="findByUserId" resultMap="GradeInfo">
+		select 
+		gif.*,
+		u.*,
+		g.*,
+		g.name as g_name
+		from grade_info_tb as gif
+		join user_tb as u
+		on u.id = gif.user_id
+		join grade_tb as g
+		on gif.grade_id = g.id
+		where gif.user_id = #{id};
+	</select>
+	
+	
+	
+	
+	
+</mapper>

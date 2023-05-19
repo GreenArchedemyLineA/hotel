@@ -1,7 +1,7 @@
 package com.dodam.hotel.repository.interfaces;
 
 import com.dodam.hotel.dto.StatusParams;
-import com.dodam.hotel.repository.model.Room;
+import com.dodam.hotel.repository.model.managertest.Room;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

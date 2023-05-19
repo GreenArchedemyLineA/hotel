@@ -2,17 +2,13 @@ package com.dodam.hotel.repository;
 
 import com.dodam.hotel.repository.interfaces.FAQRepository;
 import com.dodam.hotel.repository.model.FAQ;
-import com.dodam.hotel.repository.model.Room;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 /**

@@ -1,6 +1,8 @@
 package com.dodam.hotel.controller;
 
 import com.dodam.hotel.dto.api.ResponseMsg;
+import com.dodam.hotel.repository.interfaces.FAQRepository;
+import com.dodam.hotel.repository.interfaces.PackageRepository;
 import com.dodam.hotel.repository.model.FAQ;
 import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.service.ManagerFAQService;
@@ -19,6 +21,8 @@ import java.util.List;
 public class FAQController {
     @Autowired
     private ManagerFAQService managerFAQService;
+    @Autowired
+    private PackageRepository packageRepository;
     @Autowired
     private HttpSession session;
     @GetMapping("/manager/faq")

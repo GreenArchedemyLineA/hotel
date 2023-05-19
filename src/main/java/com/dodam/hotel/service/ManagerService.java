@@ -1,14 +1,10 @@
 package com.dodam.hotel.service;
 
 import com.dodam.hotel.dto.StatusParams;
-import com.dodam.hotel.dto.UserListDto;
 import com.dodam.hotel.repository.interfaces.RoomRepository;
-import com.dodam.hotel.repository.model.Room;
+import com.dodam.hotel.repository.model.managertest.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.dodam.hotel.dto.ManagerSignInFormDto;
 import com.dodam.hotel.repository.interfaces.MUserRepository;
 import com.dodam.hotel.repository.interfaces.ManagerRepository;
