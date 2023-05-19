@@ -22,7 +22,7 @@
 		color: #fff;
 	}
 	.content--container {
-		flex: 2;
+		flex: 3;
 		
 	}
 	.form--container {

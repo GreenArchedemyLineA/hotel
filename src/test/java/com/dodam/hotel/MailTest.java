@@ -16,8 +16,8 @@ public class MailTest{
 	public void sendMessage(){
 		String subject = "성희쓰 반갑다네";
         String content = "하이요~";
-        String from = "ww516079@gmail.com";
-        String to = "sungheepppp@gmail.com";
+        String from = "내 이메일 주소";
+        String to = "받는 사람 이메일 주소";
         try {
             MimeMessage mail = mailSender.createMimeMessage();
             MimeMessageHelper mailHelper = new MimeMessageHelper(mail, "UTF-8");
