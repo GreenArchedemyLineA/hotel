@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- writer: 이현서 -->
+<mapper namespace="com.dodam.hotel.repository.interfaces.PoolRepository">
+
+    <select id="findAllPool" resultType="com.dodam.hotel.repository.model.managertest.Pool">
+        select * from pool_tb;
+    </select>
+</mapper>

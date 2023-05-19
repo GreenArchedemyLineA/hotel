@@ -3,17 +3,19 @@ package com.dodam.hotel.repository.model.managertest;
 import com.dodam.hotel.repository.model.Room;
 import lombok.Data;
 
+import java.sql.Date;
+
 /**
  * @author lhs-devloper
  */
 @Data
 public class PackageTB {
     private Integer id;
-//    private Integer roomId;
-//    private Integer diningId;
-//    private Integer spaId;
-//    private Integer poolId;
-//    private Integer fitnessId;
+    private Integer roomId;
+    private Integer diningId;
+    private Integer spaId;
+    private Integer poolId;
+    private Integer fitnessId;
     private String name;
     private Integer price;
     private Room room;

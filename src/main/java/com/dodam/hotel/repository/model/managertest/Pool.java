@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class Pool {
     private Integer id;
+    private Integer price;
     private String hours;
     private Boolean availability;
     private String statusDesc;

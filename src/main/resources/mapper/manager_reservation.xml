@@ -8,13 +8,16 @@
     <!-- package -->
     <resultMap id="Reservation" type="com.dodam.hotel.repository.model.managertest.Reservation">
         <id property="id" column="id" />
-        <result property="start_date" column="start_date" />
-        <result property="end_date" column="end_date" />
-        <result property="number_of_p" column="number_of_p" />
+        <result property="startDate" column="start_date" />
+        <result property="endDate" column="end_date" />
+        <result property="numberOfp" column="number_of_p" />
+        <result property="userId" column="user_id" />
+        <result property="roomId" column="room_id" />
+        <result property="packageId" column="package_id" />
         <association property="user" column="user_id" javaType="com.dodam.hotel.repository.model.managertest.User" resultMap="userResult" />
         <association property="room" column="room_id" javaType="com.dodam.hotel.repository.model.Room" resultMap="roomResult"/>
         <association property="dining" column="dining_id" javaType="com.dodam.hotel.repository.model.managertest.Dining" resultMap="diningResult"/>
-        <association property="package" column="package_id" javaType="com.dodam.hotel.repository.model.managertest.PackageTB" resultMap="packageResult" />
+        <association property="h_package" column="package_id" javaType="com.dodam.hotel.repository.model.managertest.PackageTB" resultMap="packageResult" />
         <association property="fitness" column="fitness_id" javaType="com.dodam.hotel.repository.model.managertest.Fitness" resultMap="fitnessResult"/>
         <association property="pool" column="pool_id" javaType="com.dodam.hotel.repository.model.managertest.Pool" resultMap="poolResult"/>
         <association property="spa" column="spa_id" javaType="com.dodam.hotel.repository.model.managertest.Spa" resultMap="spaResult"/>
@@ -104,6 +107,63 @@
             s.availability as spa_availability,
             s.status_desc as spa_status_desc
 
+        from reservation_tb as re
+            left join user_tb as u
+                on re.user_id = u.id
+            left join room_tb as r
+                on re.room_id = r.id
+            left join dining_tb as d
+                on re.dining_id = d.id
+            left join package_tb as pack
+                on re.package_id = pack.id
+            left join fitness_tb as f
+                on re.fitness_id = f.id
+            left join pool_tb as p
+                on re.pool_id = p.id
+            left join spa_tb as s
+                on re.spa_id = s.id
+
+        where
+            user_id = #{userId} and
+            start_date >= curdate()
+    </select>
+
+    <select id="findAllReservation" resultMap="Reservation">
+        select
+            re.*,
+
+            u.id as user_id,
+            u.name as user_name,
+            u.gender as user_gender,
+            u.tel as user_tel,
+            u.blacklist as user_blacklist,
+            u.withdrawal as user_withdrawal,
+
+            r.id as room_id,
+            r.name as room_name,
+
+            d.id as dining_id,
+            d.hours as dining_hours,
+            d.name as dining_name,
+
+            pack.id as package_id,
+            pack.name as package_name,
+
+            f.id as fitness_id,
+            f.hours as fitness_hours,
+            f.availability as fitness_availability,
+            f.status_desc as fitness_status_desc,
+
+            p.id as pool_id,
+            p.hours as pool_hours,
+            p.availability as pool_availability,
+            p.status_desc as pool_status_desc,
+
+            s.id as spa_id,
+            s.hours as spa_hours,
+            s.availability as spa_availability,
+            s.status_desc as spa_status_desc
+
             from reservation_tb as re
                 left join user_tb as u
                     on re.user_id = u.id
@@ -121,17 +181,46 @@
                     on re.spa_id = s.id
 
             where
-                user_id = 1 and
                 date_format(start_date, "%Y-%m-%d") = curdate()
 
+    </select>
+
+    <select id="findReservationById" resultMap="Reservation">
+        select
+            re.*,
+            u.id as user_id,
+            u.name as user_name
+            from reservation_tb as re
+                left join user_tb as u
+                    on re.user_id = u.id
+                left join room_tb as r
+                    on re.room_id = r.id
+                left join dining_tb as d
+                    on re.dining_id = d.id
+                left join package_tb as pack
+                    on re.package_id = pack.id
+                left join fitness_tb as f
+                    on re.fitness_id = f.id
+                left join pool_tb as p
+                    on re.pool_id = p.id
+                left join spa_tb as s
+                    on re.spa_id = s.id
+            where re.id = #{id}
     </select>
 
     <update id="updateReservation">
         update
             reservation_tb
         set
-            start_date = #{start_date},
-            end_date = #{end_date}
+            start_date = #{startDate},
+            end_date = #{endDate},
+            number_of_p = #{numberOfp},
+            room_id = #{roomId},
+            dining_id = #{diningId},
+            package_id = #{packageId},
+            fitness_id = #{fitnessId},
+            pool_id = #{poolId},
+            spa_id = #{spaId}
         where
             id = #{id};
     </update>

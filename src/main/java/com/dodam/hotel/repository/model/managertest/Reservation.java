@@ -13,9 +13,18 @@ import java.sql.Date;
 @Data
 public class Reservation {
     private Integer id;
-    private Date start_date;
-    private Date end_date;
+    private Date startDate;
+    private Date endDate;
     private Integer numberOfp;
+    private Integer userId;
+    private Integer roomId;
+    private Integer diningId;
+    private Integer packageId;
+    private Integer fitnessId;
+    private Integer poolId;
+    private Integer spaId;
+
+    // ========= Mapping ===========
     private User user;
     private Room room;
     private Dining dining;

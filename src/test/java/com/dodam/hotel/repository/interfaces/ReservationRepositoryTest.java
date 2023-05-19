@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @MybatisTest
@@ -18,7 +20,7 @@ public class ReservationRepositoryTest {
 
     @Test
     public void findReservationTest(){
-        Reservation reservation = reservationRepository.findReservationByUserId(1);
-        assertEquals(null, reservation);
+        List<Reservation> reservation = reservationRepository.findReservationByUserId(1);
+        assertEquals(0, reservation.size());
     }
 }

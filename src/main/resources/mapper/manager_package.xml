@@ -133,6 +133,9 @@
 
 
     </select>
+    <select id="findPackageList" resultType="com.dodam.hotel.repository.model.managertest.PackageTB">
+        select * from package_tb;
+    </select>
 <!--
         insert into
             dining_tb(name, description, location, availability, status_desc, image)
