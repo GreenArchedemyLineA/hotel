@@ -1,18 +1,13 @@
 package com.dodam.hotel.service;
 
 import com.dodam.hotel.dto.StatusParams;
-import com.dodam.hotel.repository.model.Room;
+import com.dodam.hotel.repository.model.managertest.Room;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestComponent;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class ManagerServiceTest {

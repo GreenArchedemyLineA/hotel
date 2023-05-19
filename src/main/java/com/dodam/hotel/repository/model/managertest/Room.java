@@ -1,4 +1,4 @@
-package com.dodam.hotel.repository.model;
+package com.dodam.hotel.repository.model.managertest;
 
 import lombok.Builder;
 import lombok.Data;

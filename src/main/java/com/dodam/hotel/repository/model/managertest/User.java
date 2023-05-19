@@ -1,6 +1,6 @@
 package com.dodam.hotel.repository.model.managertest;
 
-import com.dodam.hotel.repository.model.Geneder;
+import com.dodam.hotel.repository.model.managertest.enums.Geneder;
 import lombok.Data;
 
 import java.sql.Date;

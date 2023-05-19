@@ -1,4 +1,4 @@
-package com.dodam.hotel.repository.model;
+package com.dodam.hotel.repository.model.managertest.enums;
 
 /**
  * @author lhs-devloper

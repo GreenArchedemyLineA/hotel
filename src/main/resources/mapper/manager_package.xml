@@ -9,14 +9,14 @@
     <resultMap id="Package" type="com.dodam.hotel.repository.model.managertest.PackageTB">
         <id property="id" column="id" />
         <result property="price" column="price" />
-        <association property="room" column="room_id" javaType="com.dodam.hotel.repository.model.Room" resultMap="roomResult"/>
+        <association property="room" column="room_id" javaType="com.dodam.hotel.repository.model.managertest.Room" resultMap="roomResult"/>
         <association property="dining" column="dining_id" javaType="com.dodam.hotel.repository.model.managertest.Dining" resultMap="diningResult"/>
         <association property="spa" column="spa_id" javaType="com.dodam.hotel.repository.model.managertest.Spa" resultMap="spaResult"/>
         <association property="pool" column="pool_id" javaType="com.dodam.hotel.repository.model.managertest.Pool" resultMap="poolResult"/>
         <association property="fitness" column="fitness_id" javaType="com.dodam.hotel.repository.model.managertest.Fitness" resultMap="fitnessResult"/>
     </resultMap>
     <!-- room -->
-    <resultMap id="roomResult" type="com.dodam.hotel.repository.model.Room">
+    <resultMap id="roomResult" type="com.dodam.hotel.repository.model.managertest.Room">
         <id property="id" column="room_id" />
         <result property="name" column="room_name"/>
         <result property="price" column="room_price"/>

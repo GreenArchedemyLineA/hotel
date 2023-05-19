@@ -1,8 +1,5 @@
 package com.dodam.hotel.repository.model.managertest;
 
-import com.dodam.hotel.repository.model.Room;
-import com.dodam.hotel.repository.model.managertest.*;
-import com.dodam.hotel.repository.model.managertest.PackageTB;
 import lombok.Data;
 
 import java.sql.Date;

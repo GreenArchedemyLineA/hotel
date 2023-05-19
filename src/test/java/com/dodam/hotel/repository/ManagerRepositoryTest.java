@@ -1,7 +1,7 @@
 package com.dodam.hotel.repository;
 
 import com.dodam.hotel.repository.interfaces.RoomRepository;
-import com.dodam.hotel.repository.model.Room;
+import com.dodam.hotel.repository.model.managertest.Room;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;

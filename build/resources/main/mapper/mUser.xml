@@ -8,6 +8,20 @@
 		where name = #{name};
 	</select>
 	
+	<select id="findByAll" resultType="com.dodam.hotel.repository.model.MUser">
+		select * from user_tb;
+	</select>
+	
+	<select id="findByBlackList" resultType="com.dodam.hotel.repository.model.MUser">
+		select * from user_tb
+		where blacklist = 1;
+	</select>
+	
+	<delete id="deleteBlackList">
+		DELETE FROM user_tb
+		WHERE id = #{id};
+	</delete>
+	
 	<update id="updateGrade">
 		update grade_info_tb set grade_id = #{gradeId} where user_id = #{id};	
 	</update>

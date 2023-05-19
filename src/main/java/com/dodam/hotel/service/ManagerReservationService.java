@@ -2,7 +2,7 @@ package com.dodam.hotel.service;
 
 import com.dodam.hotel.repository.interfaces.*;
 import com.dodam.hotel.repository.model.MUser;
-import com.dodam.hotel.repository.model.Room;
+import com.dodam.hotel.repository.model.managertest.Room;
 import com.dodam.hotel.repository.model.managertest.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

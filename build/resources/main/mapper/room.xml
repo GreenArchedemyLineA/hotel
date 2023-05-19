@@ -12,36 +12,36 @@
     private String status_desc;
     private Integer number_of_p;
     -->
-    <select id="findAllRoomList" resultType="com.dodam.hotel.repository.model.Room">
+    <select id="findAllRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb;
     </select>
-    <select id="findById" resultType="com.dodam.hotel.repository.model.Room">
+    <select id="findById" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb where id = #{roomId};
     </select>
 
-    <select id="findOptionSearchOneRoomList" resultType="com.dodam.hotel.repository.model.Room">
+    <select id="findOptionSearchOneRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb
                  where availability = #{roomStatus}
                    or number_of_p = #{numberOfp}
                    or price = #{price};
     </select>
 
-    <select id="findOptionStatusAndNumberOfpRoomList" resultType="com.dodam.hotel.repository.model.Room">
+    <select id="findOptionStatusAndNumberOfpRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb
         where availability = #{roomStatus}
           and number_of_p = #{numberOfp};
     </select>
-    <select id="findOptionStatusAndPriceRoomList" resultType="com.dodam.hotel.repository.model.Room">
+    <select id="findOptionStatusAndPriceRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb
         where availability = #{roomStatus}
           and price = #{price};
     </select>
-    <select id="findOptionNumberOfpAndPriceRoomList" resultType="com.dodam.hotel.repository.model.Room">
+    <select id="findOptionNumberOfpAndPriceRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb
         where number_of_p = #{numberOfp}
           and price = #{price};
     </select>
-    <select id="findAllOptionRoomList" resultType="com.dodam.hotel.repository.model.Room">
+    <select id="findAllOptionRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb
         where availability = #{roomStatus}
           and number_of_p = #{numberOfp}
