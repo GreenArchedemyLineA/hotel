@@ -11,7 +11,7 @@
 </head>
 <body>
 	<h2>문의하기</h2>
-	<form action="/qnaProc" method="post" enctype="Multipart/form-data">
+	<form action="/question/qnaProc" method="post" enctype="Multipart/form-data">
 		<select name="category">
 			<option value="호텔건의">
 				호텔건의

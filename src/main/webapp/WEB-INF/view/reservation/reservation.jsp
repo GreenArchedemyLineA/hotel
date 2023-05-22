@@ -1,59 +1,66 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-	.facilities--container {
-		display: flex;
-	}
+.facilities--container {
+	display: flex;
+}
 </style>
 </head>
 <body>
 	<form name="form" action="/reserveRoom" method="post">
-		객실 : ${selectDetail.name} 체크인 : ${selectDetail.startDate} 체크아웃 : ${selectDetail.endDate} 투숙인원 : 성인 ${selectDetail.countPerson}, 어린이 ${selectDetail.countChild}, 유아 ${selectDetail.countBaby}
-		<br/>
+		객실 : ${selectDetail.name} 체크인 : ${selectDetail.startDate} 체크아웃 : ${selectDetail.endDate} 투숙인원 : 성인 ${selectDetail.countPerson}, 어린이 ${selectDetail.countChild}, 유아 ${selectDetail.countBaby} <br />
 		다이닝신청 (조식)
 		<div class="facilities--container">
-			<input type="button" onclick='diningCount("minus")' value="-">
-			<input type="number" id='diningResult' value="0" name="diningCount">
-			<input type="button" onclick='diningCount("plus")' value="+">
+			<input type="button" onclick='diningCount("minus")' value="-"> <input type="number" id='diningResult' value="0" name="diningCount"> <input type="button"
+				onclick='diningCount("plus")' value="+">
 		</div>
-		
+
 		스파신청
 		<div class="facilities--container">
-			<input type="button" onclick='spaCount("minus")' value="-">
-			<input type="number" id='spaResult' value="0" name="spaCount">
-			<input type="button" onclick='spaCount("plus")' value="+">
+			<input type="button" onclick='spaCount("minus")' value="-"> <input type="number" id='spaResult' value="0" name="spaCount"> <input type="button" onclick='spaCount("plus")' value="+">
 		</div>
-		
+
 		수영장신청
 		<div class="facilities--container">
-			<input type="button" onclick='poolCount("minus")' value="-">
-			<input type="number" id='poolResult' value="0" name="poolCount">
-			<input type="button" onclick='poolCount("plus")' value="+">
+			<input type="button" onclick='poolCount("minus")' value="-"> <input type="number" id='poolResult' value="0" name="poolCount"> <input type="button" onclick='poolCount("plus")'
+				value="+">
 		</div>
-		
+
 		피트니스신청
 		<div class="facilities--container">
-			<input type="button" onclick='fitnessCount("minus")' value="-">
-			<input type="number" id='fitnessResult' value="0" name="fitnessCount">
-			<input type="button" onclick='fitnessCount("plus")' value="+">
+			<input type="button" onclick='fitnessCount("minus")' value="-"> <input type="number" id='fitnessResult' value="0" name="fitnessCount"> <input type="button"
+				onclick='fitnessCount("plus")' value="+">
 		</div>
-		<input type="hidden" value="${selectDetail.startDate}" name="startDate">
-		<input type="hidden" value="${selectDetail.endDate}" name="endDate">
-		<input type="hidden" value="${selectDetail.countPerson}" name="countPerson">
-		<input type="hidden" value="${selectDetail.countChild}" name="countChild">
-		<input type="hidden" value="${selectDetail.countBaby}" name="countBaby">
-		<div id="totalPrice" >
-		
+		<input type="hidden" value="${selectDetail.startDate}" name="startDate"> 
+		<input type="hidden" value="${selectDetail.endDate}" name="endDate"> 
+		<input type="hidden" value="${selectDetail.numberOfP}" name="numberOfP"> 
+		<input type="hidden" value="${selectDetail.roomId}" name="roomId"> 
+		<div id="totalPrice"></div>
+
+		<div>
+			사용 가능 쿠폰
+			<c:choose>
+				<c:when test="${couponList != null}">
+					<select>
+						<c:forEach var="couponList" items="${couponList}">
+							<option>${couponList.name}</option>
+						</c:forEach>
+					</select>
+				</c:when>
+				<c:otherwise>
+					<select>
+						<option>사용 가능한 쿠폰이 없습니다</option>
+					</select>
+				</c:otherwise>
+			</c:choose>
+
+			포인트 사용하기 <input type="text" name="point" placeholder="사용 가능 포인트 : ${point.point}">
 		</div>
-		<!-- 
-		 <input type="hidden" value="${selectDetail.price}" name="room_price">
-		객실 가격 : ${selectDetail.price} 원 <br/>
-		 총 가격 : <input type="text" name="total_price"> 원 <br/>
-		 -->
 		<button type="submit">결제하기</button>
 	</form>
 </body>

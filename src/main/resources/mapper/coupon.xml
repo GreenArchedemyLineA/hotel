@@ -37,10 +37,8 @@
 	<!-- 특정 회원 쿠폰 조회 -->
 	<select id="findByUserId" resultMap="Coupon">
 		select *
-		from coupon_tb as c
-		inner join user_tb as u
-		on c.user_id = u.id
-		where c.user_id = #{userId}
+		from coupon_tb
+		where user_id = #{userId}
 	</select>
 	
 </mapper>
