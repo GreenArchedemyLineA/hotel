@@ -1,23 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+	#user--grade--wrap{
+		display: flex;
+	}
+	#grade--name {
+		flex: 1;
+	}
+	#grade--info {
+		flex: 3;
+		display: flex;
+		flex-direction: column;
+	}
+</style>
 	<main>
 		<div>
-			<div>
-				${responseGrade.grade.name}
-				${responseGrade.grade.description}
-				${responseGrade.user.name}
+			<div id="user--grade--wrap">
+				<div id="grade--name">
+					<p>${responseGrade.grade.name}</p>
+				</div>
+				<div id="grade--info">
+					<p>${responseGrade.grade.description}</p>
+					<p>${responseGrade.user.name}</p>
+				</div>
 			</div>
 		</div>
-		<form action="/myPageProc" method="post">
-			<input type="email" name="email" readonly="readonly" value="${responseUser.email}">
-			<input type="password" name="password" value="${responseUser.password}">
-			<input type="text" name="name" value="${responseUser.name}">
-			<input type="text" name="gender" value="${responseUser.gender}">
-			<input type="text" name="birth" value="${responseUser.birth}">
-			<input type="text" name="tel" value="${responseUser.tel}">
-			<input type="submit" value="update">
-		</form>
+		
+		<button type="button" onclick="" id="userUpdate">회원 정보 수정</button>
+		<button type="button" onclick="" id="coupons">쿠폰함</button>
+		<button type="button" onclick="" id="reservations">예약 현황</button>
+		<button type="button" onclick="" id="qandA">QnA</button>
+		
+		<div id="userInfo"></div>
+		<%-- <form action="/myPageProc" method="post">
+				<input type="email" name="email" readonly="readonly" value="${responseUser.email}">
+				<input type="password" name="password" value="${responseUser.password}">
+				<input type="text" name="name" value="${responseUser.name}">
+				<input type="text" name="gender" value="${responseUser.gender}">
+				<input type="text" name="birth" value="${responseUser.birth}">
+				<input type="text" name="tel" value="${responseUser.tel}">
+				<input type="submit" value="update">
+			</form>
 		<div>
 			<div>
 			<h2>쿠폰 정보</h2>
@@ -56,7 +80,11 @@
 					<br>
 				</div>
 			</c:forEach>
-		</div>
+		</div> --%>
 	</main>
+	<script src="/js/myinfo.js">
+
+	</script>
+
 </body>
 </html>

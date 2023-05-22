@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dodam.hotel.dto.InquiryRequestDto;
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.repository.interfaces.CouponRepository;
@@ -102,6 +103,33 @@ public class UserService {
 		int resultRowCount = membershipRepository.insert(id);
 		// 숙박 쿠폰 자동 등록 처리
 		int couponCount = couponRepository.insert(id);
+	}
+	
+	// id 찾는 기능
+	@Transactional
+	public User readUserForIdInquiry(InquiryRequestDto.IdInquiryRequestDto idInquiryRequestDto) {
+		User userEntity = userRepository.findUserForIdInquiry(idInquiryRequestDto);
+		return userEntity;
+	}
+	
+	// 임시 pw update 처리
+	@Transactional
+	public int updatePwByUserInfo(InquiryRequestDto.PwInquiryRequestDto pwInquiryRequestDto) {
+		int resultRow = userRepository.updatePwByUserInfo(pwInquiryRequestDto);
+		return resultRow;
+	}
+	
+	// 비밀번호 변경 페이지에서 비밀번호 변경
+	@Transactional
+	public int updateOnlyPw(String password, Integer userId) {
+		int resultRow = userRepository.updateOnlyPw(password, userId);
+		if(resultRow == 1) {
+			int resultRow2 = userRepository.updatePwdStatus(userId);
+			if(resultRow2 != 1) {
+				// 예외처리
+			}
+		}
+		return resultRow;
 	}
 }
 

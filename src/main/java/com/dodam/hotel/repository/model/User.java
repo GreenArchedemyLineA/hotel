@@ -18,5 +18,6 @@ public class User {
 	private Boolean blacklist;
 	private Boolean withdrawal;
 	private Timestamp createdAt;
+	private Boolean randomPwdStatus;
 }
 

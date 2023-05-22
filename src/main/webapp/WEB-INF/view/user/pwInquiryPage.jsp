@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>id/pw_inquiry Page</title>
+<title>pw_inquiry Page</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <style type="text/css">
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@300;400&display=swap');
@@ -84,24 +84,10 @@
 <main class="main--container">
 	<div class="title--container">
 		<a onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></a> <img alt="" src="/images/logo_white.png">
-		<p>아이디/비밀번호 찾기</p>
+		<p>비밀번호 확인</p>
 	</div>
 	<div class="content--container">
-		<form action="/idInquiry" method="post" class="form--container">
-			<input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box"> 
-			<p style="font-size: 14px; font-weight: normal;">생년월일을 입력해주세요.</p>
-			<input type="date" name="birth" placeholder="생년월일 입력해 주세요" class="input--box">
-			<input type="text" name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
-			<button type="submit" class="sub--button">id 찾기</button>
-		</form>
-		<form action="/pwInquiry" method="post" class="form--container">
-			<input type="email" name="email" placeholder="이메일을 입력해 주세요" class="input--box">
-			<input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box"> 
-			<p style="font-size: 14px; font-weight: normal;">생년월일을 입력해주세요.</p>
-			<input type="date" name="birth" placeholder="생년월일 입력해 주세요" class="input--box">
-			<input type="text" name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
-			<button type="submit" class="sub--button">pw 찾기</button>
-		</form>
+		<p>이메일을 확인해 주세요.</p>
 	</div>
 </main>
 </body>

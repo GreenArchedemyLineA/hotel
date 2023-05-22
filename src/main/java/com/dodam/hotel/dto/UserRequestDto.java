@@ -37,5 +37,13 @@ public class UserRequestDto {
 		private Date birth;
 		private String tel;
 	}
+	
+	// 비밀번호 변경
+	@Data
+	public static class UpdatePwdDto {
+		private String currentPwd;
+		private String changePwd;
+		private String checkChangePwd;
+	}
 
 }

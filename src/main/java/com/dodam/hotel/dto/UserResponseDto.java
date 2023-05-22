@@ -16,6 +16,7 @@ public class UserResponseDto {
 		private Boolean blacklist;
 		private Boolean withdrawal;
 		private String origin_email;
+		private Boolean randomPwdStatus;
 	}
 	
 	@Data
