@@ -50,16 +50,14 @@ public class ReservationService {
 	}
 
 	// 객실 할인 체크
-	public Map<String, Object> useCouponOrPoint(Integer userId) {
+	@Transactional
+	public Map<String, Object> useCouponOrPoint(ReservationRequestDto reservationRequestDto) {
 		// 사용 가능 쿠폰 조회
-		List<Coupon> couponList = couponRepository.findByUserId(userId);
-		for (int i = 0; i < couponList.size(); i++) {
-			System.out.println(couponList.get(i));
-			
-		}
+		List<Coupon> couponList = couponRepository.findByUserId(reservationRequestDto.getUserId());
 		
 		// 포인트 조회
-		Point point = pointRepository.findByUserId(userId);
+		Point point = pointRepository.findByUserId(reservationRequestDto.getUserId());
+		
 		Map<String, Object> selectList = new HashMap<>();
 		selectList.put("point", point);
 		selectList.put("couponList", couponList);

@@ -28,7 +28,7 @@ public class Reservation {
     private User user;
     private Room room;
     private Dining dining;
-    private PackageTB h_package;
+    private Package h_package;
     private Fitness fitness;
     private Pool pool;
     private Spa spa;

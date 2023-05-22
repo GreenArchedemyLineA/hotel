@@ -54,7 +54,7 @@ public class ReservationController {
 	@PostMapping("/dining")
 	public String reserveDining(ReservationRequestDto requestDto) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-		int resultRowCount = reservationService.createReserveDining(requestDto, principal.getId());
+		reservationService.createReserveDining(requestDto, principal.getId());
 		return "redirect:/";
 	}
 	
@@ -62,15 +62,15 @@ public class ReservationController {
 	@GetMapping("/reserveRoom")
 	public String reservation(ReservationRequestDto selectReserveDetail, Model model) {
 		model.addAttribute("selectDetail", selectReserveDetail);
-		System.out.println(selectReserveDetail);
 		model.addAttribute("diningPrice", reservationOptionPrice.getDiningPrice());
 		model.addAttribute("spaPrice", reservationOptionPrice.getSpaPrice());
 		model.addAttribute("poolPrice", reservationOptionPrice.getPoolPrice());
 		model.addAttribute("fitnessPrice", reservationOptionPrice.getFitnessPrice());
 		
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+		selectReserveDetail.setUserId(principal.getId());
+		Map<String, Object> selectList = reservationService.useCouponOrPoint(selectReserveDetail);
 		
-		Map<String, Object> selectList = reservationService.useCouponOrPoint(principal.getId());
 		model.addAttribute("point", selectList.get("point"));
 		model.addAttribute("couponList", selectList.get("couponList"));
 		return "/reservation/reservation";
@@ -80,7 +80,7 @@ public class ReservationController {
 	@PostMapping("/reserveRoom")
 	public String reserveRoom(ReservationRequestDto requestDto) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-		int resultRowCount = reservationService.createReserveRoom(requestDto, principal.getId());
+		reservationService.createReserveRoom(requestDto, principal.getId());
 		return "redirect:/";
 	}
 }

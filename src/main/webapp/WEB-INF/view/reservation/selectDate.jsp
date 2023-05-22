@@ -101,14 +101,16 @@
 <!-- 예약 달력 script -->
 <script>
 	let dateSelector = document.querySelector('.dateSelector')
-	console.log(dateSelector);
 	$(".dateSelector").flatpickr({
 		enableTime : false,
-		dateFormat : "Y-m-d",
+		dateFormat : "Y/m/d",
 		mode: "range",
 	    minDate: "today",
 	    inline: true
-	});	
+
+	});
+	
+	
 </script>
 </body>
 </html>
