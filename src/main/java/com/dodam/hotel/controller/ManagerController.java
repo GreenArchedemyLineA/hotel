@@ -1,11 +1,10 @@
 package com.dodam.hotel.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
-
-import com.dodam.hotel.dto.StatusParams;
-import com.dodam.hotel.page.Criteria;
-import com.dodam.hotel.repository.model.Room;
+import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,15 +13,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dodam.hotel.dto.ManagerSignInFormDto;
+import com.dodam.hotel.dto.StatusParams;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
+import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.service.ManagerService;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/manager")
@@ -54,9 +53,9 @@ public class ManagerController {
 	
 	//유저 리스트
 	@GetMapping("/userList")
-	public String mUserListAll(@ModelAttribute("params") Criteria criteria ,Model model){
+	public String mUserListAll(Model model){
 		
-		List<MUser> userList = managerService.managerUserListAll(criteria);
+		List<MUser> userList = managerService.managerUserListAll();
 		System.out.println(userList);
 		if(userList != null) {
 			model.addAttribute("userList",userList);

@@ -1,15 +1,11 @@
 package com.dodam.hotel.service;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dodam.hotel.dto.NoticeInsertForm;
-import com.dodam.hotel.page.Criteria;
-import com.dodam.hotel.page.Pagination;
-import com.dodam.hotel.page.PagingResponse;
 import com.dodam.hotel.page.PagingVO;
 import com.dodam.hotel.repository.interfaces.EventRepository;
 import com.dodam.hotel.repository.model.Event;

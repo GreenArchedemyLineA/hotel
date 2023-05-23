@@ -90,19 +90,7 @@
 		where gif.user_id = #{id};
 	</select>
 	
-	<select id="findByAllPaging" parameterType="com.dodam.hotel.page.Criteria" resultType="com.dodam.hotel.repository.model.User">
-		select * 
-		from user_tb
-		where withdrawal = 0
-		order by id desc
-		limit #{offset},#{recordSize}
-	</select>
 	
-	<select id="count" parameterType="com.dodam.hotel.page.Criteria">
-		select count(*) 
-		from user_tb
-		where withdrawal = 0
-	</select>
 	
 	
 </mapper>
