@@ -138,23 +138,6 @@
 		</div>
 	</div>
 	<div class="content--container">
-
-		<form action="/idInquiry" method="post" class="form--container">
-			<input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box"> 
-			<p style="font-size: 14px; font-weight: normal;">생년월일을 입력해주세요.</p>
-			<input type="date" name="birth" placeholder="생년월일 입력해 주세요" class="input--box">
-			<input type="text" name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
-			<button type="submit" class="sub--button">id 찾기</button>
-		</form>
-		<form action="/pwInquiry" method="post" class="form--container">
-			<input type="email" name="email" placeholder="이메일을 입력해 주세요" class="input--box">
-			<input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box"> 
-			<p style="font-size: 14px; font-weight: normal;">생년월일을 입력해주세요.</p>
-			<input type="date" name="birth" placeholder="생년월일 입력해 주세요" class="input--box">
-			<input type="text" name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
-			<button type="submit" class="sub--button">pw 찾기</button>
-		</form>
-
 		<div class="select--container">
 			<p class="find--id">아이디 찾기</p>
 			<p class="find--pwd">비밀번호 찾기</p>
