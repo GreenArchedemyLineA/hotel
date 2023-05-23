@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
 <mapper namespace="com.dodam.hotel.repository.interfaces.MUserRepository">
 	
-	<select id="findByname" resultType="com.dodam.hotel.repository.model.MUser">
+	<select id="findByname" resultType="com.dodam.hotel.repository.model.User">
 		select * from user_tb
 		where name = #{name};
 	</select>
 	
-	<select id="findByAll" resultType="com.dodam.hotel.repository.model.MUser">
-		select * from user_tb;
+	<select id="findByAll" resultType="com.dodam.hotel.repository.model.User">
+		select * from user_tb
+		where withdrawal = 0;
 	</select>
 	
-	<select id="findByBlackList" resultType="com.dodam.hotel.repository.model.MUser">
+	<select id="findByBlackList" resultType="com.dodam.hotel.repository.model.User">
 		select * from user_tb
 		where blacklist = 1;
 	</select>
@@ -51,16 +54,16 @@
 		<result column="grade_id" property="gradeId"/>
 		<result column="update_at" property="updateAt"/>
 		<association property="grade"  resultMap="Grade"/>
-		<association property="muser" resultMap="MUser"/>
+		<association property="user" resultMap="MUser"/>
 	</resultMap>
 	
 	<resultMap type="com.dodam.hotel.repository.model.Grade" id="Grade">
-			<result column="id" property="id" />
-			<result column="g_name" property="name" />
-			<result column="description" property="description" />	
+			<result column="id" property="id"/>
+			<result column="g_name" property="name"/>
+			<result column="description" property="description"/>	
 	</resultMap>
 	
-	<resultMap type="com.dodam.hotel.repository.model.MUser" id="MUser">
+	<resultMap type="com.dodam.hotel.repository.model.User" id="MUser">
 		<result column="id" property="id"/>
 		<result column="email" property="email"/>
 		<result column="password" property="password"/>
@@ -87,8 +90,19 @@
 		where gif.user_id = #{id};
 	</select>
 	
+	<select id="findByAllPaging" parameterType="com.dodam.hotel.page.Criteria" resultType="com.dodam.hotel.repository.model.User">
+		select * 
+		from user_tb
+		where withdrawal = 0
+		order by id desc
+		limit #{offset},#{recordSize}
+	</select>
 	
-	
+	<select id="count" parameterType="com.dodam.hotel.page.Criteria">
+		select count(*) 
+		from user_tb
+		where withdrawal = 0
+	</select>
 	
 	
 </mapper>

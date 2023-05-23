@@ -4,12 +4,14 @@ import javax.servlet.http.HttpSession;
 
 
 import com.dodam.hotel.dto.StatusParams;
+import com.dodam.hotel.page.Criteria;
 import com.dodam.hotel.repository.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -38,11 +40,23 @@ public class ManagerController {
 		return "/manager/managerLogin";
 	}
 	
+	@GetMapping("/managerMain")
+	public String managerMain() {
+
+		return "/manager/managerMain";
+	}
+	
+	@GetMapping("/managerLogout")
+	public String managerLogout(){
+		session.invalidate();
+		return "redirect:/manager/managerPage";
+	}
+	
 	//유저 리스트
 	@GetMapping("/userList")
-	public String mUserListAll(Model model){
+	public String mUserListAll(@ModelAttribute("params") Criteria criteria ,Model model){
 		
-		List<MUser> userList = managerService.managerUserListAll();
+		List<MUser> userList = managerService.managerUserListAll(criteria);
 		System.out.println(userList);
 		if(userList != null) {
 			model.addAttribute("userList",userList);
@@ -79,6 +93,7 @@ public class ManagerController {
 		
 		int userWithdrawal = managerService.userUpdateWithdrawal(id);
 		int userOriginEmail = managerService.userUpdateOriginEmail(email, id);
+		//현우 쪽이랑 합친뒤 유틸 패키지에 있는 랜덤 문자 매서드 를 불러와서 이메일 뒤에 합쳐준다
 		int WithdrawalEmail = managerService.withdrawalEmail(email+"/", id);
 		System.out.println(id);
 		System.out.println(email);
@@ -96,7 +111,7 @@ public class ManagerController {
 		if (principal != null) {
 			session.setAttribute("principal", principal);
 		}
-		return "redirect:/manager/userList";
+		return "/manager/managerMain";
 	}
 
 	@GetMapping("/roomStatus")

@@ -19,21 +19,21 @@
 <body>
 	<div class="header--container">
 		<div>
-			<img alt="로고이미지" src="/images/logo.png" id="logo">
+			<a href="/manager/managerMain"><img alt="로고이미지" src="/images/logo.png" id="logo"></a>
 		</div>
 			<ul class="header--ul">
-				<li><a href="/manager/userList"><span class="material-symbols-outlined">login</span>회원조회</a></li>
-				<li><a href="/question/questionList"><span class="material-symbols-outlined">person</span>문의 사항 확인</a></li>
-				<li><a href="/event/notice"><span class="material-symbols-outlined">card_membership</span>호텔 일정</a></li>
+				<li><a href="/manager/userList"><span class="material-symbols-outlined">person</span>회원조회</a></li>
+				<li><a href="/event/notice"><span class="material-symbols-outlined">event</span>호텔 일정</a></li>
+				<li><a href="/manager/managerLogout"><span class="material-symbols-outlined">logout</span>로그아웃</a></li>
 			</ul>
 	</div>
 	<div class="navi--container">
 		<ul class="navi--ul">
-			<li>객실</li>
+			<li><a href="/manager/roomStatus">객실</a></li>
 			<li>다이닝</li>
-			<li>부대시설</li>
-			<li>예약</li>
-			<li>FAQ</li>
+			<li><a href="/manager/reservation">예약</a></li>
+			<li><a href="/question/questionList">문의 사항</a></li>
+			<li><a href="/manager/faq">FAQ</a></li>
 		</ul>
 	</div>
 	

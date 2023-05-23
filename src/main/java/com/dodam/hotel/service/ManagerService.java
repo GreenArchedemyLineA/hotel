@@ -1,7 +1,7 @@
 package com.dodam.hotel.service;
 
 import com.dodam.hotel.dto.StatusParams;
-
+import com.dodam.hotel.page.Criteria;
 import com.dodam.hotel.repository.interfaces.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,11 +78,15 @@ public class ManagerService {
 	}
 
 	// 회원 전체 리스트 검색
-	public List<MUser> managerUserListAll() {
-		List<MUser> userListEntity = mUserRepository.findByAll();
+//	public List<MUser> managerUserListAll() {
+//		List<MUser> userListEntity = mUserRepository.findByAll();
+//		return userListEntity;
+//	}
+	public List<MUser> managerUserListAll(Criteria criteria) {
+		List<MUser> userListEntity = mUserRepository.findByAllPaging(criteria);
 		return userListEntity;
 	}
-
+	
 	// 이름으로 회원 검색
 	public List<MUser> managerUserList(String name) {
 		List<MUser> userListEntity = mUserRepository.findByname(name);

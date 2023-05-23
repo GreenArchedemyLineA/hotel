@@ -13,7 +13,7 @@
 					<th scope="col">이메일</th>
 					<th scope="col">전화번호</th>
 					<th scope="col">생년월일</th>
-					<th scope="col">탈퇴 유무</th>
+					<th scope="col">탈퇴 여부</th>
 					<th scope="col">탈퇴시 생성되는 고유의 이메일</th>
 				</tr>
 			</thead>

@@ -33,7 +33,7 @@
                     <td>${reservation.user.tel}</td>
                     <td>${reservation.startDate}</td>
                     <td>${reservation.endDate}</td>
-                    <td>${reservation.numberOfp}</td>
+                    <td>${reservation.numberOfP}</td>
                     <td>${reservation.room.id != null ? reservation.id : ""} ${reservation.room != null ? "-" : ""} ${reservation.room.name != null ?  reservation.room.name : "❌"}</td>
                     <td>${reservation.dining.name != null ? reservation.dining.name : "❌"}</td>
                     <td>${reservation.fitnessId != null ? reservation.fitnessId : "❌"}</td>
