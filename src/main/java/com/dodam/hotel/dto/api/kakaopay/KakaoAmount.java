@@ -1,4 +1,4 @@
-package com.dodam.hotel.dto.kakao.pay;
+package com.dodam.hotel.dto.api.kakaopay;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
