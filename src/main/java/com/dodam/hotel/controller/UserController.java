@@ -72,26 +72,26 @@ public class UserController {
 	public String myPage(Model model) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		// 회원 정보 불러오기
-		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
+//		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
 		// 등급 정보 불러오기
 		GradeInfo responseGrade = gradeService.readGradeByUserId(principal.getId());
-		// todo
-		// 비동기처리 -> restController로 이동
-		// 쿠폰 정보 불러오기 
-		List<Coupon> coupons = couponService.readByUserId(principal.getId());
-		// todo
-		// 비동기처리 -> restController로 이동
-		// 예약 정보 불러오기
-		List<Reservation> reservations = reservationService.readAllReservationByUserId(principal.getId());
-		// 내가 한 질문 리스트 가져오기
-		// todo
-		// 비동기처리 -> restController로 이동
-		List<Reply> qna = questionService.readQuestionByUserId(principal.getId());
-		model.addAttribute("responseUser", responseUser);
+//		// todo
+//		// 비동기처리 -> restController로 이동
+//		// 쿠폰 정보 불러오기 
+//		List<Coupon> coupons = couponService.readByUserId(principal.getId());
+//		// todo
+//		// 비동기처리 -> restController로 이동
+//		// 예약 정보 불러오기
+//		List<Reservation> reservations = reservationService.readAllReservationByUserId(principal.getId());
+//		// 내가 한 질문 리스트 가져오기
+//		// todo
+//		// 비동기처리 -> restController로 이동
+//		List<Reply> qna = questionService.readQuestionByUserId(principal.getId());
+//		model.addAttribute("responseUser", responseUser);
 		model.addAttribute("responseGrade", responseGrade);
-		model.addAttribute("coupons", coupons);
-		model.addAttribute("reservations", reservations);
-		model.addAttribute("qna", qna);
+//		model.addAttribute("coupons", coupons);
+//		model.addAttribute("reservations", reservations);
+//		model.addAttribute("qna", qna);
 		return "/user/myPage";
 	}
 	

@@ -13,6 +13,9 @@
 		display: flex;
 		flex-direction: column;
 	}
+	.hidden {
+		display: none;
+	}
 </style>
 	<main>
 		<div>
@@ -32,7 +35,7 @@
 		<button type="button" onclick="" id="reservations">예약 현황</button>
 		<button type="button" onclick="" id="qandA">QnA</button>
 		
-		<div id="userInfo"></div>
+		<div id="myInfoDiv"></div>
 		<%-- <form action="/myPageProc" method="post">
 				<input type="email" name="email" readonly="readonly" value="${responseUser.email}">
 				<input type="password" name="password" value="${responseUser.password}">

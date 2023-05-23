@@ -44,7 +44,7 @@
 		<result column="r_end_date" property="endDate" />
 		<result column="r_number_of_p" property="numberOfP" />
 		<result column="r_created_at" property="createdAt" />
-		<result column="total_price" property="price" />
+		<result column="r_total_price" property="totalPrice" />
 		<collection property="user" resultMap="User"></collection>
 		<collection property="room" resultMap="Room"></collection>
 		<collection property="dining" resultMap="Dining"></collection>
@@ -139,13 +139,14 @@
 			r.end_date as r_end_date,
 			r.number_of_p as r_number_of_p,
 			r.created_at as r_created_at,
+			r.total_price as r_total_price,
 			ro.id as room_id,
 			ro.name as room_name,
 			ro.price as room_price,
 			ro.availability as room_availability,
-			p.id as pool_id,
-			p.name as pool_name,
-			p.price as pool_price,
+			p.id as package_id,
+			p.name as package_name,
+			p.price as package_price,
 			d.id as dining_id,
 			d.name as dining_name,
 			s.id as spa_id,
@@ -175,7 +176,6 @@
 	<select id="findAllReservation" resultMap="Reservation">
         select
             re.*,
-
             u.id as user_id,
             u.name as user_name,
             u.gender as user_gender,
