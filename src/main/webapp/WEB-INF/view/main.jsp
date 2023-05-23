@@ -16,24 +16,10 @@
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-#main--image {
-	width: 100%;
-	height: 1000px;
-	position: relative;
-}
-
-#logo--image {
-	position: absolute;
-	top: 10px;
-	left: 10px;
-}
-
 .navi--bar--1 {
-	position: absolute;
-	top: 30px;
-	right: 600px;
 	color: #fff;
 	font-size: 20px;
+	position: relative;
 }
 
 .navi--bar--1 li a, .navi--bar--2 li a, .navi--bar--3 li a, .navi--bar--4 li a, .navi--bar--5 li a {
@@ -47,6 +33,8 @@
 .navi--bar--detail--room {
 	margin-top: 20px;
 	display: none;
+	position: absolute;
+	left: 20px;
 }
 
 #symbol {
@@ -60,17 +48,13 @@
 .reserve--container {
 	display: flex;
 	justify-content: center;
-	padding: 50px;
 	font-size: 20px;
-	background-color: #fff;
-	position: absolute;
-	top: 550px;
-	right: 0px;
-	background-color: rgba(255, 255, 255, 0.6);
+	background-color: rgba(255, 255, 255, 0.7);
 	border-radius: 2px;
-	height: 100px;
-	width: 1000px;
+	height: 120px;
+	width: 100%;
 	padding: 10px;
+	margin-top: 170px;
 }
 
 .form--container {
@@ -80,15 +64,22 @@
 
 .check--container {
 	margin-right: 10px;
+	display: flex;
+	align-items: center;
+	font-size: 27px;
+	
 }
 
 #input--box {
 	width: 250px;
 	margin: 0 50px 0 20px;
+	height: 50px;
 	border: none;
+	text-align: center;
 }
 
 .select--box {
+	height: 30px;
 	border: none;
 }
 
@@ -97,26 +88,27 @@
 }
 
 .greeting--container {
-	position: absolute;
-	top: 300px;
-	right: 650px;
 	color: #FF9F8D;
 	font-size: 100px;
 	font-weight: bolder;
 	font-family: 'WindSong', cursive;
+	display: flex;
+	align-items: flex-end;
+	height: 330px;
+	justify-content: center;
 }
 
 .navi--bar--2 {
-	position: absolute;
-	top: 30px;
-	right: 450px;
 	color: #fff;
 	font-size: 20px;
+	position: relative;
 }
 
 .navi--bar--detail--fac {
 	margin-top: 20px;
 	display: none;
+	position: absolute;
+	left: 2px;
 }
 
 .toggle--box--fac:hover {
@@ -124,16 +116,16 @@
 }
 
 .navi--bar--3 {
-	position: absolute;
-	top: 30px;
-	right: 350px;
 	color: #fff;
 	font-size: 20px;
+	right: 160;
 }
 
 .navi--bar--detail--reserve {
 	margin-top: 20px;
 	display: none;
+	position: absolute;
+	right: 340px;
 }
 
 .toggle--box--reserve:hover {
@@ -141,16 +133,15 @@
 }
 
 .navi--bar--4 {
-	position: absolute;
-	top: 30px;
-	right: 250px;
 	color: #fff;
 	font-size: 20px;
+	position: relative;
 }
 
 .navi--bar--detail--qna {
 	margin-top: 20px;
 	display: none;
+	position: absolute;
 }
 
 .toggle--box--qna:hover {
@@ -158,9 +149,6 @@
 }
 
 .navi--bar--5 {
-	position: absolute;
-	top: 35px;
-	right: 40px;
 	color: #fff;
 }
 
@@ -173,15 +161,6 @@
 .symbol--box a {
 	color: #fff;
 }
-
-
-
-
-
-
-
-
-
 
 .image--1 {
 	width: 100%;
@@ -210,104 +189,162 @@
 
 .sub--button {
 	margin: 0 20px;
-	width: 100px;
-	background-color: #fff;
+	width: 120px;
+	background-color: #FFF7D1;
 	border: none;
+	height: 50px;
+}
+
+main {
+	background-image: url("http://localhost:8080/images/mainImage.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 1000px;
+}
+
+#header--wrap {
+	display: flex;
+	justify-content: space-between;
+}
+
+#nav--bar--wrap {
+	display: flex;
+	margin-top: 30px;
+	margin-right: 10px;
+}
+
+#toggle--nav--bar {
+	display: flex;
+	width: 500px;
+	text-align: center;
+	margin-right: 20px;
+}
+
+#navi--1--wrap {
+	flex: 1;
+}
+#navi--2--wrap {
+	flex: 1;
+}
+#navi--3--wrap {
+	flex: 1;
+}
+#navi--4--wrap {
+	flex: 1;
+}
+
+#date--input--box {
+	display: flex;
+	align-items: center;
+}
+
+.count--container {
+	display: flex;
+	align-items: center;
+	font-size: 27px;
+}
+
+#main--reserve--btn {
+	display: flex;
+	align-items: center;
 }
 </style>
 
 
-<div>
-	<img alt="메인 이미지" src="/images/mainImage.jpg" id="main--image">
-</div>
-<div>
-	<img alt="로고 이미지" src="/images/logo_white.png" id="logo--image">
-</div>
-<div>
-	<ul class="navi--bar--1">
-		<li><span class="toggle--box--room"> 객실</span> <span class="material-symbols-outlined">keyboard_arrow_down</span></li>
-		<li>
-			<ul class="navi--bar--detail--room">
-				<li><a href="/package">패키지</a></li>
-				<li><a href="/room?type=디럭스">디럭스</a></li>
-				<li><a href="/room?type=프리미엄">프리미어</a></li>
-				<li><a href="/room?type=스위트">스위트</a></li>
-				<li><a href="/room">전체객실</a></li>
-			</ul></li>
-	</ul>
-</div>
-<div>
-	<ul class="navi--bar--2">
-		<li><span class="toggle--box--fac"> 부대시설 <span class="material-symbols-outlined">keyboard_arrow_down</span>
-		</span>
-			<ul class="navi--bar--detail--fac">
-				<li><a href="/dining?type=레스토랑">레스토랑</a></li>
-				<li><a href="/dining?type=라운지">라운지 & 바</a></li>
-				<li><a href="/fitness">피트니스</a></li>
-				<li><a href="/pool">수영장</a></li>
-				<li><a href="/spa">스파</a></li>
-			</ul></li>
-	</ul>
-</div>
-<div>
-	<ul class="navi--bar--3">
-		<li><span class="toggle--box--reserve"> 예약 <span class="material-symbols-outlined">keyboard_arrow_down</span>
-		</span>
-			<ul class="navi--bar--detail--reserve">
-				<li><a href="/selectDate">객실예약</a></li>
-				<li><a href="/reserveDining">다이닝예약</a></li>
-			</ul></li>
-	</ul>
-</div>
-<div>
-	<ul class="navi--bar--4">
-		<li><span class="toggle--box--qna"> 문의 <span class="material-symbols-outlined">keyboard_arrow_down</span>
-		</span>
-			<ul class="navi--bar--detail--qna">
-				<li><a href="/question">자주 묻는 질문</a></li>
-				<li><a href="/qnaPage">1:1 문의</a></li>
-			</ul></li>
-	</ul>
-</div>
-<div class="navi--bar--5">
-	<ul class="symbol--box">
-		<li><a href="/login"><span class="material-symbols-outlined">login</span></a></li>
-		<li><a href="/myPage"><span class="material-symbols-outlined">person</span></a></li>
-		<li><a href="/membership"><span class="material-symbols-outlined">card_membership</span></a></li>
-	</ul>
-</div>
-
-
-
-
-
-	<p class="greeting--container">Hello, Dodam</p>
+<main>
+	<div id="header--wrap">
+		<div>
+			<img alt="로고 이미지" src="/images/logo_white.png" id="logo--image">
+		</div>
+		<div id="header--nav--wrap">
+			<div id="nav--bar--wrap">
+				<div id="toggle--nav--bar">
+					<div id="navi--1--wrap">
+						<ul class="navi--bar--1">
+							<li><span class="toggle--box--room"> 객실<span class="material-symbols-outlined">keyboard_arrow_down</span>
+							</span>
+								<ul class="navi--bar--detail--room">
+									<li><a href="/package">패키지</a></li>
+									<li><a href="/room?type=디럭스">디럭스</a></li>
+									<li><a href="/room?type=프리미엄">프리미어</a></li>
+									<li><a href="/room?type=스위트">스위트</a></li>
+									<li><a href="/room">전체객실</a></li>
+								</ul></li>
+						</ul>
+					</div>
+					<div id="navi--2--wrap">
+						<ul class="navi--bar--2">
+							<li><span class="toggle--box--fac"> 부대시설 <span class="material-symbols-outlined">keyboard_arrow_down</span>
+							</span>
+								<ul class="navi--bar--detail--fac">
+									<li><a href="/dining?type=레스토랑">레스토랑</a></li>
+									<li><a href="/dining?type=라운지">라운지 & 바</a></li>
+									<li><a href="/fitness">피트니스</a></li>
+									<li><a href="/pool">수영장</a></li>
+									<li><a href="/spa">스파</a></li>
+								</ul></li>
+						</ul>
+					</div>
+					<div id="navi--3--wrap">
+						<ul class="navi--bar--3">
+							<li><span class="toggle--box--reserve"> 예약 <span class="material-symbols-outlined">keyboard_arrow_down</span>
+							</span>
+								<ul class="navi--bar--detail--reserve">
+									<li><a href="/selectDate">객실예약</a></li>
+									<li><a href="/reserveDining">다이닝예약</a></li>
+								</ul></li>
+						</ul>
+					</div>
+					<div id="navi--4--wrap">
+						<ul class="navi--bar--4">
+							<li><span class="toggle--box--qna"> 문의 <span class="material-symbols-outlined">keyboard_arrow_down</span>
+							</span>
+								<ul class="navi--bar--detail--qna">
+									<li><a href="/question">자주 묻는 질문</a></li>
+									<li><a href="/qnaPage">1:1 문의</a></li>
+								</ul></li>
+						</ul>
+					</div>
+				</div>
+				<div class="navi--bar--5">
+					<ul class="symbol--box">
+						<li><a href="/login"><span class="material-symbols-outlined">login</span></a></li>
+						<li><a href="/myPage"><span class="material-symbols-outlined">person</span></a></li>
+						<li><a href="/membership"><span class="material-symbols-outlined">card_membership</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+		<p class="greeting--container">Hello, Dodam</p>
 	<div class="reserve--container">
 		<form action="/reserve" method="get" class="form--container">
-			<div class="check--container">체크인 & 체크아웃</div>
-			<input class="dateSelector" id="input--box" placeholder="날짜를 선택하세요" name="date">
+			<div class="check--container">
+				체크인 & 체크아웃
+			</div>
+			<div id="date--input--box">
+				<input class="dateSelector" id="input--box" placeholder="날짜를 선택하세요" name="date">
+			</div>
 			<div class="count--container">
-				성인 <select name="countPerson" id="select--box">
+				성인 <select name="countPerson" class="select--box">
 					<option value="1">1</option>
 					<option value="2">2</option>
-				</select> 어린이 <select name="countChild" id="select--box">
+				</select> 어린이 <select name="countChild" class="select--box">
 					<option value="0">0</option>
 					<option value="1">1</option>
 					<option value="2">2</option>
-				</select> 유아 <select name="countBaby" id="select--box">
+				</select> 유아 <select name="countBaby" class="select--box">
 					<option value="0">0</option>
 					<option value="1">1</option>
 					<option value="2">2</option>
 				</select>
 			</div>
-
-			<button type="submit" class="sub--button">검색</button>
+			<div id="main--reserve--btn">
+				<button type="submit" class="sub--button">검색</button>
+			</div>
 		</form>
 	</div>
-	<div class="image--container">
-		<img alt="" src="/images/test.jpg" class="image--1">
-	</div>
-
+</main>
 	<p class="title--container">도담 추천 프로모션
 	<p>
 	<div class="recommend--container">
@@ -344,21 +381,38 @@
 			mode : "range",
 			minDate : "today",
 		});
-
+		let timer;
 		$(document).ready(function() {
 			$(".toggle--box--room").click(function() {
-				$(".navi--bar--detail--room").slideToggle("slow");
+				if(timer){
+					clearTimeout(timer)
+				}
+				timer = setTimeout(function(){
+					$(".navi--bar--detail--room").slideToggle("slow");
+				}, 200)
 			});
 		});
 
 		$(document).ready(function() {
 			$(".toggle--box--fac").click(function() {
-				$(".navi--bar--detail--fac").slideToggle("slow");
+				// javascript 쓰로틀링
+				if(timer){
+					clearTimeout(timer)
+				}
+				timer = setTimeout(function(){
+					$(".navi--bar--detail--fac").slideToggle("slow");
+				}, 200)
+				
 			});
 		});
 		$(document).ready(function() {
 			$(".toggle--box--reserve").click(function() {
-				$(".navi--bar--detail--reserve").slideToggle("slow");
+				if(timer){
+					clearTimeout(timer)
+				}
+				timer = setTimeout(function(){
+					$(".navi--bar--detail--reserve").slideToggle("slow");
+				}, 200)
 			});
 		});
 		$(document).ready(function() {
@@ -367,3 +421,5 @@
 			});
 		});
 	</script>
+	
+	
