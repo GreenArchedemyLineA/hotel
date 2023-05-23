@@ -11,6 +11,7 @@ import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.repository.interfaces.CouponRepository;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.interfaces.MembershipRepository;
+import com.dodam.hotel.repository.interfaces.PointRepository;
 import com.dodam.hotel.repository.interfaces.UserRepository;
 import com.dodam.hotel.repository.model.User;
 
@@ -30,6 +31,9 @@ public class UserService {
 	@Autowired
 	private GradeRepository gradeRepository; 
 	
+	@Autowired
+	private PointRepository pointRepository; 
+	
 	// 로그인용
 	@Transactional
 	public UserResponseDto.LoginResponseDto readUserByIdAndPassword(UserRequestDto.LoginFormDto user) {
@@ -38,13 +42,11 @@ public class UserService {
 		if(responseUser.getBlacklist()) {
 			// 블랙당한 user
 			// 예외 처리
-			System.out.println("111111111111111111111");
 			return null;
 		}
 		if(responseUser.getWithdrawal()) {
 			// 탈퇴한 유저
 			// 예외처리
-			System.out.println("222222222222222222");
 			return null;
 		}
 		return responseUser;
@@ -92,6 +94,9 @@ public class UserService {
 		
 		// 등급 부여
 		int result = gradeRepository.insertGrade(userId);
+		
+		// 포인트 세팅
+		int pointResult = pointRepository.insertZeroPoint(userId);
 		
 	}
 	

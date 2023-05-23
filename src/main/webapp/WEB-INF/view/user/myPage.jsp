@@ -66,10 +66,10 @@
 				${list.room.name}
 				${list.room.price}
 				${list.dining.name}
-				${list.spa.name}
-				${list.fitness.name}
+				${list.spa.facilities.name}
+				${list.fitness.facilities.name}
 				${list.h_package.name}
-				${list.pool.name}
+				${list.pool.facilities.name}
 			</c:forEach>
 		</div>
 		<div>

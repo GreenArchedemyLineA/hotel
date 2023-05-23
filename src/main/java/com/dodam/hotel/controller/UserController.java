@@ -99,6 +99,8 @@ public class UserController {
 	@PostMapping("/loginProc")
 	public String loginProc(UserRequestDto.LoginFormDto loginDto) {
 		UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(loginDto);
+		System.out.println(loginDto);
+		System.out.println(principal);
 		session.setAttribute(Define.PRINCIPAL, principal);
 		
 		if(principal.getRandomPwdStatus()) {
