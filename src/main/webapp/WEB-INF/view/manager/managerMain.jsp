@@ -3,9 +3,6 @@
 
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzkxekb89f"></script>
 
-
-
-
 <div id="map" style="width:600px;height:400px;"></div>
 
 

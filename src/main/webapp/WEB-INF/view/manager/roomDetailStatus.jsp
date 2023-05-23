@@ -16,17 +16,17 @@
 </head>
 <body>
 <div>
-    <form>
+    <form action="/manager/roomStatus/${room.id}" method="post">
         <label for="roomname">방 이름</label>
-        <input type="text" name="roomname" id="roomname" value="${room.name}">
+        <input type="text" name="name" id="name" value="${room.name}">
         <label for="roomprice">방 가격</label>
-        <input type="text" name="roomprice" id="roomprice" value="${room.price}">
+        <input type="text" name="price" id="price" value="${room.price}">
         <label for="roomavailability">방 사용 여부 가능</label>
-        <input type="text" name="roomavailability" id="roomavailability" value="${room.availability}">
+        <input type="text" name="availability" id="availability" value="${room.availability}">
         <label for="description">방 내용</label>
-        <input type="text" name="roomdescription" id="description" value="${room.description}">
+        <input type="text" name="description" id="description" value="${room.description}">
         <label for="roomnumber_of_p">방 수용 인원</label>
-        <input type="text" name="roomnumber_of_p" id="roomnumber_of_p" value="${room.numberOfp}">
+        <input type="text" name="number_of_p" id="number_of_p" value="${room.numberOfP}">
         <button type="submit">수정</button>
     </form>
 </div>

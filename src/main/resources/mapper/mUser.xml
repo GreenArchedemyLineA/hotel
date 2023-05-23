@@ -90,7 +90,19 @@
 		where gif.user_id = #{id};
 	</select>
 	
-	
+	<select id="findByGradeAll" resultMap="GradeInfo">
+		select 
+		gif.*,
+		u.*,
+		g.*,
+		g.name as g_name
+		from grade_info_tb as gif
+		join user_tb as u
+		on u.id = gif.user_id
+		join grade_tb as g
+		on gif.grade_id = g.id
+		where gif.grade_id = #{gradeId};
+	</select>
 	
 	
 </mapper>

@@ -25,4 +25,6 @@ public interface MUserRepository {
 	public int updateWithdrawal(Integer id);
 	public int updateOriginEmail(@Param("email") String email,@Param("id") Integer id);
 	public int updateWithdrawalEmail(@Param("email") String email,@Param("id") Integer id);
+	
+	public List<GradeInfo> findByGradeAll(Integer gradeId);
 }

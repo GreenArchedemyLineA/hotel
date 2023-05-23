@@ -34,7 +34,7 @@ public class ManagerService {
 
 	public List<Room> findConditionsRoomList(StatusParams statusParams) {
 		Boolean roomStatus = statusParams.getRoomStatus();
-		Integer numberOfp = statusParams.getNumberOfp();
+		Integer numberOfp = statusParams.getNumberOfP();
 		Integer price = statusParams.getPrice();
 
 		List<Room> rooms;
@@ -66,7 +66,7 @@ public class ManagerService {
 	}
 
 	public Room findByRoom(Integer roomId) {
-		Room room = roomRepository.findById(roomId);
+		Room room = roomRepository.findRoomById(roomId);
 		return room;
 	}
 
@@ -87,6 +87,11 @@ public class ManagerService {
 	// 이름으로 회원 검색
 	public List<MUser> managerUserList(String name) {
 		List<MUser> userListEntity = mUserRepository.findByname(name);
+		return userListEntity;
+	}
+	
+	public List<GradeInfo> managerUserGradeList(Integer gradeId){
+		List<GradeInfo> userListEntity = mUserRepository.findByGradeAll(gradeId);
 		return userListEntity;
 	}
 	

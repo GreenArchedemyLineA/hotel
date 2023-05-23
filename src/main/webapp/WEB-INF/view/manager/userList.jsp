@@ -8,8 +8,15 @@
 			<button type="submit">회원 이름 검색</button>
 		</form>
 		<form action="/manager/blackList" method="get">
-			<!-- <input type="text" name="blackList"> -->
 			<button type="submit">블랙리스트 유저 검색</button>
+		</form>
+		<form action="/manager/userGradeList" method="get">
+			<select name="gradeId">
+				<option value="1">브라운</option>
+				<option value="2">골드</option>
+				<option value="3">다이야</option>
+			</select>
+			<button type="submit">회원 등급으로 조회</button>
 		</form>
 		<table class="table">
 			<thead>
