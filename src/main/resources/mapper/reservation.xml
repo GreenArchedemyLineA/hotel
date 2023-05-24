@@ -70,11 +70,13 @@
 		<result column="package_id" property="id" />
 		<result column="package_name" property="name" />
 		<result column="package_price" property="price" />
+		<!-- 
 		<collection property="room" resultMap="Room"></collection>
 		<collection property="dining" resultMap="Dining"></collection>
 		<collection property="fitness" resultMap="Fitness"></collection>
 		<collection property="pool" resultMap="Pool"></collection>
 		<collection property="spa" resultMap="Spa"></collection>
+		 -->
 	</resultMap>
 	
 	<resultMap type="com.dodam.hotel.repository.model.Dining" id="Dining">

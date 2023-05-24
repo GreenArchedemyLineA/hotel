@@ -8,9 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
+import com.dodam.hotel.dto.UpdateRoomStatusDto;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.service.RoomService;
 
@@ -45,5 +47,7 @@ public class RoomController {
 		model.addAttribute("searchDto", selectList.get("searchDto"));
 		return "/reservation/searchRoom";
 	}
+	
+
 	
 } // end of class

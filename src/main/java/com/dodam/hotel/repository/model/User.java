@@ -15,8 +15,10 @@ public class User {
 	private String gender;
 	private Date birth;
 	private String tel;
-	private Boolean blacklist;
-	private Boolean withdrawal;
+	private int blacklist;
+	private int withdrawal;
 	private Timestamp createdAt;
+	private String originEmail;
+	
 }
 

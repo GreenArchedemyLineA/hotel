@@ -1,19 +1,20 @@
 package com.dodam.hotel.service;
 
-import com.dodam.hotel.dto.StatusParams;
+import java.util.List;
 
-import com.dodam.hotel.repository.interfaces.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.dodam.hotel.dto.ManagerSignInFormDto;
+import com.dodam.hotel.dto.StatusParams;
 import com.dodam.hotel.repository.interfaces.MUserRepository;
 import com.dodam.hotel.repository.interfaces.ManagerRepository;
+import com.dodam.hotel.repository.interfaces.RoomRepository;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
+import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Room;
-
-import java.util.List;
 
 @Service
 public class ManagerService {
@@ -34,7 +35,7 @@ public class ManagerService {
 
 	public List<Room> findConditionsRoomList(StatusParams statusParams) {
 		Boolean roomStatus = statusParams.getRoomStatus();
-		Integer numberOfp = statusParams.getNumberOfp();
+		Integer numberOfp = statusParams.getNumberOfP();
 		Integer price = statusParams.getPrice();
 
 		List<Room> rooms;
@@ -66,7 +67,7 @@ public class ManagerService {
 	}
 
 	public Room findByRoom(Integer roomId) {
-		Room room = roomRepository.findById(roomId);
+		Room room = roomRepository.findRoomById(roomId);
 		return room;
 	}
 
@@ -82,10 +83,16 @@ public class ManagerService {
 		List<MUser> userListEntity = mUserRepository.findByAll();
 		return userListEntity;
 	}
-
+	
+	
 	// 이름으로 회원 검색
 	public List<MUser> managerUserList(String name) {
 		List<MUser> userListEntity = mUserRepository.findByname(name);
+		return userListEntity;
+	}
+	
+	public List<GradeInfo> managerUserGradeList(Integer gradeId){
+		List<GradeInfo> userListEntity = mUserRepository.findByGradeAll(gradeId);
 		return userListEntity;
 	}
 	
@@ -123,17 +130,21 @@ public class ManagerService {
 		return withdrawalUserEmailEntity;
 	}
 	
-	
 	// 회원등급 조회
 	public GradeInfo selectUserGrade(Integer id) {
 		GradeInfo userGradeEntity = mUserRepository.findByUserId(id);
 		return userGradeEntity;
 	}
-
+	
+	//맴버쉽 회원 조회
+	public List<MembershipInfo> findByMembershipUserList(){
+		List<MembershipInfo> membershipUserListEntity = mUserRepository.findByMembershipAll();
+		return membershipUserListEntity;		
+	}
+	
 	// 회원 등급 수정()
 	public int changeGradeByUserIdAndGradeId(Integer gradeId, Integer id) {
-		int resultRowCount = mUserRepository.updateGrade(gradeId, id);
-		
+		int resultRowCount = mUserRepository.updateGrade(gradeId, id);	
 		return resultRowCount;
 	}
 

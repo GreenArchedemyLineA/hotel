@@ -20,7 +20,6 @@
             <th>방 이름</th>
             <th>방 가격</th>
             <th>방 사용 여부 가능</th>
-            <th>방 내용</th>
             <th>방 상태 내용</th>
             <th>방 수용 인원</th>
         </tr>
@@ -28,19 +27,21 @@
             <tr onclick="statusDetail(${room.id})">
                 <td>${room.name}</td>
                 <td>${room.price}</td>
-                <td>${room.availability}</td>
-                <td>${room.description}</td>
+                <td>${room.availability == true ? "사용가능" : "사용불가"}</td>
                 <td>${room.statusDesc}</td>
-                <td>${room.numberOfp}</td>
+                <td>${room.numberOfP}</td>
             </tr>
         </c:forEach>
     </table>
 <form>
     <h3>option</h3>
     <input type="checkbox" name="roomStatus">
-    <input type="number" name="numberOfp" max="10" value="5">
+    <input type="number" name="numberOfP" max="10" value="5">
     <input type="number" name="price">
     <input type="submit">
+</form>
+<form action="/manager/managerMain" method="get">
+			<button type="submit">돌아가기</button>
 </form>
 <script>
     function statusDetail(id){

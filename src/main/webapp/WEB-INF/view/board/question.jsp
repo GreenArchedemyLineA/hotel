@@ -1,22 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../layout/managerHeader.jsp" %>
-	
-	<div class="d-flex align-items-start">
+<%@ include file="../layout/managerHeader.jsp"%>
+
+<div class="d-flex align-items-start">
 	<div class="flex-grow-1">
 		<form action="/question/category" method="get">
 			<select name="category">
-				<option value="호텔건의">
-					호텔건의
-				</option>
-				<option value="회원문의">
-					회원문의
-				</option>
-				<option value="부대시설문의">
-					부대시설문의
-				</option>
-				<option value="예약문의">
-					예약문의
-				</option>
+				<option value="호텔건의">호텔건의</option>
+				<option value="회원문의">회원문의</option>
+				<option value="부대시설문의">부대시설문의</option>
+				<option value="예약문의">예약문의</option>
 			</select>
 			<button type="submit">카테고리 검색</button>
 		</form>
@@ -29,7 +21,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="questionList" items= "${questionList}">
+				<c:forEach var="questionList" items="${questionList}">
 					<tr>
 						<td>${questionList.title}</td>
 						<td>${questionList.userId}</td>
@@ -51,6 +43,17 @@
 		// 문의 정보 삭제 기능
 		location.href = "/question/questionDelete/"+id; 
 	}
+	$(document).ready(function(){
+		let date 
+	$.ajax({
+		type: 'get',
+		url: '/question/questionList',
+	}).done({
+		
+	}).fail({
+		
+	});
+	});
 </script>
 </body>
 </html>

@@ -26,5 +26,10 @@
 	<delete id="delete">
 		DELETE FROM membership_tb where user_id = #{userId}
 	</delete>
-
+	
+	<select id="">
+	
+	</select>
+	
+	
 </mapper>

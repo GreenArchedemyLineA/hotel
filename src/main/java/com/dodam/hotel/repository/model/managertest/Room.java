@@ -16,5 +16,5 @@ public class Room {
     private String description;
     private String image;
     private String statusDesc;
-    private Integer numberOfp;
+    private Integer numberOfP;
 }
