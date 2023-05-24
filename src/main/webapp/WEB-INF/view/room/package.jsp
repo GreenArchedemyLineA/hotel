@@ -63,11 +63,11 @@
 			<div>
 				<c:forEach var="h_package" items="${h_package}">
 						<div>
-							<a href="#">
+							<a href="/packageDateSelect">
 								<img alt="" src="https://picsum.photos/id/169/1000/500">
 							</a>
-							<h3><a href="#">${h_package.name}</a></h3>
-							<p><a href="#">${h_package.price}</a></p>
+							<h3><a href="/packageDateSelect">${h_package.name}</a></h3>
+							<p><a href="/packageDateSelect">${h_package.price}</a></p>
 						</div>
 				</c:forEach>
 			</div>

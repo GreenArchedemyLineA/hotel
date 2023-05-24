@@ -71,9 +71,11 @@ public class UserController {
 	@GetMapping("/myPage")
 	public String myPage(Model model) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+		List<Coupon> coupons = couponService.readByUserId(principal.getId());
 		// 등급 정보 불러오기
 		GradeInfo responseGrade = gradeService.readGradeByUserId(principal.getId());
 		model.addAttribute("responseGrade", responseGrade);
+		model.addAttribute("coupons", coupons);
 		return "/user/myPage";
 	}
 	

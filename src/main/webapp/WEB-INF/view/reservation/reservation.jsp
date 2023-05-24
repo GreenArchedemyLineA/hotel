@@ -12,7 +12,7 @@
 </style>
 </head>
 <body>
-	<form name="form" action="#/reserveRoom" method="post">
+	<form name="form" action="/reserveRoom" method="post">
 		객실 : ${selectDetail.name} 체크인 : ${selectDetail.startDate} 체크아웃 : ${selectDetail.endDate} 투숙인원 : 성인 ${selectDetail.countPerson}, 어린이 ${selectDetail.countChild}, 유아 ${selectDetail.countBaby} <br />
 		다이닝신청 (조식)
 		<div class="facilities--container">
@@ -81,8 +81,8 @@
 	let startDatejs = searchParamsDate.get("startDate");
 	let endDatejs = searchParamsDate.get("endDate");
 	
-	let startDatejsArray = startDatejs.split("/");
-	let endDatejsArray = endDatejs.split("/");
+	let startDatejsArray = startDatejs.split("-");
+	let endDatejsArray = endDatejs.split("-");
 	
 	let startDateSeconds = new Date(startDatejsArray[0], startDatejsArray[1]-1, startDatejsArray[2]);
 	let endDateSeconds = new Date(endDatejsArray[0], endDatejsArray[1]-1, endDatejsArray[2]);

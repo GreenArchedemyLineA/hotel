@@ -103,7 +103,7 @@
 	let dateSelector = document.querySelector('.dateSelector')
 	$(".dateSelector").flatpickr({
 		enableTime : false,
-		dateFormat : "Y/m/d",
+		dateFormat : "Y-m-d",
 		mode: "range",
 	    minDate: "today",
 	    inline: true

@@ -134,7 +134,13 @@ class MyInfoJs {
 			method: "GET"
 		}).then(async (response) => {
 			let data = await response.json();
-
+			
+			
+			// 세션 값 넘어감
+			/*const iframeTag = document.createElement("iframe");
+			iframeTag.setAttribute("src", "/myPage");
+			this.userInfoDiv.append(iframeTag);*/
+			this.buttonCoupons.textContent = `쿠폰함(${data.length})`;
 			for (let i = 0; i < data.length; i++) {
 				const couponDivTag = document.createElement("div");
 				const nameDivTag = document.createElement("div");

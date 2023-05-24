@@ -34,13 +34,15 @@ public class ReservationController {
 	@GetMapping("/reserve")
 	public String reserveMain(ReservationRequestDto requestDto, Model model) {
 		String[] array = requestDto.getDate().split(" to ");
+		System.out.println(array[0]);
+		System.out.println(array[1]);
 		Integer countAll = requestDto.getCountPerson() + requestDto.getCountChild() + requestDto.getCountBaby();
 		requestDto.setNumberOfP(countAll);
 		// 출력
-		for (int i = 0; i < array.length; i++) {
-			requestDto.setStartDate(array[0]);
-			requestDto.setEndDate(array[1]);
-		}
+//		for (int i = 0; i < array.length; i++) {
+		requestDto.setStartDate(array[0]);
+		requestDto.setEndDate(array[1]);
+//		}
 		return null;
 	}
 
@@ -80,6 +82,7 @@ public class ReservationController {
 	@PostMapping("/reserveRoom")
 	public String reserveRoom(ReservationRequestDto requestDto) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+		System.out.println(requestDto);
 		reservationService.createReserveRoom(requestDto, principal.getId());
 		return "redirect:/";
 	}

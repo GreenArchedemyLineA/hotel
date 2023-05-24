@@ -47,6 +47,19 @@
 	position:sticky;
     top:200px;
 }
+
+.room--img {
+	margin-bottom: 30px;
+}
+
+.room--info {
+	display: flex;
+	justify-content: space-between;
+	width: 1000px;
+}
+.room-desc {
+	width: 1000px;
+}
 </style>
 </head>
 <body>
@@ -60,16 +73,24 @@
 			</ul>
 		</div>
 		<div class="main--container">
-			<div>
-				<h2>객실</h2>
-				<div>zz</div>
+			<div class="room--title">
+				<h2>${room.name}</h2>
+			</div>
+			<div class="room--img">
+				<img alt="객실 사진" src="https://picsum.photos/id/169/1000/500">
+			</div>
+			<div class="room-desc">
+				<p>${room.description}</p>
+			</div>
+			<div class="room--info">
+				<h2>객실 개요</h2>			
+				<div>
+					<p>투숙 인원 : ${room.numberOfP}</p>
+					<p>가격(1박 기준) : ${room.price}원</p>
+				</div>
 			</div>
 			<div>
-				<img alt="객실 사진" src="https://picsum.photos/id/169/1000/500">
-				<h3>${room.name}</h3>
-				<p>${room.numberOfP}</p>
-				<p>${room.price}</p>
-				<p>${room.description}</p>
+				
 			</div>
 		</div>
 	</div>

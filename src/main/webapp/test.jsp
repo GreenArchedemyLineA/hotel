@@ -200,7 +200,7 @@
 }
 
 main {
-	background-image: url("http://localhost:8080/images/mainImage.jpg");
+	background-image: url("http://localhost:8080/images/mainImage2.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 800px;
@@ -328,7 +328,7 @@ main {
 		<p class="greeting--container">Hello, Dodam</p>
 </main>
 	<div class="reserve--container">
-		<form action="/search" method="get" class="form--container">
+		<form action="/reserve" method="get" class="form--container">
 			<table>
 				<tr id="reserve--first--tr">
 					<td>체크인 & 체크아웃</td>
@@ -362,6 +362,26 @@ main {
 					</td>
 				</tr>
 			</table>
+			<!-- <div class="check--container">
+				체크인 & 체크아웃
+			</div>
+			<div id="date--input--box">
+				<input class="dateSelector" id="input--box" placeholder="날짜를 선택하세요" name="date">
+			</div>
+			<div class="count--container">
+				성인 <select name="countPerson" class="select--box">
+					<option value="1">1</option>
+					<option value="2">2</option>
+				</select> 어린이 <select name="countChild" class="select--box">
+					<option value="0">0</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+				</select> 유아 <select name="countBaby" class="select--box">
+					<option value="0">0</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+				</select>
+			</div> -->
 			<div id="main--reserve--btn">
 				<button type="submit" class="sub--button">검색</button>
 			</div>

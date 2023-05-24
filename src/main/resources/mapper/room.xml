@@ -49,7 +49,6 @@
 		or
 		start_date <![CDATA[ < ]]> #{endDate} and #{endDate} <![CDATA[ <= ]]> end_date
 		)) and number_of_p <![CDATA[ >= ]]> #{numberOfP}
-		group by name
 	</select>
     <!-- writer: 이현서 -->
     <!--

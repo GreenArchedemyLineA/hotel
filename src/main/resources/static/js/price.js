@@ -16,7 +16,6 @@ const totalPriceTag = document.getElementById("totalPrice");
 	
 	// 예약 날짜
 	
-	
 	// 총 계산
 	function totalPrice(){
 		while(totalPriceTag.firstChild)  {
