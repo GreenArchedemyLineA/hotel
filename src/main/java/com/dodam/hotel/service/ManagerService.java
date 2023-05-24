@@ -13,6 +13,7 @@ import com.dodam.hotel.repository.interfaces.RoomRepository;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
+import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Room;
 
 @Service
@@ -129,17 +130,21 @@ public class ManagerService {
 		return withdrawalUserEmailEntity;
 	}
 	
-	
 	// 회원등급 조회
 	public GradeInfo selectUserGrade(Integer id) {
 		GradeInfo userGradeEntity = mUserRepository.findByUserId(id);
 		return userGradeEntity;
 	}
-
+	
+	//맴버쉽 회원 조회
+	public List<MembershipInfo> findByMembershipUserList(){
+		List<MembershipInfo> membershipUserListEntity = mUserRepository.findByMembershipAll();
+		return membershipUserListEntity;		
+	}
+	
 	// 회원 등급 수정()
 	public int changeGradeByUserIdAndGradeId(Integer gradeId, Integer id) {
-		int resultRowCount = mUserRepository.updateGrade(gradeId, id);
-		
+		int resultRowCount = mUserRepository.updateGrade(gradeId, id);	
 		return resultRowCount;
 	}
 

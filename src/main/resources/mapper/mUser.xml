@@ -7,7 +7,7 @@
 	
 	<select id="findByname" resultType="com.dodam.hotel.repository.model.User">
 		select * from user_tb
-		where name = #{name};
+		where name = #{name} and withdrawal = 0;
 	</select>
 	
 	<select id="findByAll" resultType="com.dodam.hotel.repository.model.User">
@@ -49,6 +49,47 @@
 		update user_tb set email = #{email} where id = #{id};
 	</update>
 	
+	<select id="findByUserId" resultMap="GradeInfo">
+		select 
+		gif.*,
+		u.*,
+		g.*,
+		g.name as g_name
+		from grade_info_tb as gif
+		join user_tb as u
+		on u.id = gif.user_id
+		join grade_tb as g
+		on gif.grade_id = g.id
+		where gif.user_id = #{id};
+	</select>
+	
+	<select id="findByGradeAll" resultMap="GradeInfo">
+		select 
+		gif.*,
+		u.*,
+		g.*,
+		g.name as g_name
+		from grade_info_tb as gif
+		join user_tb as u
+		on u.id = gif.user_id
+		join grade_tb as g
+		on gif.grade_id = g.id
+		where gif.grade_id = #{gradeId} and withdrawal = 0;
+	</select>
+	
+	<select id="findByMembershipAll" resultMap="MembershipInfo">
+		select 
+		mif.*,
+		u.*,
+		m.*
+		from membership_info_tb as mif
+		join user_tb as u
+		on u.id = mif.user_id
+		join membership_tb as m
+		on mif.membership_id = m.id
+		where withdrawal = 0;
+	</select>
+	<!-- 유저 등급 조회 조인문 맵 설정 -->
 	<resultMap type="com.dodam.hotel.repository.model.GradeInfo" id="GradeInfo">
 		<result column="user_id" property="userId"/>
 		<result column="grade_id" property="gradeId"/>
@@ -75,34 +116,31 @@
 		<result column="withdrawal" property="withdrawal"/>
 		<result column="created_at" property="createdAt"/>
 	</resultMap>
+	<!-- 맴버쉽 조회 -->
+	<resultMap type="com.dodam.hotel.repository.model.MembershipInfo" id="MembershipInfo">
+		<result column="user_id" property="userId"/>
+		<result column="membershipInfo_id" property="membershipInfoId"/>
+		<result column="updated_at" property="updatedAt"/>
+		<collection property="user" resultMap="User"></collection>
+		<collection property="membership" resultMap="Membership"></collection>
+	</resultMap>
 	
-	<select id="findByUserId" resultMap="GradeInfo">
-		select 
-		gif.*,
-		u.*,
-		g.*,
-		g.name as g_name
-		from grade_info_tb as gif
-		join user_tb as u
-		on u.id = gif.user_id
-		join grade_tb as g
-		on gif.grade_id = g.id
-		where gif.user_id = #{id};
-	</select>
+	<resultMap type="com.dodam.hotel.repository.model.Membership" id="Membership">
+		<result column="id" property="id"/>
+		<result column="price" property="price"/>
+	</resultMap>
 	
-	<select id="findByGradeAll" resultMap="GradeInfo">
-		select 
-		gif.*,
-		u.*,
-		g.*,
-		g.name as g_name
-		from grade_info_tb as gif
-		join user_tb as u
-		on u.id = gif.user_id
-		join grade_tb as g
-		on gif.grade_id = g.id
-		where gif.grade_id = #{gradeId};
-	</select>
-	
-	
+	<resultMap type="com.dodam.hotel.repository.model.User" id="User">
+		<result column="id" property="id"/>
+		<result column="email" property="email"/>
+		<result column="password" property="password"/>
+		<result column="name" property="name"/>
+		<result column="gender" property="gender"/>
+		<result column="tel" property="tel"/>
+		<result column="birth" property="birth"/>
+		<result column="blacklist" property="blacklist"/>
+		<result column="withdrawal" property="withdrawal"/>
+		<result column="created_at" property="createdAt"/>
+	</resultMap>
+
 </mapper>

@@ -12,9 +12,7 @@
 					<th scope="col">회원이름</th>
 					<th scope="col">회원이메일</th>
 					<th scope="col">전화번호</th>
-					<th scope="col">생년월일</th>
-					<th scope="col">맴버쉽 가입 일자</th>
-					<th scope="col">정보보기</th>
+					<th scope="col">맴버쉽 가입일</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,9 +21,8 @@
 						<td>${user.user.name}</td>
 						<td>${user.user.email}</td>
 						<td>${user.user.tel}</td>
-						<td>${user.user.birth}</td>
-						<td>${user.user.birth}</td>
-						<td><button onclick="userDetail(${user.user.id})">상세보기/수정</button></td>
+						<td>${user.updatedAt}</td>
+						<td><button onclick="userDetail(${user.userId})">상세보기/수정</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>

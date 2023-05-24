@@ -40,6 +40,9 @@
     <input type="number" name="price">
     <input type="submit">
 </form>
+<form action="/manager/managerMain" method="get">
+			<button type="submit">돌아가기</button>
+</form>
 <script>
     function statusDetail(id){
         location.href = "/manager/roomStatusDetail?roomId="+id;

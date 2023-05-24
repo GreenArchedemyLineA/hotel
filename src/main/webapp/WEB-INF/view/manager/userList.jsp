@@ -7,8 +7,11 @@
 			<input type="text" name="name">
 			<button type="submit">회원 이름 검색</button>
 		</form>
+		<form action="/manager/membershipUserList" method="get">
+			<button type="submit">맴버쉽 회원 검색</button>
+		</form>
 		<form action="/manager/blackList" method="get">
-			<button type="submit">블랙리스트 유저 검색</button>
+			<button type="submit">블랙리스트 회원 검색</button>
 		</form>
 		<form action="/manager/userGradeList" method="get">
 			<select name="gradeId">

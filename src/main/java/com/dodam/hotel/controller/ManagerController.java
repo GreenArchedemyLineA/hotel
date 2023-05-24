@@ -20,6 +20,7 @@ import com.dodam.hotel.dto.StatusParams;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
+import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.RoomService;
@@ -86,6 +87,15 @@ public class ManagerController {
 		return "/manager/userGrade";
 	}
 	
+	//맴버쉽 회원 조회
+	@GetMapping("/membershipUserList")
+	public String membershipUserList(Model model) {
+		List<MembershipInfo> membershipUserList = managerService.findByMembershipUserList();
+		if(membershipUserList != null) {
+			model.addAttribute("userList",membershipUserList);
+		}
+		return "/manager/membershipUserList";
+	}
 	
 	//블랙리스트 조회
 	@GetMapping("/blackList")
