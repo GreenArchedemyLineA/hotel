@@ -31,8 +31,6 @@ public class PayController {
     private KakaoPay kakaoPay = new KakaoPay();
     private final String NICE_PAY_CLIENT_ID = "S2_e9b9047ecf2a467b86a6c2311d47b9df";
     private final String NICE_PAY_SECRET_KEY = "3dd7b2bd320043a69f18b5c3e28d3dd2";
-    private final String KAKAO_TESTCID = "TC0ONETIME";
-    private final String KAKAO_APP_ADMIN_KEY = "74e472b2d495ed6df25464561df4bf71";
     private final RestTemplate restTemplate = new RestTemplate();
     private String kakaoTid;
     @GetMapping("/main")
@@ -42,7 +40,12 @@ public class PayController {
         return "/pay/pay";
     }
 
-    // nicepay 결제 성공시
+    @GetMapping("/success")
+    public String successController(){
+        return "/pay/paySuccess";
+    }
+
+    // nicepay 결제 성공
     @PostMapping("/payments")
     public String nicePayController(NicepayDto nicepayDto, Model model) throws JsonProcessingException {
 
@@ -90,7 +93,7 @@ public class PayController {
     public String kakaoPaySuccessControler(String pg_token){
         System.out.println("pgToken: " + pg_token);
         KakaoSinglePayment kakaoSinglePayment = (KakaoSinglePayment) kakaoPay.payApprove(pg_token);
-        return null;
+        return "redirect:/pay/success";
     }
 
     // 토스결제 성공 시
@@ -101,6 +104,6 @@ public class PayController {
         System.out.println(amount);
         System.out.println(paymentType);
 
-        return null;
+        return "redirect:/pay/success";
     }
 }
