@@ -148,8 +148,8 @@ class MyInfoJs {
 				const startDateDivTag = document.createElement("div");
 				const endDateDivTag = document.createElement("div");
 
-				nameDivTag.textContent = data[i].name;
-				contentDivTag.textContent = data[i].content;
+				nameDivTag.textContent = data[i].couponInfo.name;
+				contentDivTag.textContent = data[i].couponInfo.content;
 				startDateDivTag.textContent = data[i].startDate;
 				endDateDivTag.textContent = data[i].endDate;
 

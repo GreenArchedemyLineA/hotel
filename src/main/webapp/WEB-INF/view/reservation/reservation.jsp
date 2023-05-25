@@ -54,7 +54,7 @@
 					<select id="coupon--result">
 						<option value="0">쿠폰을 선택하세요</option>
 						<c:forEach var="couponList" items="${couponList}">
-							<option value="${couponList.name}">${couponList.name}</option>
+							<option value="${couponList.couponInfo.name}">${couponList.couponInfo.name}</option>
 						</c:forEach>
 					</select>
 				</c:when>

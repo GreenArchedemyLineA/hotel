@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
+import com.dodam.hotel.enums.CouponInfo;
 import com.dodam.hotel.enums.Grade;
 import com.dodam.hotel.repository.interfaces.CouponRepository;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
@@ -108,15 +109,18 @@ public class ReservationService {
 		if(resultRowCount != 1) {
 			// 예외 처리
 		} else {
-			if(count > 5 && userGrade.getGrade().getId() < 3) {
+			if(count >= 5 && userGrade.getGrade().getId() < 3) {
 				// 골드 등급업 처리
 				gradeRepository.updateUserGrade(userId, Grade.DIA); // 하드코딩 된거 바꿀 것
 				// 쿠폰 부여
+				couponRepository.insert(CouponInfo.DIA , userId);
+				couponRepository.insert(CouponInfo.DIA2 , userId);
 				System.out.println("다이아 등급업 !!!");
-			} else if (count > 2 && userGrade.getGrade().getId() < 2) {
+			} else if (count >= 2 && userGrade.getGrade().getId() < 2) {
 				// 다이아 등급업 처리
 				gradeRepository.updateUserGrade(userId, Grade.GOLD); // 하드코딩 된거 바꿀 것
 				// 쿠폰 부여
+				couponRepository.insert(CouponInfo.GOLD , userId);
 				System.out.println("골드 등급업 !!!");
 				
 			}

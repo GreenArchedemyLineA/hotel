@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dodam.hotel.dto.InquiryRequestDto;
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.enums.CouponInfo;
 import com.dodam.hotel.repository.interfaces.CouponRepository;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.interfaces.MembershipRepository;
@@ -107,7 +108,7 @@ public class UserService {
 	public void createMembership(Integer id) {
 		int resultRowCount = membershipRepository.insert(id);
 		// 숙박 쿠폰 자동 등록 처리
-		int couponCount = couponRepository.insert(id);
+		int couponCount = couponRepository.insert(CouponInfo.MEMBERSHIP , id);
 	}
 	
 	// id 찾는 기능
