@@ -22,9 +22,11 @@
 .main--container {
 	display: flex;
 }
+
 #logo--image {
-		width: 150px;
+	width: 150px;
 }
+
 .title--container {
 	flex: 1;
 	background-color: #64c5f3;
@@ -45,6 +47,7 @@
 
 .title--text {
 	margin: 150px 30px 0 0;
+	min-width: 250px;
 }
 
 .content--container {
@@ -63,12 +66,12 @@
 	width: 500px;
 	height: 500px;
 }
+
 .find--id:hover, .find--pwd:hover {
 	cursor: pointer;
 	background-color: #FFF7D1;
 	color: black;
 }
-
 
 .find--id {
 	background-color: black;
@@ -78,6 +81,7 @@
 	justify-content: center;
 	align-items: center;
 }
+
 .find--pwd {
 	background-color: black;
 	width: 180px;
@@ -86,7 +90,6 @@
 	justify-content: center;
 	align-items: center;
 }
-
 
 .title--container p {
 	font-size: 60px;
@@ -100,6 +103,7 @@
 	justify-content: center;
 	height: 40px;
 }
+
 .input--box {
 	width: 350px;
 	height: 40px;
@@ -122,14 +126,12 @@
 	background-color: #FFF7D1;
 	color: #000;
 }
-
 </style>
 </head>
 <main class="main--container">
 	<div class="title--container">
 		<div class="title--logo">
-			<a onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></a>
-			<img alt="" src="/images/logo_white.png" id="logo--image">
+			<a onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></a> <img alt="" src="/images/logo_white.png" id="logo--image">
 		</div>
 		<div class="title--text">
 			<p>아이디와</p>
@@ -142,39 +144,39 @@
 			<p class="find--id">아이디 찾기</p>
 			<p class="find--pwd">비밀번호 찾기</p>
 		</div>
-			<form action="/idInquiry" method="post" class="form--container" id="id--container">
-				<input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box"> <input type="date" name="birth" placeholder="생년월일 입력해 주세요" class="input--box"> <input type="text"
-					name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
-				<button type="submit" class="sub--button">아이디 찾기</button>
-			</form>
-			<form action="/pwInquiry" method="post" class="form--container" id="pwd--container">
-				<input type="email" name="email" placeholder="이메일을 입력해 주세요" class="input--box"> <input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box"> <input type="date"
-					name="birth" placeholder="생년월일 입력해 주세요" class="input--box"> <input type="text" name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
-				<button type="submit" class="sub--button">비밀번호 찾기</button>
-			</form>
+		<form action="/idInquiry" method="post" class="form--container" id="id--container">
+			<input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box"> <input type="date" name="birth" placeholder="생년월일 입력해 주세요" class="input--box"> <input type="text"
+				name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
+			<button type="submit" class="sub--button">아이디 찾기</button>
+		</form>
+		<form action="/pwInquiry" method="post" class="form--container" id="pwd--container">
+			<input type="email" name="email" placeholder="이메일을 입력해 주세요" class="input--box"> <input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box"> <input type="date"
+				name="birth" placeholder="생년월일 입력해 주세요" class="input--box"> <input type="text" name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
+			<button type="submit" class="sub--button">비밀번호 찾기</button>
+		</form>
 
 	</div>
-	
-<script>
-$(document).ready(function() {
-	$("#pwd--container").hide();
-	$(".find--id").addClass("change--background");
-});
 
-$(".find--id").click(function(){
-	  $("#id--container").show();
-	  $("#pwd--container").hide();
-	  $(".find--id").addClass("change--background");
-	  $(".find--id").siblings().removeClass("change--background");
-	});
+	<script>
+		$(document).ready(function() {
+			$("#pwd--container").hide();
+			$(".find--id").addClass("change--background");
+		});
 
-$(".find--pwd").click(function(){
-	  $("#id--container").hide();
-	  $("#pwd--container").show();
-	  $(".find--pwd").addClass("change--background");
-	  $(".find--pwd").siblings().removeClass("change--background");
-	});
-</script>
+		$(".find--id").click(function() {
+			$("#id--container").show();
+			$("#pwd--container").hide();
+			$(".find--id").addClass("change--background");
+			$(".find--id").siblings().removeClass("change--background");
+		});
+
+		$(".find--pwd").click(function() {
+			$("#id--container").hide();
+			$("#pwd--container").show();
+			$(".find--pwd").addClass("change--background");
+			$(".find--pwd").siblings().removeClass("change--background");
+		});
+	</script>
 </main>
 </body>
 </html>

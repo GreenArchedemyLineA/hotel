@@ -42,6 +42,7 @@
 	
 	.title--text {
 		margin: 150px 30px 0 0;
+		min-width: 250px;
 	}
 	
 	.content--container {

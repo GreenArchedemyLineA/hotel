@@ -82,7 +82,6 @@ public class ReservationController {
 	@PostMapping("/reserveRoom")
 	public String reserveRoom(ReservationRequestDto requestDto) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-		System.out.println(requestDto);
 		reservationService.createReserveRoom(requestDto, principal.getId());
 		return "redirect:/";
 	}
