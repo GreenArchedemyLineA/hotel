@@ -83,8 +83,10 @@
 		<div class="info--container">
 			<div class="myinfo--container">
 				<p style="margin-right: 20px;"><b>${responseGrade.user.name}</b> 님 환영합니다 !</p>
-				<p style="margin-right: 20px;">${responseGrade.user.tel}</p>
-				<p>${responseGrade.grade.name}</p>
+				<div>
+					<p style="margin-right: 20px;">${responseGrade.user.tel}</p>
+					<p>${responseGrade.grade.name}</p>					
+				</div>
 			</div>
 			<div class="myinfo--box">
 				<span id="userUpdate" class="myinfo--box--span">회원 정보 수정</span>
