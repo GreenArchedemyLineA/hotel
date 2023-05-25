@@ -9,10 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
+import com.dodam.hotel.enums.Grade;
 import com.dodam.hotel.repository.interfaces.CouponRepository;
+import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.interfaces.PointRepository;
 import com.dodam.hotel.repository.interfaces.ReservationRepository;
 import com.dodam.hotel.repository.model.Coupon;
+import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.Point;
 import com.dodam.hotel.repository.model.Reservation;
 
@@ -27,6 +30,11 @@ public class ReservationService {
 
 	@Autowired
 	private CouponRepository couponRepository;
+	
+	private int count;
+	
+	@Autowired
+	private GradeRepository gradeRepository;
 
 	// 특정 유저의 모든 예약 정보 출력
 	@Transactional
@@ -81,8 +89,38 @@ public class ReservationService {
 			reservationRequestDto.setFitnessId(1);
 		}
 		reservationRequestDto.setUserId(userId);
-		System.out.println(reservationRequestDto);
+		List<Reservation> responseEntitys = readAllReservationByUserId(userId);
+		// 해당 회원 현재 등급 조회
+		GradeInfo userGrade = gradeRepository.findGradeByUserId(userId);
+		// 해당 회원의 모든 예약 정보 불러와서 날짜 계산하기
+		count = 0;
+		
+		responseEntitys.forEach(res -> {
+			Long startDate = res.getStartDate().getTime();
+			Long endDate = res.getEndDate().getTime();
+			Long dayCount = ((endDate - startDate) / 1000) / (24*60*60);
+			count += dayCount.intValue();
+		});
+		
 		int resultRowCount = reservationRepository.insertReserveRoom(reservationRequestDto);
+		Integer nowReservationCount = reservationRequestDto.getDay();
+		count += nowReservationCount;
+		if(resultRowCount != 1) {
+			// 예외 처리
+		} else {
+			if(count > 5 && userGrade.getGrade().getId() < 3) {
+				// 골드 등급업 처리
+				gradeRepository.updateUserGrade(userId, Grade.DIA); // 하드코딩 된거 바꿀 것
+				// 쿠폰 부여
+				System.out.println("다이아 등급업 !!!");
+			} else if (count > 2 && userGrade.getGrade().getId() < 2) {
+				// 다이아 등급업 처리
+				gradeRepository.updateUserGrade(userId, Grade.GOLD); // 하드코딩 된거 바꿀 것
+				// 쿠폰 부여
+				System.out.println("골드 등급업 !!!");
+				
+			}
+		}
 
 		return resultRowCount;
 	}

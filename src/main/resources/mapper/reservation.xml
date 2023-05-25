@@ -59,7 +59,7 @@
 		<result column="room_id" property="id" />
 		<result column="room_availability" property="availability" />
 		<result column="room_status_desc" property="statusDesc" />
-		<collection property="room_type" resultMap="RoomType"></collection>
+		<collection property="roomType" resultMap="RoomType"></collection>
 	</resultMap>
 	
 	<resultMap type="com.dodam.hotel.repository.model.RoomType" id="RoomType">

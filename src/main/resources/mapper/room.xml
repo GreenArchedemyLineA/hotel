@@ -51,7 +51,7 @@
 
 	<!-- 예약 가능 객실 조회 -->
 	<select id="findRoombyDate" resultMap="Room">
-		select rt.name as room_type_name, rt.price as room_type_price 
+		select r.id as room_id, rt.name as room_type_name, rt.price as room_type_price 
 		from room_tb as r
 		left join room_type_tb as rt
 		on r.room_type_id = rt.id
@@ -74,7 +74,7 @@
     private String status_desc;
     private Integer number_of_p;
     -->
-    <select id="findAllRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
+   <!--  <select id="findAllRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb;
     </select>
     <select id="findById" resultType="com.dodam.hotel.repository.model.managertest.Room">
@@ -113,7 +113,7 @@
     <insert id="insertRoom">
         insert into room_tb(name, price, description, availability, image, status_desc, number_of_p)
         values(#{name}, #{price}, #{description}, #{availability}, #{image}, #{statusDesc}, #{numberOfp})
-    </insert>
+    </insert> -->
 
 
 </mapper>

@@ -68,6 +68,7 @@
 
 			포인트 사용하기 
 			<input type="text" name="point" placeholder="사용 가능 포인트 : ${point.point}" id="point--result" autocomplete="off">
+			<input type="hidden" name="day" id="day--result">
 		</div>
 		<div id="totalPrice"></div>
 		<button type="submit">결제하기</button>
@@ -77,6 +78,8 @@
 
 <!-- <script src="/js/price.js"></script> -->
 <script type="text/javascript">
+	const dayResultInput = document.getElementById("day--result");
+	
 	let searchParamsDate = (new URL(document.location)).searchParams;
 	let startDatejs = searchParamsDate.get("startDate");
 	let endDatejs = searchParamsDate.get("endDate");
@@ -89,13 +92,15 @@
 	
 	let day = (endDateSeconds-startDateSeconds) /1000 / 60 / 60 / 24
 	
+	dayResultInput.value = day;
+	
 	const diningPrice = ${diningPrice};
 	const spaPrice = ${spaPrice};
 	const poolPrice = ${poolPrice};
 	const fitnessPrice = ${fitnessPrice};
 	
 	
-	const roomPrice = ${selectDetail.price} * (day-1);
+	const roomPrice = ${selectDetail.price} * day;
 	const totalPriceTag = document.getElementById("totalPrice");
 	
 	const diningDivTag = document.getElementById('diningResult')

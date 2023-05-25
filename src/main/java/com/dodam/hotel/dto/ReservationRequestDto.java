@@ -21,7 +21,7 @@ public class ReservationRequestDto {
 	private Integer price;
 	private String name;
 	private Integer totalPrice;
-	
+	private Integer day;
 	// 부대시설 사용 여부 체크
 	private Integer diningCount;
 	private Integer spaCount;
