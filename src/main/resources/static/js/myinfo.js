@@ -212,7 +212,7 @@ class MyInfoJs {
 				if (data[i].room != null) {
 					startDateTdTag.textContent = data[i].startDate;
 					endDateTdTag.textContent = data[i].endDate;
-					roomNameTdTag.textContent = data[i].room.name;
+					roomNameTdTag.textContent = data[i].room.roomType.name;
 					numberOfPTdTag.textContent = data[i].numberOfP;
 					totalPriceTdTag.textContent = data[i].totalPrice;
 					createdAtTdTag.textContent = createdAt[0];

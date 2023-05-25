@@ -57,13 +57,18 @@
 	<!-- room -->
 	<resultMap id="Room" type="com.dodam.hotel.repository.model.Room">
 		<result column="room_id" property="id" />
-		<result column="room_name" property="name" />
-		<result column="room_price" property="price" />
 		<result column="room_availability" property="availability" />
-		<result column="room_description" property="description" />
-		<result column="room_image" property="image" />
 		<result column="room_status_desc" property="statusDesc" />
-		<result column="room_number_of_p" property="numberOfP" />
+		<collection property="room_type" resultMap="RoomType"></collection>
+	</resultMap>
+	
+	<resultMap type="com.dodam.hotel.repository.model.RoomType" id="RoomType">
+		<result column="room_type_id" property="id" />
+		<result column="room_type_name" property="name" />
+		<result column="room_type_price" property="price" />
+		<result column="room_type_description" property="description" />
+		<result column="room_type_image" property="image" />
+		<result column="room_type_number_of_p" property="numberOfP" />
 	</resultMap>
 	
 	<resultMap type="com.dodam.hotel.repository.model.Package" id="Package">
@@ -140,21 +145,30 @@
 			r.number_of_p as r_number_of_p,
 			r.created_at as r_created_at,
 			r.total_price as r_total_price,
+			
 			ro.id as room_id,
-			ro.name as room_name,
-			ro.price as room_price,
 			ro.availability as room_availability,
+			
+			rt.name as room_type_name,
+			rt.price as room_type_price,
+			rt.number_of_p as room_type_number_of_p,
+			
 			p.id as package_id,
 			p.name as package_name,
 			p.price as package_price,
+			
 			d.id as dining_id,
 			d.name as dining_name,
+			
 			s.id as spa_id,
 			s.price as spa_price,
+			
 			po.id as pool_id,
 			po.price as pool_pirce,
+			
 			u.id as user_id,
 			u.name as user_name
+			
 		from reservation_tb as r
 		left join user_tb as u
 		on r.user_id = u.id
@@ -170,6 +184,8 @@
 		on r.pool_id = po.id
 		left join spa_tb as s
 		on r.spa_id = s.id
+		left join room_type_tb as rt
+		on ro.room_type_id = rt.id
 		where r.user_id = #{userId}
 	</select>
 	
@@ -184,7 +200,8 @@
             u.withdrawal as user_withdrawal,
 
             r.id as room_id,
-            r.name as room_name,
+            
+            rt.name as room_type_name,
 
             d.id as dining_id,
             d.hours as dining_hours,
@@ -213,6 +230,8 @@
                     on re.user_id = u.id
                 left join room_tb as r
                     on re.room_id = r.id
+                left join room_type as rt
+                	on r.room_type_id = rt.id
                 left join dining_tb as d
                     on re.dining_id = d.id
                 left join package_tb as pack
@@ -240,7 +259,8 @@
             u.withdrawal as user_withdrawal,
 
             r.id as room_id,
-            r.name as room_name,
+            
+            rt.name as room_type_name,
 
             d.id as dining_id,
             d.hours as dining_hours,
@@ -269,6 +289,8 @@
                 on re.user_id = u.id
             left join room_tb as r
                 on re.room_id = r.id
+            left join room_type_tb as rt
+            	on r.room_type_id = rt.id
             left join dining_tb as d
                 on re.dining_id = d.id
             left join package_tb as pack

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.repository.interfaces.RoomRepository;
 import com.dodam.hotel.repository.model.Room;
+import com.dodam.hotel.repository.model.RoomType;
 
 @Service
 public class RoomService {
@@ -20,17 +21,17 @@ public class RoomService {
 	
 	// 모든 객실 조회
 	@Transactional
-	public List<Room> readAllRoom(String type) {
+	public List<RoomType> readAllRoom(String type) {
 		String name = "%" + type + "%";
-		List<Room> rooms = roomRepository.findAllRoom(type, name);
+		List<RoomType> rooms = roomRepository.findAllRoom(type, name);
 		
 		return rooms;
 	}
 	
 	// 특정 객실 조회
 	@Transactional
-	public Room readRoomById(Integer id) {
-		Room roomEntity = roomRepository.findRoomById(id);
+	public RoomType readRoomById(Integer id) {
+		RoomType roomEntity = roomRepository.findRoomById(id);
 		return roomEntity;
 	}
 	

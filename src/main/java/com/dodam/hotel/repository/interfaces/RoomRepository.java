@@ -3,21 +3,23 @@ package com.dodam.hotel.repository.interfaces;
 import java.util.List;
 
 
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.dto.StatusParams;
 import com.dodam.hotel.repository.model.Room;
+import com.dodam.hotel.repository.model.RoomType;
 
 @Mapper
 public interface RoomRepository {
 	
 	// 전체 객실 조회 (카테고리별)
-	public List<Room> findAllRoom(@Param("type") String type, @Param("name") String name);
+	public List<RoomType> findAllRoom(@Param("type") String type, @Param("name") String name);
 	
 	// 객실 상세페이지 조회
-	public Room findRoomById(Integer id);
+	public RoomType findRoomById(Integer id);
 	
 	// 예약된 객실 조회
 	public List<Room> findRoombyDate(ReservationRequestDto reservationRequestDto); 

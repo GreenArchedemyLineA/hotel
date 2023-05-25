@@ -30,11 +30,11 @@
 	</div>
 	<div class="room--container">
 		<c:forEach var="room" items="${roomList}">
-			${room.name} 
-			${room.price} 
+			${room.roomType.name} 
+			${room.roomType.price} 
 			<button class="sub--button" 
 			onclick=
-			"clickResBtn('${searchDto.startDate}', '${searchDto.endDate}','${searchDto.numberOfP}', '${room.id}', '${room.price}','${room.name}', '${searchDto.countPerson}', '${searchDto.countChild}', '${searchDto.countBaby}')">예약하기</button> <br />
+			"clickResBtn('${searchDto.startDate}', '${searchDto.endDate}','${searchDto.numberOfP}', '${room.id}', '${room.roomType.price}','${room.roomType.name}', '${searchDto.countPerson}', '${searchDto.countChild}', '${searchDto.countBaby}')">예약하기</button> <br />
 		</c:forEach>
 	</div>
 	
