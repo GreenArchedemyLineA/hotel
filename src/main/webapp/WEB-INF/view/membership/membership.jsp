@@ -12,8 +12,7 @@
 		font-family: 'Noto Sans KR', monospace;
 	}
 	.main--container {
-		display: flex;
-		
+		display: flex;	
 	}
 	#membership--image {
 		width: 150px;
@@ -21,7 +20,6 @@
 	.title--container {
 		flex: 1;
 		background-color: #64c5f3;
-		height: 100vh;
 		color: #fff;
 	}
 	.title--container p {
@@ -47,31 +45,49 @@
 	.content--container {
 		flex: 3;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
+		align-items: center;
+		padding: 20px;
 	}
-	.content--box--1 {
+	.content--box {
 		display: flex;
 		width: 1100px;
 		height: 400px;
 		justify-content: center;
 		margin-top: 100px;
-		
 	}
-	#membership--image {
+	
+	.membership--image{
 		width: 500px;
 	}
-	.content--description {
+	
+	.content--1 {
 		margin-left: 50px;
 	}
+	
+	.content--2 {
+		margin-right: 40px;
+	}
+	
+	.content--description {
+		display: flex;
+		flex-direction: column;
+		text-align: flex-end;
+		margin-left: 50px;
+	}
+	
 	.content--description--1 {
 		font-size: 40px;
 		font-weight: bold;
-		margin-bottom: 70px;
+		margin-bottom: 30px;
 	}
+	
 	.content--description--2 {
 		font-size: 25px;
 		margin-bottom: 70px;
 	}
+	
 	.button--container {
 		width: 200px;
 		height: 40px;
@@ -80,52 +96,19 @@
 		color: #fff;
 		
 	}
-	
-	
-	/* .form--container {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		height: 100vh;
-	}
-	.input--box {
-		width: 350px;
-		height: 40px;
-		border: none;
-		border-bottom: 2px solid black;
-		margin: 10px;
-	}
 	.sub--button {
 		background-color: black;
-		color: #fff;
-		width: 350px;
-		height: 40px;
-		margin: 20px;
-		cursor: pointer;
-	}
-	.check--box {
-		display: flex;
-		justify-content: flex-start;
-		margin-bottom: 100px;
-	}
-	.join--button {
-		background-color: #FF9F8D;
 		border: none;
-		color: #fff;
-		width: 350px;
-		height: 40px;
-		margin: 10px;
-		cursor: pointer;
+		width: 300px;
+		height: 50px;
+		font-size: 20px;
+		color: #ccc;
+		margin: 40px 0;
 	}
-	.find--button {
-		width: 350px;
-		height: 40px;
-		cursor: pointer;
-		border: 1px solid #FF9F8D;
-		background-color: #fff;
-	} */
+	
 </style>
+</head>
+<body>
 <main class="main--container">
 	<div class="title--container">
 		<div class="title--logo">
@@ -139,37 +122,41 @@
 		</div>
 	</div>
 	<div class="content--container">
-		<div class="content--box--1">
-			<img alt="" src="/images/2023.jpg" id="membership--image">
-			<div class="content--description">
+		<div class="content--box">
+			<img alt="" src="/images/2023.jpg" class="membership--image">
+			<div class="content--1">
 				<div class="content--description--1">
 					<p>경험은 풍성해지고</p>
 					<p>혜택은 더해집니다</p>
 				</div> 
 				<div class="content--description--2">
+					<p>ㅡ</p>
 					<p style="margin-bottom: 10px;">포인트 적립</p>
 					<p>멤버쉽 기간 동안 7% 적립</p>
 				</div>
 					<button type="button" onclick="#" class="button--container">도담 등급 보러가기</button>
 			</div>	
 		</div>
+		
+		<div class="content--box">
+			<div class="content--2">
+				<div class="content--description--1">
+					<p>Welcome 쿠폰을</p>
+					<p>지금 만나보세요</p>
+				</div> 
+				<div class="content--description--2">
+					<p>ㅡ</p>
+					<p style="margin-bottom: 10px;">1박 무료 숙박 쿠폰</p>
+					<p>바로 사용 가능한 숙박 쿠폰 제공</p>
+				</div>
+					<button type="button" onclick="#" class="button--container">멤버쉽 혜택 보러가기</button>
+			</div>	
+			<img alt="" src="/images/membership2.jpg" class="membership--image">
+		</div>
+		<div >
+			<button onclick="location.href='/joinMembership'" class="sub--button">멤버쉽 가입하기</button>
+		</div>
 	</div>
 </main>
-
-<div class="body--container">
-	<div class="navi--bar">
-		<ul class="navi--bar--ul">
-			<li>멤버쉽 소개</li>
-			<li>멤버쉽 가입</li>
-		</ul>
-	</div>
-	<div class="main--container">
-		도담 멤버쉽을 소개합니다
-	연회비 : 50만원
-	가입 시, 1박 무료 숙박 쿠폰 제공
-	멤버쉽 전용 패키지 이용 가능
-	</div>
-		<a href="/joinMembership"><button type="submit" class="sub--button">가입하기</button></a>
-</div>
 </body>
 </html>
