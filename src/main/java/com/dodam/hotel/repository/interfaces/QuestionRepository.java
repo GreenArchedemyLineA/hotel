@@ -28,4 +28,6 @@ public interface QuestionRepository {
 	public int updateById(Integer id); 
 	public List<TestQuestion> findByCategory(String category);
 	
+	public int deleteQuestion(Integer userId);
+	
 } // end of class

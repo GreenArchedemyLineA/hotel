@@ -121,10 +121,10 @@ public class QuestionController {
 		return "redirect:/question/questionList";
 	}
 	//질문 삭제
-	@GetMapping("questionDelete")
-	public String questionDelete(){
-		
-		return null;
+	@GetMapping("/questionDelete/{questionId}")
+	public String questionDelete(@PathVariable Integer questionId){
+		int deleteQuestion = questionService.questionDeleteById(questionId);
+		return "redirect:/question/questionList";
 	}
 	
 	@GetMapping("/category")
@@ -135,5 +135,6 @@ public class QuestionController {
 		}
 		return "/board/question";
 	}
+	
 	
 }

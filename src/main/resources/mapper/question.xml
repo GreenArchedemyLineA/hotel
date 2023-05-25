@@ -105,8 +105,9 @@
         WHERE id=#{id};
 	</update>
 	
-	<delete id="">
-		
+	<delete id="deleteQuestion">
+		delete from question_tb
+    		where user_id = #{userId};
 	</delete>
 	
 	
