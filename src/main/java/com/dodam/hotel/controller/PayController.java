@@ -1,10 +1,15 @@
 package com.dodam.hotel.controller;
 
 import com.dodam.hotel.dto.api.kakaopay.KakaoPay;
+import com.dodam.hotel.dto.api.kakaopay.KakaoRequestDto;
+import com.dodam.hotel.dto.api.nicepay.NicePay;
 import com.dodam.hotel.dto.api.nicepay.NicepayDto;
 import com.dodam.hotel.dto.api.kakaopay.KakaoPaymentDto;
 import com.dodam.hotel.dto.api.kakaopay.KakaoSinglePayment;
-import com.dodam.hotel.dto.api.tosspay.TossPaymentRequestDto;
+import com.dodam.hotel.dto.api.nicepay.NicepayResultDto;
+import com.dodam.hotel.dto.api.tosspay.TossPay;
+import com.dodam.hotel.dto.api.tosspay.TossResponse;
+import com.dodam.hotel.dto.api.tosspay.TosspayRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,10 +34,14 @@ import java.util.*;
 @RequestMapping("/pay")
 public class PayController {
     private KakaoPay kakaoPay = new KakaoPay();
+    private NicePay nicePay = new NicePay();
+    private TossPay tossPay = new TossPay();
     private final String NICE_PAY_CLIENT_ID = "S2_e9b9047ecf2a467b86a6c2311d47b9df";
     private final String NICE_PAY_SECRET_KEY = "3dd7b2bd320043a69f18b5c3e28d3dd2";
     private final RestTemplate restTemplate = new RestTemplate();
     private String kakaoTid;
+
+    // 다음은 카카오, 토스, 나이스페이 결제 예제를 위한 페이지입니다
     @GetMapping("/main")
     public String index(Model model){
         model.addAttribute("clientId", NICE_PAY_CLIENT_ID);
@@ -48,44 +57,24 @@ public class PayController {
     // nicepay 결제 성공
     @PostMapping("/payments")
     public String nicePayController(NicepayDto nicepayDto, Model model) throws JsonProcessingException {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((NICE_PAY_CLIENT_ID+":"+NICE_PAY_SECRET_KEY).getBytes()));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-
-        Map<String, Object> AuthenticationMap = new HashMap<>();
-        AuthenticationMap.put("amount", String.valueOf(nicepayDto.getAmount()));
-
-        HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(AuthenticationMap), headers);
-
-
-        // Jackson JsonNode
-        ResponseEntity<JsonNode> responseEntity = restTemplate.exchange(
-                "https://sandbox-api.nicepay.co.kr/v1/payments/" + nicepayDto.getTid(),
-                HttpMethod.POST,
-                request,
-                JsonNode.class
-        );
-
-        JsonNode responseNode = responseEntity.getBody();
-        String resultCode = responseNode.get("resultCode").asText();
-        if(resultCode.equalsIgnoreCase("0000")){
+        NicepayResultDto nicepayResultDto = (NicepayResultDto) nicePay.payReady(nicepayDto);
+        if("0000".equals(nicepayResultDto.getResultCode())){
             // 결제 성공 케이스 작성하고
-            System.out.println(responseNode);
-            return "/nicepay/paySuccess";
+            System.out.println(nicepayResultDto);
+            return "redirect:/pay/success";
         }else{
             // 결제 실패 케이스 작성
-            System.out.println(responseNode);
-            return "/nicepay/payFailed";
+            System.out.println(nicepayResultDto);
+            return "redirect:/pay/fail";
         }
     }
     // 카카오 결제(SDK 지원 방식이 보이지 않아 다음과 같이 사용)
     @GetMapping("/kakaopay")
-    public String kakaopayController(){
-        KakaoPaymentDto kakaoPaymentDto = (KakaoPaymentDto) kakaoPay.payReady();
+    public String kakaopayController(KakaoRequestDto kakaoRequestDto){
+        if(kakaoRequestDto.getItem_name() == null || kakaoRequestDto.getTotal_amount() == null){
+            //인터셉터 처리
+        }
+        KakaoPaymentDto kakaoPaymentDto = (KakaoPaymentDto) kakaoPay.payReady(kakaoRequestDto);
         return "redirect:" +kakaoPaymentDto.getNext_redirect_pc_url();
     }
 
@@ -98,12 +87,15 @@ public class PayController {
 
     // 토스결제 성공 시
     @GetMapping("/toss/success")
-    public String tossSuccessController(String paymentKey, String orderId, String amount, String paymentType){
-        System.out.println(paymentKey);
-        System.out.println(orderId);
-        System.out.println(amount);
-        System.out.println(paymentType);
-
+    public String tossSuccessController(TosspayRequest tosspayRequest){
+        System.out.println(tosspayRequest);
+        TossResponse tossResponse = (TossResponse) tossPay.payReady(tosspayRequest);
         return "redirect:/pay/success";
     }
 }
+// 다이닝 예약
+// 객실예약 마무리
+
+// 멤버쉽만 패키지 예약가능
+// -> 패키지따로 예약 페이지를 만드는게 훨씬나음..(?)
+// 리팩토링(중요동 낮음)

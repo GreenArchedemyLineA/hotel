@@ -2,6 +2,7 @@ package com.dodam.hotel.dto.api.kakaopay;
 
 import com.dodam.hotel.dto.api.pay.PayApproveRequest;
 import com.dodam.hotel.dto.api.pay.PayInterface;
+import com.dodam.hotel.dto.api.pay.PayReadyInterface;
 import com.dodam.hotel.dto.api.pay.PayReadyResponse;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +26,13 @@ public class KakaoPay implements PayInterface {
 //        return null;
 //    }
 
+    @Override
     public PayReadyResponse payReady() {
+        return null;
+    }
+
+    public PayReadyResponse payReady(PayReadyInterface kakaoRequestDto) {
+        KakaoRequestDto typeConverKakaoRequestDto = (KakaoRequestDto) kakaoRequestDto;
         URI uri = UriComponentsBuilder
                 .fromUriString("https://kapi.kakao.com")
                 .path("/v1/payment/ready")
@@ -41,10 +48,10 @@ public class KakaoPay implements PayInterface {
         parameters.add("cid", KAKAO_TESTCID);
         parameters.add("partner_order_id", "partner_order_id");
         parameters.add("partner_user_id", "partner_user_id");
-        parameters.add("item_name", "초코파이");
+        parameters.add("item_name", typeConverKakaoRequestDto.getItem_name());
         parameters.add("quantity", "1");
-        parameters.add("total_amount", "2200");
-        parameters.add("vat_amount", "200");
+        parameters.add("total_amount", typeConverKakaoRequestDto.getTotal_amount());
+        parameters.add("vat_amount", typeConverKakaoRequestDto.getVat_amount() != null ? typeConverKakaoRequestDto.getVat_amount() : "0");
         parameters.add("tax_free_amount", "0");
         parameters.add("approval_url", "http://localhost:8080/pay/kakao/success");
         parameters.add("fail_url", "http://localhost:8080/pay/kakao/fail");

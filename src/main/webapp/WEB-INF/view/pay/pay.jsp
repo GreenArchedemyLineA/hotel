@@ -16,6 +16,8 @@
 <script src="https://js.tosspayments.com/v1/payment-widget"></script>
 <script src="https://pay.nicepay.co.kr/v1/js/"></script>
 
+
+
 <script>
     function nicePay() {
         AUTHNICE.requestPay({
@@ -24,7 +26,7 @@
             orderId: '${orderId}',
             amount: 1000,
             goodsName: '나이스페이-상품',
-            returnUrl: 'http://localhost:8080/nicepay/payments',
+            returnUrl: 'http://localhost:8080/pay/payments',
             fnError: function (result) {
                 alert('개발자확인용 : ' + result.errorMsg + '')
             }
@@ -32,17 +34,17 @@
     }
 
     const clientKey = 'test_ck_P24xLea5zVAN5EQM26mrQAMYNwW6' // 테스트용 클라이언트 키
-    const customerKey = 'q7UMSZKxl-nn7tCSSmUr0' // 고객을 식별할 수 있는 키
+    const customerKey = 'lDbYSlFCj9PZh5k9iOPWV' // 고객을 식별할 수 있는 키
 
     // 2. 결제위젯 SDK 초기화
-    const paymentWidget = PaymentWidget(clientKey, customerKey);
-    const paymentMethods = paymentWidget.renderPaymentMethods('#payment-method', 1000, { variantKey: "widgetA" });
+    const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS);
+    const paymentMethods = paymentWidget.renderPaymentMethods('#payment-method', 1000);
     function tossPay(){
         paymentWidget.requestPayment({
             orderId: 'AD8aZDpbzXs4EQa-UkIX6',
             orderName: '토스 티셔츠 외 2건',
-            successUrl: 'http://localhost:8080/success',
-            failUrl: 'http://localhost:8080/fail',
+            successUrl: 'http://localhost:8080/pay/toss/success',
+            failUrl: 'http://localhost:8080/pay/fail',
             customerEmail: 'customer123@gmail.com',
             customerName: '김토스'
         })

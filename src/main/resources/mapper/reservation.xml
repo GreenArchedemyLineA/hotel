@@ -1,7 +1,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dodam.hotel.repository.interfaces.ReservationRepository">
-	
+
+
 	<!-- 피트니스 -->
 	<resultMap type="com.dodam.hotel.repository.model.Fitness" id="Fitness">
 		<result column="fitness_id" property="id" />
@@ -83,9 +84,9 @@
 		<result column="dining_id" property="id" />
 		<result column="dining_name" property="name" />
 		<result column="dining_hours" property="hours" />
-		<result column="location" property="location" />
-		<result column="availability" property="availability" />
-		<result column="status_desc" property="statusDesc" />
+		<result column="dining_location" property="location" />
+		<result column="dining_availability" property="availability" />
+		<result column="dining_status_desc" property="statusDesc" />
 		<result column="image1" property="image1" />
 		<result column="image2" property="image2" />
 		<result column="image3" property="image3" />
@@ -338,5 +339,37 @@
         delete from reservation_tb
         where id = #{id};
     </delete>
-    
+
+
+
+	<!-- writer: 이현서 -->
+	<resultMap id="DiningReservation" type="com.dodam.hotel.repository.model.managertest.DiningReservation">
+		<id property="id" column="r_id" />
+		<result property="startDate" column="r_start_date" />
+		<result property="endDate" column="r_end_date" />
+		<result property="numberOfP" column="r_number_of_p" />
+		<association property="user" resultMap="User" />
+		<association property="dining" resultMap="Dining" />
+	</resultMap>
+	<!-- writer: 이현서 -->
+	<select id="reservationFindDining" resultMap="DiningReservation">
+		select
+			re.id as r_id,
+			re.start_date as r_start_date,
+			re.end_date as r_end_date,
+			re.number_of_p as r_number_of_p,
+			u.id as user_id,
+			u.name as user_name,
+			d.id as dining_id,
+			d.name as dining_name,
+			d.location as dining_location,
+			d.availability as dining_availability,
+			d.status_desc as dining_status_desc
+		from reservation_tb as re
+		left join dining_tb as d
+		    on re.dining_id = d.id
+		left join user_tb as u
+			on re.user_id = u.id
+		where re.dining_id is not null and re.start_date=#{date};
+	</select>
 </mapper>
