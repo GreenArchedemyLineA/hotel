@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@300;400&display=swap');
+
 	* {
 		margin: 0;
 		font-family: 'Noto Sans KR', monospace;
@@ -65,8 +66,6 @@
 		width: 550px;
 		height: 30px;
 	}
-	
-	
 </style>
 	<main class="main--container">
 		<div class="title--container">

@@ -23,7 +23,7 @@
 	}
 	
 	#calender {
-		width: 1000px;
+		width: 600px;
 	    height: 50px;
 	    border: none;
 	    font-size: 30px;
@@ -31,7 +31,7 @@
 	}
 	
 	.flatpickr-calendar {
-		width: 1100px;
+		width: 600px;
     	height: 900px;
 	}
 	
@@ -48,6 +48,7 @@
 	}
 	.flatpickr-days {
 		width: 100%;
+		height: 505px;
 	}
 	
 	.dayContainer {
@@ -59,8 +60,9 @@
 	.flatpickr-day {
 		width: 150px;
 	    max-width: 150px;
-	    height: 100px;
+	    height: 80px;
 	}
+	
 	.search--button {
 		margin-top: 50px;
 		width: 100px;
@@ -69,12 +71,15 @@
 	.count--container {
 		margin-top: 50px;
 	}
+	
 </style>
 </head>
 <body>
 	<div class="calender--container">
 		<form action="/search" method="get">
-		 <input type="text" class="dateSelector" id="calender" name="date">
+		<div>
+			 <input type="text" class="dateSelector" id="calender" name="date">
+		</div>
 		 <div class="count--container">
 			성인 
 			<select name="countPerson">
@@ -107,10 +112,7 @@
 		mode: "range",
 	    minDate: "today",
 	    inline: true
-
 	});
-	
-	
 </script>
 </body>
 </html>

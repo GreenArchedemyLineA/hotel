@@ -152,6 +152,7 @@ class MyInfoJs {
 				contentDivTag.textContent = data[i].couponInfo.content;
 				startDateDivTag.textContent = data[i].startDate;
 				endDateDivTag.textContent = data[i].endDate;
+				
 
 				const childNodeArry = [nameDivTag, contentDivTag, startDateDivTag, endDateDivTag];
 
