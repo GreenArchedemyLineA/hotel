@@ -1,7 +1,7 @@
 package com.dodam.hotel.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +10,7 @@ import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.repository.interfaces.CouponRepository;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
+import com.dodam.hotel.repository.interfaces.MUserRepository;
 import com.dodam.hotel.repository.interfaces.MembershipRepository;
 import com.dodam.hotel.repository.interfaces.PointRepository;
 import com.dodam.hotel.repository.interfaces.UserRepository;
@@ -23,6 +24,9 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	@Autowired
+	private MUserRepository mUserRepository;
+	
+	@Autowired
 	private MembershipRepository membershipRepository;
 	
 	@Autowired
@@ -32,13 +36,15 @@ public class UserService {
 	private GradeRepository gradeRepository; 
 	
 	@Autowired
-	private PointRepository pointRepository; 
+	private PointRepository pointRepository;
+	
+	@Value("${dodam.key}")
+	private String dodamKey;
 	
 	// 로그인용
 	@Transactional
 	public UserResponseDto.LoginResponseDto readUserByIdAndPassword(UserRequestDto.LoginFormDto user) {
 		UserResponseDto.LoginResponseDto responseUser = userRepository.findUserByLoginFormDto(user);
-		System.out.println(responseUser);
 		if(responseUser.getBlacklist()) {
 			// 블랙당한 user
 			// 예외 처리
@@ -49,8 +55,15 @@ public class UserService {
 			// 예외처리
 			return null;
 		}
+		
+		// 카카오 로그인
+		if(responseUser.getSocialLogin() == false) {
+			// 일반회원 예외처리
+		}
+		
 		return responseUser;
 	}
+
 	
 	// 내정보 페이지에 회원 정보 출력
 	@Transactional
@@ -82,8 +95,15 @@ public class UserService {
 	 *  회원가입 서비스 (성희)
 	 */
 	@Transactional
-	public void createUser(UserRequestDto.insertDto insertDto) {
+	public UserRequestDto.insertDto createUser(UserRequestDto.insertDto insertDto) {
 		// 중복 회원가입 검사 (todo)
+		
+		// 카카오 로그인 비밀번호 및 소셜로그인 여부 세팅
+		if(insertDto.getPassword() == null) {
+			insertDto.setPassword(dodamKey);
+			insertDto.setSocialLogin(true);
+		}
+		
 		// 조회 돌리기
 		int resultRowCount = userRepository.insert(insertDto);
 		if (resultRowCount != 1) {
@@ -98,6 +118,7 @@ public class UserService {
 		// 포인트 세팅
 		int pointResult = pointRepository.insertZeroPoint(userId);
 		
+		return insertDto;
 	}
 	
 	/**
@@ -135,6 +156,12 @@ public class UserService {
 			}
 		}
 		return resultRow;
+	}
+	
+	// 카카오 로그인 (성희)
+	@Transactional
+	public String kakaoLogin(String code) {
+		return null;
 	}
 }
 

@@ -172,8 +172,8 @@ class MyInfoJs {
 				const startDateDivTag = document.createElement("div");
 				const endDateDivTag = document.createElement("div");
 
-				nameDivTag.textContent = data[i].name;
-				contentDivTag.textContent = data[i].content;
+				nameDivTag.textContent = data[i].couponType.name;
+				contentDivTag.textContent = data[i].couponType.content;
 				startDateDivTag.textContent = "유효기간: " + data[i].startDate+" - ";
 				endDateDivTag.textContent = data[i].endDate;
 

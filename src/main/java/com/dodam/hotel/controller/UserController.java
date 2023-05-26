@@ -20,8 +20,6 @@ import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.repository.model.Coupon;
 import com.dodam.hotel.repository.model.GradeInfo;
-import com.dodam.hotel.repository.model.Reply;
-import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.CouponService;
 import com.dodam.hotel.service.GradeService;
@@ -83,15 +81,13 @@ public class UserController {
 	@PostMapping("/loginProc")
 	public String loginProc(UserRequestDto.LoginFormDto loginDto) {
 		UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(loginDto);
-		System.out.println(loginDto);
-		System.out.println(principal);
 		session.setAttribute(Define.PRINCIPAL, principal);
 		
 		if(principal.getRandomPwdStatus()) {
 			return "/user/changePw";
 		}
 		
-		return "redirect:/myPage";
+		return "redirect:/";
 	}
 	
 	// 비밀번호 변경 페이지

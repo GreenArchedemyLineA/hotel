@@ -36,6 +36,7 @@ public class UserRequestDto {
 		private String gender;
 		private Date birth;
 		private String tel;
+		private Boolean socialLogin;
 	}
 	
 	// 비밀번호 변경

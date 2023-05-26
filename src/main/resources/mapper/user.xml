@@ -41,8 +41,8 @@
 	
 	<!-- 회원가입 -->
 	<insert id="insert">
-	INSERT INTO user_tb (email, password, name, gender, birth, tel)
-	VALUES (#{email}, #{password}, #{name}, #{gender}, #{birth}, #{tel})
+	INSERT INTO user_tb (email, password, name, gender, birth, tel, social_login)
+	VALUES (#{email}, #{password}, #{name}, #{gender}, #{birth}, #{tel}, #{socialLogin})
 	</insert>
 	
 	<!-- 제일 최근 가입 회원 조회 -->
