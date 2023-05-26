@@ -1,6 +1,7 @@
 package com.dodam.hotel.controller;
 
-import com.dodam.hotel.repository.model.managertest.DiningReservation;
+import com.dodam.hotel.repository.model.DiningReservation;
+
 import com.dodam.hotel.service.ManagerReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

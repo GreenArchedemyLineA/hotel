@@ -61,6 +61,8 @@ public class PayController {
         if("0000".equals(nicepayResultDto.getResultCode())){
             // 결제 성공 케이스 작성하고
             System.out.println(nicepayResultDto);
+            // pay결제성공시 서비스 넣고
+            
             return "redirect:/pay/success";
         }else{
             // 결제 실패 케이스 작성
@@ -82,6 +84,7 @@ public class PayController {
     public String kakaoPaySuccessControler(String pg_token){
         System.out.println("pgToken: " + pg_token);
         KakaoSinglePayment kakaoSinglePayment = (KakaoSinglePayment) kakaoPay.payApprove(pg_token);
+        // 성공 서비스
         return "redirect:/pay/success";
     }
 
@@ -90,6 +93,7 @@ public class PayController {
     public String tossSuccessController(TosspayRequest tosspayRequest){
         System.out.println(tosspayRequest);
         TossResponse tossResponse = (TossResponse) tossPay.payReady(tosspayRequest);
+        // 성공 서비스
         return "redirect:/pay/success";
     }
 

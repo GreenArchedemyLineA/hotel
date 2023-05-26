@@ -1,16 +1,14 @@
 package com.dodam.hotel.repository.interfaces;
 
 import java.sql.Date;
-
 import java.util.List;
 
-
-import com.dodam.hotel.repository.model.managertest.DiningReservation;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.repository.model.Reservation;
+import com.dodam.hotel.repository.model.DiningReservation;
 import com.dodam.hotel.util.PagingObj;
 
 @Mapper

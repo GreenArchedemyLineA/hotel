@@ -431,7 +431,7 @@
 
 
 	<!-- writer: 이현서 -->
-	<resultMap id="DiningReservation" type="com.dodam.hotel.repository.model.managertest.DiningReservation">
+	<resultMap id="DiningReservation" type="com.dodam.hotel.repository.model.DiningReservation">
 		<id property="id" column="r_id" />
 		<result property="startDate" column="r_start_date" />
 		<result property="endDate" column="r_end_date" />

@@ -1,10 +1,8 @@
-package com.dodam.hotel.repository.model.managertest;
-
-import com.dodam.hotel.repository.model.Dining;
-import com.dodam.hotel.repository.model.User;
-import lombok.Data;
+package com.dodam.hotel.repository.model;
 
 import java.sql.Date;
+
+import lombok.Data;
 
 /**
  * @author lhs-devloper

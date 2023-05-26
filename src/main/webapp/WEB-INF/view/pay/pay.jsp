@@ -18,7 +18,9 @@
 
 
 
+
 <script>
+	// clientId, orderId, goodsName 
     function nicePay() {
         AUTHNICE.requestPay({
             clientId: '${clientId}',
@@ -44,7 +46,7 @@
             (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
         );
     }
-
+	// Toss결제시 orderName에 상품이름 추가
     function tossPay(){
         paymentWidget.requestPayment({
             orderId: uuidv4(),
