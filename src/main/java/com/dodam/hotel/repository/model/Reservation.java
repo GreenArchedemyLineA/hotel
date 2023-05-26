@@ -14,7 +14,7 @@ public class Reservation {
     private Integer numberOfP;
     private Integer userId;
     private Integer roomId;
-    private Integer price;
+    private Integer totalPrice;
     private Timestamp createdAt;
     private Integer diningId;
     private Integer packageId;
