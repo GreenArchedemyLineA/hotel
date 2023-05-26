@@ -86,12 +86,14 @@
                  where availability = #{roomStatus}
                  or number_of_p = #{numberOfp}
                  or price = #{price};
+                   or number_of_p = #{numberOfP}
+                   or price = #{price};
     </select>
 
     <select id="findOptionStatusAndNumberOfpRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb
         where availability = #{roomStatus}
-          and number_of_p = #{numberOfp};
+          and number_of_p = #{numberOfP};
     </select>
     <select id="findOptionStatusAndPriceRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb
@@ -100,20 +102,23 @@
     </select>
     <select id="findOptionNumberOfpAndPriceRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb
-        where number_of_p = #{numberOfp}
+        where number_of_p = #{numberOfP}
           and price = #{price};
     </select>
     <select id="findAllOptionRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb
         where availability = #{roomStatus}
-          and number_of_p = #{numberOfp}
+          and number_of_p = #{numberOfP}
           and price = #{price};
     </select>
 
     <insert id="insertRoom">
         insert into room_tb(name, price, description, availability, image, status_desc, number_of_p)
-        values(#{name}, #{price}, #{description}, #{availability}, #{image}, #{statusDesc}, #{numberOfp})
-    </insert> -->
+        values(#{name}, #{price}, #{description}, #{availability}, #{image}, #{statusDesc}, #{numberOfP})
+    -->
 
-
+	<update id="updateManagerRoom">
+		update room_tb set availability = #{availability} where id = #{id}; 
+	</update>
+	
 </mapper>

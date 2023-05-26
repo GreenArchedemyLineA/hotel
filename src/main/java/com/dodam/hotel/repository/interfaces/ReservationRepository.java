@@ -1,7 +1,11 @@
 package com.dodam.hotel.repository.interfaces;
 
+import java.sql.Date;
+
 import java.util.List;
 
+
+import com.dodam.hotel.repository.model.managertest.DiningReservation;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,4 +37,6 @@ public interface ReservationRepository {
     int deleteReservation(Integer id);
 
     Reservation findReservationById(Integer id);
+
+	List<DiningReservation> reservationFindDining(Date date);
 }

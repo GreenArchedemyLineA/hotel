@@ -1,47 +1,107 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
-</head>
-<body>
-    <table>
-        <tr>
-            <th>방 이름</th>
-            <th>방 가격</th>
-            <th>방 사용 여부 가능</th>
-            <th>방 내용</th>
-            <th>방 상태 내용</th>
-            <th>방 수용 인원</th>
-        </tr>
-        <c:forEach var="room" items="${roomList}">
-            <tr onclick="statusDetail(${room.id})">
-                <td>${room.name}</td>
-                <td>${room.price}</td>
-                <td>${room.availability}</td>
-                <td>${room.description}</td>
-                <td>${room.statusDesc}</td>
-                <td>${room.numberOfp}</td>
-            </tr>
-        </c:forEach>
-    </table>
-<form>
-    <h3>option</h3>
-    <input type="checkbox" name="roomStatus">
-    <input type="number" name="numberOfp" max="10" value="5">
-    <input type="number" name="price">
-    <input type="submit">
-</form>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../layout/managerHeader.jsp"%>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzkxekb89f"></script>
+<style>
+.container {
+	color: black;
+}
+
+header {
+	font-size: 30px;
+	color: black;
+}
+
+.content {
+	display: flex;
+}
+
+.navi {
+	display: flex;
+	flex: 1;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	flex: 3;
+}
+
+.navi {
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+}
+
+.content {
+	display: flex;
+	height: 100vh;
+}
+
+.main--content {
+	border: 2px solid black;
+	width: 1200px;
+	height: 600px;
+	margin-left: 30px;
+	margin-top: 30px;
+}
+
+.navi--bar {
+	border: 2px solid black;
+	margin-top: 30px;
+	width: 200px;
+	height: 400px;
+}
+
+li {
+	list-style: none;
+}
+
+td, th, button {
+	color: black;
+}
+</style>
+<div class="content">
+	<div class="navi">
+		<div class="navi--bar"></div>
+	</div>
+	<div class="main">
+		<header>여짝에 리스트</header>
+		<div class="main--content">
+			<form action="/manager/managerMain" method="get">
+				<button type="submit">돌아가기</button>
+			</form>
+			<form>
+				<h3>option</h3>
+				<input type="checkbox" name="roomStatus">
+				<input type="number" name="numberOfP" max="10" value="5"> 
+				<input type="number" name="price"> 
+				<input type="submit">
+			</form>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">방 이름</th>
+						<th scope="col">방 가격</th>
+						<th scope="col">방 사용유무</th>
+						<th scope="col">방 상태</th>
+						<th scope="col">방 수용 인원</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="room" items="${roomList}">
+						<tr onclick="statusDetail(${room.id})">
+							<td>${room.name}</td>
+							<td>${room.price}</td>
+							<td>${room.availability == true ? "사용가능" : "사용불가"}</td>
+							<td>${room.statusDesc}</td>
+							<td>${room.numberOfP}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
 <script>
     function statusDetail(id){
         location.href = "/manager/roomStatusDetail?roomId="+id;

@@ -102,7 +102,7 @@ public class QuestionController {
 		}
 		return "/board/question";
 	}
-	
+	//문의 사항 상세보기
 	@GetMapping("/questionDetail/{id}")
 	public String questionDetail(@PathVariable Integer id,Model model) {
 		TestQuestion question = questionService.findById(id);
@@ -111,7 +111,7 @@ public class QuestionController {
 		}
 		return "/board/questionDetail";
 	}
-	
+	//댓글 달아 보내기
 	@PostMapping("/reply/{questionId}/{managerId}")
 	@Transactional
 	public String insertReply(String content,@PathVariable Integer questionId,@PathVariable Integer managerId) {
@@ -119,11 +119,11 @@ public class QuestionController {
 		int insertReply = questionService.insertReply(content, questionId, managerId);
 		return "redirect:/question/questionList";
 	}
-	
-	@GetMapping("questionDelete")
-	public String questionDelete(){
-		
-		return null;
+	//질문 삭제
+	@GetMapping("/questionDelete/{questionId}")
+	public String questionDelete(@PathVariable Integer questionId){
+		int deleteQuestion = questionService.questionDeleteById(questionId);
+		return "redirect:/question/questionList";
 	}
 	
 	@GetMapping("/category")
@@ -134,5 +134,6 @@ public class QuestionController {
 		}
 		return "/board/question";
 	}
+	
 	
 }

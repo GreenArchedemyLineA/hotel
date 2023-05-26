@@ -18,7 +18,8 @@ public class ReservationOptionPrice {
 	private Integer spaPrice;
 	private Integer poolPrice;
 	private Integer fitnessPrice;
-	
+
+	@Autowired
 	private FacilitiesRepository facilitiesRepository;
 	
 	@Autowired

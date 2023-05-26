@@ -1,19 +1,29 @@
 package com.dodam.hotel.service;
 
-import com.dodam.hotel.dto.StatusParams;
+import java.util.HashMap;
 
-import com.dodam.hotel.repository.interfaces.RoomRepository;
+import java.util.List;
+
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.dodam.hotel.dto.ManagerSignInFormDto;
+import com.dodam.hotel.dto.StatusParams;
 import com.dodam.hotel.repository.interfaces.MUserRepository;
 import com.dodam.hotel.repository.interfaces.ManagerRepository;
+import com.dodam.hotel.repository.interfaces.RoomRepository;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
+import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Room;
+import com.dodam.hotel.repository.model.RoomType;
 
-import java.util.List;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
+
 
 @Service
 public class ManagerService {
@@ -34,7 +44,7 @@ public class ManagerService {
 
 	public List<Room> findConditionsRoomList(StatusParams statusParams) {
 		Boolean roomStatus = statusParams.getRoomStatus();
-		Integer numberOfp = statusParams.getNumberOfp();
+		Integer numberOfp = statusParams.getNumberOfP();
 		Integer price = statusParams.getPrice();
 
 		List<Room> rooms;
@@ -65,15 +75,36 @@ public class ManagerService {
 		return rooms;
 	}
 
-	public Room findByRoom(Integer roomId) {
-		Room room = roomRepository.findById(roomId);
+	public RoomType findByRoom(Integer roomId) {
+		RoomType room = roomRepository.findRoomById(roomId);
 		return room;
 	}
 
 	// 매니저 로그인
 	public Manager managerSign(ManagerSignInFormDto managerSignInFormDto) {
-		System.out.println(managerSignInFormDto);
 		Manager managerEntity = managerRepository.findByManagernameAndPassword(managerSignInFormDto);
+		
+		if(managerEntity != null) {
+//			    String api_key = "NCSYYRDX9Y5UNIO7";
+//		        String api_secret = "YEHIFZWNUP9GCLPXD9SHND2DWEOQRIQP";
+//		        Message coolsms = new Message(api_key, api_secret);
+//		        HashMap<String, String> params = new HashMap<String, String>();
+//
+//		        params.put("to", "01052770535");
+//		        params.put("from", "01038379096");
+//		        params.put("type", "SMS");
+//		        params.put("text", "강사님 안녕하세요!!!!!!!!!!!!!!!!!!");
+//		        params.put("app_version", "test app 1.2");
+//
+//		        try {
+//		            JSONObject obj = (JSONObject)coolsms.send(params);
+//		            System.out.println(obj.toString());
+//		        } catch (CoolsmsException e) {
+//		            System.out.println(e.getMessage());
+//		            System.out.println(e.getCode());
+//		        }
+		}
+		
 		return managerEntity;
 	}
 
@@ -82,10 +113,16 @@ public class ManagerService {
 		List<MUser> userListEntity = mUserRepository.findByAll();
 		return userListEntity;
 	}
-
+	
+	
 	// 이름으로 회원 검색
 	public List<MUser> managerUserList(String name) {
 		List<MUser> userListEntity = mUserRepository.findByname(name);
+		return userListEntity;
+	}
+	//등급별 회원 조회
+	public List<GradeInfo> managerUserGradeList(Integer gradeId){
+		List<GradeInfo> userListEntity = mUserRepository.findByGradeAll(gradeId);
 		return userListEntity;
 	}
 	
@@ -123,17 +160,21 @@ public class ManagerService {
 		return withdrawalUserEmailEntity;
 	}
 	
-	
 	// 회원등급 조회
 	public GradeInfo selectUserGrade(Integer id) {
 		GradeInfo userGradeEntity = mUserRepository.findByUserId(id);
 		return userGradeEntity;
 	}
-
-	// 회원 등급 수정()
+	
+	//맴버쉽 회원 조회
+	public List<MembershipInfo> findByMembershipUserList(){
+		List<MembershipInfo> membershipUserListEntity = mUserRepository.findByMembershipAll();
+		return membershipUserListEntity;		
+	}
+	
+	// 회원 등급 수정
 	public int changeGradeByUserIdAndGradeId(Integer gradeId, Integer id) {
-		int resultRowCount = mUserRepository.updateGrade(gradeId, id);
-		
+		int resultRowCount = mUserRepository.updateGrade(gradeId, id);	
 		return resultRowCount;
 	}
 

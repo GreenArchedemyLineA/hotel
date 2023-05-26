@@ -54,10 +54,16 @@ public class QuestionService {
 	// 특정 유저 질문 조회 기능
 	@Transactional
 	public List<Reply> readQuestionByUserId(Integer userId) {
-		List<Reply> questionEntitys = questionRepository.selectQuestionByUserId(userId);
-		return questionEntitys;
+		List<Reply> questionEntity = questionRepository.selectQuestionByUserId(userId);
+		return questionEntity;
 	}
-
+	//질문 삭제 기능
+	@Transactional
+	public int questionDeleteById(Integer questionId) {
+		int deleteReplyEntity = replyRepository.deleteReply(questionId);
+		int questionDeleteEntity = questionRepository.deleteQuestion(questionId);
+		return questionDeleteEntity;
+	}
 	// 문의 전부 보기
 	public List<TestQuestion> findAllQuestionList(){
 		List<TestQuestion> questionListEntity = questionRepository.findAllQuestion(); 

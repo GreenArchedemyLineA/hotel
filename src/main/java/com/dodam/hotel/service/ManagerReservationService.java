@@ -1,11 +1,13 @@
 package com.dodam.hotel.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.dodam.hotel.repository.model.managertest.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +24,6 @@ import com.dodam.hotel.repository.model.Dining;
 import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.Room;
-import com.dodam.hotel.repository.model.managertest.Fitness;
-import com.dodam.hotel.repository.model.managertest.PackageTB;
-import com.dodam.hotel.repository.model.managertest.Pool;
-import com.dodam.hotel.repository.model.managertest.Spa;
 
 /**
  * @author lhs-devloper
@@ -99,5 +97,10 @@ public class ManagerReservationService {
     public int deleteReservation(Integer id){
         int result = reservationRepository.deleteReservation(id);
         return result;
+    }
+
+    public List<DiningReservation> findDiningReservationAllList(Date date){
+        List<DiningReservation> diningReservationList = reservationRepository.reservationFindDining(date);
+        return diningReservationList;
     }
 }

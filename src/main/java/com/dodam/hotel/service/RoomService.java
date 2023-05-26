@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
+import com.dodam.hotel.dto.UpdateRoomStatusDto;
 import com.dodam.hotel.repository.interfaces.RoomRepository;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.repository.model.RoomType;
@@ -35,7 +36,11 @@ public class RoomService {
 		return roomEntity;
 	}
 	
-	
+	//룸 사용가능 상태 변경 <- 매니저 부분
+	public int RoomStatusTrueAndFalse(Integer id,Boolean availability) {
+		int roomEntity = roomRepository.updateManagerRoom(id,availability);
+		return roomEntity;
+	}
 	/**
 	 *  전체 예약 객실 조회 (성희)
 	 */
@@ -56,5 +61,7 @@ public class RoomService {
 		
 		return selectList;
 	}
+	
+	
 	
 } // end of class

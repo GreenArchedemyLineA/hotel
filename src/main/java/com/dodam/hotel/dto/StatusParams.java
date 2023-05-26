@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class StatusParams {
     private Boolean roomStatus;
-    private Integer numberOfp;
+    private Integer numberOfP;
     private Integer price;
 }

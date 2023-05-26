@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.dto.StatusParams;
+import com.dodam.hotel.dto.UpdateRoomStatusDto;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.repository.model.RoomType;
 
@@ -24,8 +25,11 @@ public interface RoomRepository {
 	// 예약된 객실 조회
 	public List<Room> findRoombyDate(ReservationRequestDto reservationRequestDto); 
 	
+	//룸 사용가능 상태변경
+	public int updateManagerRoom(@Param("id") Integer id, @Param("availability") Boolean availability);
+	
 	List<Room> findAllRoomList();
-
+	
     // 인원 수
     List<Room> findOptionSearchOneRoomList(StatusParams statusParams);
     List<Room> findOptionStatusAndNumberOfpRoomList(StatusParams statusParams);
@@ -46,7 +50,7 @@ public interface RoomRepository {
     private Integer number_of_p;
      */
     int insertRoom(Room room);
-
+    
     Room findById(Integer roomId);
     
 } // end of class

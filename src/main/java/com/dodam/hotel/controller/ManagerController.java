@@ -1,26 +1,30 @@
 package com.dodam.hotel.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
-
-import com.dodam.hotel.dto.StatusParams;
-import com.dodam.hotel.repository.model.Room;
+import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dodam.hotel.dto.ManagerSignInFormDto;
+import com.dodam.hotel.dto.StatusParams;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
+import com.dodam.hotel.repository.model.MembershipInfo;
+import com.dodam.hotel.repository.model.Room;
+import com.dodam.hotel.repository.model.RoomType;
 import com.dodam.hotel.service.ManagerService;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
+import com.dodam.hotel.service.RoomService;
 
 @Controller
 @RequestMapping("/manager")
@@ -30,12 +34,25 @@ public class ManagerController {
 	private ManagerService managerService;
 	@Autowired
 	private HttpSession session;
-
+	@Autowired
+	private RoomService roomService;
 
 	@GetMapping("/managerPage")
 	public String managerPage() {
 
 		return "/manager/managerLogin";
+	}
+	
+	@GetMapping("/managerMain")
+	public String managerMain() {
+
+		return "/manager/managerMain";
+	}
+	
+	@GetMapping("/managerLogout")
+	public String managerLogout(){
+		session.invalidate();
+		return "redirect:/manager/managerPage";
 	}
 	
 	//유저 리스트
@@ -49,18 +66,38 @@ public class ManagerController {
 		}
 		return "/manager/userList";
 	}
+	
 	// 이름으로 유저 조회;
 	@GetMapping("/userNameList")
 	public String mUserList(String name,Model model){
 		
 		List<MUser> userList = managerService.managerUserList(name);
-		System.out.println(userList);
 		if(userList != null) {
 			model.addAttribute("userList",userList);
 		}
 		return "/manager/userList";
 	}
-
+	
+	//등급으로 유저 조회
+	@GetMapping("/userGradeList")
+	public String mUserGradeList(Integer gradeId,Model model) {
+		List<GradeInfo> userGradeList = managerService.managerUserGradeList(gradeId);
+		if(userGradeList != null) {
+			model.addAttribute("userList",userGradeList);
+		}
+		return "/manager/userGrade";
+	}
+	
+	//맴버쉽 회원 조회
+	@GetMapping("/membershipUserList")
+	public String membershipUserList(Model model) {
+		List<MembershipInfo> membershipUserList = managerService.findByMembershipUserList();
+		if(membershipUserList != null) {
+			model.addAttribute("userList",membershipUserList);
+		}
+		return "/manager/membershipUserList";
+	}
+	
 	//블랙리스트 조회
 	@GetMapping("/blackList")
 	public String mUserBlackList(Model model){
@@ -79,9 +116,8 @@ public class ManagerController {
 		
 		int userWithdrawal = managerService.userUpdateWithdrawal(id);
 		int userOriginEmail = managerService.userUpdateOriginEmail(email, id);
+		//현우 쪽이랑 합친뒤 유틸 패키지에 있는 랜덤 문자 매서드 를 불러와서 이메일 뒤에 합쳐준다
 		int WithdrawalEmail = managerService.withdrawalEmail(email+"/", id);
-		System.out.println(id);
-		System.out.println(email);
 		return "redirect:/manager/blackList";
 	}
 	
@@ -96,9 +132,10 @@ public class ManagerController {
 		if (principal != null) {
 			session.setAttribute("principal", principal);
 		}
-		return "redirect:/manager/userList";
+		return "/manager/managerMain";
 	}
 
+	
 	@GetMapping("/roomStatus")
 	public String Check(StatusParams statusParams, Model model) {
 		List<Room> rooms;
@@ -106,7 +143,7 @@ public class ManagerController {
 		// 전체 조회
 		if (statusParams.getRoomStatus() == null
 				&& statusParams.getPrice() == null
-				&& statusParams.getNumberOfp() == null) {
+				&& statusParams.getNumberOfP() == null) {
 			rooms = managerService.findAllRoomList();
 		}
 		// 선택 조회(?? 변경 필요)
@@ -117,13 +154,20 @@ public class ManagerController {
 		model.addAttribute("roomList", rooms);
 		return "/manager/status";
 	}
-
+	
+	//객실 정보 상세 조회
 	@GetMapping("/roomStatusDetail")
 	public String RoomStatusDetail(Integer roomId, Model model) {
-		Room room = managerService.findByRoom(roomId);
-
+		RoomType room = managerService.findByRoom(roomId);
 		model.addAttribute("room", room);
 		return "/manager/roomDetailStatus";
+	}
+	
+	// 객실 사용가능 상태값 변경
+	@PostMapping("/roomStatus/{id}")
+	public String roomStatus(@PathVariable Integer id,Boolean availability) {
+		int roomStatus = roomService.RoomStatusTrueAndFalse(id,availability);
+		return "redirect:/manager/roomStatus";
 	}
 	
 	//회원 정보 상세 조회 or 
@@ -149,22 +193,16 @@ public class ManagerController {
 		int blackList = managerService.updateWhiteList(id);
 		return "redirect:/manager/userDetail/{id}";
 	}
+	
 	//등급 수정 
 	@PostMapping("/updateGrade/{id}")
 	public String updateGradeProc(@PathVariable Integer id ,Integer gradeId) {
-		
-		// 서비스
-		// 유저 회원변경 서비스 => updateUserGrade
-		
-		// GetMapping(Controller) getUser
-		// 특정유저에대해서 찾는거(서비스) => findUser
-		// 저장소 => findUserById()
 		managerService.changeGradeByUserIdAndGradeId(gradeId, id);
 		return "redirect:/manager/userDetail/" + id;
 	}
+	
 	@GetMapping("/deleteBlackList")
 	public String deleteBlackList() {
-		
 		return "redirect:/manager/";
 	}
 

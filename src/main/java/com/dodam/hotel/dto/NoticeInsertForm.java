@@ -7,6 +7,7 @@ import lombok.Data;
 @Data                                                                                    
 public class NoticeInsertForm {
 	
+	private Integer id;
 	private Date startDate;
 	private Date endDate;
 	private String title;
