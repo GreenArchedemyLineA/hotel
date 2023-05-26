@@ -141,6 +141,6 @@ public class KakaoController {
     	  }
       }
       
-      return "redirect:/user/kakaoJoin";
-	}
+      return "/user/kakaoJoin";
+	}	
 }

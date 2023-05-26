@@ -5,17 +5,17 @@
         
 <mapper namespace="com.dodam.hotel.repository.interfaces.MUserRepository">
 	
-	<select id="findByname" resultType="com.dodam.hotel.repository.model.User">
+	<select id="findByname" resultType="com.dodam.hotel.repository.model.MUser">
 		select * from user_tb
 		where name = #{name} and withdrawal = 0;
 	</select>
 	
-	<select id="findByAll" resultType="com.dodam.hotel.repository.model.User">
+	<select id="findByAll" resultType="com.dodam.hotel.repository.model.MUser">
 		select * from user_tb
 		where withdrawal = 0;
 	</select>
 	
-	<select id="findByBlackList" resultType="com.dodam.hotel.repository.model.User">
+	<select id="findByBlackList" resultType="com.dodam.hotel.repository.model.MUser">
 		select * from user_tb
 		where blacklist = 1;
 	</select>
