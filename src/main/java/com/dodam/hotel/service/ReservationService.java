@@ -19,6 +19,7 @@ import com.dodam.hotel.repository.model.Coupon;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.Point;
 import com.dodam.hotel.repository.model.Reservation;
+import com.dodam.hotel.util.PagingObj;
 
 @Service
 public class ReservationService {
@@ -41,6 +42,19 @@ public class ReservationService {
 	@Transactional
 	public List<Reservation> readAllReservationByUserId(Integer userId) {
 		List<Reservation> reservationEntitys = reservationRepository.findAllReservationByUserId(userId);
+		return reservationEntitys;
+	}
+	
+	// 특정 유저 모든 예약 정보 카운트
+	@Transactional
+	public int readAllReservationByUserIdCount(Integer userId) {
+		int resultCount = reservationRepository.findAllReservationByUserIdCount(userId);
+		return resultCount;
+	}
+	
+	// 특정 유저 모든 예약 정보 페이징
+	public List<Reservation> readAllResrevationByUserIdPaging(PagingObj obj, Integer userId) {
+		List<Reservation> reservationEntitys = reservationRepository.findAllReservationByUserIdPaging(obj, userId);
 		return reservationEntitys;
 	}
 
@@ -111,14 +125,14 @@ public class ReservationService {
 		} else {
 			if(count >= 5 && userGrade.getGrade().getId() < 3) {
 				// 골드 등급업 처리
-				gradeRepository.updateUserGrade(userId, Grade.DIA); // 하드코딩 된거 바꿀 것
+				gradeRepository.updateUserGrade(userId, Grade.DIA);
 				// 쿠폰 부여
 				couponRepository.insert(CouponInfo.DIA , userId);
 				couponRepository.insert(CouponInfo.DIA2 , userId);
 				System.out.println("다이아 등급업 !!!");
 			} else if (count >= 2 && userGrade.getGrade().getId() < 2) {
 				// 다이아 등급업 처리
-				gradeRepository.updateUserGrade(userId, Grade.GOLD); // 하드코딩 된거 바꿀 것
+				gradeRepository.updateUserGrade(userId, Grade.GOLD);
 				// 쿠폰 부여
 				couponRepository.insert(CouponInfo.GOLD , userId);
 				System.out.println("골드 등급업 !!!");

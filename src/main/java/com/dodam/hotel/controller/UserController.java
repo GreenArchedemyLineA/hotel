@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.InquiryRequestDto;
 import com.dodam.hotel.dto.TestDto;
@@ -30,6 +31,7 @@ import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.CreateRandomStr;
 import com.dodam.hotel.util.Define;
+import com.dodam.hotel.util.PagingObj;
 
 @Controller
 public class UserController {
@@ -222,6 +224,34 @@ public class UserController {
 			System.out.println("이메일 전송 실패");
 		}
 		return "redirect:/pwInquiryPage";
+	}
+	
+	@GetMapping("/myReservations")
+	public String myReservations(Model model, @RequestParam(name = "nowPage", defaultValue = "1" , required = false) String nowPage, @RequestParam(name = "cntPerPage", defaultValue = "5" , required = false) String cntPerPage) {
+		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+		
+		int total = reservationService.readAllReservationByUserIdCount(principal.getId());
+		
+		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		
+		List<Reservation> reservations = reservationService.readAllResrevationByUserIdPaging(po, principal.getId());
+		model.addAttribute("paging", po);
+		model.addAttribute("reservations", reservations);
+		return "/user/reservationList";
+	}
+	
+	@GetMapping("/myReplys")
+	public String myReply(Model model, @RequestParam(name = "nowPage", defaultValue = "1" , required = false) String nowPage, @RequestParam(name = "cntPerPage", defaultValue = "5" , required = false) String cntPerPage) {
+		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+		
+		int total = questionService.readQuestionCountByUserId(principal.getId());
+		
+		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		
+		List<Reply> questions = questionService.readQuestionByUserIdPaging(po, principal.getId());
+		model.addAttribute("paging", po);
+		model.addAttribute("questions", questions);
+		return "/user/replyList";
 	}
 	
 } // end of class

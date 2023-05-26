@@ -162,7 +162,7 @@ class MyInfoJs {
 			};*/
 			const couponListPage = document.createElement("iframe");
 			couponListPage.src = "/couponList";
-			couponListPage.scroll = "no";
+			couponListPage.scrolling = "no";
 			couponListPage.width = "700px";
 			couponListPage.height = "500px";
 			couponListPage.frameBorder = "0";
@@ -179,8 +179,15 @@ class MyInfoJs {
 			method: "GET"
 		}).then(async (response) => {
 			let data = await response.json();
-
-			const tableTag = document.createElement("table");
+			
+			const reservationListPage = document.createElement("iframe");
+			reservationListPage.src = "/myReservations";
+			reservationListPage.scrolling = "no";
+			reservationListPage.width = "700px";
+			reservationListPage.height = "500px";
+			reservationListPage.frameBorder = "0";
+			this.userInfoDiv.append(reservationListPage);
+			/*const tableTag = document.createElement("table");
 			const reservationTrTag = document.createElement("tr");
 			const titleStartDateTdTag = document.createElement("td");
 			const titleEndDateTdTag = document.createElement("td");
@@ -241,8 +248,7 @@ class MyInfoJs {
 				
 				tableTag.append(reservationTrTag);
 				
-				this.userInfoDiv.append(tableTag);
-			};
+			};*/
 		});
 	};
 	
@@ -255,7 +261,7 @@ class MyInfoJs {
 			method: "GET"
 		}).then(async (response) => {
 			let data = await response.json();
-			console.log(data);
+			/*console.log(data);
 			for(let i = 0; i < data.length; i++) {
 				let createdAt = data[i].question.createdAt.split("T");
 				const questionDivTag = document.createElement("div");
@@ -281,7 +287,6 @@ class MyInfoJs {
 				childNodeArry.forEach((node) => {
 					questionDivTag.append(node);
 				});
-				this.userInfoDiv.append(questionDivTag);
 				
 				
 				let el = document.getElementById("toggleBtn" + i);
@@ -290,7 +295,14 @@ class MyInfoJs {
 					replyContentDivTag.classList.toggle('hidden');
 					contentDivTag.classList.toggle('hidden');
 				});
-			};
+			};*/
+			const replyListPage = document.createElement("iframe");
+			replyListPage.src = "/myReplys";
+			replyListPage.scrolling = "no";
+			replyListPage.width = "700px";
+			replyListPage.height = "500px";
+			replyListPage.frameBorder = "0";
+			this.userInfoDiv.append(replyListPage);
 		});
 	};
 }

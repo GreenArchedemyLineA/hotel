@@ -91,7 +91,7 @@ public class QuestionController {
 		questionService.createQuestion(question);
 		return "redirect:/";
 	}
-	//문의사항 계시판
+	//문의사항 게시판
 	@GetMapping("/questionList")
 	public String questionList(Model model) {
 		//주소 요청시 작성된 계시물 제목 List 로 다불러오기
@@ -106,7 +106,6 @@ public class QuestionController {
 	@GetMapping("/questionDetail/{id}")
 	public String questionDetail(@PathVariable Integer id,Model model) {
 		TestQuestion question = questionService.findById(id);
-		System.out.println(question);
 		if(question != null) {
 			model.addAttribute("question",question);
 		}

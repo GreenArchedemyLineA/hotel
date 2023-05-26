@@ -26,17 +26,9 @@ public class CouponController {
 	private CouponService couponService;
 	
 	@GetMapping("/couponList")
-	public String couponList(Model model, @RequestParam(value = "nowPage", required = false) String nowPage, @RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
+	public String couponList(Model model, @RequestParam(name = "nowPage", defaultValue = "1" , required = false) String nowPage, @RequestParam(name = "cntPerPage", defaultValue = "1" , required = false) String cntPerPage) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		int total = couponService.readCouponCount(principal.getId());
-		if(nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "1";
-		} else if(nowPage == null) {
-			nowPage = "1";
-		} else if(cntPerPage == null) {
-			cntPerPage = "1";
-		}
 		
 		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		System.out.println(po);
@@ -44,6 +36,6 @@ public class CouponController {
 		model.addAttribute("paging", po);
 		model.addAttribute("coupons", coupons);
 		
-		return "/test";
+		return "/user/couponList";
 	}
 }

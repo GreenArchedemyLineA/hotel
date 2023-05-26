@@ -20,7 +20,7 @@ public interface CouponRepository {
 	// 쿠폰 등록
 	public int insert(@Param("couponInfoId") CouponInfo couponInfoId, @Param("userId") Integer userId);
 	
-	// 특정 회원 쿠폰 조회
+	// 특정 회원 쿠폰 조회 (안쓸듯?)
 	public List<Coupon> findByUserId(Integer userId);
 	
 	// 특정 회원 모든 쿠폰 개수 조회
