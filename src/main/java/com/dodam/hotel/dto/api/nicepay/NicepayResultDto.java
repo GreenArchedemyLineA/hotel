@@ -1,5 +1,6 @@
 package com.dodam.hotel.dto.api.nicepay;
 
+import com.dodam.hotel.dto.api.pay.PayReadyResponse;
 import lombok.Data;
 
 import java.sql.Time;
@@ -8,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class NicepayResultDto {
+public class NicepayResultDto implements PayReadyResponse {
     private String resultCode;
     private String resultMsg;
     private String tid;

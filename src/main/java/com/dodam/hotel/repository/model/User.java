@@ -19,6 +19,10 @@ public class User {
 	private int withdrawal;
 	private Timestamp createdAt;
 	private String originEmail;
-	
+
+	/**
+	 * @author lhs-devloper
+	 */
+	private String randomPwsStatus;
 }
 
