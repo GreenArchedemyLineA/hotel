@@ -3,11 +3,11 @@
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzkxekb89f"></script>
 <style>
 .container {
-	color: red;
+	color: black;
 }
 header{
 	font-size: 30px;
-	color: red;
+	color: black;
 }
 .content {
 	display: flex;
@@ -33,7 +33,7 @@ header{
 	height: 100vh;
 }
 .main--content {
-	border: 2px solid red;
+	border: 2px solid black;
 	width: 1200px;
 	height: 600px;
 	margin-left: 30px;
@@ -41,7 +41,7 @@ header{
 }
 
 .navi--bar {
-	border: 2px solid red;
+	border: 2px solid black;
 	margin-top: 30px;
 	width: 200px;
 	height: 400px;
@@ -51,7 +51,7 @@ li{
 	list-style: none;
 }
 td,th,button{
-	color: red;
+	color: black;
 }
 </style>
 

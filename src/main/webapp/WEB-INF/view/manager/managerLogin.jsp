@@ -34,9 +34,12 @@ body{
 				<label>매니저 비밀번호 : </label> 
 				<input type="text" id="password" name="password" value="dodam1234">
 				<br>
-				<button type="submit">로그인</button>
+				<button id="sms" type="submit">로그인</button>
 			</form>
 		</div>
 	</div>
+	<script type="text/javascript">
+	
+	</script>
 </body>
 </html>

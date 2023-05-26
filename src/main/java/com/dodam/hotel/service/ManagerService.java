@@ -1,7 +1,9 @@
 package com.dodam.hotel.service;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,11 @@ import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Room;
+
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
+
 
 @Service
 public class ManagerService {
@@ -73,8 +80,29 @@ public class ManagerService {
 
 	// 매니저 로그인
 	public Manager managerSign(ManagerSignInFormDto managerSignInFormDto) {
-		System.out.println(managerSignInFormDto);
 		Manager managerEntity = managerRepository.findByManagernameAndPassword(managerSignInFormDto);
+		
+		if(managerEntity != null) {
+//			    String api_key = "NCSYYRDX9Y5UNIO7";
+//		        String api_secret = "YEHIFZWNUP9GCLPXD9SHND2DWEOQRIQP";
+//		        Message coolsms = new Message(api_key, api_secret);
+//		        HashMap<String, String> params = new HashMap<String, String>();
+//
+//		        params.put("to", "01052770535");
+//		        params.put("from", "01038379096");
+//		        params.put("type", "SMS");
+//		        params.put("text", "강사님 안녕하세요!!!!!!!!!!!!!!!!!!");
+//		        params.put("app_version", "test app 1.2");
+//
+//		        try {
+//		            JSONObject obj = (JSONObject)coolsms.send(params);
+//		            System.out.println(obj.toString());
+//		        } catch (CoolsmsException e) {
+//		            System.out.println(e.getMessage());
+//		            System.out.println(e.getCode());
+//		        }
+		}
+		
 		return managerEntity;
 	}
 
@@ -90,7 +118,7 @@ public class ManagerService {
 		List<MUser> userListEntity = mUserRepository.findByname(name);
 		return userListEntity;
 	}
-	
+	//등급별 회원 조회
 	public List<GradeInfo> managerUserGradeList(Integer gradeId){
 		List<GradeInfo> userListEntity = mUserRepository.findByGradeAll(gradeId);
 		return userListEntity;
@@ -142,7 +170,7 @@ public class ManagerService {
 		return membershipUserListEntity;		
 	}
 	
-	// 회원 등급 수정()
+	// 회원 등급 수정
 	public int changeGradeByUserIdAndGradeId(Integer gradeId, Integer id) {
 		int resultRowCount = mUserRepository.updateGrade(gradeId, id);	
 		return resultRowCount;

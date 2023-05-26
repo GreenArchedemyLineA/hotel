@@ -53,7 +53,7 @@ public class FAQController {
     public String faqUpdatePage(@PathVariable Integer id, Model model){
         FAQ faq = managerFAQService.findFAQById(id);
         model.addAttribute("faq", faq);
-        return "/manager/FAQUpdate";
+        return "redirect:/manager/FAQUpdate";
     }
 
     @PostMapping("/manager/faq/update-proc")

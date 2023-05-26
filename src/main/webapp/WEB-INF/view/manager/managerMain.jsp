@@ -91,7 +91,11 @@ var marker = new naver.maps.Marker({
     position: new naver.maps.LatLng(35.1595148,129.0602424),
     map: map
 });
-var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+'Busan'+"&appid="+"b1b7f03c32e5f5f4ac70fb27ed83b55d";
+let apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+'Busan'+"&appid="+"b1b7f03c32e5f5f4ac70fb27ed83b55d";
+
+	
+
+
 
 });
 </script>
