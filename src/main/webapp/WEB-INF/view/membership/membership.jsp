@@ -11,6 +11,9 @@
 		margin: 0;
 		font-family: 'Noto Sans KR', monospace;
 	}
+	#logo--image {
+		cursor: pointer;
+	}
 	.main--container {
 		display: flex;	
 	}
@@ -40,6 +43,7 @@
 	
 	.title--text {
 		margin: 150px 30px 0 0;
+		min-width: 350px;
 	}
 	
 	.content--container {
@@ -105,7 +109,43 @@
 		color: #ccc;
 		margin: 40px 0;
 	}
-	
+	.modal--wrap{
+        display: none;
+        width: 500px;
+        height: 500px;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        margin: -250px 0 0 -250px;
+        background:#eee;
+        z-index: 2;
+    }
+    .black--bg{
+        display: none;
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color:rgba(0, 0,0, 0.5);
+        top:0;
+        left: 0;
+        z-index: 1;
+    }
+    .modal--close{
+        width: 26px;
+        height: 26px;
+        position: absolute;
+        top: -30px;
+        right: 0;
+    }
+    .modal--close > a{
+        display: block;
+        width: 100%;
+        height: 100%;
+        background:url(https://img.icons8.com/metro/26/000000/close-window.png);
+        text-indent: -9999px;
+    }
+
 </style>
 </head>
 <body>
@@ -113,7 +153,7 @@
 	<div class="title--container">
 		<div class="title--logo">
 			<a onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></a>
-			<img alt="" src="/images/logo_white.png" id="logo--image">	
+			<img alt="" src="/images/logo_white.png" id="logo--image" onclick="location.href='/'">	
 		</div>
 		<div class="title--text">
 			<p>도담 멤버쉽이</p>
@@ -134,7 +174,7 @@
 					<p style="margin-bottom: 10px;">포인트 적립</p>
 					<p>멤버쉽 기간 동안 7% 적립</p>
 				</div>
-					<button type="button" onclick="#" class="button--container">도담 등급 보러가기</button>
+					<button type="button" class="button--container">도담 등급 보러가기</button>
 			</div>	
 		</div>
 		
@@ -159,4 +199,7 @@
 	</div>
 </main>
 </body>
+<script type="text/javascript">
+
+</script>
 </html>

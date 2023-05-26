@@ -3,6 +3,7 @@ package com.dodam.hotel.controller;
 
 import java.util.List;
 
+
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
@@ -85,15 +86,13 @@ public class UserController {
 	@PostMapping("/loginProc")
 	public String loginProc(UserRequestDto.LoginFormDto loginDto) {
 		UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(loginDto);
-		System.out.println(loginDto);
-		System.out.println(principal);
 		session.setAttribute(Define.PRINCIPAL, principal);
 		
 		if(principal.getRandomPwdStatus()) {
 			return "/user/changePw";
 		}
 		
-		return "redirect:/myPage";
+		return "redirect:/";
 	}
 	
 	// 비밀번호 변경 페이지

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
@@ -257,13 +258,14 @@ main {
 	width: 500px;
 }
 
+
 </style>
 
 
 <main>
 	<div id="header--wrap">
 		<div>
-			<img alt="로고 이미지" src="/images/logo_white.png" id="logo--image">
+			<img alt="로고 이미지" src="/images/logo.png" id="logo--image">
 		</div>
 		<div id="header--nav--wrap">
 			<div id="nav--bar--wrap">
@@ -309,8 +311,8 @@ main {
 							<li><span class="toggle--box--qna"> 문의 <span class="material-symbols-outlined">keyboard_arrow_down</span>
 							</span>
 								<ul class="navi--bar--detail--qna">
-									<li><a href="/question">자주 묻는 질문</a></li>
-									<li><a href="/qnaPage">1:1 문의</a></li>
+									<li><a href="/question/question">자주 묻는 질문</a></li>
+									<li><a href="/question/qnaPage">1:1 문의</a></li>
 								</ul></li>
 						</ul>
 					</div>
@@ -318,7 +320,15 @@ main {
 				<div class="navi--bar--5">
 					<ul class="symbol--box">
 						<li><a href="/login"><span class="material-symbols-outlined">login</span></a></li>
-						<li><a href="/myPage"><span class="material-symbols-outlined">person</span></a></li>
+						<c:choose>
+							<c:when test="${principal != null}">
+								<li><a href="/myPage"><span class="material-symbols-outlined">person</span></a></li>
+							</c:when>
+						<c:otherwise>
+							<li><a href="/login"><span class="material-symbols-outlined">person</span></a></li>
+						</c:otherwise>							
+						</c:choose>
+						
 						<li><a href="/membership"><span class="material-symbols-outlined">card_membership</span></a></li>
 					</ul>
 				</div>
@@ -403,45 +413,7 @@ main {
 			mode : "range",
 			minDate : "today",
 		});
-		let timer;
-		$(document).ready(function() {
-			$(".toggle--box--room").click(function() {
-				if(timer){
-					clearTimeout(timer)
-				}
-				timer = setTimeout(function(){
-					$(".navi--bar--detail--room").slideToggle("slow");
-				}, 200)
-			});
-		});
-
-		$(document).ready(function() {
-			$(".toggle--box--fac").click(function() {
-				// javascript 쓰로틀링
-				if(timer){
-					clearTimeout(timer)
-				}
-				timer = setTimeout(function(){
-					$(".navi--bar--detail--fac").slideToggle("slow");
-				}, 200)
-				
-			});
-		});
-		$(document).ready(function() {
-			$(".toggle--box--reserve").click(function() {
-				if(timer){
-					clearTimeout(timer)
-				}
-				timer = setTimeout(function(){
-					$(".navi--bar--detail--reserve").slideToggle("slow");
-				}, 200)
-			});
-		});
-		$(document).ready(function() {
-			$(".toggle--box--qna").click(function() {
-				$(".navi--bar--detail--qna").slideToggle("slow");
-			});
-		});
 	</script>
+	<script src="js/mainToggle.js"></script>
 	
 	
