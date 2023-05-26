@@ -140,7 +140,7 @@ class MyInfoJs {
 			/*const iframeTag = document.createElement("iframe");
 			iframeTag.setAttribute("src", "/myPage");
 			this.userInfoDiv.append(iframeTag);*/
-			this.buttonCoupons.textContent = `쿠폰함(${data.length})`;
+			/*this.buttonCoupons.textContent = `쿠폰함(${data.length})`;
 			for (let i = 0; i < data.length; i++) {
 				const couponDivTag = document.createElement("div");
 				const nameDivTag = document.createElement("div");
@@ -159,8 +159,14 @@ class MyInfoJs {
 				childNodeArry.forEach((node) => {
 					couponDivTag.append(node);
 				});
-				this.userInfoDiv.append(couponDivTag);
-			};
+			};*/
+			const couponListPage = document.createElement("iframe");
+			couponListPage.src = "/couponList";
+			couponListPage.scroll = "no";
+			couponListPage.width = "700px";
+			couponListPage.height = "500px";
+			couponListPage.frameBorder = "0";
+			this.userInfoDiv.append(couponListPage);
 		});
 	};
 

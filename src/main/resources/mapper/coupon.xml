@@ -48,4 +48,27 @@
 		where user_id = #{userId}
 	</select>
 	
+	<select id="findCouponCountByUserId" resultType="int">
+		select count(*)
+		from coupon_tb
+		where user_id = #{userId}
+	</select>
+	
+	<select id="findByUserIdPaging" resultMap="Coupon">
+		SELECT * 
+		from (
+ 			SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* 
+        	FROM (
+				SELECT c.id as id, c.start_date as start_date, c.end_date as end_date, ci.id as coupon_info_id, ci.name as name, ci.content as content
+				from coupon_tb as c
+				left join coupon_info_tb as ci
+				on c.coupon_info_id = ci.id
+            	WHERE c.user_id = #{userId}
+        	    ORDER BY id DESC
+     	       ) A, 
+        		(SELECT @ROWNUM := 0 ) B
+        	) as C
+		WHERE C.ROWNUM BETWEEN #{obj.start} AND #{obj.end}
+	</select>
+	
 </mapper>
