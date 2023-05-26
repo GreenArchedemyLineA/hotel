@@ -92,10 +92,6 @@ public class PayController {
         TossResponse tossResponse = (TossResponse) tossPay.payReady(tosspayRequest);
         return "redirect:/pay/success";
     }
-}
-// 다이닝 예약
-// 객실예약 마무리
 
-// 멤버쉽만 패키지 예약가능
-// -> 패키지따로 예약 페이지를 만드는게 훨씬나음..(?)
-// 리팩토링(중요동 낮음)
+    // 후 코드 잘못짠듯..? 더 리팩토링 필요..
+}

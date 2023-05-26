@@ -4,6 +4,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class PayService {
 
+
+
     @Transactional
     public void payReady(){
 

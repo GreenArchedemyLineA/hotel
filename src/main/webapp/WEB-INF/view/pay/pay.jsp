@@ -39,9 +39,15 @@
     // 2. 결제위젯 SDK 초기화
     const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS);
     const paymentMethods = paymentWidget.renderPaymentMethods('#payment-method', 1000);
+    function uuidv4() {
+        return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+    }
+
     function tossPay(){
         paymentWidget.requestPayment({
-            orderId: 'AD8aZDpbzXs4EQa-UkIX6',
+            orderId: uuidv4(),
             orderName: '토스 티셔츠 외 2건',
             successUrl: 'http://localhost:8080/pay/toss/success',
             failUrl: 'http://localhost:8080/pay/fail',

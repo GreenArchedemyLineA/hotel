@@ -50,6 +50,7 @@ public class TossPay implements PayInterface {
                     TossResponse.class
             );
             TossResponse responseNode = responseEntity.getBody();
+            
             return responseNode;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
