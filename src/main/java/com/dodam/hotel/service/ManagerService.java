@@ -75,8 +75,8 @@ public class ManagerService {
 		return rooms;
 	}
 
-	public RoomType findByRoom(Integer roomId) {
-		RoomType room = roomRepository.findRoomById(roomId);
+	public Room findByRoom(Integer roomId) {
+		Room room = roomRepository.findById(roomId);
 		return room;
 	}
 

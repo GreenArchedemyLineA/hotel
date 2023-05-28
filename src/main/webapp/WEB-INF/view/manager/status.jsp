@@ -90,11 +90,11 @@ td, th, button {
 				<tbody>
 					<c:forEach var="room" items="${roomList}">
 						<tr onclick="statusDetail(${room.id})">
-							<td>${room.name}</td>
-							<td>${room.price}</td>
+							<td>${room.roomType.name}</td>
+							<td>${room.roomType.price}</td>
 							<td>${room.availability == true ? "사용가능" : "사용불가"}</td>
 							<td>${room.statusDesc}</td>
-							<td>${room.numberOfP}</td>
+							<td>${room.roomType.numberOfP}</td>
 						</tr>
 					</c:forEach>
 				</tbody>

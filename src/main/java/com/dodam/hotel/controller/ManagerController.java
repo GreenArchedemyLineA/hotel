@@ -150,7 +150,7 @@ public class ManagerController {
 		else {
 			rooms = managerService.findConditionsRoomList(statusParams);
 		}
-
+		System.out.println(rooms);
 		model.addAttribute("roomList", rooms);
 		return "/manager/status";
 	}
@@ -158,7 +158,8 @@ public class ManagerController {
 	//객실 정보 상세 조회
 	@GetMapping("/roomStatusDetail")
 	public String RoomStatusDetail(Integer roomId, Model model) {
-		RoomType room = managerService.findByRoom(roomId);
+		Room room = managerService.findByRoom(roomId);
+		System.out.println(room);
 		model.addAttribute("room", room);
 		return "/manager/roomDetailStatus";
 	}
