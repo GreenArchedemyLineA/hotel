@@ -16,7 +16,7 @@
     <input type="hidden" name="userId" value="${reservation.userId}">
     <input type="hidden" name="startDate" value="${reservation.startDate}">
     <input type="hidden" name="endDate" value="${reservation.endDate}">
-    <input type="hidden" name="numberOfp" value="${reservation.numberOfp}">
+    <input type="hidden" name="numberOfp" value="${reservation.numberOfP}">
 <div>
     <div class="selected">
         <div class="reservation">
@@ -47,7 +47,7 @@
             예약 인원 수
         </div>
         <div class="reservation">
-            ${reservation.numberOfp}
+            ${reservation.numberOfP}
         </div>
     </div>
 
@@ -60,10 +60,10 @@
                 <c:forEach var="room" items="${roomList}">
                     <c:choose>
                         <c:when test="${room.id == reservation.roomId}">
-                            <option value="${room.id}" selected>${room.id}-${room.name}</option>
+                            <option value="${room.id}" selected>${room.id}-${room.roomType.name}</option>
                         </c:when>
                         <c:otherwise>
-                            <option value="${room.id}">${room.id}-${room.name}</option>
+                            <option value="${room.id}">${room.id}-${room.roomType.name}</option>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>

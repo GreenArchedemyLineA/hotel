@@ -104,7 +104,7 @@ td, th, button {
 										<td>${reservation.startDate}</td>
 										<td>${reservation.endDate}</td>
 										<td>${reservation.numberOfP}</td>
-										<td>${reservation.room.id != null ? reservation.id : ""}${reservation.room != null ? "-" : ""}${reservation.room.name != null ?  reservation.room.name : "❌"}</td>
+										<td>${reservation.room.id != null ? reservation.id : ""}${reservation.room != null ? "-" : ""}${reservation.room.roomType.name != null ?  reservation.room.roomType.name : "❌"}</td>
 										<td>${reservation.dining.name != null ? reservation.dining.name : "❌"}</td>
 										<td>${reservation.fitnessId != null ? reservation.fitnessId : "❌"}</td>
 										<td>${reservation.poolId != null ? reservation.poolId : "❌"}</td>
