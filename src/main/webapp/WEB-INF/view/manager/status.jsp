@@ -60,48 +60,41 @@ td, th, button {
 	color: black;
 }
 </style>
-<div class="content">
-	<div class="navi">
-		<div class="navi--bar"></div>
-	</div>
-	<div class="main">
-		<header>여짝에 리스트</header>
-		<div class="main--content">
-			<form action="/manager/managerMain" method="get">
-				<button type="submit">돌아가기</button>
-			</form>
-			<form>
-				<h3>option</h3>
-				<input type="checkbox" name="roomStatus">
-				<input type="number" name="numberOfP" max="10" value="5"> 
-				<input type="number" name="price"> 
-				<input type="submit">
-			</form>
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">방 이름</th>
-						<th scope="col">방 가격</th>
-						<th scope="col">방 사용유무</th>
-						<th scope="col">방 상태</th>
-						<th scope="col">방 수용 인원</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="room" items="${roomList}">
-						<tr onclick="statusDetail(${room.id})">
-							<td>${room.roomType.name}</td>
-							<td>${room.roomType.price}</td>
-							<td>${room.availability == true ? "사용가능" : "사용불가"}</td>
-							<td>${room.statusDesc}</td>
-							<td>${room.roomType.numberOfP}</td>
+		<div class="content">
+			<div class="main--content">
+				<button type="button" onclick="location.href='/manager/userList'">돌아가기</button>
+				<form>
+					<h3>option</h3>
+					<input type="checkbox" name="roomStatus">
+					<input type="number" name="numberOfP" max="10" value="5"> 
+					<input type="number" name="price"> 
+					<input type="submit">
+				</form>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">방 이름</th>
+							<th scope="col">방 가격</th>
+							<th scope="col">방 사용유무</th>
+							<th scope="col">방 상태</th>
+							<th scope="col">방 수용 인원</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<c:forEach var="room" items="${roomList}">
+							<tr onclick="statusDetail(${room.id})">
+								<td>${room.roomType.name}</td>
+								<td>${room.roomType.price}</td>
+								<td>${room.availability == true ? "사용가능" : "사용불가"}</td>
+								<td>${room.statusDesc}</td>
+								<td>${room.roomType.numberOfP}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 		</div>
-	</div>
-</div>
+	</main>
 <script>
     function statusDetail(id){
         location.href = "/manager/roomStatusDetail?roomId="+id;

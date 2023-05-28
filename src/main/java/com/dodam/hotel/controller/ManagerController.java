@@ -60,7 +60,6 @@ public class ManagerController {
 	public String mUserListAll(Model model){
 		
 		List<MUser> userList = managerService.managerUserListAll();
-		System.out.println(userList);
 		if(userList != null) {
 			model.addAttribute("userList",userList);
 		}
@@ -102,7 +101,6 @@ public class ManagerController {
 	@GetMapping("/blackList")
 	public String mUserBlackList(Model model){
 		List<MUser> userBlackList = managerService.managerUserBlackList();
-		System.out.println(userBlackList);
 		if(userBlackList != null) {
 			model.addAttribute("userList",userBlackList);
 		}
@@ -126,9 +124,6 @@ public class ManagerController {
 	public String managersign(ManagerSignInFormDto managerSignInFormDto) {
 
 		Manager principal = managerService.managerSign(managerSignInFormDto);
-		System.out.println(managerSignInFormDto.getUsername());
-		System.out.println(managerSignInFormDto.getPassword());
-		System.out.println(principal);
 		if (principal != null) {
 			session.setAttribute("principal", principal);
 		}
@@ -139,7 +134,6 @@ public class ManagerController {
 	@GetMapping("/roomStatus")
 	public String Check(StatusParams statusParams, Model model) {
 		List<Room> rooms;
-		System.out.println(statusParams);
 		// 전체 조회
 		if (statusParams.getRoomStatus() == null
 				&& statusParams.getPrice() == null
@@ -150,7 +144,6 @@ public class ManagerController {
 		else {
 			rooms = managerService.findConditionsRoomList(statusParams);
 		}
-		System.out.println(rooms);
 		model.addAttribute("roomList", rooms);
 		return "/manager/status";
 	}
@@ -159,7 +152,6 @@ public class ManagerController {
 	@GetMapping("/roomStatusDetail")
 	public String RoomStatusDetail(Integer roomId, Model model) {
 		Room room = managerService.findByRoom(roomId);
-		System.out.println(room);
 		model.addAttribute("room", room);
 		return "/manager/roomDetailStatus";
 	}
@@ -175,7 +167,6 @@ public class ManagerController {
 	@GetMapping("/userDetail/{id}")
 	public String userDetail(@PathVariable Integer id,Model model) {
 		GradeInfo userGradeDetail = managerService.selectUserGrade(id);
-		System.out.println(userGradeDetail);
 		if(userGradeDetail != null) {
 			model.addAttribute("userDetail",userGradeDetail);
 		}

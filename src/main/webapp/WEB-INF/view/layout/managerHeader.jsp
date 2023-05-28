@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzkxekb89f"></script>
 <meta charset="UTF-8">
 <title>Main Page</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -12,59 +13,64 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <style>
-*{
-margin: 0;
-padding: 0;
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@300;400&display=swap');
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Noto Sans KR', monospace;
 }
-body{
+
+body {
 	height: 100vh;
 }
-a {
-	margin-left: 30px;
-	font-size: 30px;
-}
 
-a:link {
-	color: black;
-}
-
-a:visited {
-	color: black;
-}
-
-a:hover {
-	color: black;
-}
-
-a:active {
-	color: black;
-}
-
-.header {
+main {
 	display: flex;
-	justify-content: flex-end;
-	border-bottom: 3px solid black; 
+	height: 100vh;
 }
-label{
-	color: black;
+
+nav {
+	width: 150px;  /* 로그 크기에 따라 수정할 예정 */	
+	height: 100vh;
+	background-color: #64c5f3;
 }
-h5{
-	color: black;
+
+.content {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
 }
+
+.main--content {
+	border: 2px solid black;
+	width: 1200px;
+	height: 600px;
+	padding: 10px;
+}
+
+li {
+	list-style: none;
+	margin-bottom: 10px;
+	padding-left: 10px;
+}
+
+.main--headers {
+	margin-bottom: 10px;
+}
+
 </style>
-</head>
 <body>
-	<div class="header">
-		<a href="/manager/managerMain" style="justify-content: flex-start;">
-			<img alt="로고이미지" src="/images/adminLogo.png">
-		</a>
-		<a href="/manager/roomStatus">객실</a> 
-		<a href="#">다이닝</a>
-		<a href="/manager/userList">회원조회</a> 
-		<a href="/manager/reservation">예약</a> 
-		<a href="/event/notice">호텔 일정</a>
-		<a href="/question/questionList">문의 사항</a> 
-		<a href="/manager/faq">FAQ</a>
-	</div>
-</body>
-</html>
+	<main>
+		<nav>
+			<ul>
+				<li id="logo--li"><a href="/manager/managerMain"><img alt="dodam" src="/images/adminNavLogo_v_wh.png" width="100" height="40"></a></li>
+				<li id="room--li"><a href="/manager/roomStatus">객실</a></li>
+				<li id="dining--li"><a href="#">다이닝</a></li>
+				<li id="userList--li"><a href="/manager/userList">회원조회</a></li>
+				<li id="reservation--li"><a href="/manager/reservation">예약</a></li>
+				<li id="event--li"><a href="/event/notice">호텔 일정</a></li>
+				<li id="qna--li"><a href="/question/questionList">문의 사항</a></li>
+				<li id="faq--li"><a href="/manager/faq">FAQ</a></li>
+			</ul>
+		</nav>
