@@ -74,22 +74,65 @@
     private String status_desc;
     private Integer number_of_p;
     -->
-   <!--  <select id="findAllRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
-        select * from room_tb;
+
+
+   <select id="findAllRoomList" resultMap="Room">
+        select 
+        	r.id as room_id,
+        	r.availability as room_availability,
+        	r.status_desc as room_status_desc,
+        	r.room_type_id as room_room_type_id,
+        	rt.id as room_type_id,
+        	rt.name as room_type_name,
+        	rt.price as room_type_price,
+        	rt.description as room_type_description,
+        	rt.image as room_type_image,
+        	rt.number_of_p as room_type_number_of_p
+       
+        from room_tb as r
+        	join room_type_tb as rt
+        	on r.room_type_id = rt.id;
     </select>
-    <select id="findById" resultType="com.dodam.hotel.repository.model.managertest.Room">
-        select * from room_tb where id = #{roomId};
+    <select id="findById" resultMap="Room">
+        select 
+      		r.id as room_id,
+        	r.availability as room_availability,
+        	r.status_desc as room_status_desc,
+        	r.room_type_id as room_room_type_id,
+        	rt.id as room_type_id,
+        	rt.name as room_type_name,
+        	rt.price as room_type_price,
+        	rt.description as room_type_description,
+        	rt.image as room_type_image,
+        	rt.number_of_p as room_type_number_of_p
+        from room_tb as r
+        	join room_type_tb as rt
+        	on r.room_type_id = rt.id
+        where r.id = #{roomId};
     </select>
 
-    <select id="findOptionSearchOneRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
-        select * from room_tb
-                 where availability = #{roomStatus}
-                 or number_of_p = #{numberOfp}
-                 or price = #{price};
-                   or number_of_p = #{numberOfP}
-                   or price = #{price};
-    </select>
+    <select id="findOptionSearchOneRoomList" resultMap="Room">
+        select
+        	r.id as room_id,
+        	r.availability as room_availability,
+        	r.status_desc as room_status_desc,
+        	r.room_type_id as room_room_type_id,
+        	rt.id as room_type_id,
+        	rt.name as room_type_name,
+        	rt.price as room_type_price,
+        	rt.description as room_type_description,
+        	rt.image as room_type_image,
+        	rt.number_of_p as room_type_number_of_p
+        from room_tb as r
+        	join room_type_tb as rt
+        	on r.room_type_id = rt.id
+        where 
+        	r.availability = #{roomStatus}
+            or rt.number_of_p >= #{numberOfP}
+           	or rt.price = #{price};
 
+    </select>
+	<!--  
     <select id="findOptionStatusAndNumberOfpRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb
         where availability = #{roomStatus}
