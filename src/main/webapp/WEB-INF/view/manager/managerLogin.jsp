@@ -13,31 +13,75 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
 <style>
-body{
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
 	height: 100vh;
+}
+main {
+	background-color: #64c5f3;
+	width: 100%;
+	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
+
+.img {
+	display: flex;
+	justify-content: center;
+}
+
+#login--box {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+}
+.sub--button {
+		background-color: #fff;
+		color: #000;
+		width: 100%;
+		height: 40px;
+		cursor: pointer;
+		border: none;
+		border-radius: 5px;
+	}
+#username {
+	width: 100%;
+	margin-bottom: 5px;
+	border-radius: 5px;
+}
+#password {
+	width: 100%;
+	margin-bottom: 10px;
+	border-radius: 5px;
+}
 </style>
 </head>
-<body class="container">
-	<div class="content">
-		<div class="img">
-			<img alt="로고이미지" src="/images/logo.png" id="logo">
+<body>
+	<main>
+		<div class="content">
+			<div class="img">
+				<img alt="로고이미지" src="/images/adminLogo.png" id="logo">
+			</div>
+			<div class="login-form">
+				<form action="/manager/managerSignInProc" method="post" id="login--box">
+					<div class="id--box">
+						<input type="text" id="username" name="username" value="dodam@manager.com" placeholder="아이디를 입력해주세요."> 
+					</div>
+					<div class="password--box">
+						<input type="text" id="password" name="password" value="dodam1234" placeholder="비밀번호를 입력해주세요.">
+					</div>
+					<div class="btn--box">
+						<button type="submit" class="sub--button">로그인</button>
+					</div>
+				</form>
+			</div>
 		</div>
-		<div class="login-form">
-			<form action="/manager/managerSignInProc" method="post">
-				<label>매니저 아이디 : </label> 
-				<input type="text" id="username" name="username" value="dodam@manager.com"> 
-				<br>
-				<label>매니저 비밀번호 : </label> 
-				<input type="text" id="password" name="password" value="dodam1234">
-				<br>
-				<button id="sms" type="submit">로그인</button>
-			</form>
-		</div>
-	</div>
+	</main>
 	<script type="text/javascript">
 	
 	</script>

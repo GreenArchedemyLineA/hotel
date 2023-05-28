@@ -54,19 +54,10 @@ h5{
 </style>
 </head>
 <body>
-	
-	<!-- <div class="header--container">
-		<div>
-			<a href="/manager/managerMain"><img alt="로고이미지" src="/images/logo.png" id="logo"></a>
-		</div>
-			<ul class="header--ul">
-				<li><a href="/manager/userList"><span class="material-symbols-outlined">person</span>회원조회</a></li>
-				<li><a href="/event/notice"><span class="material-symbols-outlined">event</span>호텔 일정</a></li>
-				<li><a href="/manager/managerLogout"><span class="material-symbols-outlined">logout</span>로그아웃</a></li>
-			</ul>
-	</div> -->
 	<div class="header">
-		<a href="/manager/managerMain" style="justify-content: flex-start;">DODAM</a>
+		<a href="/manager/managerMain" style="justify-content: flex-start;">
+			<img alt="로고이미지" src="/images/adminLogo.png">
+		</a>
 		<a href="/manager/roomStatus">객실</a> 
 		<a href="#">다이닝</a>
 		<a href="/manager/userList">회원조회</a> 
@@ -75,5 +66,5 @@ h5{
 		<a href="/question/questionList">문의 사항</a> 
 		<a href="/manager/faq">FAQ</a>
 	</div>
-	
-	
+</body>
+</html>
