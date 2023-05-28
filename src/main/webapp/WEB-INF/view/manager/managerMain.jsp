@@ -39,21 +39,24 @@ nav {
 .content {
 	display: flex;
 	flex-direction: column;
-	flex: 3;
+	padding: 10px;
 }
 
 .main--content {
 	border: 2px solid black;
 	width: 1200px;
 	height: 600px;
-	margin-left: 30px;
-	margin-top: 30px;
+	padding: 10px;
 }
 
 li {
 	list-style: none;
 	margin-bottom: 10px;
 	padding-left: 10px;
+}
+
+.main--headers {
+	margin-bottom: 10px;
 }
 
 </style>
