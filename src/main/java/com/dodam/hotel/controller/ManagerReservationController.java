@@ -34,9 +34,11 @@ public class ManagerReservationController {
         System.out.println(name);
         if(name == null || name.equals("")){
             List<Reservation> reservationList = managerReservationService.findTodayAllReservation();
+            System.out.println(reservationList);
             model.addAttribute("reservationList", reservationList);
         }else{
             List<Reservation> reservationList = managerReservationService.findUserReservation(name);
+            System.out.println(reservationList);
             model.addAttribute("reservationList", reservationList);
         }
         return "/manager/reservation";
@@ -45,6 +47,7 @@ public class ManagerReservationController {
     @GetMapping("/reservation/{id}")
     public String reservationDetail(@PathVariable Integer id, Model model){
         Map<String, Object> reservationMap = managerReservationService.findReservationById(id);
+        System.out.println(reservationMap.get("reservation"));
         model.addAttribute("reservation", reservationMap.get("reservation"));
         model.addAttribute("roomList", reservationMap.get("roomList"));
         model.addAttribute("spaList", reservationMap.get("spaList"));
