@@ -14,7 +14,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.0.84:3306/dodam?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://127.0.0.1:3306/dodam?serverTimezone=Asia/Seoul
     username: dodam
     password: dodam1234
 
