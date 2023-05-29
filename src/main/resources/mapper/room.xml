@@ -93,6 +93,39 @@
         	join room_type_tb as rt
         	on r.room_type_id = rt.id;
     </select>
+    
+   <select id="findAllRoomListPaging" resultMap="Room">
+        	SELECT * 
+		from (
+ 			SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* 
+        	FROM (
+				select 
+	        	r.id as room_id,
+	        	r.availability as room_availability,
+	        	r.status_desc as room_status_desc,
+	        	r.room_type_id as room_room_type_id,
+	        	rt.id as room_type_id,
+	        	rt.name as room_type_name,
+	        	rt.price as room_type_price,
+	        	rt.description as room_type_description,
+	        	rt.image as room_type_image,
+	        	rt.number_of_p as room_type_number_of_p
+       
+	     	    from room_tb as r
+	        	join room_type_tb as rt
+	        	on r.room_type_id = rt.id
+        	    ORDER BY r.id DESC
+     	       ) A, 
+        		(SELECT @ROWNUM := 0 ) B
+        	) as C
+		WHERE C.ROWNUM BETWEEN #{start} AND #{end}
+    </select>
+    
+    <select id="findAllRoomListCount" resultType="int">
+    	select count(*)
+    	from room_tb
+    </select>
+    
     <select id="findById" resultMap="Room">
         select 
       		r.id as room_id,

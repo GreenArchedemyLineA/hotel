@@ -64,7 +64,7 @@ li {
 	<main>
 		<nav>
 			<ul>
-				<li id="logo--li"><a href="/manager/managerMain"><img alt="dodam" src="/images/adminNavLogo_v_wh.png" width="100" height="40"></a></li>
+				<li id="logo--li"><a href="/manager/managerMain"><img alt="dodam" src="/images/white_logo.png" width="100" height="40"></a></li>
 				<li id="room--li"><a href="/manager/roomStatus">객실</a></li>
 				<li id="dining--li"><a href="#">다이닝</a></li>
 				<li id="userList--li"><a href="/manager/userList">회원조회</a></li>

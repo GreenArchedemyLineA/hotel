@@ -2,13 +2,14 @@ package com.dodam.hotel.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dodam.hotel.dto.NoticeInsertForm;
-import com.dodam.hotel.page.PagingVO;
 import com.dodam.hotel.repository.interfaces.EventRepository;
 import com.dodam.hotel.repository.model.Event;
+import com.dodam.hotel.util.PagingObj;
 
 @Service
 public class EventService {
@@ -28,8 +29,8 @@ public class EventService {
 //		 return eventListEntity;
 //	 }
 	// 행사일정 리스트로 띠우기
-	public List<Event> findByEventAllPaging(PagingVO vo) {
-		List<Event> eventListEntity = eventRepository.findByAllPage(vo);
+	public List<Event> findByEventAllPaging(PagingObj obj) {
+		List<Event> eventListEntity = eventRepository.findByAllPage(obj);
 		return eventListEntity;
 	}
 	//행사 일정 리스트 숫자

@@ -19,6 +19,7 @@ import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.repository.model.RoomType;
+import com.dodam.hotel.util.PagingObj;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -36,9 +37,14 @@ public class ManagerService {
 
 	@Autowired
 	private RoomRepository roomRepository;
+	
+	public int readAllRoomListCount() {
+		int resultCount = roomRepository.findAllRoomListCount();
+		return resultCount;
+	}
 
-	public List<Room> findAllRoomList() {
-		List<Room> rooms = roomRepository.findAllRoomList();
+	public List<Room> findAllRoomList(PagingObj obj) {
+		List<Room> rooms = roomRepository.findAllRoomListPaging(obj);
 		return rooms;
 	}
 

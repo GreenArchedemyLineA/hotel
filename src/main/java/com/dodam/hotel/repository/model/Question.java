@@ -2,7 +2,6 @@ package com.dodam.hotel.repository.model;
 
 import java.sql.Timestamp;
 
-import com.dodam.hotel.enums.QuestionCategory;
 import com.dodam.hotel.util.DateFormat;
 
 import lombok.Data;
@@ -22,7 +21,7 @@ public class Question {
 	private Integer userId;
 	private User user;
 	private Timestamp createdAt;
-	private QuestionCategory category;
+	private String category;
 	private String originFile;
 	private String uploadFile;
 	private Boolean status;

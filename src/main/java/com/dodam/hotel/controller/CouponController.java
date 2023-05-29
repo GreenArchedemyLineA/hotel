@@ -31,7 +31,6 @@ public class CouponController {
 		int total = couponService.readCouponCount(principal.getId());
 		
 		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		System.out.println(po);
 		List<Coupon> coupons = couponService.readCouponByUserId(po, principal.getId());
 		model.addAttribute("paging", po);
 		model.addAttribute("coupons", coupons);

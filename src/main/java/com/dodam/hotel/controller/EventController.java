@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.NoticeInsertForm;
-import com.dodam.hotel.page.PagingVO;
 import com.dodam.hotel.repository.model.Event;
 import com.dodam.hotel.service.EventService;
+import com.dodam.hotel.util.PagingObj;
 
 @Controller
 @RequestMapping("/event")
@@ -22,22 +22,13 @@ public class EventController {
 	EventService eventService;
 	
 	@GetMapping("/notice")
-	public String eventNotice(PagingVO vo,Model model
-			,@RequestParam(value ="nowPage" , required = false)String nowPage
-			,@RequestParam(value="cntPerPage", required=false)String cntPerPage){
+	public String eventNotice(Model model
+			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
+			,@RequestParam(name ="cntPerPage", defaultValue = "5", required=false)String cntPerPage){
 		int total = eventService.countEvent();
-		if(nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "5";
-		} else if (nowPage == null) {
-			nowPage = "1";
-		} else if (cntPerPage == null) { 
-			cntPerPage = "5";
-		}	
-		vo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		System.out.println(eventService.findByEventAllPaging(vo));
-		model.addAttribute("paging", vo);
-		model.addAttribute("viewAll", eventService.findByEventAllPaging(vo));
+		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("paging", obj);
+		model.addAttribute("viewAll", eventService.findByEventAllPaging(obj));
 		return "/board/eventNotice"; 
 	}
 	

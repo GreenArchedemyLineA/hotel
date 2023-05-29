@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.ManagerSignInFormDto;
 import com.dodam.hotel.dto.StatusParams;
@@ -25,6 +26,7 @@ import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.repository.model.RoomType;
 import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.RoomService;
+import com.dodam.hotel.util.PagingObj;
 
 @Controller
 @RequestMapping("/manager")
@@ -132,18 +134,25 @@ public class ManagerController {
 
 	
 	@GetMapping("/roomStatus")
-	public String Check(StatusParams statusParams, Model model) {
+	public String Check(StatusParams statusParams, Model model, 
+			@RequestParam(name = "nowPage", defaultValue = "1" , required = false) String nowPage, 
+			@RequestParam(name = "cntPerPage", defaultValue = "5" , required = false) String cntPerPage) {
 		List<Room> rooms;
 		// 전체 조회
+		int total = managerService.readAllRoomListCount();
+		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		if (statusParams.getRoomStatus() == null
 				&& statusParams.getPrice() == null
 				&& statusParams.getNumberOfP() == null) {
-			rooms = managerService.findAllRoomList();
+			rooms = managerService.findAllRoomList(obj);
 		}
 		// 선택 조회(?? 변경 필요)
 		else {
+			// 페이징처리 안했음
 			rooms = managerService.findConditionsRoomList(statusParams);
 		}
+		
+		model.addAttribute("paging", obj);
 		model.addAttribute("roomList", rooms);
 		return "/manager/status";
 	}

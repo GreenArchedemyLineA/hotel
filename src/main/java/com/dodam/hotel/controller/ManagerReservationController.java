@@ -34,7 +34,6 @@ public class ManagerReservationController {
         System.out.println(name);
         if(name == null || name.equals("")){
             List<Reservation> reservationList = managerReservationService.findTodayAllReservation();
-            System.out.println(reservationList);
             model.addAttribute("reservationList", reservationList);
         }else{
             List<Reservation> reservationList = managerReservationService.findUserReservation(name);
@@ -55,14 +54,12 @@ public class ManagerReservationController {
         model.addAttribute("fitnessList", reservationMap.get("fitnessList"));
         model.addAttribute("diningList", reservationMap.get("diningList"));
         model.addAttribute("packageList", reservationMap.get("packageList"));
-        System.out.println(reservationMap.get("packageList"));
         return "/manager/reservationDetail";
     }
 
     @PostMapping("/reservation/update")
     public String reservationUpdate(Reservation reservation){
 //        Manager manager = (Manager) session.getAttribute("principal");
-        System.out.println(reservation);
 
 //        if(manager == null){
 //            return null;
