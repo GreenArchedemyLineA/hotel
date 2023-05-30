@@ -77,9 +77,15 @@ public class KakaoPay implements PayInterface {
                 .encode()
                 .build()
                 .toUri();
+
+        // https://kapi.kakao.com/v1/payment/ready
+
+        // header 끝
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "KakaoAK " + KAKAO_APP_ADMIN_KEY);
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+
 
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("cid", KAKAO_TESTCID);

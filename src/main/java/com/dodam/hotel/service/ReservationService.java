@@ -58,6 +58,9 @@ public class ReservationService {
 		reservationRequestDto.setUserId(userId);
 		System.out.println(reservationRequestDto);
 		int resultRowCount = reservationRepository.insertReserveRoom(reservationRequestDto);
+
+
+
 		return resultRowCount;
 	}
 

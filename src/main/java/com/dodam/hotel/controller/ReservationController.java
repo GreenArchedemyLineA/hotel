@@ -71,6 +71,7 @@ public class ReservationController {
 	public String reserveRoom(ReservationRequestDto requestDto) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		int resultRowCount = reservationService.createReserveRoom(requestDto, principal.getId());
+
 		return "redirect:/";
 	}
 }
