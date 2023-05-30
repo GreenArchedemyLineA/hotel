@@ -16,30 +16,30 @@
 		객실 : ${selectDetail.name} 체크인 : ${selectDetail.startDate} 체크아웃 : ${selectDetail.endDate} 투숙인원 : 성인 ${selectDetail.countPerson}, 어린이 ${selectDetail.countChild}, 유아 ${selectDetail.countBaby} <br />
 		다이닝신청 (조식)
 		<div class="facilities--container">
-			<input type="button" onclick='diningCount("minus")' value="-"> 
-			<input type="number" id='diningResult' value="0" name="diningCount" min="0"> 
-			<input type="button" onclick='diningCount("plus")' value="+">
+			<input type="button" onclick='diningMinus()' value="-"> 
+			<input type="number" id="diningResult" value="0" name="diningCount" min="0"> 
+			<input type="button" onclick='diningPlus()' value="+">
 		</div>
 
 		스파신청
 		<div class="facilities--container">
-			<input type="button" onclick='spaCount("minus")' value="-"> 
-			<input type="number" id='spaResult' value="0" name="spaCount" min="0"> 
-			<input type="button" onclick='spaCount("plus")' value="+">
+			<input type="button" onclick='spaMinus()' value="-"> 
+			<input type="number" id="spaResult" value="0" name="spaCount" min="0"> 
+			<input type="button" onclick='spaPlus()' value="+">
 		</div>
 
 		수영장신청
-		<div class="facilities--container">
-			<input type="button" onclick='poolCount("minus")' value="-"> 
-			<input type="number" id='poolResult' value="0" name="poolCount" min="0"> 
-			<input type="button" onclick='poolCount("plus")' value="+">
+		<div class="facilities--container">	
+			<input type="button" onclick='poolMinus()' value="-"> 
+			<input type="number" id="poolResult" value="0" name="poolCount" min="0"> 
+			<input type="button" onclick='poolPlus()' value="+">
 		</div>
 
 		피트니스신청
 		<div class="facilities--container">
-			<input type="button" onclick='fitnessCount("minus")' value="-"> 
-			<input type="number" id='fitnessResult' value="0" name="fitnessCount" min="0"> 
-			<input type="button" onclick='fitnessCount("plus")' value="+">
+			<input type="button" onclick='fitnessMinus()' value="-">
+			<input type="number" id="fitnessResult" value="0" name="fitnessCount" min="0"> 
+			<input type="button" onclick='fitnessPlus()' value="+">
 		</div>
 		<input type="hidden" value="${selectDetail.startDate}" name="startDate"> 
 		<input type="hidden" value="${selectDetail.endDate}" name="endDate"> 
@@ -73,9 +73,6 @@
 		<div id="totalPrice"></div>
 		<button type="submit">결제하기</button>
 	</form>
-</body>
-
-
 <!-- <script src="/js/price.js"></script> -->
 <script type="text/javascript">
 	const dayResultInput = document.getElementById("day--result");
@@ -169,6 +166,12 @@
 			couponPrice = ${selectDetail.price}
 			console.log("couponPrice: " + couponPrice)
 		}
+		else if(couponSelectTag.value === "객실 10% 할인 쿠폰"){
+			couponPrice = ${(selectDetail.price * 0.1)}
+		}
+		else if(couponSelectTag.value === "객실 30% 할인 쿠폰"){
+			couponPrice = ${(selectDetail.price * 0.3)}
+		}
 		else if(couponSelectTag.value === "0"){
 			couponPrice = 0;
 		}
@@ -185,58 +188,72 @@
 		target.addEventListener("change", totalPrice);
 	})
 	
-	function diningCount(type) {
-		const resultElement = document.getElementById('diningResult');
-		// 현재 화면에 표시된 값
-		let number = resultElement.innerText;
-		// 더하기/빼기
-		if (type === 'plus') {
-			number = parseInt(number) + 1;
-		} else if (type === 'minus') {
-			number = parseInt(number) - 1;
-		}
-		resultElement.innerText = number;
+	
+	function diningMinus() {
+		const resultElement = document.getElementById("diningResult");
+		let number = resultElement.value;
+		number = parseInt(number) - 1;
+		resultElement.value = number;
+		totalPrice();
 	}
 	
-	function spaCount(type) {
-		const resultElement = document.getElementById('spaResult');
-		// 현재 화면에 표시된 값
-		let number = resultElement.innerText;
-		// 더하기/빼기
-		if (type === 'plus') {
-			number = parseInt(number) + 1;
-		} else if (type === 'minus') {
-			number = parseInt(number) - 1;
-		}
-		resultElement.innerText = number;
+	function diningPlus() {
+		const resultElement = document.getElementById("diningResult");
+		let number = resultElement.value;
+		number = parseInt(number) + 1;
+		resultElement.value = number;
+		totalPrice();
 	}
 	
-	function poolCount(type) {
-		const resultElement = document.getElementById('poolResult');
-		// 현재 화면에 표시된 값
-		let number = resultElement.innerText;
-		// 더하기/빼기
-		if (type === 'plus') {
-			number = parseInt(number) + 1;
-		} else if (type === 'minus') {
-			number = parseInt(number) - 1;
-		}
-		resultElement.innerText = number;
+	function spaMinus() {
+		const resultElement = document.getElementById("spaResult");
+		let number = resultElement.value;
+		number = parseInt(number) - 1;
+		resultElement.value = number;
+		totalPrice();
 	}
 	
-	function fitnessCount(type) {
-		const resultElement = document.getElementById('fitnessResult');
-		// 현재 화면에 표시된 값
-		let number = resultElement.innerText;
-		// 더하기/빼기
-		if (type === 'plus') {
-			number = parseInt(number) + 1;
-		} else if (type === 'minus') {
-			number = parseInt(number) - 1;
-		}
-		resultElement.innerText = number;
+	function spaPlus() {
+		const resultElement = document.getElementById("spaResult");
+		let number = resultElement.value;
+		number = parseInt(number) + 1;
+		resultElement.value = number;
+		totalPrice();
+	}
+	
+	function poolMinus() {
+		const resultElement = document.getElementById("poolResult");
+		let number = resultElement.value;
+		number = parseInt(number) - 1;
+		resultElement.value = number;
+		totalPrice();
+	}
+	
+	function poolPlus() {
+		const resultElement = document.getElementById("poolResult");
+		let number = resultElement.value;
+		number = parseInt(number) + 1;
+		resultElement.value = number;
+		totalPrice();
+	}
+	
+	function fitnessMinus() {
+		const resultElement = document.getElementById("fitnessResult");
+		let number = resultElement.value;
+		number = parseInt(number) - 1;
+		resultElement.value = number;
+		totalPrice();
+	}
+	
+	function fitnessPlus() {
+		const resultElement = document.getElementById("fitnessResult");
+		let number = resultElement.value;
+		number = parseInt(number) + 1;
+		resultElement.value = number;
+		totalPrice();
 	}
 	
 	totalPrice();
 </script>
+</body>
 </html>

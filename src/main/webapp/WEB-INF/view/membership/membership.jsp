@@ -5,6 +5,9 @@
 <meta charset="UTF-8">
 <title>Login Page</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@300;400&display=swap');
 	* {
@@ -174,7 +177,7 @@
 					<p style="margin-bottom: 10px;">포인트 적립</p>
 					<p>멤버쉽 기간 동안 7% 적립</p>
 				</div>
-					<button type="button" class="button--container">도담 등급 보러가기</button>
+					<button type="button" class="button--container" data-toggle="modal" data-target="#grade" >도담 등급 보러가기</button>
 			</div>	
 		</div>
 		
@@ -189,7 +192,7 @@
 					<p style="margin-bottom: 10px;">1박 무료 숙박 쿠폰</p>
 					<p>바로 사용 가능한 숙박 쿠폰 제공</p>
 				</div>
-					<button type="button" onclick="#" class="button--container">멤버쉽 혜택 보러가기</button>
+					<button type="button" class="button--container" data-toggle="modal" data-target="#membership">멤버쉽 혜택 보러가기</button>
 			</div>	
 			<img alt="" src="/images/membership2.jpg" class="membership--image">
 		</div>
@@ -197,9 +200,44 @@
 			<button onclick="location.href='/joinMembership'" class="sub--button">멤버쉽 가입하기</button>
 		</div>
 	</div>
+		<div class="modal" id="grade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">호텔 등급별 해택입니다</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div>					
+						<label>브라운</label>
+						<br> 
+						<label>신규 가입 회원, 적립 4%</label>
+						<br> 
+						<label>골드</label> 
+						<br> 
+						<label>2박 숙박 혹은 500 포인트 적립 회원, 적립 5%와 객실 1만 할인 쿠폰 제공</label> 
+						<br> 
+						<label>다이야</label>
+						<br> 
+						<label>10박 숙박 혹은 70000 포인트 적립 회원, 적립 7%와 객실 3만 할인 쿠폰 제공 및 다이닝 식사권 2매 제공</label> 
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="membership">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">맴버쉽 해택입니다</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div>					
+						<label>누나/현우야</label>
+						<br>
+						<label>디자인 작업 해줘</label>
+				</div>
+			</div>
+		</div>
+	</div>
 </main>
 </body>
-<script type="text/javascript">
-
-</script>
 </html>
