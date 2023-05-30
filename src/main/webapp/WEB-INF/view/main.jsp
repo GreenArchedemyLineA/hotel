@@ -265,17 +265,15 @@ main {
 <main>
 	<div id="header--wrap">
 		<div>
-			<img alt="로고 이미지" src="/images/logo.png" id="logo--image">
+			<img alt="로고 이미지" src="/images/dodam_wlogo.png" id="logo--image" width="400px">
 		</div>
 		<div id="header--nav--wrap">
 			<div id="nav--bar--wrap">
 				<div id="toggle--nav--bar">
 					<div id="navi--1--wrap">
 						<ul class="navi--bar--1">
-							<li><span class="toggle--box--room"> 객실<span class="material-symbols-outlined">keyboard_arrow_down</span>
-							</span>
+							<li><span class="toggle--box--room"> 객실<span class="material-symbols-outlined">keyboard_arrow_down</span></span>
 								<ul class="navi--bar--detail--room">
-									<li><a href="/package">패키지</a></li>
 									<li><a href="/room?type=디럭스">디럭스</a></li>
 									<li><a href="/room?type=프리미엄">프리미어</a></li>
 									<li><a href="/room?type=스위트">스위트</a></li>
@@ -335,7 +333,7 @@ main {
 			</div>
 		</div>
 	</div>
-		<p class="greeting--container">Hello, Dodam</p>
+
 </main>
 	<div class="reserve--container">
 		<form action="/search" method="get" class="form--container">

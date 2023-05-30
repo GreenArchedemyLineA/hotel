@@ -1,54 +1,98 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<%@ include file="../layout/header.jsp"%>
+<link rel="stylesheet" href="/css/navi.css" />
+<link rel="stylesheet" href="/css/calender.css" />
+<link rel="stylesheet" href="/css/myPage.css" />
 <style type="text/css">
+.form--box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 700px;
+	width: 1200px;
+	border: 2px solid #64c5f3;
+}
 .facilities--container {
 	display: flex;
+	flex: 1;
+	flex-direction: column;
+}
+.info--container {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+}
+.facilities--detail {
+	text-align: center;
+	margin-top: 10px;
+}
+.select--info {
+	font-size: 20px;
+	font-weight: bold;
+	display: flex;
+	flex-direction: column;
+}
+.input--box {
+	border: none;
+}
+.symbol:hover {
+	color: #FF9F8D;
+	cursor: pointer;
+}
+.info--content {
+	border-bottom: 1px solid #ccc;
 }
 </style>
 </head>
 <body>
-	<form name="form" action="/reserveRoom" method="post">
-		객실 : ${selectDetail.name} 체크인 : ${selectDetail.startDate} 체크아웃 : ${selectDetail.endDate} 투숙인원 : 성인 ${selectDetail.countPerson}, 어린이 ${selectDetail.countChild}, 유아 ${selectDetail.countBaby} <br />
-		다이닝신청 (조식)
+	<div class="main--container">
+	<form name="form" action="/reserveRoom" method="post" class="form--box">
 		<div class="facilities--container">
-			<input type="button" onclick='diningCount("minus")' value="-"> 
-			<input type="number" id='diningResult' value="0" name="diningCount" min="0"> 
-			<input type="button" onclick='diningCount("plus")' value="+">
+			<span class="select--info">
+				<span class="info--title">객실</span> 
+				<span class="info--content">${selectDetail.name}</span>
+				
+				<span class="info--title">체크인</span>
+				<span class="info--content">${selectDetail.startDate} ㅡ ${selectDetail.endDate}</span>
+				
+				<span class="info--title">투숙인원</span>
+				<span class="info--content">성인 ${selectDetail.countPerson}, 어린이 ${selectDetail.countChild}, 유아 ${selectDetail.countBaby}</span>
+			</span>
+			<div class="facilities--detail">
+			다이닝신청 (조식)
+			<!--  <input type="button" onclick='diningCount("minus")' value="-">-->
+			<span class="material-symbols-outlined symbol">do_not_disturb_on</span>
+			<input type="number" id='diningResult' value="0" name="diningCount" min="0" class="input--box"> 
+			<span class="material-symbols-outlined symbol">add_circle</span>
 		</div>
 
-		스파신청
-		<div class="facilities--container">
-			<input type="button" onclick='spaCount("minus")' value="-"> 
-			<input type="number" id='spaResult' value="0" name="spaCount" min="0"> 
-			<input type="button" onclick='spaCount("plus")' value="+">
+		<div class="facilities--detail">
+			스파신청
+			<span class="material-symbols-outlined symbol">do_not_disturb_on</span>
+			<input type="number" id='spaResult' value="0" name="spaCount" min="0" class="input--box">  
+			<span class="material-symbols-outlined symbol">add_circle</span>
 		</div>
 
-		수영장신청
-		<div class="facilities--container">
-			<input type="button" onclick='poolCount("minus")' value="-"> 
-			<input type="number" id='poolResult' value="0" name="poolCount" min="0"> 
-			<input type="button" onclick='poolCount("plus")' value="+">
+		<div class="facilities--detail">
+			수영장신청
+			<span class="material-symbols-outlined symbol">do_not_disturb_on</span>
+			<input type="number" id='poolResult' value="0" name="poolCount" min="0" class="input--box"> 
+			<span class="material-symbols-outlined symbol">add_circle</span>
 		</div>
 
-		피트니스신청
-		<div class="facilities--container">
-			<input type="button" onclick='fitnessCount("minus")' value="-"> 
-			<input type="number" id='fitnessResult' value="0" name="fitnessCount" min="0"> 
-			<input type="button" onclick='fitnessCount("plus")' value="+">
+		<div class="facilities--detail">
+			피트니스신청
+			<span class="material-symbols-outlined symbol">do_not_disturb_on</span>
+			<input type="number" id='fitnessResult' value="0" name="fitnessCount" min="0" class="input--box"> 
+			<span class="material-symbols-outlined symbol">add_circle</span>
 		</div>
 		<input type="hidden" value="${selectDetail.startDate}" name="startDate"> 
 		<input type="hidden" value="${selectDetail.endDate}" name="endDate"> 
 		<input type="hidden" value="${selectDetail.numberOfP}" name="numberOfP"> 
 		<input type="hidden" value="${selectDetail.roomId}" name="roomId"> 
 		
-
 		<div>
-			사용 가능 쿠폰
 			<c:choose>
 				<c:when test="${couponList != null}">
 					<select id="coupon--result">
@@ -66,13 +110,17 @@
 				</c:otherwise>
 			</c:choose>
 
-			포인트 사용하기 
 			<input type="text" name="point" placeholder="사용 가능 포인트 : ${point.point}" id="point--result" autocomplete="off">
 			<input type="hidden" name="day" id="day--result">
+			</div>
 		</div>
-		<div id="totalPrice"></div>
-		<button type="submit">결제하기</button>
+		
+		<div class="info--container">			
+			<div id="totalPrice"></div>
+			<button type="submit" class="sub--button">결제하기</button>
+		</div>
 	</form>
+	</div>
 </body>
 
 
@@ -135,17 +183,17 @@
 		
 		
 		const roomPriceTag = document.createElement("div");
-		roomPriceTag.textContent = "방 가격: " + roomPrice;
+		roomPriceTag.textContent = "객실 금액: " + roomPrice;
 		
 		const optionPriceTag = document.createElement("div");
 		const optionPrice = diningPriceResult + spaPriceResult + poolPriceResult + fitnessPriceResult;
-		optionPriceTag.textContent = "옵션 가격: " + optionPrice;
+		optionPriceTag.textContent = "옵션 금액: " + optionPrice;
 		
 		const couponPriceTag = document.createElement("div");		
-		couponPriceTag.textContent = "쿠폰 할인 가격: " + couponPrice;
+		couponPriceTag.textContent = "쿠폰 할인 금액: " + couponPrice;
 		
 		const pointPriceTag = document.createElement("div");
-		pointPriceTag.textContent = "포인트 사용 가격: " + pointPrice;
+		pointPriceTag.textContent = "포인트 사용 금액: " + pointPrice;
 		
 		let totalPrice = roomPrice + optionPrice - couponPrice - pointPrice;			
 
