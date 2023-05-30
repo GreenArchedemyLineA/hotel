@@ -165,33 +165,47 @@
            	or rt.price = #{price};
 
     </select>
-	<!--  
-    <select id="findOptionStatusAndNumberOfpRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
-        select * from room_tb
-        where availability = #{roomStatus}
-          and number_of_p = #{numberOfP};
+
+	<!-- writer: 이현서 hotfix -->
+    <select id="findOptionStatusAndNumberOfpRoomList" resultMap="Room">
+        select *
+		from room_tb as r
+			join room_type_tb as rt
+			on r.room_type_id = rt.id
+        where r.availability = #{roomStatus}
+          and rt.number_of_p = #{numberOfP};
     </select>
-    <select id="findOptionStatusAndPriceRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
-        select * from room_tb
-        where availability = #{roomStatus}
-          and price = #{price};
+    <select id="findOptionStatusAndPriceRoomList" resultMap="Room">
+		select *
+		from room_tb as r
+			join room_type_tb as rt
+			on r.room_type_id = rt.id
+        where r.availability = #{roomStatus}
+          and rt.price = #{price};
     </select>
-    <select id="findOptionNumberOfpAndPriceRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
-        select * from room_tb
-        where number_of_p = #{numberOfP}
-          and price = #{price};
+    <select id="findOptionNumberOfpAndPriceRoomList" resultMap="Room">
+		select *
+		from room_tb as r
+			join room_type_tb as rt
+			on r.room_type_id = rt.id
+        where rt.number_of_p = #{numberOfP}
+          and rt.price = #{price};
     </select>
-    <select id="findAllOptionRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
-        select * from room_tb
-        where availability = #{roomStatus}
-          and number_of_p = #{numberOfP}
-          and price = #{price};
+    <select id="findAllOptionRoomList" resultMap="Room">
+		select *
+		from room_tb as r
+			join room_type_tb as rt
+			on r.room_type_id = rt.id
+        where r.availability = #{roomStatus}
+          and rt.number_of_p = #{numberOfP}
+          and rt.price = #{price};
     </select>
 
-    <insert id="insertRoom">
-        insert into room_tb(name, price, description, availability, image, status_desc, number_of_p)
-        values(#{name}, #{price}, #{description}, #{availability}, #{image}, #{statusDesc}, #{numberOfP})
-    -->
+	<!-- 이현서: 저도 잘 모르겠습니다 이게 무엇인지..? -->
+<!--    <insert id="insertRoom">-->
+<!--        insert into room_tb(name, price, description, availability, image, status_desc, number_of_p)-->
+<!--        values(#{name}, #{price}, #{description}, #{availability}, #{image}, #{statusDesc}, #{numberOfP})-->
+<!--	</insert>-->
 
 	<update id="updateManagerRoom">
 		update room_tb set availability = #{availability} where id = #{id}; 
