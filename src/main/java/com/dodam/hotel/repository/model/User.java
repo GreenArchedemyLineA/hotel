@@ -21,6 +21,7 @@ public class User {
 	private Timestamp createdAt;
 	private Boolean randomPwdStatus;
 	private String originEmail;
+	private Boolean socialLogin;
 
 }
 

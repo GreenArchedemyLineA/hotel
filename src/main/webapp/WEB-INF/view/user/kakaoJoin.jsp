@@ -17,7 +17,7 @@
 		</div>
 	</div>
 	<div class="content--container">
-		<form action="/join" method="post" class="form--container">
+		<form action="/kakaoJoin" method="post" class="form--container">
 			<c:choose>
 				<c:when test="${user.email == null}">
 					<input type="email" name="email" class="input--box" placeholder="이메일을 입력해 주세요"> 			

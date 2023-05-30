@@ -265,7 +265,7 @@ main {
 <main>
 	<div id="header--wrap">
 		<div>
-			<img alt="로고 이미지" src="/images/white_logo.png" id="logo--image">
+			<img alt="로고 이미지" src="/images/dodam_wlogo.png" id="logo--image" width="400px">
 		</div>
 		<div id="header--nav--wrap">
 			<div id="nav--bar--wrap">
@@ -333,7 +333,7 @@ main {
 			</div>
 		</div>
 	</div>
-		<p class="greeting--container">Hello, Dodam</p>
+
 </main>
 	<div class="reserve--container">
 		<form action="/search" method="get" class="form--container">

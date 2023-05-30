@@ -29,6 +29,7 @@ import com.dodam.hotel.dto.kakao.KakaoAccount;
 import com.dodam.hotel.dto.kakao.KakaoResponseToken;
 import com.dodam.hotel.dto.kakao.KakaoUserInfo;
 import com.dodam.hotel.repository.model.MUser;
+import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.Define;
@@ -121,13 +122,10 @@ public class KakaoController {
       HttpEntity reqUserEntity = new HttpEntity(httpUserInfoHeaders);
 
       ResponseEntity<KakaoUserInfo> responseUser = restTemplate.exchange(userInfoUri, HttpMethod.GET, reqUserEntity, KakaoUserInfo.class);
-      System.out.println(responseUser.getBody().getKakao_account());
       KakaoAccount userInfo = responseUser.getBody().getKakao_account();
       
-      
    
-     
-      UserResponseDto.MyPageResponseDto loginUser = userService.readUserByEmail(responseUser.getBody().getKakao_account().getEmail());
+      User loginUser = userService.readUserKakao(userInfo.getEmail());
     	  if(loginUser != null) {
     		  session.setAttribute(Define.PRINCIPAL, loginUser);
     		  return "redirect:/";

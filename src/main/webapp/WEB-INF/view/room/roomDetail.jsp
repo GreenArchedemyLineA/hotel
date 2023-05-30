@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../layout/header.jsp"%>
 <link rel="stylesheet" href="/css/navi.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <style type="text/css">
 </style>
 <body>
@@ -15,7 +17,14 @@
 				</div>
 		</div>
 		<div class="main--container">
-			<img alt="객실 사진" src="https://picsum.photos/id/169/1000/500">
+			<div class="swiper">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"><img alt="객실 사진" src="/images/deluxe.jpg" width="1000px" height="500px"></div>
+					<div class="swiper-slide"><img alt="객실 사진" src="/images/deluxe2.jpg" width="1000px" height="500px"></div>
+					<div class="swiper-slide"><img alt="객실 사진" src="/images/deluxe3.jpg" width="1000px" height="500px"></div>
+				</div>
+			</div>
+			
 			<div class="info--container">
 				<div class="title--box">
 				<p>${room.name}</p>
@@ -33,5 +42,12 @@
 		</div>
 	</div>
 	<script src="js/mainToggle.js"></script>
+	<script type="text/javascript">
+		const swiper = new Swiper('.swiper', {
+			  // Optional parameters
+			  direction: 'vertical',
+			  loop: true
+		}
+	</script>
 </body>
 </html>

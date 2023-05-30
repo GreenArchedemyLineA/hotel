@@ -14,6 +14,7 @@
 		<result column="blacklist" property="blacklist"/>
 		<result column="withdrawal" property="withdrawal"/>
 		<result column="created_at" property="createdAt"/>
+		<result column="social_login" property="socialLogin"/>
 		<result column="random_pwd_status" property="randomPwdStatus"/>
 	</resultMap>
 
@@ -23,7 +24,6 @@
 		from user_tb
 		where email = #{email} and password = #{password}
 	</select>
-	
 	
 	<!-- 마이페이지 정보 수정 -->
 	<update id="updateUserByEmail">
@@ -43,6 +43,12 @@
 	<insert id="insert">
 	INSERT INTO user_tb (email, password, name, gender, birth, tel)
 	VALUES (#{email}, #{password}, #{name}, #{gender}, #{birth}, #{tel})
+	</insert>
+	
+	<!-- 카카오 회원가입 -->
+	<insert id="insertKakao">
+	INSERT INTO user_tb (email, password, name, gender, birth, tel, social_login)
+	VALUES (#{email}, #{password}, #{name}, #{gender}, #{birth}, #{tel}, 1)
 	</insert>
 	
 	<!-- 제일 최근 가입 회원 조회 -->
