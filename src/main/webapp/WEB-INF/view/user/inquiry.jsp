@@ -25,6 +25,7 @@
 
 #logo--image {
 	width: 150px;
+	cursor: pointer;
 }
 
 .title--container {
@@ -67,12 +68,6 @@
 	height: 500px;
 }
 
-.find--id:hover, .find--pwd:hover {
-	cursor: pointer;
-	background-color: #FFF7D1;
-	color: black;
-}
-
 .find--id {
 	background-color: black;
 	width: 180px;
@@ -80,6 +75,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
 }
 
 .find--pwd {
@@ -89,6 +85,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
 }
 
 .title--container p {
@@ -126,12 +123,21 @@
 	background-color: #FFF7D1;
 	color: #000;
 }
+
+.back--icon {
+	display: flex;
+	height: 65px;
+	align-items: center;
+	cursor: pointer;
+}
+
 </style>
 </head>
 <main class="main--container">
 	<div class="title--container">
 		<div class="title--logo">
-			<a onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></a> <img alt="" src="/images/logo_white.png" id="logo--image">
+			<span class="material-symbols-outlined back--icon" onclick="history.back()">arrow_back</span>
+			<img alt="" src="/images/dodam_wlogo.png" id="logo--image" height="65" onclick="location.href='/'">	
 		</div>
 		<div class="title--text">
 			<p>아이디와</p>

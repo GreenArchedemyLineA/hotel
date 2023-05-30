@@ -21,6 +21,7 @@
 	color: #fff;
 	font-size: 20px;
 	position: relative;
+	padding-left: 30px;
 }
 
 .navi--bar--1 li a, .navi--bar--2 li a, .navi--bar--3 li a, .navi--bar--4 li a, .navi--bar--5 li a {
@@ -107,6 +108,7 @@
 	color: #fff;
 	font-size: 20px;
 	position: relative;
+	padding-left: 10px;
 }
 
 .navi--bar--detail--fac {
@@ -123,14 +125,13 @@
 .navi--bar--3 {
 	color: #fff;
 	font-size: 20px;
-	right: 160;
+	position: relative;
 }
 
 .navi--bar--detail--reserve {
 	margin-top: 20px;
 	display: none;
 	position: absolute;
-	right: 340px;
 }
 
 .toggle--box--reserve:hover {
@@ -147,6 +148,7 @@
 	margin-top: 20px;
 	display: none;
 	position: absolute;
+	right: 55px;
 }
 
 .toggle--box--qna:hover {
@@ -258,6 +260,23 @@ main {
 	width: 500px;
 }
 
+.down--icon {
+	height: 28.89px;
+	display: flex;
+	align-items: center;
+}
+
+.toggle--wrap {
+	display: flex;
+}
+
+#reservation--toggle--wrap {
+	padding-left: 22px;
+}
+
+#logo--image {
+	cursor: pointer;
+}
 
 </style>
 
@@ -265,14 +284,18 @@ main {
 <main>
 	<div id="header--wrap">
 		<div>
-			<img alt="로고 이미지" src="/images/dodam_wlogo.png" id="logo--image" width="400px">
+			<img alt="로고 이미지" src="/images/dodam_wlogo.png" id="logo--image" width="400px" onclick="location.href='/'">
 		</div>
 		<div id="header--nav--wrap">
 			<div id="nav--bar--wrap">
 				<div id="toggle--nav--bar">
 					<div id="navi--1--wrap">
 						<ul class="navi--bar--1">
-							<li><span class="toggle--box--room"> 객실<span class="material-symbols-outlined">keyboard_arrow_down</span></span>
+							<li>
+								<div class="toggle--wrap">
+									<p class="toggle--box--room"> 객실</p>
+									<p class="material-symbols-outlined down--icon">keyboard_arrow_down</p>
+								</div>
 								<ul class="navi--bar--detail--room">
 									<li><a href="/room?type=디럭스">디럭스</a></li>
 									<li><a href="/room?type=프리미엄">프리미어</a></li>
@@ -283,8 +306,11 @@ main {
 					</div>
 					<div id="navi--2--wrap">
 						<ul class="navi--bar--2">
-							<li><span class="toggle--box--fac"> 부대시설 <span class="material-symbols-outlined">keyboard_arrow_down</span>
-							</span>
+							<li>
+							<div class="toggle--wrap">
+								<p class="toggle--box--fac"> 부대시설</p>
+								<p class="material-symbols-outlined down--icon">keyboard_arrow_down</p>
+							</div>
 								<ul class="navi--bar--detail--fac">
 									<li><a href="/dining?type=레스토랑">레스토랑</a></li>
 									<li><a href="/dining?type=라운지">라운지 & 바</a></li>
@@ -296,8 +322,11 @@ main {
 					</div>
 					<div id="navi--3--wrap">
 						<ul class="navi--bar--3">
-							<li><span class="toggle--box--reserve"> 예약 <span class="material-symbols-outlined">keyboard_arrow_down</span>
-							</span>
+							<li>
+							<div class="toggle--wrap" id="reservation--toggle--wrap">
+								<p class="toggle--box--reserve"> 예약</p>
+								<p class="material-symbols-outlined down--icon">keyboard_arrow_down</p>
+							</div>
 								<ul class="navi--bar--detail--reserve">
 									<li><a href="/selectDate">객실예약</a></li>
 									<li><a href="/reserveDining">다이닝예약</a></li>
@@ -306,25 +335,35 @@ main {
 					</div>
 					<div id="navi--4--wrap">
 						<ul class="navi--bar--4">
-							<li><span class="toggle--box--qna"> 문의 <span class="material-symbols-outlined">keyboard_arrow_down</span>
-							</span>
+							<li>
+							<div class="toggle--wrap">
+								<p class="toggle--box--qna"> 문의</p>
+								<p class="material-symbols-outlined down--icon">keyboard_arrow_down</p>
+							</div>
 								<ul class="navi--bar--detail--qna">
-									<li><a href="/question/question">자주 묻는 질문</a></li>
-									<li><a href="/question/qnaPage">1:1 문의</a></li>
+									<li><a href="/question/question">FAQ</a></li>
+									<li style="width: 100px;"><a href="/question/qnaPage">1:1 문의</a></li>
 								</ul></li>
 						</ul>
 					</div>
 				</div>
 				<div class="navi--bar--5">
 					<ul class="symbol--box">
-						<li><a href="/login"><span class="material-symbols-outlined">login</span></a></li>
+						<c:choose>
+							<c:when test="${principal != null}">
+								<li><a href="/logout"><span class="material-symbols-outlined">logout</span></a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="/login"><span class="material-symbols-outlined">login</span></a></li>
+							</c:otherwise>
+						</c:choose>
 						<c:choose>
 							<c:when test="${principal != null}">
 								<li><a href="/myPage"><span class="material-symbols-outlined">person</span></a></li>
 							</c:when>
-						<c:otherwise>
-							<li><a href="/login"><span class="material-symbols-outlined">person</span></a></li>
-						</c:otherwise>							
+							<c:otherwise>
+								<li><a href="/login"><span class="material-symbols-outlined">person</span></a></li>
+							</c:otherwise>							
 						</c:choose>
 						
 						<li><a href="/membership"><span class="material-symbols-outlined">card_membership</span></a></li>

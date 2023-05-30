@@ -17,11 +17,29 @@
 		<div class="navi--bar">
 			<span class="title--box"><a href="/dining">다이닝</a></span>
 				<div class="detail--container">
-					<span class="detail--box"><a href="/dining?type=레스토랑">레스토랑</a></span>
-					<span class="detail--box"><a href="/dining?type=라운지">라운지 & 바</a></span>
-					<span class="detail--box"><a href="/fitness">피트니스</a></span>
-					<span class="detail--box"><a href="/pool">수영장</a></span>
-					<span class="detail--box"><a href="/spa">스파</a></span>
+					<c:choose>
+						<c:when test="${type eq '레스토랑'}">
+							<span class="detail--box color--toggle" onclick="location.href='/dining?type=레스토랑'">레스토랑</span>
+							<span class="detail--box" onclick="location.href='/dining?type=라운지'">라운지 & 바</span>
+							<span class="detail--box"><a href="/fitness">피트니스</a></span>
+							<span class="detail--box"><a href="/pool">수영장</a></span>
+							<span class="detail--box"><a href="/spa">스파</a></span>
+						</c:when>
+						<c:when test="${type eq '라운지'}">
+							<span class="detail--box" onclick="location.href='/dining?type=레스토랑'">레스토랑</span>
+							<span class="detail--box color--toggle" onclick="location.href='/dining?type=라운지'">라운지 & 바</span>
+							<span class="detail--box"><a href="/fitness">피트니스</a></span>
+							<span class="detail--box"><a href="/pool">수영장</a></span>
+							<span class="detail--box"><a href="/spa">스파</a></span>
+						</c:when>
+						<c:otherwise>
+							<span class="detail--box"><a href="/dining?type=레스토랑">레스토랑</a></span>
+							<span class="detail--box"><a href="/dining?type=라운지">라운지 & 바</a></span>
+							<span class="detail--box"><a href="/fitness">피트니스</a></span>
+							<span class="detail--box"><a href="/pool">수영장</a></span>
+							<span class="detail--box"><a href="/spa">스파</a></span>
+						</c:otherwise>
+					</c:choose>
 				</div>
 		</div>
 		<div class="main--container">

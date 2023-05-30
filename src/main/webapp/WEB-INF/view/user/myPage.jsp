@@ -7,8 +7,8 @@
 	<main class="main--container">
 		<div class="title--container">
 		<div class="title--logo">
-			<a onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></a>
-			<img alt="" src="/images/white_logo.png" id="logo--image">	
+			<span class="material-symbols-outlined back--icon" onclick="history.back()">arrow_back</span>
+			<img alt="" src="/images/dodam_wlogo.png" id="logo--image" height="65" width="150" onclick="location.href='/'">	
 		</div>
 		<div class="title--text">
 			<p>내 정보를</p>
@@ -30,7 +30,35 @@
 				<span id="reservations" class="myinfo--box--span">예약 현황</span>
 				<span id="qandA" class="myinfo--box--span">QnA</span>
 			</div>
-			<div id="myInfoDiv"></div>
+				<div id="myInfoDiv">
+					<form class="form--container" action="/myPageProc" method="post">
+						<div>
+							<span>이메일</span>
+							<input class="input--box" name="email" type="email" readonly="readonly" value="${responseUser.email}">
+						</div>
+						<div>
+							<span>비밀번호</span>
+							<input class="input--box" name="password" type="password" value="${responseUser.password}">
+						</div>
+						<div>
+							<span>이름</span>
+							<input class="input--box" name="name" type="text" value="${responseUser.name}">
+						</div>
+						<div>
+							<span>성별</span>
+							<input class="input--box" name="gender" type="text" value="${responseUser.gender}">
+						</div>
+						<div>
+							<span>생년월일</span>
+							<input class="input--box" name="birth" type="text" id="text" value="${responseUser.birth}" readonly="readonly">
+						</div>
+						<div>
+							<span>전화번호</span>
+							<input class="input--box" name="tel" type="text" value="${responseUser.tel}">
+						</div>
+						<input class="sub--button" type="submit" value="정보 수정">
+					</form>
+				</div>
 			</div>
 		</div>
 	</main>

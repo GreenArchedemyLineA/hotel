@@ -8,8 +8,8 @@
 <main class="main--container">
 	<div class="title--container">
 		<div class="title--logo">
-			<a onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></a>
-			<img alt="" src="/images/logo_white.png" id="logo--image">
+			<span class="material-symbols-outlined back--icon" onclick="history.back()">arrow_back</span>
+			<img alt="" src="/images/logo_white.png" id="logo--image" onclick="location.href='/'">
 		</div>
 		<div class="title--text">
 			<p>추가 정보를</p>

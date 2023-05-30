@@ -27,6 +27,7 @@ public class RoomController {
 	@GetMapping("/room")
 	public String roomPage(Model model, @RequestParam(name = "type", defaultValue = "All", required = false) String type) {
 		 List<RoomType> rooms = roomService.readAllRoom(type);
+		 model.addAttribute("type", type);
 		 model.addAttribute("roomList", rooms);
 		return "/room/list";
 	}

@@ -24,6 +24,7 @@
 .title--box {
 	font-size: 30px;
 	font-weight: bold;
+	cursor: pointer;
 }
 
 .main--container {
@@ -63,11 +64,12 @@ a:hover {
 }
 .detail--box {
 	margin-left: 10px;
+	cursor: pointer;
 }
 .detail--box > a {
 	text-decoration: none;
 }
-.detail--box > a:hover {
+.detail--box:hover {
 	color: #FF9F8D;
 }
 .desc--box {
@@ -100,4 +102,9 @@ a:hover {
 
 .selected--menu > a {
 	color: #FF9F8D;
+}
+
+.color--toggle {
+	color: #FF9F8D;
+	font-weight: bolder;
 }

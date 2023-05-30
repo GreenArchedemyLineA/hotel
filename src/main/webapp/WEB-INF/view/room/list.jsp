@@ -8,11 +8,30 @@
 <body>
 	<div class="body--container">
 		<div class="navi--bar">
-			<span class="title--box"><a href="/room">객실</a></span>
+			<span class="title--box" onclick="location.href='/room'">객실</span>
 				<div>
-					<span class="detail--box"><a href="/room?type=디럭스">디럭스</a></span>
-					<span class="detail--box"><a href="/room?type=프리미엄">프리미엄</a></span>
-					<span class="detail--box"><a href="/room?type=스위트">스위트</a></span>
+					<c:choose>
+						<c:when test="${type eq '디럭스'}">
+							<span class="detail--box color--toggle" onclick="location.href='/room?type=디럭스'">디럭스</span>
+							<span class="detail--box" onclick="location.href='/room?type=프리미엄'">프리미엄</span>
+							<span class="detail--box" onclick="location.href='/room?type=스위트'">스위트</span>
+						</c:when>
+						<c:when test="${type eq '프리미엄'}">
+							<span class="detail--box" onclick="location.href='/room?type=디럭스'">디럭스</span>
+							<span class="detail--box color--toggle" onclick="location.href='/room?type=프리미엄'">프리미엄</span>
+							<span class="detail--box" onclick="location.href='/room?type=스위트'">스위트</span>
+						</c:when>
+						<c:when test="${type eq '스위트'}">
+							<span class="detail--box" onclick="location.href='/room?type=디럭스'">디럭스</span>
+							<span class="detail--box" onclick="location.href='/room?type=프리미엄'">프리미엄</span>
+							<span class="detail--box color--toggle" onclick="location.href='/room?type=스위트'">스위트</span>
+						</c:when>
+						<c:otherwise>
+							<span class="detail--box" onclick="location.href='/room?type=디럭스'">디럭스</span>
+							<span class="detail--box" onclick="location.href='/room?type=프리미엄'">프리미엄</span>
+							<span class="detail--box" onclick="location.href='/room?type=스위트'">스위트</span>
+						</c:otherwise>
+					</c:choose>
 				</div>
 		</div>
 		<div class="main--container">
@@ -28,7 +47,7 @@
 							</c:if> 
 							<c:if test="${roomList.id == 3}">
 								<img alt="프리미엄" src="images/premium.jpg" style="width: 1000px; height: 500px;">
-							</c:if> 
+							</c:if>
 							<c:if test="${roomList.id == 4}">
 								<img alt="스위트" src="images/suite.jpg" style="width: 1000px; height: 500px;"> 
 							</c:if> 
