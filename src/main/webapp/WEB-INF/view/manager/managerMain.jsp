@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
 		<div class="content">
-			<header>여짝에 이제 리스트 들을 띄어줄 생각입니다</header>
+			<p>여짝에 이제 리스트 들을 띄어줄 생각입니다</p>
 			<div id="map" class="main--content"></div>
 		</div>
 	</main>

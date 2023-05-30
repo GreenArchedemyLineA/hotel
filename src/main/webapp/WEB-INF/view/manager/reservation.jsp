@@ -54,7 +54,6 @@
 			</div>
 		</div>
 	</div>
-</main>
 
 	<script>
 	    function detailReservation(id){
