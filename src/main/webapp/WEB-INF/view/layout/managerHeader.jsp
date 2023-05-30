@@ -6,6 +6,7 @@
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzkxekb89f"></script>
 <meta charset="UTF-8">
 <title>Main Page</title>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -53,10 +54,20 @@ li {
 	list-style: none;
 	margin-bottom: 10px;
 	padding-left: 10px;
+	cursor: pointer;
 }
 
 .main--headers {
 	margin-bottom: 10px;
+}
+
+#search--list {
+	display: none;
+}
+
+#search--user--wrap {
+	display: flex;
+	justify-content: space-between;
 }
 
 </style>
@@ -64,13 +75,30 @@ li {
 	<main>
 		<nav>
 			<ul>
-				<li id="logo--li"><a href="/manager/managerMain"><img alt="dodam" src="/images/white_logo.png" width="100" height="40"></a></li>
-				<li id="room--li"><a href="/manager/roomStatus">객실</a></li>
-				<li id="dining--li"><a href="#">다이닝</a></li>
-				<li id="userList--li"><a href="/manager/userList">회원조회</a></li>
-				<li id="reservation--li"><a href="/manager/reservation">예약</a></li>
-				<li id="event--li"><a href="/event/notice">호텔 일정</a></li>
-				<li id="qna--li"><a href="/question/questionList">문의 사항</a></li>
-				<li id="faq--li"><a href="/manager/faq">FAQ</a></li>
+				<li id="logo--li" onclick="location.href='/manager/managerMain'"><img alt="dodam" src="/images/white_logo.png" width="100" height="40"></li>
+				<li id="room--li" onclick="location.href='/manager/roomStatus'">객실</li>
+				<li id="dining--li" onclick="location.href='#'">다이닝</li>
+				<li id="userList--li">
+					<div id="search--user--wrap">
+						<span onclick="location.href='/manager/userList'">회원조회</span>
+						<i class="xi-angle-down-min"></i>
+					</div>
+					<ul id="search--list">
+						<li onclick="location.href='/manager/userList'">전체 회원 조회</li>
+						<li onclick="location.href='/manager/membershipUserList'">멤버쉽 회원 조회</li>
+						<li onclick="location.href='/manager/blackList'">블랙리스트 회원 조회</li>
+					</ul>	
+				</li>
+				<li id="reservation--li" onclick="location.href='/manager/reservation'">예약</li>
+				<li id="event--li" onclick="location.href='/event/notice'">호텔 일정</li>
+				<li id="qna--li" onclick="location.href='/question/questionList'">문의 사항</li>
+				<li id="faq--li" onclick="location.href='/manager/faq'">FAQ</li>
 			</ul>
 		</nav>
+	
+	<script type="text/javascript">
+		$("#userList--li").on("click", function() {
+			$("#search--user--wrap").siblings().slideToggle()
+		});
+	</script>
+	

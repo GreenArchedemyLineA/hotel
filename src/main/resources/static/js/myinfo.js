@@ -15,6 +15,7 @@ class MyInfoJs {
 		this.buttonCoupons.addEventListener("click", this.createCouponListForm.bind(this));
 		this.buttonReservations.addEventListener("click", this.createReservationListForm.bind(this));
 		this.buttonQandA.addEventListener("click", this.createQnAListForm.bind(this));
+		
 
 	}
 
