@@ -1,9 +1,10 @@
 package com.dodam.hotel.repository.interfaces;
 
-import com.dodam.hotel.repository.model.managertest.Spa;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
+import com.dodam.hotel.repository.model.Spa;
 
 /**
  * @author lhs-devloper

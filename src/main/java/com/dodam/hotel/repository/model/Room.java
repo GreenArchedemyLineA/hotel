@@ -6,13 +6,10 @@ import lombok.Data;
 public class Room {
 	
 	private Integer id;
-	private String name;
-	private Integer price;
 	private Boolean availability;
-	private String description;
-	private String image;
 	private String statusDesc;
-	private Integer numberOfP;
+	private Integer roomTypeId;
 	
+	private RoomType roomType;
 	
 } // end of class

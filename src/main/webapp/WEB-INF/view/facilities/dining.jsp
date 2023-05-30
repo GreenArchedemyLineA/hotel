@@ -47,6 +47,29 @@
 	position:sticky;
     top:200px;
 }
+
+.dining--outline {
+	display: flex;
+	justify-content: space-between;
+	width: 1000px;
+}
+
+.dining--info {
+	width: 1000px;
+}
+
+.dining--time {
+	display: flex;
+	justify-content: space-between;
+	width: 1000px;
+}
+
+.dining--additional--information {
+	display: flex;
+	justify-content: space-between;
+	width: 1000px;
+}
+
 </style>
 </head>
 <body>
@@ -65,15 +88,34 @@
 					<a href="#">
 						<img alt="객실 사진" src="https://picsum.photos/id/169/1000/500">
 					</a>
-					<h3><a href="#">${list.dining.name}</a></h3>
-						<p><a href="#">위치 : ${list.dining.location}</a></p>
-					<c:if test="${type != 'All'}">
-						<p><a href="#">시간 : ${list.dining.hours}</a></p>
-						<p><a href="#">설명1 : ${list.contentDesc1}</a></p>
-						<p><a href="#">설명2 : ${list.contentDesc2}</a></p>
-						<p><a href="#">설명3 : ${list.contentDesc3}</a></p>
-						<p><a href="#">설명4 : ${list.contentDesc4}</a></p>
-					</c:if>
+				</div>
+				<div class="dining--info">
+					<div class="dining--outline">
+						<div>
+							<h2>다이닝 개요</h2>
+						</div>
+						<div>
+							<h3><a href="#">${list.dining.name}</a></h3>
+							<p><a href="#">위치 : ${list.dining.location}</a></p>
+						</div>
+					</div>
+					<div>
+						<c:if test="${type != 'All'}">
+							<div class="dining--time">
+								<h2>이용 시간</h2>									
+								<p><a href="#">${list.dining.hours}</a></p>
+							</div>
+							<div class="dining--additional--information">
+								<h2>추가 정보</h2>
+								<div>
+									<p><a href="#">설명1 : ${list.contentDesc1}</a></p>
+									<p><a href="#">설명2 : ${list.contentDesc2}</a></p>
+									<p><a href="#">설명3 : ${list.contentDesc3}</a></p>
+									<p><a href="#">설명4 : ${list.contentDesc4}</a></p>
+								</div>
+							</div>
+						</c:if>
+					</div>
 				</div>
 			</c:forEach>
 		</div>

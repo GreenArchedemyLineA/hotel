@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+import com.dodam.hotel.enums.Grade;
+
 @SpringBootTest
 public class MailTest{
 	@Autowired
@@ -32,5 +34,10 @@ public class MailTest{
         } catch(Exception e) {
             e.printStackTrace();
         }
+	}
+	
+	@Test
+	public void enumTest() {
+		Integer id = Grade.BROWN.getGrade();
 	}
 }

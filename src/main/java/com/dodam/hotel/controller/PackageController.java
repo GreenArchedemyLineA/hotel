@@ -27,4 +27,5 @@ public class PackageController {
 		model.addAttribute("h_package", h_package);
 		return "/room/package";
 	}
+	
 }

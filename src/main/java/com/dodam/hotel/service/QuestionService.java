@@ -12,6 +12,7 @@ import com.dodam.hotel.repository.interfaces.ReplyRepository;
 import com.dodam.hotel.repository.model.FAQ;
 import com.dodam.hotel.repository.model.Reply;
 import com.dodam.hotel.repository.model.TestQuestion;
+import com.dodam.hotel.util.PagingObj;
 @Service
 public class QuestionService {
 	
@@ -31,19 +32,38 @@ public class QuestionService {
 		}
 	}
 	
+	// 특정 유저 모든 질문 개수
+	public int readQuestionCountByUserId(Integer userId) {
+		int resultCount = questionRepository.findByUserIdCount(userId);
+		return resultCount;
+	}
+	
+	// 특정 유저 질문 조회(페이징)
+	public List<Reply> readQuestionByUserIdPaging(PagingObj obj, Integer userId) {
+		List<Reply> replyEntitys = questionRepository.findByUserIdPaging(obj, userId);
+		return replyEntitys;
+	}
+	
 	// 모든 자주 묻는 질문 조회
+	@Transactional
 	public List<FAQ> readAllFaq() {
 		List<FAQ> faqEntitys = questionRepository.selectAllFaq();
 		return faqEntitys;
 	}
 	
-	// 질문 조회 기능
+	// 특정 유저 질문 조회 기능
 	@Transactional
 	public List<Reply> readQuestionByUserId(Integer userId) {
-		List<Reply> questionEntitys = questionRepository.selectQuestionByUserId(userId);
-		return questionEntitys;
+		List<Reply> questionEntity = questionRepository.selectQuestionByUserId(userId);
+		return questionEntity;
 	}
-
+	//질문 삭제 기능
+	@Transactional
+	public int questionDeleteById(Integer questionId) {
+		int deleteReplyEntity = replyRepository.deleteReply(questionId);
+		int questionDeleteEntity = questionRepository.deleteQuestion(questionId);
+		return questionDeleteEntity;
+	}
 	// 문의 전부 보기
 	public List<TestQuestion> findAllQuestionList(){
 		List<TestQuestion> questionListEntity = questionRepository.findAllQuestion(); 
@@ -59,7 +79,7 @@ public class QuestionService {
 		int updateStatusEntity = questionRepository.updateById(id);
 		return updateStatusEntity;
 	}
-	//댓긓작성
+	//댓글작성
 	public int insertReply(String content,Integer questionId,Integer managerId) {
 		int insertReplyEntity = replyRepository.insert(content, questionId, managerId); 
 		return insertReplyEntity; 

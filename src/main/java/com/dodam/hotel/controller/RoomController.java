@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.dto.UpdateRoomStatusDto;
 import com.dodam.hotel.repository.model.Room;
+import com.dodam.hotel.repository.model.RoomType;
 import com.dodam.hotel.service.RoomService;
 
 @Controller
@@ -25,7 +26,8 @@ public class RoomController {
 	// 객실 페이지로 이동
 	@GetMapping("/room")
 	public String roomPage(Model model, @RequestParam(name = "type", defaultValue = "All", required = false) String type) {
-		 List<Room> rooms = roomService.readAllRoom(type);
+		 List<RoomType> rooms = roomService.readAllRoom(type);
+		 System.out.println(rooms);
 		 model.addAttribute("roomList", rooms);
 		return "/room/list";
 	}
@@ -33,7 +35,7 @@ public class RoomController {
 	// 객실 상세 페이지
 	@GetMapping("/detailRoom/{id}")
 	public String roomDetailPage(Model model, @PathVariable Integer id) {
-		Room responseRoom = roomService.readRoomById(id);
+		RoomType responseRoom = roomService.readRoomById(id);
 		model.addAttribute("room", responseRoom);
 		return "/room/roomDetail";
 	}

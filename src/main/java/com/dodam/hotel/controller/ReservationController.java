@@ -1,5 +1,7 @@
 package com.dodam.hotel.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.dto.UserResponseDto.LoginResponseDto;
+import com.dodam.hotel.repository.model.Point;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.util.Define;
 import com.dodam.hotel.util.ReservationOptionPrice;
@@ -30,13 +34,15 @@ public class ReservationController {
 	@GetMapping("/reserve")
 	public String reserveMain(ReservationRequestDto requestDto, Model model) {
 		String[] array = requestDto.getDate().split(" to ");
+		System.out.println(array[0]);
+		System.out.println(array[1]);
 		Integer countAll = requestDto.getCountPerson() + requestDto.getCountChild() + requestDto.getCountBaby();
 		requestDto.setNumberOfP(countAll);
 		// 출력
-		for (int i = 0; i < array.length; i++) {
-			requestDto.setStartDate(array[0]);
-			requestDto.setEndDate(array[1]);
-		}
+//		for (int i = 0; i < array.length; i++) {
+		requestDto.setStartDate(array[0]);
+		requestDto.setEndDate(array[1]);
+//		}
 		return null;
 	}
 
@@ -50,7 +56,7 @@ public class ReservationController {
 	@PostMapping("/dining")
 	public String reserveDining(ReservationRequestDto requestDto) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-		int resultRowCount = reservationService.createReserveDining(requestDto, principal.getId());
+		reservationService.createReserveDining(requestDto, principal.getId());
 		return "redirect:/";
 	}
 	
@@ -63,6 +69,12 @@ public class ReservationController {
 		model.addAttribute("poolPrice", reservationOptionPrice.getPoolPrice());
 		model.addAttribute("fitnessPrice", reservationOptionPrice.getFitnessPrice());
 		
+		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+		selectReserveDetail.setUserId(principal.getId());
+		Map<String, Object> selectList = reservationService.useCouponOrPoint(selectReserveDetail);
+		
+		model.addAttribute("point", selectList.get("point"));
+		model.addAttribute("couponList", selectList.get("couponList"));
 		return "/reservation/reservation";
 	}
 	
@@ -72,7 +84,9 @@ public class ReservationController {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		int resultRowCount = reservationService.createReserveRoom(requestDto, principal.getId());
 
+		reservationService.createReserveRoom(requestDto, principal.getId());
 		return "redirect:/";
 	}
+	
 }
 

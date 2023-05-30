@@ -1,23 +1,79 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzkxekb89f"></script>
+<style>
+.container {
+	color: black;
+}
+header{
+	font-size: 30px;
+	color: black;
+}
+.content {
+	display: flex;
+}
 
-<div class="d-flex align-items-start">
-	<div class="flex-grow-1">
-		<form action="/question/category" method="get">
-			<select name="category">
-				<option value="호텔건의">호텔건의</option>
-				<option value="회원문의">회원문의</option>
-				<option value="부대시설문의">부대시설문의</option>
-				<option value="예약문의">예약문의</option>
-			</select>
-			<button type="submit">카테고리 검색</button>
+.navi {
+	display: flex;
+	flex: 1;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	flex: 3;
+}
+.navi{
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+}
+.content{
+	display: flex;
+	height: 100vh;
+}
+.main--content {
+	border: 2px solid black;
+	width: 1200px;
+	height: 600px;
+	margin-left: 30px;
+	margin-top: 30px;
+}
+
+.navi--bar {
+	border: 2px solid black;
+	margin-top: 30px;
+	width: 200px;
+	height: 400px;
+		
+}
+li{
+	list-style: none;
+}
+td,th,button{
+	color: black;
+}
+</style>
+	<div class="content">
+		<div class="navi">
+			<div class="navi--bar">
+				<ul>	
+				</ul>
+			</div>
+		</div>
+		<div class="main">
+			<header>여짝에 리스트</header>
+			<div class="main--content">
+			<form action="/manager/userList" method="get">
+			<button type="submit">돌아가기</button>
 		</form>
-		<table class="table">
+			<table class="table">
 			<thead>
 				<tr>
 					<th scope="col">문의 제목</th>
 					<th scope="col">문의자 아이디</th>
 					<th scope="col">답변 상태값</th>
+					<th scope="col">답변하기/삭제</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -26,34 +82,46 @@
 						<td>${questionList.title}</td>
 						<td>${questionList.userId}</td>
 						<td>${questionList.status}</td>
-						<td><button onclick="questionDetail(${questionList.id})">답변</button></td>
-						<td><button onclick="questionDelete(${questionList.id})">삭제</button></td>
+						<c:choose>
+						<c:when test="${questionList.status != true}">
+							<td><button onclick="questionDetail(${questionList.id})">답변</button></td>
+						</c:when>
+						<c:otherwise>
+							<td><button onclick="questionDelete(${questionList.id})">삭제</button></td>
+						</c:otherwise>
+						</c:choose>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		<div style="display: block; text-align: center;">
+				<c:if test="${paging.startPage != 1}">
+					<a href="/event/notice?nowPage=${paging.startPage - 1}&cntPerPage=${paging.cntPerPage}">&lt;</a>
+				</c:if>
+				<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+					<c:choose>
+						<c:when test="${p == paging.nowPage}">
+							<b>${p}</b>
+						</c:when>
+						<c:when test="${p != paging.nowPage}">
+							<a href="/event/notice?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+				<c:if test="${paging.endPage != paging.lastPage}">
+					<a href="/event/notice?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">&gt;</a>
+				</c:if>
+			</div>
+			</div>
+		</div>
 	</div>
-</div>
 <script>
-	function questionDetail(id){
-		// 문의 정보 확인과 댓글 작성 할수 있는 페이지로
-		location.href = "/question/questionDetail/"+id; 
-	}
-	function questionDelete(id){
-		// 문의 정보 삭제 기능
-		location.href = "/question/questionDelete/"+id; 
-	}
-	$(document).ready(function(){
-		let date 
-	$.ajax({
-		type: 'get',
-		url: '/question/questionList',
-	}).done({
-		
-	}).fail({
-		
-	});
-	});
+function questionDetail(id){
+	location.href = "/question/questionDetail/"+id; 
+}
+function questionDelete(id){
+	location.href = "/question/questionDelete/"+id; 
+}
 </script>
 </body>
 </html>

@@ -30,19 +30,21 @@
 	</div>
 	<div class="room--container">
 		<c:forEach var="room" items="${roomList}">
-			${room.name} 
-			${room.price} 
+			${room.roomType.name} 
+			${room.roomType.price} 
 			<button class="sub--button" 
-			onclick="clickResBtn('${searchDto.startDate}', '${searchDto.endDate}','${searchDto.numberOfP}', '${room.price}','${room.name}', '${searchDto.countPerson}', '${searchDto.countChild}', '${searchDto.countBaby}')">예약하기</button> <br />
+			onclick=
+			"clickResBtn('${searchDto.startDate}', '${searchDto.endDate}','${searchDto.numberOfP}', '${room.id}', '${room.roomType.price}','${room.roomType.name}', '${searchDto.countPerson}', '${searchDto.countChild}', '${searchDto.countBaby}')">예약하기</button> <br />
 		</c:forEach>
 	</div>
 	
 	<script type="text/javascript">
-		function clickResBtn(startDate, endDate, numberOfP, price, name, countPerson, countChild, countBaby) {
+		function clickResBtn(startDate, endDate, numberOfP, id, price, name, countPerson, countChild, countBaby) {
 			let selectReserveDetail = {
 				startDate: startDate,
 				endDate: endDate,
 				numberOfP: numberOfP,
+				roomId: id,
 				price: price,
 				name: name,
 				countPerson: countPerson,

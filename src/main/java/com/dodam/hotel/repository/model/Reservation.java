@@ -3,8 +3,6 @@ package com.dodam.hotel.repository.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-import com.dodam.hotel.repository.model.managertest.PackageTB;
-
 import lombok.Data;
 
 @Data
@@ -16,7 +14,7 @@ public class Reservation {
     private Integer numberOfP;
     private Integer userId;
     private Integer roomId;
-    private Integer price;
+    private Integer totalPrice;
     private Timestamp createdAt;
     private Integer diningId;
     private Integer packageId;
@@ -28,7 +26,7 @@ public class Reservation {
     private User user;
     private Room room;
     private Dining dining;
-    private PackageTB h_package;
+    private Package h_package;
     private Fitness fitness;
     private Pool pool;
     private Spa spa;

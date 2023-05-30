@@ -10,6 +10,8 @@ public class Coupon {
 	private String content;
 	private String startDate;
 	private String endDate;
+	private Integer couponId;
 	private User user;
+	private CouponInfo couponInfo;
 	
 }

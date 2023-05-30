@@ -22,6 +22,7 @@ import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Room;
+import com.dodam.hotel.repository.model.RoomType;
 import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.RoomService;
 
@@ -157,7 +158,7 @@ public class ManagerController {
 	//객실 정보 상세 조회
 	@GetMapping("/roomStatusDetail")
 	public String RoomStatusDetail(Integer roomId, Model model) {
-		Room room = managerService.findByRoom(roomId);
+		RoomType room = managerService.findByRoom(roomId);
 		model.addAttribute("room", room);
 		return "/manager/roomDetailStatus";
 	}

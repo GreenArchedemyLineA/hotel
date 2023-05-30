@@ -2,12 +2,10 @@ package com.dodam.hotel.service;
 
 import java.sql.Date;
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.dodam.hotel.repository.model.managertest.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,9 +19,13 @@ import com.dodam.hotel.repository.interfaces.ReservationRepository;
 import com.dodam.hotel.repository.interfaces.RoomRepository;
 import com.dodam.hotel.repository.interfaces.SpaRepository;
 import com.dodam.hotel.repository.model.Dining;
+import com.dodam.hotel.repository.model.DiningReservation;
+import com.dodam.hotel.repository.model.Fitness;
 import com.dodam.hotel.repository.model.MUser;
+import com.dodam.hotel.repository.model.Pool;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.Room;
+import com.dodam.hotel.repository.model.Spa;
 
 /**
  * @author lhs-devloper

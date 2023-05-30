@@ -47,6 +47,14 @@
 	position:sticky;
     top:200px;
 }
+
+.main--title {
+	text-align: center;
+}
+
+.room--wrap {
+	margin-bottom: 30px;
+}
 </style>
 </head>
 <body>
@@ -60,18 +68,20 @@
 			</ul>
 		</div>
 		<div class="main--container">
-			<div>
+			<div class="main--title">
 				<h2>객실</h2>
-				<div>zz</div>
+				<div>환상적인 파노라믹뷰와 모던한 인테리어의 객실은 최상의 휴식을 제공합니다.</div>
 			</div>
 			<div>
 				<c:forEach var="roomList" items="${roomList}">
-						<div>
+						<div class="room--wrap">
 							<a href="/detailRoom/${roomList.id}">
 								<img alt="객실 사진" src="https://picsum.photos/id/169/1000/500">
 							</a>
-							<h3><a href="/detailRoom/${roomList.id}">${roomList.name}</a></h3>
-							<p><a href="/detailRoom/${roomList.id}">수용 가능 인원 : ${roomList.numberOfP}</a></p>
+							<div class="room--info">
+								<h3><a href="/detailRoom/${roomList.id}">${roomList.name}</a></h3>
+								<p><a href="/detailRoom/${roomList.id}">수용 가능 인원 : ${roomList.numberOfP}</a></p>
+							</div>
 						</div>
 				</c:forEach>
 			</div>

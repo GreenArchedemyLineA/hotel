@@ -19,5 +19,6 @@ public class MUser {
 	private int withdrawal;
 	private Timestamp createdAt;
 	private String originEmail;
+	private Boolean socialLogin;
 	
 }

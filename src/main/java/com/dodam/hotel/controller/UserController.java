@@ -3,15 +3,21 @@ package com.dodam.hotel.controller;
 
 import java.util.List;
 
+
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-
+import com.dodam.hotel.dto.InquiryRequestDto;
+import com.dodam.hotel.dto.TestDto;
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.repository.model.Coupon;
@@ -24,9 +30,9 @@ import com.dodam.hotel.service.GradeService;
 import com.dodam.hotel.service.QuestionService;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.UserService;
+import com.dodam.hotel.util.CreateRandomStr;
 import com.dodam.hotel.util.Define;
-
-import com.dodam.hotel.dto.TestDto;
+import com.dodam.hotel.util.PagingObj;
 
 @Controller
 public class UserController {
@@ -49,6 +55,9 @@ public class UserController {
 	@Autowired
 	private QuestionService questionService;
 	
+	@Autowired
+	private JavaMailSenderImpl mailSender;
+	
 	// 메인 페이지 (성희)
 	@GetMapping({"","/"})
 	public String mainPage() {
@@ -65,27 +74,11 @@ public class UserController {
 	@GetMapping("/myPage")
 	public String myPage(Model model) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-		// 회원 정보 불러오기
-		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
+		List<Coupon> coupons = couponService.readByUserId(principal.getId());
 		// 등급 정보 불러오기
 		GradeInfo responseGrade = gradeService.readGradeByUserId(principal.getId());
-		// todo
-		// 비동기처리 -> restController로 이동
-		// 쿠폰 정보 불러오기 
-		List<Coupon> coupons = couponService.readByUserId(principal.getId());
-		// todo
-		// 비동기처리 -> restController로 이동
-		// 예약 정보 불러오기
-		List<Reservation> reservations = reservationService.readAllReservationByUserId(principal.getId());
-		// 내가 한 질문 리스트 가져오기
-		// todo
-		// 비동기처리 -> restController로 이동
-		List<Reply> qna = questionService.readQuestionByUserId(principal.getId());
-		model.addAttribute("responseUser", responseUser);
 		model.addAttribute("responseGrade", responseGrade);
 		model.addAttribute("coupons", coupons);
-		model.addAttribute("reservations", reservations);
-		model.addAttribute("qna", qna);
 		return "/user/myPage";
 	}
 	
@@ -94,7 +87,31 @@ public class UserController {
 	public String loginProc(UserRequestDto.LoginFormDto loginDto) {
 		UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(loginDto);
 		session.setAttribute(Define.PRINCIPAL, principal);
-		return "redirect:/myPage";
+		
+		if(principal.getRandomPwdStatus()) {
+			return "/user/changePw";
+		}
+		
+		return "redirect:/";
+	}
+	
+	// 비밀번호 변경 페이지
+	@PostMapping("/changePwProc")
+	public String changePwProc(UserRequestDto.UpdatePwdDto pwdDto) {
+		// 앞에서 비밀번호 확인 처리
+		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+		int resultRow = userService.updateOnlyPw(pwdDto.getChangePwd(), principal.getId());
+		if(resultRow != 1) {
+			System.out.println("변경 실패");
+		}
+		return "redirect:/logout";
+	}
+	
+	// 로그아웃 처리
+	@GetMapping("/logout")
+	public String logout() {
+		session.invalidate();
+		return "redirect:/login";
 	}
 	
 	// 회원정보 수정 처리 (김현우)
@@ -157,4 +174,83 @@ public class UserController {
 	public String managerLogin() {
 		return "";
 	}
+	
+	// id 찾기 기능
+	@PostMapping("/idInquiry")
+	public String idInquiry(InquiryRequestDto.IdInquiryRequestDto idInquiryRequestDto, Model model) {
+		User responseUser = userService.readUserForIdInquiry(idInquiryRequestDto);
+		model.addAttribute("responseUser", responseUser);
+		return "/user/idInquiryPage";
+	}
+	
+	// pw 찾기 페이지 이동
+	@GetMapping("/pwInquiryPage")
+	public String pwInquiryPage() {
+		return "/user/pwInquiryPage";
+	}
+	
+	// pw 찾기 기능
+	@PostMapping("/pwInquiry")
+	public String pwInquiry(InquiryRequestDto.PwInquiryRequestDto pwInquiryRequestDto) {
+		// 랜덤 비밀번호 생성
+		String randomStr = CreateRandomStr.createRandomString();
+		
+		pwInquiryRequestDto.setPassword(randomStr);
+		
+		int resultRow = userService.updatePwByUserInfo(pwInquiryRequestDto);
+		
+		if(resultRow == 1) {
+			String subject = pwInquiryRequestDto.getName() + "님의 임시 비밀번호 입니다.";
+	        String content = "<p>로그인 후 비밀번호를 변경해주시길 바랍니다.</p> <br> <h2>임시 비밀번호</h2> <br> <p>" + randomStr + "</p>";
+	        String from = Define.ADMIN_EMAIL;
+	        String to = pwInquiryRequestDto.getEmail();
+	        try {
+	            MimeMessage mail = mailSender.createMimeMessage();
+	            MimeMessageHelper mailHelper = new MimeMessageHelper(mail, "UTF-8");
+	            
+	            mailHelper.setFrom(from);
+	            mailHelper.setTo(to);	
+	            mailHelper.setSubject(subject);
+	            mailHelper.setText(content, true);
+	            
+	            mailSender.send(mail);
+	            
+	        } catch(Exception e) {
+	            e.printStackTrace();
+	        }
+		} else {
+			// 예외처리 이메일 전송 실패
+			System.out.println("이메일 전송 실패");
+		}
+		return "redirect:/pwInquiryPage";
+	}
+	
+	@GetMapping("/myReservations")
+	public String myReservations(Model model, @RequestParam(name = "nowPage", defaultValue = "1" , required = false) String nowPage, @RequestParam(name = "cntPerPage", defaultValue = "5" , required = false) String cntPerPage) {
+		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+		
+		int total = reservationService.readAllReservationByUserIdCount(principal.getId());
+		
+		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		
+		List<Reservation> reservations = reservationService.readAllResrevationByUserIdPaging(po, principal.getId());
+		model.addAttribute("paging", po);
+		model.addAttribute("reservations", reservations);
+		return "/user/reservationList";
+	}
+	
+	@GetMapping("/myReplys")
+	public String myReply(Model model, @RequestParam(name = "nowPage", defaultValue = "1" , required = false) String nowPage, @RequestParam(name = "cntPerPage", defaultValue = "5" , required = false) String cntPerPage) {
+		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+		
+		int total = questionService.readQuestionCountByUserId(principal.getId());
+		
+		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		
+		List<Reply> questions = questionService.readQuestionByUserIdPaging(po, principal.getId());
+		model.addAttribute("paging", po);
+		model.addAttribute("questions", questions);
+		return "/user/replyList";
+	}
+	
 } // end of class

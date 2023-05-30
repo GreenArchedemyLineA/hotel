@@ -1,6 +1,7 @@
 package com.dodam.hotel.repository.model;
 
 import java.sql.Date;
+
 import java.sql.Timestamp;
 
 import lombok.Data;
@@ -18,11 +19,8 @@ public class User {
 	private int blacklist;
 	private int withdrawal;
 	private Timestamp createdAt;
+	private Boolean randomPwdStatus;
 	private String originEmail;
 
-	/**
-	 * @author lhs-devloper
-	 */
-	private String randomPwsStatus;
 }
 

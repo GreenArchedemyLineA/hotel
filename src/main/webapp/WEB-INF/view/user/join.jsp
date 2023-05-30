@@ -14,22 +14,47 @@
 		display: flex;
 		
 	}
+	#logo--image {
+		width: 150px;
+	}
 	.title--container {
 		flex: 1;
-		background-color: #1F5B25;
+		background-color: #64c5f3;
 		height: 100vh;
 		color: #fff;
 	}
 	.content--container {
-		flex: 2;
+		flex: 3;
 		
 	}
+	.title--logo {
+		display: flex;
+		align-items: flex-end;
+		justify-content: flex-end;
+		margin: 10px 10px 0 0;
+	}
+	
+	.title--logo a {
+		cursor: pointer;
+	}
+	
+	.title--text {
+		margin: 150px 30px 0 0;
+		min-width: 250px;
+	}
+	
 	.form--container {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		height: 100vh;
+	}
+	.title--container p {
+		font-size: 60px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
 	}
 	.input--box {
 		width: 350px;
@@ -68,10 +93,14 @@
 </style>
 <main class="main--container">
 	<div class="title--container">
-		<span class="material-symbols-outlined">arrow_back</span>
-		<img alt="" src="/images/logo_white.png">
-		<p>회원가입을</p>
-		<p>시작해볼까요?</p>
+		<div class="title--logo">
+			<a onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></a>
+			<img alt="" src="/images/logo_white.png" id="logo--image">
+		</div>
+		<div class="title--text">
+			<p>회원가입을</p>
+			<p>시작해볼까요?</p>
+		</div>
 	</div>
 	<div class="content--container">
 		<form action="/join" method="post" class="form--container">
