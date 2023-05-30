@@ -62,7 +62,12 @@ public class KakaoController {
     public String kakaoJoin() {
     	return "/user/kakaoJoin";
     }
-    
+    /**
+     * 
+     * @param code
+     * @param model
+     * @return 카카로 로그인 (성희)
+     */
     @GetMapping("/kakaoLogin")
     public String kakaoLogin(@RequestParam String code, Model model){
 //      String TOKEN_URI = "https://kauth.kakao.com/oauth/token";
@@ -122,24 +127,11 @@ public class KakaoController {
       
    
      
-      List<MUser> users = managerService.managerUserListAll();
-      model.addAttribute("user",userInfo);
-      
-      System.out.println(responseUser.getBody().getKakao_account().getEmail());
-      for(MUser user : users) {
-    	  
-    	  System.out.println(user.getEmail());
-    	  if(responseUser.getBody().getKakao_account().getEmail().equals(user.getEmail())) {
-    		  // 로그인 처리 
-    		  UserRequestDto.LoginFormDto login_user = new LoginFormDto();
-    		  login_user.setEmail(responseUser.getBody().getKakao_account().getEmail());
-    		  login_user.setPassword(dodamKey);
-    		  UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(login_user);
-    		  session.setAttribute(Define.PRINCIPAL, principal);
-    		  
+      UserResponseDto.MyPageResponseDto loginUser = userService.readUserByEmail(responseUser.getBody().getKakao_account().getEmail());
+    	  if(loginUser != null) {
+    		  session.setAttribute(Define.PRINCIPAL, loginUser);
     		  return "redirect:/";
     	  }
-      }
       
       return "/user/kakaoJoin";
 	}	

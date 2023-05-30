@@ -1,117 +1,63 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../layout/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%@ include file="../layout/header.jsp"%>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="/css/navi.css" />
 <style type="text/css">
-* {
-	font-family: 'Noto Sans KR', monospace;
-}
-
-.body--container {
-	display: flex;
-}
-
-.navi--bar {
-	background-color: #D0DFBE;
-	width: 300px;
-	height: 500px;
-	padding: 20px;
-	margin: 30px;
-	border-radius: 10px;
-}
-
-.navi--bar--ul {
-	padding: 0;
-}
-
-.navi--bar--ul li {
-	text-align: center;
-	list-style: none;
-	font-size: 20px;
-	padding: 15px 0;
-}
-
-.main--container {
-	background-color: beige;
-	width: 1800px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.navi--bar {
-	position:sticky;
-    top:200px;
-}
-
-.dining--outline {
-	display: flex;
-	justify-content: space-between;
-	width: 1000px;
-}
-
-.dining--info {
-	width: 1000px;
-}
-
-.dining--time {
-	display: flex;
-	justify-content: space-between;
-	width: 1000px;
-}
-
-.dining--additional--information {
-	display: flex;
-	justify-content: space-between;
-	width: 1000px;
-}
-
 </style>
 </head>
 <body>
 	<div class="body--container">
 		<div class="navi--bar">
-			<ul class="navi--bar--ul">
-			    <li><a href="/dining">전체 보기</a></li>
-			    <li><a href="/dining?type=레스토랑">레스토랑</a></li>
-				<li><a href="/dining?type=라운지">라운지 & 바</a></li>
-			</ul>
+			<span class="title--box"><a href="/dining">다이닝</a></span>
+				<div class="detail--container">
+					<span class="detail--box"><a href="/dining?type=레스토랑">레스토랑</a></span>
+					<span class="detail--box"><a href="/dining?type=라운지">라운지 & 바</a></span>
+					<span class="detail--box"><a href="/fitness">피트니스</a></span>
+					<span class="detail--box"><a href="/pool">수영장</a></span>
+					<span class="detail--box"><a href="/spa">스파</a></span>
+				</div>
 		</div>
 		<div class="main--container">
-			<h2>다이닝</h2>
 			<c:forEach var="list" items="${diningList}">
 				<div>
-					<a href="#">
-						<img alt="객실 사진" src="https://picsum.photos/id/169/1000/500">
-					</a>
+					<c:choose>
+						<c:when test="${type.equals('레스토랑')}">
+							<img alt="레스토랑" src="/images/dining1.jpg" style="width: 1000px; height: 500px;">
+						</c:when>
+						<c:otherwise>
+							<a href="/dining?type=라운지">
+								<img alt="라운지 & 바" src="/images/bar.jpg" style="width: 1000px; height: 500px;">
+							</a>
+						</c:otherwise>
+					</c:choose>
+					
 				</div>
-				<div class="dining--info">
-					<div class="dining--outline">
-						<div>
-							<h2>다이닝 개요</h2>
-						</div>
-						<div>
-							<h3><a href="#">${list.dining.name}</a></h3>
-							<p><a href="#">위치 : ${list.dining.location}</a></p>
-						</div>
+				<div class="info--container">
+					<div class="info--outline">
+						<p class="title--box">${list.dining.name}</p>
+						<p class="desc--box">${list.dining.location}</p>
 					</div>
 					<div>
 						<c:if test="${type != 'All'}">
-							<div class="dining--time">
-								<h2>이용 시간</h2>									
-								<p><a href="#">${list.dining.hours}</a></p>
+							<div class="desc--box--2">						
+								<p>${list.dining.hours}</p>
 							</div>
-							<div class="dining--additional--information">
-								<h2>추가 정보</h2>
-								<div>
-									<p><a href="#">설명1 : ${list.contentDesc1}</a></p>
-									<p><a href="#">설명2 : ${list.contentDesc2}</a></p>
-									<p><a href="#">설명3 : ${list.contentDesc3}</a></p>
-									<p><a href="#">설명4 : ${list.contentDesc4}</a></p>
+							<div class="desc--box--3">
+								<div class="info--title">
+									<p>추가 정보</p>								
+								</div>
+								<div class="info--content">
+									<p>${list.contentDesc1}</p>
+									<p>${list.contentDesc2}</p>
+									<p>${list.contentDesc3}</p>
+									<p>${list.contentDesc4}</p>
 								</div>
 							</div>
 						</c:if>
@@ -120,5 +66,13 @@
 			</c:forEach>
 		</div>
 	</div>
+	<script>
+    const swiper = new Swiper('.swiper-container', {
+      direction: 'horizontal',
+      loop: true
+
+    });
+</script>
 </body>
+
 </html>
