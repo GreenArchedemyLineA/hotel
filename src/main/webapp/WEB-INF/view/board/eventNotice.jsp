@@ -5,7 +5,6 @@
 	width: 100%; display : flex;
 	justify-content: center;
 	align-items: center;
-	display: flex;
 }
 .table--tr {
 	background-color: #ebebeb;
@@ -28,6 +27,16 @@
 	width: 60px;
 	height: 30px;
 }
+
+.del--button {
+	background-color: red;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	width: 60px;
+	height: 30px;
+}
+
 .button--box {
 	display: flex;
 	justify-content: center;
@@ -54,7 +63,7 @@
 }
 </style>
 	<div class="content">
-	<h2>행사</h2>
+	<h2>일정</h2>
 			<div class="main--content">
 				<table class="table">
 					<thead>
@@ -62,8 +71,8 @@
 							<th scope="col">일정</th>
 							<th scope="col">시작일</th>
 							<th scope="col">종료일</th>
-							<th scope="col">행사 수정</th>
-							<th scope="col">행사 삭제</th>
+							<th scope="col"></th>
+							<th scope="col"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -73,7 +82,7 @@
 								<td>${list.startDate}</td>
 								<td>${list.endDate}</td>
 								<td><button onclick="eventDetail(${list.id})" class="sub--button">수정</button></td>
-								<td><button onclick="eventDelete(${list.id})" class="sub--button">삭제</button></td>
+								<td><button onclick="eventDelete(${list.id})" class="del--button">삭제</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>

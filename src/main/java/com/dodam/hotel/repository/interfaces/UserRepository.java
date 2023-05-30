@@ -18,6 +18,9 @@ public interface UserRepository {
 	// update용
 	public int updateUserByEmail(UserRequestDto.MyPageFormDto user);
 	
+	// 카카오 로그인 유저 찾기
+	public UserResponseDto.LoginResponseDto findUserKakao(String email);
+	
 	// 특정 유저 정보 찾기
 	public User findUserByEmail(String email);
 	

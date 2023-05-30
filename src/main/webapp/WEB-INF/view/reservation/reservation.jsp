@@ -217,6 +217,12 @@
 			couponPrice = ${selectDetail.price}
 			console.log("couponPrice: " + couponPrice)
 		}
+		else if(couponSelectTag.value === "객실 10% 할인 쿠폰"){
+			couponPrice = ${(selectDetail.price * 0.1)}
+		}
+		else if(couponSelectTag.value === "객실 30% 할인 쿠폰"){
+			couponPrice = ${(selectDetail.price * 0.3)}
+		}
 		else if(couponSelectTag.value === "0"){
 			couponPrice = 0;
 		}

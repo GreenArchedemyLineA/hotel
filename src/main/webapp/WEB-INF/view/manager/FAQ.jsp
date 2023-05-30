@@ -30,10 +30,25 @@
 }
 
 .content {
-	width: 100%; display : flex;
+	width: 100%;
+	display: flex;
 	justify-content: center;
 	align-items: center;
 	display: flex;
+}
+.sub-button {
+	background-color: #000;
+	color: #fff;
+	width: 100px;
+	height: 40px;
+	margin: 20px 10px;
+}
+.button--box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+	width: 100%;
 }
 </style>
 <div class="content">
@@ -48,9 +63,16 @@
 					</div>
 					<div class="faq--content">
 						<div>${faq.content}</div>
+						<div class="button--box">
+							<button onclick="updateFAQ(${faq.id})" class="sub-button">수정</button>
+							<button onclick="deleteFAQ(${faq.id})" class="sub-button">삭제</button>
+						</div>
 					</div>
 				</div>
 			</c:forEach>
+				<div class="button--box">
+					<button onclick="location.href='/manager/faq/write'" class="sub-button" style="margin-top: 100px">등록</button>
+				</div>
 		</div>
 	</div>
 </div>
@@ -69,6 +91,28 @@
 			}
 		});
 	});
+	
+	  function updateFAQ(id){
+	        location.href = "/manager/faq/update/"+ id;
+	    }
+
+	  function deleteFAQ(id){
+	        if(confirm("삭제하시겠습니까?")){
+	            fetch("/manager/delete/faq?id=" + id,{
+	                method: "delete",
+	            }).then(async(res) => {
+	                let response = await res.json();
+	                console.log(response)
+	                switch (response.status_code){
+	                    case 200:
+	                        alert("삭제 완료가 되었습니다");
+	                    case 403:
+	                        alert("재 로그인 해주세요!")
+	                }
+	                location.href = response.redirect_uri;
+	            });
+	        }
+	    };
 </script>
 </body>
 </html>

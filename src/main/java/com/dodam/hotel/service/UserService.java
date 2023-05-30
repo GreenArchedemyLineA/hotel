@@ -61,8 +61,8 @@ public class UserService {
 
 	// 카카오 로그인 (성희)
 	@Transactional
-	public User readUserKakao(String email) {
-		User responseUser = userRepository.findUserByEmail(email);
+	public UserResponseDto.LoginResponseDto readUserKakao(String email) {
+		UserResponseDto.LoginResponseDto responseUser = userRepository.findUserKakao(email);
 		if (responseUser != null) {
 			if (responseUser.getSocialLogin() == false) {
 				// 일반회원 예외처리
