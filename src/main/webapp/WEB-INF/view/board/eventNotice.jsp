@@ -28,15 +28,6 @@
 	height: 30px;
 }
 
-.del--button {
-	background-color: red;
-	border: none;
-	color: #fff;
-	cursor: pointer;
-	width: 60px;
-	height: 30px;
-}
-
 .button--box {
 	display: flex;
 	justify-content: center;
@@ -82,7 +73,7 @@
 								<td>${list.startDate}</td>
 								<td>${list.endDate}</td>
 								<td><button onclick="eventDetail(${list.id})" class="sub--button">수정</button></td>
-								<td><button onclick="eventDelete(${list.id})" class="del--button">삭제</button></td>
+								<td><button onclick="eventDelete(${list.id})" class="sub--button">삭제</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>

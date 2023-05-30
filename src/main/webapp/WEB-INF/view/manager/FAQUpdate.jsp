@@ -31,6 +31,12 @@
 	border-bottom: 2px solid #ebebeb;
 	margin: 10px;
 }
+.input--title--box {
+	border: none;
+	background-color: #ebebeb;
+	margin: 10px;
+	height: 40px;
+}
 .content--box {
 	height: 500px;
 }
@@ -39,8 +45,8 @@
 	<h2>FAQ</h2>
 	<div class="main--content">
 		<form method="post" action="/manager/faq/update-proc" class="form--container">
-		    <input type="hidden" name="id" value="${faq.id}" class="input--box">
-		    <input type="text" name="title" value="${faq.title}" class="input--box">
+		    <input type="hidden" name="id" value="${faq.id}">
+		    <input type="text" name="title" value="${faq.title}" class="input--title--box">
 		    <input type="text" name="content" value="${faq.content}" class="input--box content--box">
 		    <div class="button--box">
 			    <button class="sub-button">수정</button>		    

@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
 		<div class="content">
+			<h2>객실</h2>
 			<div class="main--content">
-				<button type="button" onclick="location.href='/manager/userList'">돌아가기</button>
 				<form>
-					<h3>option</h3>
 					<input type="checkbox" name="roomStatus">
 					<input type="number" name="numberOfP" max="10" value="5"> 
 					<input type="number" name="price"> 
@@ -12,17 +11,19 @@
 				</form>
 				<table class="table">
 					<thead>
-						<tr>
-							<th scope="col">방 이름</th>
-							<th scope="col">방 가격</th>
-							<th scope="col">방 사용유무</th>
-							<th scope="col">방 상태</th>
-							<th scope="col">방 수용 인원</th>
+						<tr class="table--tr">
+							<th scope="col">ID</th>
+							<th scope="col">객실</th>
+							<th scope="col">가격</th>
+							<th scope="col">사용유무</th>
+							<th scope="col">상태</th>
+							<th scope="col">수용인원</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="room" items="${roomList}">
-							<tr onclick="statusDetail(${room.id})">
+							<tr onclick="statusDetail(${room.id})" class="table-tr">
+								<td>${room.roomType.id}</td>
 								<td>${room.roomType.name}</td>
 								<td>${room.roomType.price}</td>
 								<td>${room.availability == true ? "사용가능" : "사용불가"}</td>
