@@ -69,6 +69,8 @@
 		<result column="room_type_price" property="price" />
 		<result column="room_type_description" property="description" />
 		<result column="room_type_image" property="image" />
+		<result column="room_type_image2" property="image" />
+		<result column="room_type_image3" property="image" />
 		<result column="room_type_number_of_p" property="numberOfP" />
 	</resultMap>
 	

@@ -76,21 +76,21 @@
 			      <div class="swiper-slide">
 					<div class="bx-group">
 						<div>
-							<img alt="객실 사진" src="/images/deluxe.jpg" width="1000px" height="500px">
+							<img alt="객실 사진" src="/images/${room.image}" width="1000px" height="500px">
 						</div>
 					</div>
 			      </div>
 			      <div class="swiper-slide">
 			      	<div class="bx-group">
 						<div>
-							<img alt="객실 사진" src="/images/deluxe2.jpg" width="1000px" height="500px">
+							<img alt="객실 사진" src="/images/${room.image2}" width="1000px" height="500px">
 						</div>
 					</div>
 			      </div>
 			      <div class="swiper-slide">
 			      	<div class="bx-group">
 						<div>
-							<img alt="객실 사진" src="/images/deluxe3.jpg" width="1000px" height="500px">
+							<img alt="객실 사진" src="/images/${room.image3}" width="1000px" height="500px">
 						</div>
 					</div>
 			      </div>
