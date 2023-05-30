@@ -119,18 +119,33 @@ public class ManagerService {
 		List<MUser> userListEntity = mUserRepository.findByAll();
 		return userListEntity;
 	}
-	
+	//페이징
+	public List<MUser> managerUserListAllPaging(PagingObj obj) {
+		List<MUser> userListEntity = mUserRepository.findByAllPaging(obj);
+		return userListEntity;
+	}
+	public Integer findByAllCount() {
+		return mUserRepository.findByAllCount(); 
+	}
 	
 	// 이름으로 회원 검색
-	public List<MUser> managerUserList(String name) {
-		List<MUser> userListEntity = mUserRepository.findByname(name);
+	public List<MUser> managerUserList(PagingObj obj,String name) {
+		List<MUser> userListEntity = mUserRepository.findByNamePaging(obj, name);
 		return userListEntity;
 	}
+	public Integer findByNameCount(String name) {
+		return mUserRepository.findByNameCount(name); 
+	}
+	
 	//등급별 회원 조회
-	public List<GradeInfo> managerUserGradeList(Integer gradeId){
-		List<GradeInfo> userListEntity = mUserRepository.findByGradeAll(gradeId);
+	public List<GradeInfo> managerUserGradeList(PagingObj obj,Integer gradeId){
+		List<GradeInfo> userListEntity = mUserRepository.findByGradeAll(obj,gradeId);
 		return userListEntity;
 	}
+	public Integer findByGradeAllCount(Integer gradeId) {
+		return mUserRepository.findByGradeAllCount(gradeId); 
+	}
+	
 	
 	//블랙 리스트로 지정
 	public int updateBlackList(Integer id) {
@@ -145,9 +160,12 @@ public class ManagerService {
 	}
 	
 	// 블랙리스트 조회
-	public List<MUser> managerUserBlackList() {
-		List<MUser> userBlackListEntity = mUserRepository.findByBlackList();
+	public List<MUser> managerUserBlackList(PagingObj obj) {
+		List<MUser> userBlackListEntity = mUserRepository.findByBlackList(obj);
 		return userBlackListEntity;
+	}
+	public int findByBlackListCount() {
+		return mUserRepository.findByBlackListCount();
 	}
 	
 	// 블랙 리스트 탈퇴 상태 값 변경
@@ -173,11 +191,13 @@ public class ManagerService {
 	}
 	
 	//맴버쉽 회원 조회
-	public List<MembershipInfo> findByMembershipUserList(){
-		List<MembershipInfo> membershipUserListEntity = mUserRepository.findByMembershipAll();
+	public List<MembershipInfo> findByMembershipUserList(PagingObj obj){
+		List<MembershipInfo> membershipUserListEntity = mUserRepository.findByMembershipAll(obj);
 		return membershipUserListEntity;		
 	}
-	
+	public Integer findByMembershipAllCount() {
+		return mUserRepository.findByMembershipAllCount(); 
+	}
 	// 회원 등급 수정
 	public int changeGradeByUserIdAndGradeId(Integer gradeId, Integer id) {
 		int resultRowCount = mUserRepository.updateGrade(gradeId, id);	

@@ -57,7 +57,7 @@ public class ManagerReservationService {
     }
     public List<Reservation> findUserReservation(String name){
         List<Reservation> reservationList = new ArrayList<>();
-        List<MUser> userList = mUserRepository.findByname(name);
+        List<MUser> userList = mUserRepository.findByName(name);
         System.out.println(userList);
         userList.stream().forEach((user) ->{
             List<Reservation> reservationUserList = reservationRepository.findReservationByUserId(user.getId());

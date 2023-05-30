@@ -60,21 +60,25 @@
 	
 				<div>
 					<form action="/event/event-insert" method="post">
-						<label>일정 시작 날짜</label> <input type="text" name="startDate" value="2015-10-13"> <br> <label>일정 종료 날짜</label> <input type="text" name="endDate" value="2015-10-13"> <br> <label>제목</label>
-						<input type="text" name="title" value="asdsadasd"> <br> <label>내용</label> <input type="text" name="content" value="asdasdasdasd">
+						<label>일정 시작 날짜</label>
+						<input type="text" name="startDate" value="2015-10-13">
+						<br> 
+						<label>일정 종료 날짜</label> 
+						<input type="text" name="endDate" value="2015-10-13"> 
+						<br> 
+						<label>제목</label>
+						<input type="text" name="title"> 
+						<br> 
+						<label>내용</label> 
+						<input type="text" name="content" value="asdasdasdasd">
 						<button type="submit" class="btn btn-primary">작성</button>
 					</form>
 				</div>
-	
 			</div>
 		</div>
 	</div>
 </main>
 <script>
-	function selChange() {
-		var sel = document.getElementById('cntPerPage').value;
-		location.href="/event/notice?nowPage=${paging.nowPage}&cntPerPage="+sel;
-	}
 	function eventDetail(id){
 		location.href = "/event/updateEventPage/"+id; 
 	}

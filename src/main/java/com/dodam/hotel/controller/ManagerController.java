@@ -59,53 +59,62 @@ public class ManagerController {
 	
 	//유저 리스트
 	@GetMapping("/userList")
-	public String mUserListAll(Model model){
-		
-		List<MUser> userList = managerService.managerUserListAll();
-		if(userList != null) {
-			model.addAttribute("userList",userList);
-		}
+	public String mUserListAll(Model model
+			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
+			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage){
+		int total = managerService.findByAllCount();
+		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("paging", obj);
+		model.addAttribute("viewAll",managerService.managerUserListAllPaging(obj));
 		return "/manager/userList";
 	}
 	
 	// 이름으로 유저 조회;
 	@GetMapping("/userNameList")
-	public String mUserList(String name,Model model){
-		
-		List<MUser> userList = managerService.managerUserList(name);
-		if(userList != null) {
-			model.addAttribute("userList",userList);
-		}
+	public String mUserList(String name,Model model
+			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
+			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage){
+		int total = managerService.findByNameCount(name);
+		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("paging", obj);
+		model.addAttribute("viewAll", managerService.managerUserList(obj,name));
 		return "/manager/userList";
 	}
 	
 	//등급으로 유저 조회
 	@GetMapping("/userGradeList")
-	public String mUserGradeList(Integer gradeId,Model model) {
-		List<GradeInfo> userGradeList = managerService.managerUserGradeList(gradeId);
-		if(userGradeList != null) {
-			model.addAttribute("userList",userGradeList);
-		}
+	public String mUserGradeList(Integer gradeId, Model model
+			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
+			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage) {
+		int total = managerService.findByGradeAllCount(gradeId);
+		System.out.println("total: " + total);
+		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("paging", obj);
+		model.addAttribute("viewAll", managerService.managerUserGradeList(obj,gradeId));
 		return "/manager/userGrade";
 	}
 	
 	//맴버쉽 회원 조회
 	@GetMapping("/membershipUserList")
-	public String membershipUserList(Model model) {
-		List<MembershipInfo> membershipUserList = managerService.findByMembershipUserList();
-		if(membershipUserList != null) {
-			model.addAttribute("userList",membershipUserList);
-		}
+	public String membershipUserList(Model model
+			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
+			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage) {
+		int total = managerService.findByMembershipAllCount();
+		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("paging", obj);
+		model.addAttribute("viewAll", managerService.findByMembershipUserList(obj));
 		return "/manager/membershipUserList";
 	}
 	
 	//블랙리스트 조회
 	@GetMapping("/blackList")
-	public String mUserBlackList(Model model){
-		List<MUser> userBlackList = managerService.managerUserBlackList();
-		if(userBlackList != null) {
-			model.addAttribute("userList",userBlackList);
-		}
+	public String mUserBlackList(Model model
+			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
+			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage){
+		int total = managerService.findByBlackListCount();
+		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("paging", obj);
+		model.addAttribute("viewAll",  managerService.managerUserBlackList(obj));
 		return "/manager/userBlackList";
 	}
 	

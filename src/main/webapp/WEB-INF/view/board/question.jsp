@@ -4,7 +4,7 @@
 		<div class="main">
 			<header>여짝에 리스트</header>
 			<div class="main--content">
-				<button type="button" onclick="location.href='/manager/userList'">돌아가기</button>
+				<button type="button" onclick="location.href='/question/questionList'">돌아가기</button>
 			<table class="table">
 				<thead>
 					<tr>
