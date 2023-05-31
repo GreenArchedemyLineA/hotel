@@ -87,7 +87,7 @@
 }
 
 #logo--image {
-	width: 150px;
+	width: 200px;
 }
 
 .title--container {
@@ -345,7 +345,7 @@
 
 .back--icon {
 	display: flex;
-	height: 65px;
+	height: 40px;
 	align-items: center;
 	cursor: pointer;
 }

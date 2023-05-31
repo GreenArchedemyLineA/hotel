@@ -145,6 +145,13 @@
         background:url(https://img.icons8.com/metro/26/000000/close-window.png);
         text-indent: -9999px;
     }
+    
+	.back--icon {
+		display: flex;
+		height: 40px;
+		align-items: center;
+		cursor: pointer;
+	}
 
 </style>
 </head>
@@ -152,7 +159,7 @@
 <main class="main--container">
 	<div class="title--container">
 		<div class="title--logo">
-			<a onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></a>
+			<a onclick="history.back()"><span class="material-symbols-outlined back--icon">arrow_back</span></a>
 			<img alt="" src="/images/dodam_wlogo.png" id="logo--image" onclick="location.href='/'" width="200px;" height="40px;">	
 		</div>
 		<div class="title--text">

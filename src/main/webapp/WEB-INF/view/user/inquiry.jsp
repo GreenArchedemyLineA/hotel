@@ -24,7 +24,7 @@
 }
 
 #logo--image {
-	width: 150px;
+	width: 200px;
 	cursor: pointer;
 }
 
@@ -126,7 +126,7 @@
 
 .back--icon {
 	display: flex;
-	height: 65px;
+	height: 40px;
 	align-items: center;
 	cursor: pointer;
 }
@@ -137,7 +137,7 @@
 	<div class="title--container">
 		<div class="title--logo">
 			<span class="material-symbols-outlined back--icon" onclick="history.back()">arrow_back</span>
-			<img alt="" src="/images/dodam_wlogo.png" id="logo--image" height="65" onclick="location.href='/'">	
+			<img alt="" src="/images/dodam_wlogo.png" id="logo--image" height="40" onclick="location.href='/'">	
 		</div>
 		<div class="title--text">
 			<p>아이디와</p>

@@ -38,7 +38,6 @@
 	
 	.bx-group > div {
 		flex: 1;
-		box-shadow: 0 0 5px;
 		rbga: 0 0 0 .2;
 		margin: 20px;
 	}

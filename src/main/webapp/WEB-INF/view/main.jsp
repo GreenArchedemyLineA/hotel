@@ -8,6 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@300;400&family=WindSong:wght@500&display=swap');
 
@@ -278,6 +279,32 @@ main {
 	cursor: pointer;
 }
 
+.membership--wrap {
+	background-color: #f9f9f9;
+	width: 100%;
+	height: 300px;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+#gift--box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#discount--box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#point--box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 </style>
 
 
@@ -414,8 +441,7 @@ main {
 			</div>
 		</form>
 	</div>
-	<p class="title--container">도담 추천 프로모션
-	<p>
+	<p class="title--container">도담 추천 프로모션</p>
 	<div class="recommend--container">
 
 		<div class="room--box">
@@ -429,12 +455,21 @@ main {
 		</div>
 	</div>
 
-	<p class="title--container">도담 멤버쉽
-	<p>
+	<p class="title--container">도담 멤버쉽</p>
 	<div class="recommend--container">
-
-		<div class="room--box">
-			<img alt="" src="https://picsum.photos/200/200" class=""> Sweet Moment
+		<div class="membership--wrap">
+			<div id="gift--box">
+				<span class="material-symbols-outlined">redeem</span>
+				<p>회원 전용 이벤트를 누려보세요.</p>
+			</div>
+			<div id="discount--box">
+				<span class="material-symbols-outlined">calculate</span>
+				<p>멤버십 회원만을 위해 할인된 가격을 제공합니다.</p>
+			</div>
+			<div id="point--box">
+				<span class="material-symbols-outlined">monetization_on</span>
+				<p>포인트를 적립하고, 현금처럼 실용적으로 사용하세요.</p>
+			</div>
 		</div>
 		<a href="/membership">자세히 보기</a>
 	</div>

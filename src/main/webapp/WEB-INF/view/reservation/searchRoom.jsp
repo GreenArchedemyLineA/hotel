@@ -79,7 +79,6 @@
 	
 	.bx-group > div {
 		flex: 1;
-		box-shadow: 0 0 5px;
 		rbga: 0 0 0 .2;
 		margin: 20px;
 	}
@@ -100,6 +99,31 @@
 	:root {
     	--swiper-theme-color: #000;
 	}
+	
+	#back--btn {
+		background-color: black;
+	    color: #fff;
+	    width: 120px;
+	    height: 32px;
+	    cursor: pointer;
+	    border: none;
+	}
+	
+	#reserve--btn {
+		background-color: #FF9F8D;
+		border: none;
+		color: #fff;
+		width: 100px;
+		height: 60px;
+		cursor: pointer;
+	}
+	
+	.room--info--div {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 10px;
+	}
+	
 </style>
 <body>
 	<div class="main--container">
@@ -118,7 +142,7 @@
 				<div id="countBaby" class="select--box">유아 ${searchDto.countBaby}인</div>
 			</div>
 			<div class="button--container">
-				<button onclick="history.back()" class="sub--button">변경하기</button>
+				<button onclick="history.back()" class="sub--button" id="back--btn">변경하기</button>
 			</div>
 		</div>
 		<div class="room--container">
@@ -129,9 +153,19 @@
 							<div class="bx-group">
 								<div>
 									<img alt="" src="/images/${room.roomType.image}">
-									${room.roomType.name} 
-									${room.roomType.price} 
-									<button class="sub--button" onclick="clickResBtn('${searchDto.startDate}', '${searchDto.endDate}','${searchDto.numberOfP}', '${room.id}', '${room.roomType.price}','${room.roomType.name}', '${searchDto.countPerson}', '${searchDto.countChild}', '${searchDto.countBaby}')">예약하기</button> <br />
+									<div class="room--info--div">
+										<div>
+											<div style="font-size: 28px; font-weight: bolder;">
+												${room.roomType.name} 
+											</div>
+											<div style="text-align: start; font-size: 20px">
+												<span>${room.roomType.price}원 ~ </span> 
+											</div>
+										</div>
+										<div>
+											<button class="sub--button" id="reserve--btn" onclick="clickResBtn('${searchDto.startDate}', '${searchDto.endDate}','${searchDto.numberOfP}', '${room.id}', '${room.roomType.price}','${room.roomType.name}', '${searchDto.countPerson}', '${searchDto.countChild}', '${searchDto.countBaby}')">예약하기</button> <br />
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
