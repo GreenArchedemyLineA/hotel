@@ -3,53 +3,66 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.dodam.hotel.repository.interfaces.RoomRepository">
+	<resultMap id="Room" type="com.dodam.hotel.repository.model.Room">
+		<result column="room_id" property="id" />
+		<result column="room_availability" property="availability" />
+		<result column="room_status_desc" property="statusDesc" />
+		<collection property="roomType" resultMap="RoomType"></collection>
+	</resultMap>
+	
+	<resultMap type="com.dodam.hotel.repository.model.RoomType" id="RoomType">
+		<result column="room_type_id" property="id" />
+		<result column="room_type_name" property="name" />
+		<result column="room_type_price" property="price" />
+		<result column="room_type_description" property="description" />
+		<result column="room_type_image" property="image" />
+		<result column="room_type_number_of_p" property="numberOfP" />
+	</resultMap>
+	
 	<select id="findAllRoom"
-		resultType="com.dodam.hotel.repository.model.Room">
+		resultType="com.dodam.hotel.repository.model.RoomType">
 		<if test="type=='All'">
 			select *
-			from room_tb
-			group by name
+			from room_type_tb
 		</if>
 		<if test="type=='디럭스'">
 			select *
-			from room_tb
+			from room_type_tb
 			where name like #{name}
-			group by name
 		</if>
 		<if test="type=='프리미엄'">
 			select *
-			from room_tb
+			from room_type_tb
 			where name like #{name}
-			group by name
 		</if>
 		<if test="type=='스위트'">
 			select *
-			from room_tb
+			from room_type_tb
 			where name like #{name}
-			group by name
 		</if>
 	</select>
 
 	<select id="findRoomById"
-		resultType="com.dodam.hotel.repository.model.Room">
+		resultType="com.dodam.hotel.repository.model.RoomType">
 		select *
-		from room_tb
+		from room_type_tb
 		where id = #{id}
 	</select>
 
 	<!-- 예약 가능 객실 조회 -->
-	<select id="findRoombyDate" resultType="com.dodam.hotel.repository.model.Room">
-		select *
-		from room_tb
-		where not (id IN(
+	<select id="findRoombyDate" resultMap="Room">
+		select r.id as room_id, rt.name as room_type_name, rt.price as room_type_price 
+		from room_tb as r
+		left join room_type_tb as rt
+		on r.room_type_id = rt.id
+		where not (r.id IN(
 		select room_id
 		from reservation_tb
 		where
 		start_date <![CDATA[ <= ]]> #{startDate} and #{startDate} <![CDATA[ < ]]> end_date 
 		or
 		start_date <![CDATA[ < ]]> #{endDate} and #{endDate} <![CDATA[ <= ]]> end_date
-		)) and number_of_p <![CDATA[ >= ]]> #{numberOfP}
-		group by name
+		)) and rt.number_of_p <![CDATA[ >= ]]> #{numberOfP}
 	</select>
     <!-- writer: 이현서 -->
     <!--
@@ -61,7 +74,7 @@
     private String status_desc;
     private Integer number_of_p;
     -->
-    <select id="findAllRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
+   <!--  <select id="findAllRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb;
     </select>
     <select id="findById" resultType="com.dodam.hotel.repository.model.managertest.Room">
@@ -71,6 +84,8 @@
     <select id="findOptionSearchOneRoomList" resultType="com.dodam.hotel.repository.model.managertest.Room">
         select * from room_tb
                  where availability = #{roomStatus}
+                 or number_of_p = #{numberOfp}
+                 or price = #{price};
                    or number_of_p = #{numberOfP}
                    or price = #{price};
     </select>
@@ -100,7 +115,7 @@
     <insert id="insertRoom">
         insert into room_tb(name, price, description, availability, image, status_desc, number_of_p)
         values(#{name}, #{price}, #{description}, #{availability}, #{image}, #{statusDesc}, #{numberOfP})
-    </insert>
+    -->
 
 	<update id="updateManagerRoom">
 		update room_tb set availability = #{availability} where id = #{id}; 

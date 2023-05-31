@@ -84,9 +84,16 @@ public class ReservationController {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		int resultRowCount = reservationService.createReserveRoom(requestDto, principal.getId());
 
+
+		System.out.println();
+
+
 		reservationService.createReserveRoom(requestDto, principal.getId());
 		return "redirect:/";
 	}
-	
+	@GetMapping("/reservation/success")
+	public String successReservation(){
+		return "/pay/paySuccess";
+	}
 }
 

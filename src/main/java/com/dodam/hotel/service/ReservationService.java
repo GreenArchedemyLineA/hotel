@@ -119,6 +119,11 @@ public class ReservationService {
 		
 		int resultRowCount = reservationRepository.insertReserveRoom(reservationRequestDto);
 
+
+		// 결제 낑겨넣기
+		System.out.println(reservationRequestDto.getPrice());
+
+
 		Integer nowReservationCount = reservationRequestDto.getDay();
 		count += nowReservationCount;
 		if(resultRowCount != 1) {
