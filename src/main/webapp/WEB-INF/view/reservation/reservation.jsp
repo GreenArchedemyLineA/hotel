@@ -266,6 +266,8 @@ input[type="number"]::-webkit-inner-spin-button {
 			<input type="hidden" value="${selectDetail.roomId}" name="roomId"> 
 			<input type="hidden" name="day" id="day--result">
 		<div>
+		<c:choose>
+		<c:when test="${diningStatus.availability == 1}">
 			<div class="facilities--detail">
 				<div class="facilities--detail--title">
 					다이닝신청 (조식)
@@ -281,7 +283,17 @@ input[type="number"]::-webkit-inner-spin-button {
 					</div> 
 				</div>
 			</div>
-	
+			</c:when>
+			<c:otherwise>
+			<div class="facilities--detail">
+				<div class="facilities--detail--title">
+					${diningStatus.statusDesc}
+				</div>
+				</div>
+			</c:otherwise>
+	</c:choose>
+	<c:choose>
+		<c:when test="${spaStatus.availability == 1}">
 			<div class="facilities--detail">
 				<div class="facilities--detail--title">
 					스파신청
@@ -296,7 +308,17 @@ input[type="number"]::-webkit-inner-spin-button {
 					</div>  
 				</div>
 			</div>
-	
+	</c:when>
+	<c:otherwise>
+		<div class="facilities--detail">
+				<div class="facilities--detail--title">
+					${spaStatus.statusDesc}
+				</div>
+				</div>
+	</c:otherwise>
+	</c:choose>
+	<c:choose>
+	<c:when test="${poolStatus.availability == 1}">
 			<div class="facilities--detail">
 				<div class="facilities--detail--title">
 					수영장신청
@@ -311,7 +333,17 @@ input[type="number"]::-webkit-inner-spin-button {
 					</div> 
 				</div>
 			</div>
-	
+			</c:when>
+			<c:otherwise>
+				<div class="facilities--detail">
+				<div class="facilities--detail--title">
+					${poolStatus.statusDesc}
+				</div>
+				</div>
+			</c:otherwise>
+	</c:choose>
+	<c:choose>
+	<c:when test="${fitnessStatus.availability == 1}">
 			<div class="facilities--detail">
 				<div class="facilities--detail--title">
 					피트니스신청
@@ -326,8 +358,16 @@ input[type="number"]::-webkit-inner-spin-button {
 					</div> 
 				</div>
 			</div>
+			</c:when>
+			<c:otherwise>
+				<div class="facilities--detail">
+				<div class="facilities--detail--title">
+					${fitnessStatus.statusDesc}
+				</div>
+				</div>
+			</c:otherwise>
+		 </c:choose>
 		</div>
-		 
 		</div>
 		
 		<div class="info--container">			
@@ -356,10 +396,6 @@ input[type="number"]::-webkit-inner-spin-button {
 		</div>
 	</form>
 	</div>
-
-
-
->>>>>>> 6b81e9a1f236f0c56114ffae5f172e039b0676d1
 <!-- <script src="/js/price.js"></script> -->
 <script type="text/javascript">
 	const dayResultInput = document.getElementById("day--result");

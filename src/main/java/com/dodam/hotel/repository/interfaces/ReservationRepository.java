@@ -37,4 +37,10 @@ public interface ReservationRepository {
     Reservation findReservationById(Integer id);
 
 	List<DiningReservation> reservationFindDining(Date date);
+	
+	//예약시 부대시설 사용가능 조회 - 민우
+	
+	
+	
+	
 }

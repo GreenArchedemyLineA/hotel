@@ -89,7 +89,8 @@ public class UserController {
 	public String loginProc(UserRequestDto.LoginFormDto loginDto) {
 		UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(loginDto);
 		session.setAttribute(Define.PRINCIPAL, principal);
-
+		session.setAttribute("tel", principal.getTel());
+		System.out.println(session.getAttribute("tel"));
 		if (principal.getRandomPwdStatus()) {
 			return "/user/changePw";
 		}

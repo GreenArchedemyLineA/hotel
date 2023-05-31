@@ -18,6 +18,7 @@ public class UserResponseDto {
 		private String originEmail;
 		private Boolean randomPwdStatus;
 		private Boolean socialLogin;
+		private String tel;
 	}
 	
 	@Data

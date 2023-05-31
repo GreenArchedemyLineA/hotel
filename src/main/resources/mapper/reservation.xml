@@ -477,5 +477,6 @@
 		left join user_tb as u
 			on re.user_id = u.id
 		where re.dining_id is not null and re.start_date=#{date};
-	</select>
+	</select>	
+	
 </mapper>
