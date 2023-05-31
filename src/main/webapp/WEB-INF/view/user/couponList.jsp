@@ -5,28 +5,25 @@
 <head>
 <meta charset="UTF-8">
 <title>couponList Page</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@300;400&family=WindSong:wght@500&display=swap');
-* {
-	margin: 0;
-	padding: 0;
-	font-family: 'Noto Sans KR', sans-serif;
-}
-</style>
+<link rel="stylesheet" href="/css/myPage.css" />
 </head>
 <body>
-	
-	<c:forEach items="${coupons}" var="coupons">
-		<div>
-			${coupons.couponInfo.name}
-		</div>
-		<div>
-			${coupons.startDate}
-		</div>
-		<div>
-			${coupons.endDate}
-		</div>
-	</c:forEach>
+	<div class="coupon--container">
+		<c:forEach items="${coupons}" var="coupons">
+			<div class="color--container">
+				<img alt="" src="/images/dodam_wlogo.png" width="150" height="50">
+			</div>
+			<div class="coupon--info--container">
+				<div class="coupon--name--container">
+					${coupons.couponInfo.name}
+				</div>
+				<div class="coupon--date--container">
+					${coupons.startDate} &nbsp; ~ &nbsp;
+					${coupons.endDate}
+				</div>
+			</div>
+		</c:forEach>
+	</div>
 	
 	<div style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1}">

@@ -1,39 +1,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
-<style>
-	button {
-		width: 50px;
-		height: 50px;
+<style>	
+	.faq--title--wrap {
+		display: flex;
 	}
+	
+	.faq--toggle--title {
+		display: flex;
+		cursor: pointer;
+		background-color: #ebebeb;
+		margin-bottom: 10px;
+	}
+	
+	.faq--content {
+		display: none;
+	}
+	
+	.toggle--content {
+		display: block;
+	}
+	
+	.faq--number {
+		width: 50px;
+		font-size: 20px;
+	}
+	
+	.faq--title {
+		font-size: 20px;
+	}
+	
 </style>
 <div class="content">
 	<div class="main--content">
-	<div>
-	<button type="button" data-toggle="modal" data-target="#insertFaq">FAQ 등록</button>
-	</div>
-		<table>
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>내용</th>
-					<th>상세보기</th>
-					<th>수정</th>
-					<th>삭제</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="faq" items="${faqList}">
-					<tr>
-						<td>${faq.id}</td>
-						<td>${faq.title}</td>
-						<td>${faq.content}</td>
-						<td><button onclick="detailFAQForm(${faq.id})">상세보기</button></td>
-						<td><button onclick="deleteFaq(${faq.id})">삭제</button></td>						
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+		<div id="faq--wrap">
+			<c:forEach var="faq" items="${faqList}">
+				<div>
+					<div class="faq--toggle--title">
+						<div class="faq--number">${faq.id}</div>
+						<div class="faq--title">${faq.title}</div>
+					</div>
+					<div class="faq--content">
+						<div>${faq.content}</div>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
 	</div>
 	
 </div>
@@ -62,15 +73,21 @@
 	</div>
 
 	<script>
-    function detailFAQForm(id){
-        location.href = "/manager/faq/"+id;
-    }
-    function updateFaq(id){
-    	location.href = "/manager/faq/"+id;
-    }
-    function deleteFaq(id){
-    	location.href = "/manager/faq/"+id;
-    }
-</script>
+	    function detailFAQForm(id){
+	        location.href = "/manager/faq/"+id;
+	    }
+	    $(document).ready(
+		    function() {
+		    	let faqToggle = $(".faq--toggle--title")
+		    	faqToggle.on("click", function() {
+		    		if($(this).siblings().hasClass("toggle--content")){
+			    		$(this).siblings().removeClass("toggle--content");
+		    		} else {
+		    			$(".toggle--content").removeClass("toggle--content");
+			    		$(this).siblings().addClass("toggle--content");
+		    		}
+		    	});
+		    });
+	</script>
 </body>
 </html>

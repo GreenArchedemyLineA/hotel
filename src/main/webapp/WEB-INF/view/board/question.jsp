@@ -2,7 +2,7 @@
 <%@ include file="../layout/managerHeader.jsp"%>
 	<div class="content">
 		<div class="main">
-			<header>여짝에 리스트</header>
+			<h2>문의사항</h2>
 			<div class="main--content">
 				<button type="button" onclick="location.href='/question/questionList'">돌아가기</button>
 			<table class="table">

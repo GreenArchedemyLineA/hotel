@@ -29,6 +29,7 @@ import com.dodam.hotel.dto.kakao.KakaoAccount;
 import com.dodam.hotel.dto.kakao.KakaoResponseToken;
 import com.dodam.hotel.dto.kakao.KakaoUserInfo;
 import com.dodam.hotel.repository.model.MUser;
+import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.Define;
@@ -62,7 +63,12 @@ public class KakaoController {
     public String kakaoJoin() {
     	return "/user/kakaoJoin";
     }
-    
+    /**
+     * 
+     * @param code
+     * @param model
+     * @return 카카로 로그인 (성희)
+     */
     @GetMapping("/kakaoLogin")
     public String kakaoLogin(@RequestParam String code, Model model){
 //      String TOKEN_URI = "https://kauth.kakao.com/oauth/token";
@@ -116,30 +122,14 @@ public class KakaoController {
       HttpEntity reqUserEntity = new HttpEntity(httpUserInfoHeaders);
 
       ResponseEntity<KakaoUserInfo> responseUser = restTemplate.exchange(userInfoUri, HttpMethod.GET, reqUserEntity, KakaoUserInfo.class);
-      System.out.println(responseUser.getBody().getKakao_account());
       KakaoAccount userInfo = responseUser.getBody().getKakao_account();
       
-      
    
-     
-      List<MUser> users = managerService.managerUserListAll();
-      model.addAttribute("user",userInfo);
-      
-      System.out.println(responseUser.getBody().getKakao_account().getEmail());
-      for(MUser user : users) {
-    	  
-    	  System.out.println(user.getEmail());
-    	  if(responseUser.getBody().getKakao_account().getEmail().equals(user.getEmail())) {
-    		  // 로그인 처리 
-    		  UserRequestDto.LoginFormDto login_user = new LoginFormDto();
-    		  login_user.setEmail(responseUser.getBody().getKakao_account().getEmail());
-    		  login_user.setPassword(dodamKey);
-    		  UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(login_user);
-    		  session.setAttribute(Define.PRINCIPAL, principal);
-    		  
+      User loginUser = userService.readUserKakao(userInfo.getEmail());
+    	  if(loginUser != null) {
+    		  session.setAttribute(Define.PRINCIPAL, loginUser);
     		  return "redirect:/";
     	  }
-      }
       
       return "/user/kakaoJoin";
 	}	

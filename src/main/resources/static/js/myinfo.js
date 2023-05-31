@@ -15,6 +15,7 @@ class MyInfoJs {
 		this.buttonCoupons.addEventListener("click", this.createCouponListForm.bind(this));
 		this.buttonReservations.addEventListener("click", this.createReservationListForm.bind(this));
 		this.buttonQandA.addEventListener("click", this.createQnAListForm.bind(this));
+		
 
 	}
 
@@ -212,7 +213,7 @@ class MyInfoJs {
 			const reservationListPage = document.createElement("iframe");
 			reservationListPage.src = "/myReservations";
 			reservationListPage.scrolling = "no";
-			reservationListPage.width = "700px";
+			reservationListPage.width = "1200px";
 			reservationListPage.height = "500px";
 			reservationListPage.frameBorder = "0";
 			this.userInfoDiv.append(reservationListPage);
@@ -298,7 +299,6 @@ class MyInfoJs {
 		}).then(async (response) => {
 			let data = await response.json();
 			/*console.log(data);
-			console.log(data);
 				const totalDivTag = document.createElement("div");
 				totalDivTag.className = "total--container";	
 			for(let i = 0; i < data.length; i++) {

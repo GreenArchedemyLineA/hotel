@@ -83,7 +83,8 @@
 </head>
 <main class="main--container">
 	<div class="title--container">
-		<a onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></a> <img alt="" src="/images/logo_white.png">
+		<span class="material-symbols-outlined back--icon" onclick="history.back()">arrow_back</span> 
+		<img alt="" src="/images/logo_white.png">
 		<p>비밀번호 변경</p>
 	</div>
 	<div class="content--container">

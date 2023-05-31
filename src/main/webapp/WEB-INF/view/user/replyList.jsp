@@ -5,31 +5,36 @@
 <head>
 <meta charset="UTF-8">
 <title>replyList Page</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@300;400&family=WindSong:wght@500&display=swap');
-* {
-	margin: 0;
-	padding: 0;
-	font-family: 'Noto Sans KR', sans-serif;
-}
-</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<link rel="stylesheet" href="/css/myPage.css" />
 </head>
 <body>
-	
-	<c:forEach items="${questions}" var="questions">
-		<div>
-			${questions.question.title}
-		</div>
-		<div>
-			${questions.question.content}
-		</div>
-		<div>
-			${questions.question.createdAt}
-		</div>
-		<div>
-			<button>hi</button>
-		</div>
-	</c:forEach>
+	<div class="total--container">
+		<c:forEach items="${questions}" var="questions" varStatus="status">
+			<div class="toggle--container">
+				<div class="question--container">
+					<div class="titleToggle--container">
+						<div>
+							${questions.question.formatDate()}
+						</div>
+						<div class="qna--title--box">
+							${questions.question.title}
+						</div>
+						<span class="material-symbols-outlined toggleBtn">expand_more</span>
+					</div>
+				</div>
+				<div class="contentToggle--container">
+					<div class="qna--content--box">
+						${questions.question.content}
+					</div>
+					<div class="qna--reply--box">
+						${questions.content}
+					</div>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
 	
 	<div style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1}">
@@ -50,6 +55,20 @@
 		</c:if>
 	</div>
 	
+<script>
+$(document).ready(
+	    function() {
+	    	let faqToggle = $(".question--container")
+	    	faqToggle.on("click", function() {
+	    		if($(this).siblings().hasClass("toggle--content")){
+		    		$(this).siblings().removeClass("toggle--content");
+	    		} else {
+	    			$(".toggle--content").removeClass("toggle--content");
+		    		$(this).siblings().addClass("toggle--content");
+	    		}
+	    	});
+	    });
+</script>
 </body>
 </html>
 	
