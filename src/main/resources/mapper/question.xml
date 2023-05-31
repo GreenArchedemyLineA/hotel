@@ -105,18 +105,32 @@
 		where question_id = #{id};
 	</select>
 	
-	<select id="findAllQuestion" resultType="com.dodam.hotel.repository.model.TestQuestion">
-		select *
-		from question_tb;
+	<select id="findAllQuestionCount" resultType="int">
+		select count(*)
+		from question_tb
 	</select>
 	
-	<select id="findById" resultType="com.dodam.hotel.repository.model.TestQuestion">
+	<select id="findAllQuestion" resultType="com.dodam.hotel.repository.model.Question">
+		SELECT *
+		from (
+ 			SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* 
+	        FROM (
+				select *
+				from question_tb
+	            ORDER BY id DESC
+	            ) A, 
+	        (SELECT @ROWNUM := 0 ) B
+	        ) as C
+		where C.ROWNUM BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="findById" resultType="com.dodam.hotel.repository.model.Question">
 		select *
 		from question_tb
 		where id = #{id};
 	</select>
 
-	<select id="findByCategory" resultType="com.dodam.hotel.repository.model.TestQuestion">
+	<select id="findByCategory" resultType="com.dodam.hotel.repository.model.Question">
 		select *
 		from question_tb
 		where category = #{category};

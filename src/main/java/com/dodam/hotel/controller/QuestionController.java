@@ -1,6 +1,7 @@
 package com.dodam.hotel.controller;
 
 import java.io.File;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -14,14 +15,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dodam.hotel.dto.QuestionRequestDto.InsertQuestionRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.repository.model.FAQ;
-import com.dodam.hotel.repository.model.TestQuestion;
+import com.dodam.hotel.repository.model.Question;
 import com.dodam.hotel.service.QuestionService;
 import com.dodam.hotel.util.Define;
+import com.dodam.hotel.util.PagingObj;
 
 /**
  * 
@@ -91,21 +94,25 @@ public class QuestionController {
 		questionService.createQuestion(question);
 		return "redirect:/";
 	}
+	
 	//문의사항 게시판
 	@GetMapping("/questionList")
-	public String questionList(Model model) {
+	public String questionList(Model model, @RequestParam(name = "nowPage", defaultValue = "1" , required = false) String nowPage, @RequestParam(name = "cntPerPage", defaultValue = "5" , required = false) String cntPerPage) {
 		//주소 요청시 작성된 계시물 제목 List 로 다불러오기
-		List<TestQuestion> questionList = questionService.findAllQuestionList();
-		System.out.println(questionList);
+		int total = questionService.readAllQuestionCount();
+		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		List<Question> questionList = questionService.findAllQuestionList(obj);
 		if(questionList != null) {
+			model.addAttribute("paging", obj);
 			model.addAttribute("questionList",questionList);
 		}
 		return "/board/question";
 	}
+	
 	//문의 사항 상세보기
 	@GetMapping("/questionDetail/{id}")
 	public String questionDetail(@PathVariable Integer id,Model model) {
-		TestQuestion question = questionService.findById(id);
+		Question question = questionService.findById(id);
 		if(question != null) {
 			model.addAttribute("question",question);
 		}
@@ -128,7 +135,7 @@ public class QuestionController {
 	
 	@GetMapping("/category")
 	public String questionCategory(String category,Model model) {
-		List<TestQuestion> questionList = questionService.findByCategory(category);
+		List<Question> questionList = questionService.findByCategory(category);
 		if(questionList != null) {
 			model.addAttribute("questionList",questionList);
 		}

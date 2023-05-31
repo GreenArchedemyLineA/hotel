@@ -2,6 +2,7 @@ package com.dodam.hotel.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,8 +11,8 @@ import com.dodam.hotel.dto.QuestionRequestDto.InsertQuestionRequestDto;
 import com.dodam.hotel.repository.interfaces.QuestionRepository;
 import com.dodam.hotel.repository.interfaces.ReplyRepository;
 import com.dodam.hotel.repository.model.FAQ;
+import com.dodam.hotel.repository.model.Question;
 import com.dodam.hotel.repository.model.Reply;
-import com.dodam.hotel.repository.model.TestQuestion;
 import com.dodam.hotel.util.PagingObj;
 @Service
 public class QuestionService {
@@ -64,14 +65,19 @@ public class QuestionService {
 		int questionDeleteEntity = questionRepository.deleteQuestion(questionId);
 		return questionDeleteEntity;
 	}
+	// 모든 문의 개수
+	public int readAllQuestionCount() {
+		int resultCount = questionRepository.findAllQuestionCount();
+		return resultCount;
+	}
 	// 문의 전부 보기
-	public List<TestQuestion> findAllQuestionList(){
-		List<TestQuestion> questionListEntity = questionRepository.findAllQuestion(); 
+	public List<Question> findAllQuestionList(PagingObj obj){
+		List<Question> questionListEntity = questionRepository.findAllQuestion(obj); 
 		return questionListEntity;
 	}
 	// 문의 아이디로 검색후 상세보기
-	public TestQuestion findById(Integer id) {
-		TestQuestion questionEntity = questionRepository.findById(id);
+	public Question findById(Integer id) {
+		Question questionEntity = questionRepository.findById(id);
 		return questionEntity;
 	}
 	// 댓글 상태값 변경
@@ -85,8 +91,8 @@ public class QuestionService {
 		return insertReplyEntity; 
 	}
 	// 문의 카테고리로 검색
-	public List<TestQuestion> findByCategory(String category){
-		List<TestQuestion> questionCategoryEntity = questionRepository.findByCategory(category);
+	public List<Question> findByCategory(String category){
+		List<Question> questionCategoryEntity = questionRepository.findByCategory(category);
 		return questionCategoryEntity;
 	}
 }

@@ -79,11 +79,17 @@
 	height: 40px;
 	cursor: pointer;
 }
+
+#logo--image{
+	cursor: pointer;
+}
+
 </style>
 </head>
 <main class="main--container">
 	<div class="title--container">
-		<a onclick="history.back()"><span class="material-symbols-outlined">arrow_back</span></a> <img alt="" src="/images/logo_white.png">
+		<span class="material-symbols-outlined back--icon" onclick="history.back()">arrow_back</span> 
+		<img alt="" src="/images/logo_white.png" onclick="location.href='/'" id="logo--image">
 		<p>아이디 확인</p>
 	</div>
 	<div class="content--container">

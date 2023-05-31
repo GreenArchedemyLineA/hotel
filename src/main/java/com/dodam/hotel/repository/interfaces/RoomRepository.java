@@ -12,6 +12,7 @@ import com.dodam.hotel.dto.StatusParams;
 import com.dodam.hotel.dto.UpdateRoomStatusDto;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.repository.model.RoomType;
+import com.dodam.hotel.util.PagingObj;
 
 @Mapper
 public interface RoomRepository {
@@ -28,7 +29,11 @@ public interface RoomRepository {
 	//룸 사용가능 상태변경
 	public int updateManagerRoom(@Param("id") Integer id, @Param("availability") Boolean availability);
 	
+	// 모든 룸 개수 조회
+	int findAllRoomListCount();
+	
 	List<Room> findAllRoomList();
+	List<Room> findAllRoomListPaging(PagingObj obj);
 	
     // 인원 수
     List<Room> findOptionSearchOneRoomList(StatusParams statusParams);

@@ -1,75 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../layout/managerHeader.jsp"%>
-<!-- writer -->
-<style>
-.container {
-	color: black;
-}
-
-header {
-	font-size: 30px;
-	color: red;
-}
-
-.content {
-	display: flex;
-}
-
-.navi {
-	display: flex;
-	flex: 1;
-}
-
-.main {
-	display: flex;
-	flex-direction: column;
-	flex: 3;
-}
-
-.navi {
-	display: flex;
-	height: 100vh;
-	justify-content: center;
-}
-
-.content {
-	display: flex;
-	height: 100vh;
-}
-
-.main--content {
-	border: 2px solid black;
-	width: 1200px;
-	height: 600px;
-	margin-left: 30px;
-	margin-top: 30px;
-}
-
-.navi--bar {
-	border: 2px solid black;
-	margin-top: 30px;
-	width: 200px;
-	height: 400px;
-}
-
-li {
-	list-style: none;
-}
-
-td, th, button {
-	color: black;
-}
-</style>
-<div class="content">
-	<div class="navi">
-		<div class="navi--bar">
-			<ul>
-				<li></li>
-				<li></li>
-			</ul>
-		</div>
-		</div>
+	<div class="content">
 		<div class="main">
 			<header>여짝에 리스트</header>
 			<div class="main--content">
@@ -104,7 +35,7 @@ td, th, button {
 										<td>${reservation.startDate}</td>
 										<td>${reservation.endDate}</td>
 										<td>${reservation.numberOfP}</td>
-										<td>${reservation.room.id != null ? reservation.id : ""}${reservation.room != null ? "-" : ""}${reservation.room.name != null ?  reservation.room.name : "❌"}</td>
+										<td>${reservation.room.id != null ? reservation.id : ""}${reservation.room != null ? "-" : ""}${reservation.room.roomType.name != null ?  reservation.room.roomType.name : "❌"}</td>
 										<td>${reservation.dining.name != null ? reservation.dining.name : "❌"}</td>
 										<td>${reservation.fitnessId != null ? reservation.fitnessId : "❌"}</td>
 										<td>${reservation.poolId != null ? reservation.poolId : "❌"}</td>
@@ -115,40 +46,42 @@ td, th, button {
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
-            예약리스트가 없습니다.
-        </c:otherwise>
+					            예약리스트가 없습니다.
+					        </c:otherwise>
 						</c:choose>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
+</main>
 
 	<script>
-    function detailReservation(id){
-        let e = window.event;
-        e.preventDefault();
-        location.href = "/manager/reservation/" + id;
-    }
-    function deleteReservation(id){
-        let e = window.event;
-        e.cancelBubble = true;
-        console.log(id)
-        if(confirm("예약 삭제하시겠습니까? 복구 불가")){
-            fetch("/manager/reservation/delete?id=" + id, ({
-                method: "delete",
-            }))
-                .then(async (response) => {
-                    let result = await response.json()
-                    if(result.status_code == 200){
-                        alert(result.msg)
-                        location.href = result.redirect_uri;
-                    }else{
-                        alert(result.msg)
-                    }
-                })
-        }
-    }
-</script>
-	</body>
-	</html>
+	    function detailReservation(id){
+	        let e = window.event;
+	        e.preventDefault();
+	        location.href = "/manager/reservation/" + id;
+	    }
+	    function deleteReservation(id){
+	        let e = window.event;
+	        e.cancelBubble = true;
+	        console.log(id)
+	        if(confirm("예약 삭제하시겠습니까? 복구 불가")){
+	            fetch("/manager/reservation/delete?id=" + id, ({
+	                method: "delete",
+	            }))
+	                .then(async (response) => {
+	                    let result = await response.json()
+	                    if(result.status_code == 200){
+	                        alert(result.msg)
+	                        location.href = result.redirect_uri;
+	                    }else{
+	                        alert(result.msg)
+	                    }
+	                })
+	        }
+	    }
+	</script>
+</body>
+</html>
+	

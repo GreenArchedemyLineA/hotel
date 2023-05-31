@@ -10,6 +10,8 @@ public class RoomType {
 	private Integer price;
 	private String description;
 	private String image;
+	private String image2;
+	private String image3;
 	private Integer numberOfP;
 	
 } // end of class

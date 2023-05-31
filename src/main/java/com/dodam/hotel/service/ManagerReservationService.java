@@ -57,7 +57,7 @@ public class ManagerReservationService {
     }
     public List<Reservation> findUserReservation(String name){
         List<Reservation> reservationList = new ArrayList<>();
-        List<MUser> userList = mUserRepository.findByname(name);
+        List<MUser> userList = mUserRepository.findByName(name);
         System.out.println(userList);
         userList.stream().forEach((user) ->{
             List<Reservation> reservationUserList = reservationRepository.findReservationByUserId(user.getId());
@@ -74,18 +74,20 @@ public class ManagerReservationService {
         Reservation reservation = reservationRepository.findReservationById(id);
         List<Room> roomList = roomRepository.findAllRoomList();
         List<Dining> diningList = diningRepository.findAllDining();
-        List<Fitness> fitnessList = fitnessRepository.findAllFitness();
-        List<Spa> spaList = spaRepository.findAllSpa();
-        List<Pool> poolList = poolRepository.findAllPool();
+//        List<Fitness> fitnessList = fitnessRepository.findAllFitness();
+//        List<Spa> spaList = spaRepository.findAllSpa();
+//        List<Pool> poolList = poolRepository.findAllPool();
+//        
+        // Package에 관련된 테이블이 날라간 관계로 해당 
         // 고쳐주세요 메서드 날아간듯 ㄷㄷ
-//        List<PackageTB> packageTBList = packageRepository.findPackageList();
+        //        List<PackageTB> packageTBList = packageRepository.findPackageList();
+        //        mapList.put("packageList", packageTBList);
         mapList.put("reservation", reservation);
         mapList.put("roomList", roomList);
         mapList.put("diningList", diningList);
-        mapList.put("fitnessList", fitnessList);
-        mapList.put("spaList", spaList);
-        mapList.put("poolList", poolList);
-//        mapList.put("packageList", packageTBList);
+//        mapList.put("fitnessList", fitnessList);
+//        mapList.put("spaList", spaList);
+//        mapList.put("poolList", poolList);
 
         return mapList;
     }

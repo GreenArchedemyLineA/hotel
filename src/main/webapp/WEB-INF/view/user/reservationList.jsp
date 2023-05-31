@@ -5,19 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@300;400&family=WindSong:wght@500&display=swap');
-
-* {
-	margin: 0;
-	padding: 0;
-	font-family: 'Noto Sans KR', sans-serif;
-}
-</style>
+<link rel="stylesheet" href="/css/myPage.css" />
 </head>
 <body>
-	<table>
-		<tr>
+	<table class="table--container">
+		<tr id="title--tr--container">
 			<td>Check In</td>
 			<td>Check Out</td>
 			<td>Room</td>
@@ -26,7 +18,7 @@
 			<td>Date</td>
 		</tr>
 		<c:forEach items="${reservations}" var="list">
-			<tr>
+			<tr class="table--tr--container">
 				<td>${list.startDate}</td>
 				<td>${list.endDate}</td>
 				<td>${list.room.roomType.name}</td>
