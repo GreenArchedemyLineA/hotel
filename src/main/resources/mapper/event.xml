@@ -14,13 +14,47 @@
 	</select>
 	
 	<select id="findByAllPage" resultType="com.dodam.hotel.repository.model.Event">
-			SELECT * from (
-		 		SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* 
-		        FROM
-		        (SELECT * FROM event_tb ORDER BY id DESC) A, 
-		        (SELECT @ROWNUM := 0 ) B
-		        ) as C
-		        where C.ROWNUM BETWEEN #{start} AND #{end};
+		SELECT * from (
+	 		SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* 
+	        FROM
+	        (SELECT * FROM event_tb ORDER BY id DESC) A, 
+	        (SELECT @ROWNUM := 0 ) B
+	        ) as C
+	    where C.ROWNUM BETWEEN #{start} AND #{end};
+	</select>
+	
+	<select id="findNowEventByPage" resultType="com.dodam.hotel.repository.model.Event">
+		SELECT * from (
+	 		SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* 
+	        FROM
+	        (SELECT * 
+	         FROM event_tb
+	         WHERE end_date <![CDATA[>=]]> now() 
+	         ORDER BY id DESC) A, 
+	        (SELECT @ROWNUM := 0 ) B
+	        ) as C
+	    where C.ROWNUM BETWEEN #{start} AND #{end};
+	</select>
+	
+	<select id="findByPrevEventPage" resultType="com.dodam.hotel.repository.model.Event">
+		SELECT * from (
+	 		SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* 
+	        FROM
+	        (SELECT * 
+	         FROM event_tb
+	         WHERE end_date <![CDATA[<]]> now()
+	         ORDER BY id DESC) A, 
+	        (SELECT @ROWNUM := 0 ) B
+	        ) as C
+	    where C.ROWNUM BETWEEN #{start} AND #{end};
+	</select>
+	
+	<select id="findByNowAll" resultType="Integer">
+		select count(*) from event_tb WHERE end_date <![CDATA[>=]]> now()
+	</select>
+	
+	<select id="findByPrevAll" resultType="Integer">
+		select count(*) from event_tb WHERE end_date <![CDATA[<]]> now()
 	</select>
 	
 	<select id="count" resultType="Integer">

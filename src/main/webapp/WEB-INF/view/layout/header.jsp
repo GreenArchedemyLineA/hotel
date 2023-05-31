@@ -24,7 +24,7 @@
 					<div id="navi--1--wrap">
 						<ul class="navi--bar--1">
 							<li>
-								<div class="toggle--wrap" style="padding-right: 20px;">
+								<div class="toggle--wrap--room" style="padding-right: 20px;">
 									<p class="toggle--box--room"> 객실</p>
 									<p class="material-symbols-outlined down--icon">keyboard_arrow_down</p>
 								</div>
@@ -39,7 +39,7 @@
 					<div id="navi--2--wrap">
 						<ul class="navi--bar--2">
 							<li>
-							<div class="toggle--wrap">
+							<div class="toggle--wrap--fac">
 								<p class="toggle--box--fac"> 부대시설</p>
 								<p class="material-symbols-outlined down--icon">keyboard_arrow_down</p>
 							</div>
@@ -55,7 +55,7 @@
 					<div id="navi--3--wrap">
 						<ul class="navi--bar--3">
 							<li>
-							<div class="toggle--wrap" id="reservation--toggle--wrap">
+							<div class="toggle--wrap--reserve" id="reservation--toggle--wrap">
 								<p class="toggle--box--reserve"> 예약</p>
 								<p class="material-symbols-outlined down--icon">keyboard_arrow_down</p>
 							</div>
@@ -68,13 +68,14 @@
 					<div id="navi--4--wrap">
 						<ul class="navi--bar--4">
 							<li>
-							<div class="toggle--wrap">
+							<div class="toggle--wrap--qna">
 								<p class="toggle--box--qna"> 문의</p>
 								<p class="material-symbols-outlined down--icon">keyboard_arrow_down</p>
 							</div>
 								<ul class="navi--bar--detail--qna">
 									<li><a href="/question/question">FAQ</a></li>
 									<li><a href="/question/qnaPage">1:1 문의</a></li>
+									<li><a href="/event/eventBoard/onGoing">이벤트</a></li>
 								</ul></li>
 						</ul>
 					</div>

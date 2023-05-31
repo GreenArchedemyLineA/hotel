@@ -22,4 +22,12 @@ public interface EventRepository {
 	//게시글수 카운팅
 	int count();
 	
+	// 진행중인 이벤트 조회
+	public int findByNowAll();
+	public List<Event> findNowEventByPage(PagingObj obj);
+	
+	// 종료된 이벤트 조회
+	public int findByPrevAll();
+	public List<Event> findByPrevEventPage(PagingObj obj);
+	
 }

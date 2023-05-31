@@ -27,6 +27,10 @@
 			select *
 			from room_type_tb
 		</if>
+		<if test="type=='AllInOne'">
+			select *
+			from room_type_tb
+		</if>
 		<if test="type=='디럭스'">
 			select *
 			from room_type_tb

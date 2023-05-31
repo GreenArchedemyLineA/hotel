@@ -267,8 +267,21 @@ main {
 	align-items: center;
 }
 
-.toggle--wrap {
+.toggle--wrap--room {
 	display: flex;
+	cursor: pointer;
+}
+.toggle--wrap--fac {
+	display: flex;
+	cursor: pointer;
+}
+.toggle--wrap--reserve {
+	display: flex;
+	cursor: pointer;
+}
+.toggle--wrap--qna {
+	display: flex;
+	cursor: pointer;
 }
 
 #reservation--toggle--wrap {
@@ -281,7 +294,7 @@ main {
 
 .membership--wrap {
 	background-color: #f9f9f9;
-	width: 100%;
+	width: 1200px;
 	height: 300px;
 	display: flex;
 	justify-content: space-evenly;
@@ -291,18 +304,51 @@ main {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+	width: 300px;
 }
 
 #discount--box {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+	width: 300px;
 }
 
 #point--box {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+	width: 300px;
+}
+
+.membership--container {
+	margin: 10px;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #f9f9f9;
+	width: 100%;
+	height: 300px;
+}
+
+.membership--icon{
+	font-size: 50px;
+}
+
+.membership--desc {
+	font-size: 18px;
+}
+
+#desc--btn {
+	background-color: #000;
+	color: #fff;
+	border: none;
+	width: 284px;
+	height: 70px;
 }
 
 </style>
@@ -319,7 +365,7 @@ main {
 					<div id="navi--1--wrap">
 						<ul class="navi--bar--1">
 							<li>
-								<div class="toggle--wrap">
+								<div class="toggle--wrap--room">
 									<p class="toggle--box--room"> 객실</p>
 									<p class="material-symbols-outlined down--icon">keyboard_arrow_down</p>
 								</div>
@@ -334,7 +380,7 @@ main {
 					<div id="navi--2--wrap">
 						<ul class="navi--bar--2">
 							<li>
-							<div class="toggle--wrap">
+							<div class="toggle--wrap--fac">
 								<p class="toggle--box--fac"> 부대시설</p>
 								<p class="material-symbols-outlined down--icon">keyboard_arrow_down</p>
 							</div>
@@ -350,7 +396,7 @@ main {
 					<div id="navi--3--wrap">
 						<ul class="navi--bar--3">
 							<li>
-							<div class="toggle--wrap" id="reservation--toggle--wrap">
+							<div class="toggle--wrap--reserve" id="reservation--toggle--wrap">
 								<p class="toggle--box--reserve"> 예약</p>
 								<p class="material-symbols-outlined down--icon">keyboard_arrow_down</p>
 							</div>
@@ -363,13 +409,14 @@ main {
 					<div id="navi--4--wrap">
 						<ul class="navi--bar--4">
 							<li>
-							<div class="toggle--wrap">
+							<div class="toggle--wrap--qna">
 								<p class="toggle--box--qna"> 문의</p>
 								<p class="material-symbols-outlined down--icon">keyboard_arrow_down</p>
 							</div>
 								<ul class="navi--bar--detail--qna">
 									<li><a href="/question/question">FAQ</a></li>
 									<li style="width: 100px;"><a href="/question/qnaPage">1:1 문의</a></li>
+									<li><a href="/event/eventBoard/onGoing">이벤트</a></li>
 								</ul></li>
 						</ul>
 					</div>
@@ -455,23 +502,23 @@ main {
 		</div>
 	</div>
 
-	<p class="title--container">도담 멤버쉽</p>
-	<div class="recommend--container">
+	<div class="membership--container">
+		<p class="title--container">도담 멤버쉽</p>
 		<div class="membership--wrap">
 			<div id="gift--box">
-				<span class="material-symbols-outlined">redeem</span>
-				<p>회원 전용 이벤트를 누려보세요.</p>
+				<span class="material-symbols-outlined membership--icon">redeem</span>
+				<p class="membership--desc">회원 전용 이벤트를 누려보세요.</p>
 			</div>
 			<div id="discount--box">
-				<span class="material-symbols-outlined">calculate</span>
-				<p>멤버십 회원만을 위해 할인된 가격을 제공합니다.</p>
+				<span class="material-symbols-outlined membership--icon">calculate</span>
+				<p class="membership--desc">멤버십 회원만을 위해 할인된 가격을 제공합니다.</p>
 			</div>
 			<div id="point--box">
-				<span class="material-symbols-outlined">monetization_on</span>
-				<p>포인트를 적립하고, 현금처럼 실용적으로 사용하세요.</p>
+				<span class="material-symbols-outlined membership--icon">monetization_on</span>
+				<p class="membership--desc">포인트를 적립하고, 현금처럼 실용적으로 사용하세요.</p>
 			</div>
 		</div>
-		<a href="/membership">자세히 보기</a>
+		<button type="button" onclick="location.href='/membership'" id="desc--btn">자세히 보기</button>
 	</div>
 
 
