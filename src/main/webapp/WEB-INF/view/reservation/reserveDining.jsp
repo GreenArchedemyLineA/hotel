@@ -31,34 +31,52 @@
 	<div class="body--container">
 		<div class="navi--bar">
 			<span class="title--box">예약</span>
-			<div class="detail--container">
-				<span class="detail--box"><a href="/selectDate">객실 예약</a></span> 
-				<span class="detail--box selected--menu"><a href="/reserveDining">다이닝 예약</a></span>
-			</div>
+				<div class="detail--container">
+					<span class="detail--box"><a href="/selectDate">객실 예약</a></span>
+					<span class="detail--box selected--menu"><a href="/reserveDining">다이닝 예약</a></span>
+				</div>
 		</div>
 		<div class="calender--container">
-			<form action="/dining" method="post">
+		<form action="/search" method="get" id="calender--form">
+			<div class="calender--wrap">
 				<input type="text" class="dateSelector" id="calender" name="date">
-				<div class="count--container">
-					성인 <select name="countPerson" class="select--box">
+			</div>
+			<div class="count--container">
+				<div id="select--box--wrap">
+					<div class="select--title--box">
+						<h3>예약 인원</h3>
+					</div>
+					<div class="select--people--box">
+						<p class="select--title--tag">성인</p>
+						<select name="countPerson" class="select--box">
 							<option value="1">1</option>
 							<option value="2">2</option>
 						</select> 
-					어린이 <select name="countChild" class="select--box">
+					</div>
+					<div class="select--people--box">
+						<p class="select--title--tag">어린이</p>
+						<select name="countChild" class="select--box">
 							<option value="0">0</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
 						</select> 
-					유아 <select name="countBaby" class="select--box">
+					</div>
+					<div class="select--people--box">
+						<p class="select--title--tag">유아</p>
+						<select name="countBaby" class="select--box">
 							<option value="0">0</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
 						</select>
-				<button class="sub--button">예약</button>
+					</div>
 				</div>
-			</form>
-		</div>
+				<div id="calender--search--btn">
+					<button class="sub--button">검색</button>
+				</div>
+			</div>
+		</form>
 	</div>
+</div>
 	<script>
 		let dateSelector = document.querySelector('.dateSelector')
 		console.log(dateSelector);
