@@ -123,7 +123,9 @@
 		WHERE C.ROWNUM BETWEEN #{start} AND #{end}
 	</select>
 
-	
+	<update id="updateRoomStatus">
+		
+	</update>
 	<!-- <select id="findAllRoomListPaging" resultMap="Room">
 		SELECT *
 		from (

@@ -316,9 +316,9 @@
                 left join pool_tb as p
                     on re.pool_id = p.id
                 left join spa_tb as s
-                    on re.spa_id = s.id
-         <!--  where
-                date_format(start_date, "%Y-%m-%d") = curdate()  -->
+	                  on re.spa_id = s.id
+	       		 where
+                date_format(start_date, "%Y-%m-%d") = curdate()
 
     </select>
 	

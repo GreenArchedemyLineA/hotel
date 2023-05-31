@@ -20,6 +20,7 @@ import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Room;
+import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.DiningService;
 import com.dodam.hotel.service.EventService;
 import com.dodam.hotel.service.FacilitiesService;
@@ -27,6 +28,7 @@ import com.dodam.hotel.service.ManagerReservationService;
 import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.QuestionService;
 import com.dodam.hotel.service.RoomService;
+import com.dodam.hotel.service.UserService;
 
 @Controller
 @RequestMapping("/manager")
@@ -34,6 +36,8 @@ public class ManagerController {
 	
 	@Autowired
 	private ManagerService managerService;
+	@Autowired
+	private UserService userService;
 	@Autowired
 	private HttpSession session;
 	@Autowired
@@ -80,8 +84,18 @@ public class ManagerController {
 	public String mUserListAll(Model model){
 		
 		List<MUser> userList = managerService.managerUserListAll();
+		List<User> userToday = userService.readJoinUserToday();
+		int userTodayCount = userToday.size();
+		List<MembershipInfo> membershipToday = userService.readJoinMembershipToday();
+		int membershipTodayCount = membershipToday.size();
 		if(userList != null) {
 			model.addAttribute("userList",userList);
+		}
+		if(userToday != null) {
+			model.addAttribute("userTodayCount",userTodayCount);
+		}
+		if(membershipToday != null) {
+			model.addAttribute("membershipTodayCount",membershipTodayCount);
 		}
 		return "/manager/userList";
 	}
@@ -172,8 +186,10 @@ public class ManagerController {
 	 */
 	
 	@GetMapping("/roomStatus")
-	public String Check(StatusParams statusParams, Model model) {
+	public String Check(StatusParams statusParams, Integer roomId, Model model) {
 		List<Room> rooms;
+		Room room = managerService.findByRoom(roomId);
+		model.addAttribute("room", room);
 		// 전체 조회
 		int total = managerService.readAllRoomListCount();
 		if (statusParams.getRoomStatus() == null
@@ -187,6 +203,9 @@ public class ManagerController {
 			rooms = managerService.findConditionsRoomList(statusParams);
 		}
 		model.addAttribute("roomList", rooms);
+		for (int i = 0; i < 16; i++) {
+			System.out.println(managerReservationService.findTodayAllReservation());
+		}
 		model.addAttribute("reservation", managerReservationService.findTodayAllReservation());
 		return "/manager/status";
 	}

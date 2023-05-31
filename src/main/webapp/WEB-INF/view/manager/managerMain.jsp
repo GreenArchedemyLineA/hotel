@@ -97,6 +97,7 @@
 }
 </style>
 		<div class="main--container">
+			<p>매니저님 반갑습니다</p>
 			<div id="date"></div>
 			<div class="content--container">
 				<div class="left--content">
@@ -142,10 +143,10 @@
 						<a href="" class="check--box">객실</a>
 						<c:choose>
 							<c:when test="${availableRoom == 0}">
-								<div><span class="ok">사용 가능</span> 0개 <span class="no">사용 불가</span> ${notAvailableRoom}개</div>														
+								<div><span class="no">사용 불가</span> ${notAvailableRoom}개</div>														
 							</c:when>
 							<c:when test="${notAvailableRoom == 0}">
-								<div><span class="ok">사용 가능</span> ${availableRoom}개    <span class="no">사용 불가</span> 0개</div>														
+								<div><span class="ok">사용 가능</span> ${availableRoom}개</div>														
 							</c:when>
 							<c:otherwise>
 								<div><span class="ok">사용 가능</span> ${availableRoom}개    <span class="no">사용 불가</span> ${notAvailableRoom}개</div>	

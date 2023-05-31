@@ -65,6 +65,12 @@
 		birth=#{birth} and tel=#{tel}
 	</select>
 	
+	<!-- 오늘 회원가입 회원 조회 -->
+	<select id="findUserToday" resultType="com.dodam.hotel.repository.model.User">
+		select * from user_tb
+		where date_format(created_at, "%Y-%m-%d") = curdate()
+	</select>
+	
 	<!-- id 찾기 -->
 	<select id="findUserForIdInquiry" resultMap="User">
 		select email, name
@@ -92,4 +98,5 @@
 		set random_pwd_status = false
 		where id = #{id}
 	</update>
+	
 </mapper>

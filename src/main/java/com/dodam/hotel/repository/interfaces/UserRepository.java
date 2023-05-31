@@ -1,5 +1,7 @@
 package com.dodam.hotel.repository.interfaces;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,6 +34,9 @@ public interface UserRepository {
 	
 	// 제일 최근 가입 회원 ID 찾기
 	public Integer findIdOrderById(UserRequestDto.insertDto insertDto);
+	
+	// 오늘 가입 회원 조회
+	public List<User> findUserToday();
 	
 	// 회원 id 조회
 	public User findUserForIdInquiry(InquiryRequestDto.IdInquiryRequestDto idInquiryRequestDto);

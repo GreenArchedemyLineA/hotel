@@ -52,6 +52,10 @@
 	border-bottom: 2px solid #ebebeb;
 	margin: 10px;
 }
+.modal-content {
+	width: 700px;
+	height: 300px;
+}
 </style>
 	<div class="content">
 	<h2>일정</h2>
