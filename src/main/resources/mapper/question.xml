@@ -91,10 +91,9 @@
 		select count(*) from question_tb where user_id = #{userId}
 	</select>
 	
-	<!-- 모든 faq 조회 -->
-	<select id="selectAllFaq" resultMap="Faq">
-		select *
-		from faq_tb
+	<select id="findByStatusCount" resultType="int">
+		select count(*) from question_tb
+		where status = 0;
 	</select>
 	
 	<select id="findAll" resultMap="Reply">

@@ -4,17 +4,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.ManagerSignInFormDto;
 import com.dodam.hotel.dto.StatusParams;
@@ -23,10 +20,13 @@ import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Room;
-import com.dodam.hotel.repository.model.RoomType;
+import com.dodam.hotel.service.DiningService;
+import com.dodam.hotel.service.EventService;
+import com.dodam.hotel.service.FacilitiesService;
+import com.dodam.hotel.service.ManagerReservationService;
 import com.dodam.hotel.service.ManagerService;
+import com.dodam.hotel.service.QuestionService;
 import com.dodam.hotel.service.RoomService;
-import com.dodam.hotel.util.PagingObj;
 
 @Controller
 @RequestMapping("/manager")
@@ -38,7 +38,17 @@ public class ManagerController {
 	private HttpSession session;
 	@Autowired
 	private RoomService roomService;
-
+	@Autowired
+	private EventService eventService;
+	@Autowired
+	private QuestionService questionService;
+	@Autowired
+	private DiningService diningService;
+	@Autowired
+	private FacilitiesService facilitiesService;
+	@Autowired
+	private ManagerReservationService managerReservationService;
+	
 	@GetMapping("/managerPage")
 	public String managerPage() {
 
@@ -46,8 +56,16 @@ public class ManagerController {
 	}
 	
 	@GetMapping("/managerMain")
-	public String managerMain() {
-
+	public String managerMain(Model model) {
+		model.addAttribute("viewAll", eventService.findByIdLimit());
+		model.addAttribute("question", questionService.readQuestionCountByStatus0());
+		model.addAttribute("availableRoom", roomService.readRoomAvailableCount());
+		model.addAttribute("notAvailableRoom", roomService.readRoomNotAvailableCount());
+		model.addAttribute("restaurant", diningService.readRestaurantStatus());
+		model.addAttribute("bar", diningService.readBarStatus());
+		model.addAttribute("pool", facilitiesService.readPoolStatus());
+		model.addAttribute("spa", facilitiesService.readSpaStatus());
+		model.addAttribute("fitness", facilitiesService.readFitnessStatus());
 		return "/manager/managerMain";
 	}
 	
@@ -133,27 +151,43 @@ public class ManagerController {
 	}
 
 	
+	/*
+	 * @GetMapping("/roomStatus") public String Check(StatusParams statusParams,
+	 * Model model,
+	 * 
+	 * @RequestParam(name = "nowPage", defaultValue = "1" , required = false) String
+	 * nowPage,
+	 * 
+	 * @RequestParam(name = "cntPerPage", defaultValue = "5" , required = false)
+	 * String cntPerPage) { List<Room> rooms; // 전체 조회 int total =
+	 * managerService.readAllRoomListCount(); PagingObj obj = new PagingObj(total,
+	 * Integer.parseInt(nowPage), Integer.parseInt(cntPerPage)); if
+	 * (statusParams.getRoomStatus() == null && statusParams.getPrice() == null &&
+	 * statusParams.getNumberOfP() == null) { rooms =
+	 * managerService.findAllRoomList(obj); } // 선택 조회(?? 변경 필요) else { // 페이징처리 안했음
+	 * rooms = managerService.findConditionsRoomList(statusParams); }
+	 * 
+	 * model.addAttribute("paging", obj); model.addAttribute("roomList", rooms);
+	 * return "/manager/status"; }
+	 */
+	
 	@GetMapping("/roomStatus")
-	public String Check(StatusParams statusParams, Model model, 
-			@RequestParam(name = "nowPage", defaultValue = "1" , required = false) String nowPage, 
-			@RequestParam(name = "cntPerPage", defaultValue = "5" , required = false) String cntPerPage) {
+	public String Check(StatusParams statusParams, Model model) {
 		List<Room> rooms;
 		// 전체 조회
 		int total = managerService.readAllRoomListCount();
-		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		if (statusParams.getRoomStatus() == null
 				&& statusParams.getPrice() == null
 				&& statusParams.getNumberOfP() == null) {
-			rooms = managerService.findAllRoomList(obj);
+			rooms = managerService.findAllRoomList();
 		}
 		// 선택 조회(?? 변경 필요)
 		else {
 			// 페이징처리 안했음
 			rooms = managerService.findConditionsRoomList(statusParams);
 		}
-		
-		model.addAttribute("paging", obj);
 		model.addAttribute("roomList", rooms);
+		model.addAttribute("reservation", managerReservationService.findTodayAllReservation());
 		return "/manager/status";
 	}
 	

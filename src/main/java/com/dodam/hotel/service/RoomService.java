@@ -41,6 +41,19 @@ public class RoomService {
 		int roomEntity = roomRepository.updateManagerRoom(id,availability);
 		return roomEntity;
 	}
+	
+	// 사용 가능 객실 갯수 조회
+	public int readRoomAvailableCount() {
+		int resultRowCount = roomRepository.findRoomByCount1();
+		return resultRowCount;
+	}
+	
+	// 사용 불가 객실 객수 조회
+	public int readRoomNotAvailableCount() {
+		int resultRowCount = roomRepository.findRoomByCount0();
+		return resultRowCount;
+	}
+	
 	/**
 	 *  전체 예약 객실 조회 (성희)
 	 */

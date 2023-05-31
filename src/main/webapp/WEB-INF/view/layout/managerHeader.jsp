@@ -22,10 +22,6 @@
 	font-family: 'Noto Sans KR', monospace;
 }
 
-body {
-	height: 100vh;
-}
-
 main {
 	display: flex;
 	height: 100vh;
@@ -33,8 +29,9 @@ main {
 
 nav {
 	width: 300px;  /* 로그 크기에 따라 수정할 예정 */	
-	height: 100vh;
 	background-color: #64c5f3;
+	height: 100vh;
+	display: flex;
 }
 
 .content {
@@ -47,6 +44,7 @@ nav {
 	width: 1200px;
 	height: 600px;
 	padding: 10px;
+	
 }
 
 li {
@@ -90,7 +88,7 @@ li:hover {
 				<li id="dining--li" onclick="location.href='/manager/dining'">다이닝</li>
 				<li id="userList--li">
 					<div>
-						<span id="search--user--wrap">회원조회</span>
+						<span id="search--user--wrap">회원</span>
 					</div>
 					<ul id="search--list">
 						<li onclick="location.href='/manager/userList'">전체 회원 조회</li>
