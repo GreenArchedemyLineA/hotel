@@ -192,9 +192,11 @@
 	function diningMinus() {
 		const resultElement = document.getElementById("diningResult");
 		let number = resultElement.value;
-		number = parseInt(number) - 1;
+		if(number > 0){
+		number = parseInt(number) - 1;			
 		resultElement.value = number;
 		totalPrice();
+		}
 	}
 	
 	function diningPlus() {
@@ -208,9 +210,11 @@
 	function spaMinus() {
 		const resultElement = document.getElementById("spaResult");
 		let number = resultElement.value;
+		if(number > 0){
 		number = parseInt(number) - 1;
 		resultElement.value = number;
 		totalPrice();
+		}
 	}
 	
 	function spaPlus() {
@@ -224,9 +228,11 @@
 	function poolMinus() {
 		const resultElement = document.getElementById("poolResult");
 		let number = resultElement.value;
+		if(number > 0){
 		number = parseInt(number) - 1;
 		resultElement.value = number;
 		totalPrice();
+		}
 	}
 	
 	function poolPlus() {
@@ -240,9 +246,11 @@
 	function fitnessMinus() {
 		const resultElement = document.getElementById("fitnessResult");
 		let number = resultElement.value;
+		if(number > 0){
 		number = parseInt(number) - 1;
 		resultElement.value = number;
 		totalPrice();
+		}
 	}
 	
 	function fitnessPlus() {

@@ -59,7 +59,7 @@ public class FAQController {
     @PostMapping("/manager/faq/update-proc")
     public String faqUpdateProc(FAQ faq){
         managerFAQService.updateFAQ(faq);
-        return "redirect:/manager/FAQ";
+        return "redirect:/manager/faq";
     }
 
     @DeleteMapping("/manager/delete/faq")
