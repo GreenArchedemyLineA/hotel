@@ -91,7 +91,7 @@ public class PayController {
                     .build();
 
             payService.createPay(dto);
-            return "redirect:/pay/success?tid="+nicepayResultDto.getTid();
+            return "redirect:/";
         }else{
             // 결제 실패 케이스 작성
             System.out.println(nicepayResultDto);
@@ -156,7 +156,7 @@ public class PayController {
                 .build();
 
         payService.createPay(dto);
-        return "redirect:/pay/success?tid="+tossResponse.getPaymentKey();
+        return "redirect:/";
     }
 
     // 후 코드 잘못짠듯..? 더 리팩토링 필요..

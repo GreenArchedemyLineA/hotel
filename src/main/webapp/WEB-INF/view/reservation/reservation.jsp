@@ -615,6 +615,22 @@ input[type="number"]::-webkit-inner-spin-button {
 <script>
 	let orderNameValue = '${orderName}';
 	let totalPriceValue = document.getElementById("total--price--input").value;
+	function nicePay() {
+		AUTHNICE.requestPay({
+			clientId: 'S2_e9b9047ecf2a467b86a6c2311d47b9df',
+			method: 'card',
+			orderId: '${orderName}',
+			amount: totalPriceValue,
+			goodsName: '${orderName}',
+			returnUrl: 'http://localhost:8080/pay/payments',
+			fnError: function (result) {
+				console.log(result)
+				alert(result.errorMsg)
+			}
+		});
+	}
+
+
 	let form = document.getElementById("reservation");
 	console.log(form)
 	let e = window.event;
@@ -632,18 +648,24 @@ input[type="number"]::-webkit-inner-spin-button {
 		let popupOption = "width=800,height=800";
 		let url;
 		if(payType === "nicepay"){
-			url = "http://localhost:8080/pay/payReady?paySelect=nicepay&clientKey=S2_e9b9047ecf2a467b86a6c2311d47b9df&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
+			nicePay();
 		}else if(payType === "kakaopay"){
 			url = "http://localhost:8080/pay/kakaopay?item_name="+ orderNameValue +"&total_amount=" +totalPriceValue
+			let returnPay = window.open(
+					url,
+					"popup",
+					popupOption
+			);
+			returnPay.focus();
 		}else if(payType === "tosspay"){
 			url = "http://localhost:8080/pay/payReady?paySelect=toss&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
+			let returnPay = window.open(
+					url,
+					"popup",
+					popupOption
+			);
+			returnPay.focus();
 		}
-		let returnPay = window.open(
-				url,
-				"popup",
-				popupOption
-		);
-		returnPay.focus();
 	}
 
 	function getReturnValue(returnValue){
@@ -657,6 +679,8 @@ input[type="number"]::-webkit-inner-spin-button {
 			form.submit();
 		}
 	}
+
+
 
 </script>
 </body>

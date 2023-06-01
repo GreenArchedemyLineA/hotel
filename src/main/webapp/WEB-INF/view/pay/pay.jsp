@@ -4,33 +4,14 @@
 <%--<h1>NICEPAY TEST</h1>--%>
 <style>
 </style>
-<button class="pay" onclick="nicePay()">신용카드 결제하기</button>
 <div style="display: none">
     <img class="pay" src="/images/tosspay_icon.png" onclick="tossPay()" id="payment-method">
 </div>
-
 <script src="https://js.tosspayments.com/v1/payment-widget"></script>
-<script src="https://pay.nicepay.co.kr/v1/js/"></script>
-
-
-
 
 <script>
 	// clientId, orderId, goodsName 
-    function nicePay() {
-        AUTHNICE.requestPay({
-            clientId: '${clientId}',
-            method: 'card',
-            orderId: '${orderId}',
-            amount: '${totalAmount}',
-            goodsName: '${orderId}',
-            returnUrl: 'http://localhost:8080/pay/payments',
-            fnError: function (result) {
-                console.log(result)
-                alert(result.errorMsg)
-            }
-        });
-    }
+
 
     const clientKey = 'test_ck_P24xLea5zVAN5EQM26mrQAMYNwW6' // 테스트용 클라이언트 키
     const customerKey = 'lDbYSlFCj9PZh5k9iOPWV' // 고객을 식별할 수 있는 키
@@ -50,6 +31,8 @@
             orderName: '${orderId}',
             successUrl: 'http://localhost:8080/pay/toss/success',
             failUrl: 'http://localhost:8080/pay/fail'
+        }).catch((error)=>{
+            window.close();
         })
     }
 <%--    <c:if test="${option eq 'nicepay'}">--%>
