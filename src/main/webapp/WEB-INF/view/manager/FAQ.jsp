@@ -95,18 +95,6 @@
 	  function updateFAQ(id){
 	        location.href = "/manager/faq/update/"+ id;
 	    }
-	    $(document).ready(
-		    function() {
-		    	let faqToggle = $(".faq--toggle--title")
-		    	faqToggle.on("click", function() {
-		    		if($(this).siblings().hasClass("toggle--content")){
-			    		$(this).siblings().removeClass("toggle--content");
-		    		} else {
-		    			$(".toggle--content").removeClass("toggle--content");
-			    		$(this).siblings().addClass("toggle--content");
-		    		}
-		    	});
-		    });
 	  function deleteFAQ(id){
 	        if(confirm("삭제하시겠습니까?")){
 	            fetch("/manager/delete/faq?id=" + id,{

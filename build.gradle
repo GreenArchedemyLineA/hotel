@@ -51,6 +51,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.0'
 	// testImplementation 'org.springframework.security:spring-security-test'
+	
+	// 암호화
+	implementation 'org.springframework.security:spring-security-crypto'
 }
 
 tasks.named('test') {
