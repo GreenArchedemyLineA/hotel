@@ -139,10 +139,6 @@ public class ReservationService {
 				
 			}
 		}
-		
-		// 방 상태 바꾸기
-		
-
 		return resultRowCount;
 	}
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style>
 .content {
@@ -123,15 +124,28 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 	
-				<div>
-						<div>
-							<div id="title--box">오늘 회원 가입 고객 ${userTodayCount}명</div>
-						</div>
-						<div>
-							<div id="title--box">오늘 멤버쉽 회원 가입 고객 ${membershipTodayCount}명</div>
-						</div>
-						<div>
-						</div>
+				<div>	
+					<div>
+						<c:choose>
+							<c:when test="${userTodayCount != null}">
+								<div id="title--box">오늘 회원 가입 고객 ${userTodayCount}명</div>
+							</c:when>
+							<c:otherwise>
+								<div id="title--box">오늘 회원 가입 고객이 없습니다</div>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div>
+						<c:choose>
+							<c:when test="${membershipTodayCount != null}">
+								<div id="title--box">오늘 멤버쉽 가입 고객 ${membershipTodayCount}명</div>
+							</c:when>
+							<c:otherwise>
+								<div id="title--box">오늘 멤버쉽 가입 고객이 없습니다</div>
+							</c:otherwise>
+						</c:choose>
+							
+					</div>
 
 				</div>
 			
