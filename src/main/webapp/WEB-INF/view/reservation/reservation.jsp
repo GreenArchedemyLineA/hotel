@@ -273,11 +273,11 @@ input[type="number"]::-webkit-inner-spin-button {
 				<!--  <input type="button" onclick='diningCount("minus")' value="-">-->
 				<div class="facilities--detail--option">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol">do_not_disturb_on</span>
+						<span class="material-symbols-outlined symbol" onclick="diningMinus()">do_not_disturb_on</span>
 					</div>
 					<input type="number" id='diningResult' value="0" name="diningCount" min="0" class="count--box">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol">add_circle</span>
+						<span class="material-symbols-outlined symbol" onclick="diningPlus()">add_circle</span>
 					</div> 
 				</div>
 			</div>
@@ -288,11 +288,11 @@ input[type="number"]::-webkit-inner-spin-button {
 				</div>
 				<div class="facilities--detail--option">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol">do_not_disturb_on</span>
+						<span class="material-symbols-outlined symbol" onclick="spaMinus()">do_not_disturb_on</span>
 					</div>
 					<input type="number" id='spaResult' value="0" name="spaCount" min="0" class="count--box">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol">add_circle</span>
+						<span class="material-symbols-outlined symbol" onclick="spaPlus()">add_circle</span>
 					</div>  
 				</div>
 			</div>
@@ -303,11 +303,11 @@ input[type="number"]::-webkit-inner-spin-button {
 				</div>
 				<div class="facilities--detail--option">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol">do_not_disturb_on</span>
+						<span class="material-symbols-outlined symbol" onclick="poolMinus()">do_not_disturb_on</span>
 					</div>
 					<input type="number" id='poolResult' value="0" name="poolCount" min="0" class="count--box">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol">add_circle</span>
+						<span class="material-symbols-outlined symbol" onclick="poolPlus()">add_circle</span>
 					</div> 
 				</div>
 			</div>
@@ -318,11 +318,11 @@ input[type="number"]::-webkit-inner-spin-button {
 				</div>
 				<div class="facilities--detail--option">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol">do_not_disturb_on</span>
+						<span class="material-symbols-outlined symbol" onclick="fitnessMinus()">do_not_disturb_on</span>
 					</div>
 					<input type="number" id='fitnessResult' value="0" name="fitnessCount" min="0" class="count--box">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol">add_circle</span>
+						<span class="material-symbols-outlined symbol" onclick="fitnessPlus()">add_circle</span>
 					</div> 
 				</div>
 			</div>
@@ -514,56 +514,92 @@ input[type="number"]::-webkit-inner-spin-button {
 		target.addEventListener("change", totalPrice);
 	})
 	
-	function diningCount(type) {
-		const resultElement = document.getElementById('diningResult');
-		// 현재 화면에 표시된 값
-		let number = resultElement.innerText;
-		// 더하기/빼기
-		if (type === 'plus') {
-			number = parseInt(number) + 1;
-		} else if (type === 'minus') {
-			number = parseInt(number) - 1;
+	function diningMinus() {
+		const resultElement = document.getElementById("diningResult");
+		let number = resultElement.value;
+		if(number > 0){
+		number = parseInt(number) - 1;			
+		resultElement.value = number;
+		totalPrice();
 		}
-		resultElement.innerText = number;
 	}
 	
-	function spaCount(type) {
-		const resultElement = document.getElementById('spaResult');
-		// 현재 화면에 표시된 값
-		let number = resultElement.innerText;
-		// 더하기/빼기
-		if (type === 'plus') {
+	function diningPlus() {
+		const resultElement = document.getElementById("diningResult");
+		let maxNumber = ${selectDetail.countPerson} + ${selectDetail.countChild} + ${selectDetail.countBaby};
+		let number = resultElement.value;
+		if(number < maxNumber) {
+			let number = resultElement.value;
 			number = parseInt(number) + 1;
-		} else if (type === 'minus') {
-			number = parseInt(number) - 1;
+			resultElement.value = number;
 		}
-		resultElement.innerText = number;
+		totalPrice();
 	}
 	
-	function poolCount(type) {
-		const resultElement = document.getElementById('poolResult');
-		// 현재 화면에 표시된 값
-		let number = resultElement.innerText;
-		// 더하기/빼기
-		if (type === 'plus') {
-			number = parseInt(number) + 1;
-		} else if (type === 'minus') {
-			number = parseInt(number) - 1;
+	function spaMinus() {
+		const resultElement = document.getElementById("spaResult");
+		let number = resultElement.value;
+		if(number > 0){
+		number = parseInt(number) - 1;
+		resultElement.value = number;
+		totalPrice();
 		}
-		resultElement.innerText = number;
 	}
 	
-	function fitnessCount(type) {
-		const resultElement = document.getElementById('fitnessResult');
-		// 현재 화면에 표시된 값
-		let number = resultElement.innerText;
-		// 더하기/빼기
-		if (type === 'plus') {
+	function spaPlus() {
+		const resultElement = document.getElementById("spaResult");
+		let maxNumber = ${selectDetail.countPerson} + ${selectDetail.countChild} + ${selectDetail.countBaby};
+		let number = resultElement.value;
+		if(number < maxNumber) {
+			let number = resultElement.value;
 			number = parseInt(number) + 1;
-		} else if (type === 'minus') {
-			number = parseInt(number) - 1;
+			resultElement.value = number;
 		}
-		resultElement.innerText = number;
+		totalPrice();
+	}
+	
+	function poolMinus() {
+		const resultElement = document.getElementById("poolResult");
+		let number = resultElement.value;
+		if(number > 0){
+		number = parseInt(number) - 1;
+		resultElement.value = number;
+		totalPrice();
+		}
+	}
+	
+	function poolPlus() {
+		const resultElement = document.getElementById("poolResult");
+		let maxNumber = ${selectDetail.countPerson} + ${selectDetail.countChild} + ${selectDetail.countBaby};
+		let number = resultElement.value;
+		if(number < maxNumber) {
+			let number = resultElement.value;
+			number = parseInt(number) + 1;
+			resultElement.value = number;
+		}
+		totalPrice();
+	}
+	
+	function fitnessMinus() {
+		const resultElement = document.getElementById("fitnessResult");
+		let number = resultElement.value;
+		if(number > 0){
+		number = parseInt(number) - 1;
+		resultElement.value = number;
+		totalPrice();
+		}
+	}
+	
+	function fitnessPlus() {
+		const resultElement = document.getElementById("fitnessResult");
+		let maxNumber = ${selectDetail.countPerson} + ${selectDetail.countChild} + ${selectDetail.countBaby};
+		let number = resultElement.value;
+		if(number < maxNumber) {
+			let number = resultElement.value;
+			number = parseInt(number) + 1;
+			resultElement.value = number;
+		}
+		totalPrice();
 	}
 	
 	totalPrice();
