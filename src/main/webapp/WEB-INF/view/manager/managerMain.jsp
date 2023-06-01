@@ -242,12 +242,12 @@
 </div>
 </main>
 <script>
-	window.onload = function() {
+	let today = new Date();
 		let todayDate = document.getElementById('date');
-		let today = new Date();
 		let year = today.getFullYear();
 		let month = today.getMonth() + 1;
 		let date = today.getDate();
+	window.onload = function() {
 
 		document.querySelector('#date').innerHTML = year + "년&nbsp" + month
 				+ "월&nbsp" + date + "일"
@@ -255,7 +255,7 @@
 	}
 
 	// 매출 차트
-	 google.charts.load('current', {packages: ['corechart', 'bar']});
+	google.charts.load('current', {packages: ['corechart', 'bar']});
    google.charts.setOnLoadCallback(drawBasic);
 
    function drawBasic() {
@@ -274,7 +274,7 @@
      ['수', 40],
      ['목', 5],
      ['금', 60],
-     ['오늘', ${totalPrice}],
+     [ year-month-date, ${totalPrice}],
     ]);
 
     let options = {
