@@ -51,14 +51,9 @@ public class ManagerReservationService {
 	@Autowired
 	private PackageRepository packageRepository;
 
-	public List<Reservation> findTodayAllReservation() {
-		List<Reservation> reservationList = reservationRepository.findAllReservation();
-		return reservationList;
-	}
-
 	public List<Reservation> findUserReservation(String name) {
 		List<Reservation> reservationList = new ArrayList<>();
-		List<MUser> userList = mUserRepository.findByname(name);
+		List<MUser> userList = mUserRepository.findByName(name);
 		System.out.println(userList);
 		userList.stream().forEach((user) -> {
 			List<Reservation> reservationUserList = reservationRepository.findReservationByUserId(user.getId());
@@ -69,6 +64,12 @@ public class ManagerReservationService {
 
 		return reservationList;
 	}
+	
+    public List<Reservation> findTodayAllReservation(){
+    	List<Reservation> reservationList = reservationRepository.findAllReservation();
+        return reservationList;
+    }
+
 
 	public Map<String, Object> findReservationById(Integer id) {
 		Map<String, Object> mapList = new HashMap<>();

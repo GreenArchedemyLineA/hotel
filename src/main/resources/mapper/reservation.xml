@@ -391,9 +391,9 @@
 
 	
 	<insert id="insertReserveRoom">
-		INSERT INTO reservation_tb (total_price, start_date, end_date, number_of_p, user_id, room_id, dining_id, fitness_id, pool_id, spa_id)
+		INSERT INTO reservation_tb (total_price, start_date, end_date, number_of_p, user_id, room_id, dining_id, fitness_id, pool_id, spa_id, pay_tid)
 		VALUES
-		(#{totalPrice}, #{startDate}, #{endDate}, #{numberOfP}, #{userId}, #{roomId}, #{diningId}, #{fitnessId}, #{poolId}, #{spaId})
+		(#{totalPrice}, #{startDate}, #{endDate}, #{numberOfP}, #{userId}, #{roomId}, #{diningId}, #{fitnessId}, #{poolId}, #{spaId}, #{tid})
 	</insert>
 	
 	 <select id="findReservationById" resultMap="Reservation">

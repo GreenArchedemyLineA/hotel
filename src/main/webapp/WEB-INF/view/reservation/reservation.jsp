@@ -235,9 +235,10 @@ input[type="number"]::-webkit-inner-spin-button {
 </head>
 <body>
 	<div class="main--container">
-	<form name="form" action="/reserveRoom" method="post" class="form--box">
+	<form name="form" action="/reserveRoom" method="post" class="form--box" id="reservation">
 		<div class="facilities--container">
 			<div class="select--info">
+
 				<div class="facilities--info--box">
 					<div class="info--title">객실</div> 
 					<div class="info--content">${selectDetail.name}</div>
@@ -349,13 +350,22 @@ input[type="number"]::-webkit-inner-spin-button {
 							</select>
 						</c:otherwise>
 					</c:choose>
-					<input type="text" name="point" placeholder="사용 가능 포인트 : ${point.point}" id="point--result" autocomplete="off">
+					<input type="text" name="point" placeholder="사용 가능 포인트 : ${point}" id="point--result" autocomplete="off">
 				</div>
 			</div>
-			<button type="submit" class="sub--button">결제하기</button>
+			<div>
+				<fieldset>
+					<legend>결제 방법 선택</legend>
+					<input type="radio" name="pgType" value="nicepay" id="nicepay" class="pg-type" checked><label for="nicepay">신용카드결제</label>
+					<input type="radio" name="pgType" value="kakaopay" id="kakaopay" class="pg-type"><label for="kakaopay">카카오페이결제</label>
+					<input type="radio" name="pgType" value="tosspay" id="tosspay" class="pg-type"><label for="tosspay">토스간편결제</label>
+				</fieldset>
+			</div>
+			<button type="button" class="sub--button" onclick="payEvent()">결제하기</button>
 		</div>
 	</form>
 	</div>
+
 <!-- <script src="/js/price.js"></script> -->
 <script type="text/javascript">
 	const dayResultInput = document.getElementById("day--result");
@@ -568,11 +578,12 @@ input[type="number"]::-webkit-inner-spin-button {
 		const resultElement = document.getElementById("poolResult");
 		let number = resultElement.value;
 		if(number > 0){
-		number = parseInt(number) - 1;
-		resultElement.value = number;
-		totalPrice();
+			number = parseInt(number) - 1;
+			resultElement.value = number;
+			totalPrice();
 		}
 	}
+	
 	
 	function poolPlus() {
 		const resultElement = document.getElementById("poolResult");
@@ -610,4 +621,82 @@ input[type="number"]::-webkit-inner-spin-button {
 	
 	totalPrice();
 </script>
+<!-- writer: 이현서 -->
+<!-- 나이스페이 결제 모듈 스크립트 -->
+<script src="https://pay.nicepay.co.kr/v1/js/"></script>
+<!-- 토스페이 결제 모듈 스크립트 -->
+<script src="https://js.tosspayments.com/v1/payment-widget"></script>
+
+<script>
+	let orderNameValue = '${orderName}';
+	let totalPriceValue = document.getElementById("total--price--input").value;
+	function nicePay() {
+		AUTHNICE.requestPay({
+			clientId: 'S2_e9b9047ecf2a467b86a6c2311d47b9df',
+			method: 'card',
+			orderId: '${orderName}',
+			amount: totalPriceValue,
+			goodsName: '${orderName}',
+			returnUrl: 'http://localhost:8080/pay/payments',
+			fnError: function (result) {
+				console.log(result)
+				alert(result.errorMsg)
+			}
+		});
+	}
+
+
+	let form = document.getElementById("reservation");
+	console.log(form)
+	let e = window.event;
+	let pgArray = [...document.getElementsByClassName("pg-type")];
+	console.log(totalPriceValue)
+	function payEvent() {
+		let payType;
+		pgArray.some((pgInput) => {
+			if(pgInput.checked){
+				payType = pgInput.value
+				return
+			}
+		})
+
+		let popupOption = "width=800,height=800";
+		let url;
+		if(payType === "nicepay"){
+			nicePay();
+		}else if(payType === "kakaopay"){
+			url = "http://localhost:8080/pay/kakaopay?item_name="+ orderNameValue +"&total_amount=" +totalPriceValue
+			let returnPay = window.open(
+					url,
+					"popup",
+					popupOption
+			);
+			returnPay.focus();
+		}else if(payType === "tosspay"){
+			url = "http://localhost:8080/pay/payReady?paySelect=toss&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
+			let returnPay = window.open(
+					url,
+					"popup",
+					popupOption
+			);
+			returnPay.focus();
+		}
+	}
+
+	function getReturnValue(returnValue){
+		let returnJSON = JSON.parse(returnValue);
+		console.log(returnJSON)
+		if(returnJSON.status == "OK"){
+			let tidInputTag = document.createElement("input");
+			tidInputTag.value = returnJSON.tid;
+			tidInputTag.name = "tid"
+			form.append(tidInputTag)
+			form.submit();
+		}
+	}
+
+
+
+</script>
 <%@ include file="../layout/footer.jsp"%>
+

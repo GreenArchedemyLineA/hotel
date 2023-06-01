@@ -137,15 +137,11 @@
 						<button type="submit" class="sub--button">작성</button>
 					</form>
 				</div>
-	
 			</div>
 		</div>
 	</div>
+	</main>
 <script>
-	function selChange() {
-		var sel = document.getElementById('cntPerPage').value;
-		location.href="/event/notice?nowPage=${paging.nowPage}&cntPerPage="+sel;
-	}
 	function eventDetail(id){
 		location.href = "/event/updateEventPage/"+id; 
 	}

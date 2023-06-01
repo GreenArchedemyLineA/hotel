@@ -4,7 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.dodam.hotel.repository.interfaces.ManagerRepository">
-
+ 
 	<select id="findByManagernameAndPassword" resultType="com.dodam.hotel.repository.model.Manager">
 		select * from manager_tb
 		where username = #{username} and password = #{password};

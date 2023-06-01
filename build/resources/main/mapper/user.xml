@@ -3,13 +3,27 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dodam.hotel.repository.interfaces.UserRepository">
 
+	<resultMap type="com.dodam.hotel.repository.model.User" id="User">
+		<result column="id" property="id"/>
+		<result column="email" property="email"/>
+		<result column="password" property="password"/>
+		<result column="name" property="name"/>
+		<result column="gender" property="gender"/>
+		<result column="birth" property="birth"/>
+		<result column="tel" property="tel"/>
+		<result column="blacklist" property="blacklist"/>
+		<result column="withdrawal" property="withdrawal"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="social_login" property="socialLogin"/>
+		<result column="random_pwd_status" property="randomPwdStatus"/>
+	</resultMap>
+
 	<!-- 로그인 용도 user select -->
 	<select id="findUserByLoginFormDto" resultType="com.dodam.hotel.dto.UserResponseDto$LoginResponseDto">
 		select *
 		from user_tb
 		where email = #{email} and password = #{password}
 	</select>
-	
 	
 	<!-- 마이페이지 정보 수정 -->
 	<update id="updateUserByEmail">
@@ -25,10 +39,23 @@
 		where email = #{email}
 	</select>
 	
+	<!-- email로 카카오 유저 조회 -->
+	<select id="findUserKakao" resultType="com.dodam.hotel.dto.UserResponseDto$LoginResponseDto">
+		select *
+		from user_tb
+		where email = #{email}
+	</select>
+	
 	<!-- 회원가입 -->
 	<insert id="insert">
 	INSERT INTO user_tb (email, password, name, gender, birth, tel)
 	VALUES (#{email}, #{password}, #{name}, #{gender}, #{birth}, #{tel})
+	</insert>
+	
+	<!-- 카카오 회원가입 -->
+	<insert id="insertKakao">
+	INSERT INTO user_tb (email, password, name, gender, birth, tel, social_login)
+	VALUES (#{email}, #{password}, #{name}, #{gender}, #{birth}, #{tel}, 1)
 	</insert>
 	
 	<!-- 제일 최근 가입 회원 조회 -->
@@ -38,4 +65,31 @@
 		birth=#{birth} and tel=#{tel}
 	</select>
 	
+	<!-- id 찾기 -->
+	<select id="findUserForIdInquiry" resultMap="User">
+		select email, name
+		from user_tb
+		where name=#{name} and birth=#{birth} and tel=#{tel}
+	</select>
+	
+	<!-- 임시 비밀번호 발급 -->
+	<update id="updatePwByUserInfo">
+		update user_tb
+		set password = #{password}, random_pwd_status = true
+		where name=#{name} and birth=#{birth} and tel=#{tel} and email=#{email}
+	</update>
+	
+	<!-- 비밀번호 변경 페이지에서 비밀번호 변경 -->
+	<update id="updateOnlyPw">
+		update user_tb
+		set password = #{password}
+		where id = #{userId}
+	</update>
+	
+	<!-- 임시 비밀번호 발급 여부 변경 -->
+	<update id="updatePwdStatus">
+		update user_tb
+		set random_pwd_status = false
+		where id = #{id}
+	</update>
 </mapper>

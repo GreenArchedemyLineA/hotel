@@ -81,6 +81,7 @@
 		</div>
 	</div>
 </div>
+</main>
 <script>
 	function questionDetail(id){
 		location.href = "/question/questionDetail/"+id; 

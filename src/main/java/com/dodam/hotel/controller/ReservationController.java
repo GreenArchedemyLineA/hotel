@@ -2,6 +2,7 @@ package com.dodam.hotel.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -79,14 +80,16 @@ public class ReservationController {
 		
 		model.addAttribute("point", selectList.get("point"));
 		model.addAttribute("couponList", selectList.get("couponList"));
+		model.addAttribute("orderName", UUID.randomUUID().toString() + System.currentTimeMillis());
 		return "/reservation/reservation";
 	}
 	
 	// 객실 예약 처리
 	@PostMapping("/reserveRoom")
 	public String reserveRoom(ReservationRequestDto requestDto) {
+		System.out.println(requestDto);
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-		reservationService.createReserveRoom(requestDto, principal.getId());
+		int resultRowCount = reservationService.createReserveRoom(requestDto, principal.getId());
 		return "redirect:/";
 	}
 	
@@ -112,5 +115,6 @@ public class ReservationController {
 		return "/user/reservationList";
 	}
 	
+
 }
 

@@ -114,7 +114,7 @@
 			</div>
 		</div>
 	</div>
-
+</main>
 	<script>
 	    function detailReservation(id){
 	        let e = window.event;
