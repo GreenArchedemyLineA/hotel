@@ -1,13 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!-- Full Calendar -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.print.min.css" rel="stylesheet" media="print">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <!-- fullcalendar 언어 CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
 <style>
 .content {
 	background-image: url("http://localhost:8080/images/mainImage.jpg");
@@ -16,6 +20,7 @@
 	width: 100%;
 	opacity: 0.4;
 }
+
 #date {
 	font-size: 40px;
 	width: 100%;
@@ -171,7 +176,8 @@
 						</c:when>
 						<c:otherwise>
 							<div>
-								<span class="ok">사용 가능</span> ${availableRoom}개 <span class="no">사용 불가</span> ${notAvailableRoom}개
+								<span class="ok">사용 가능</span> ${availableRoom}개 <span class="no">사용
+									불가</span> ${notAvailableRoom}개
 							</div>
 						</c:otherwise>
 					</c:choose>
@@ -242,12 +248,12 @@
 </div>
 </main>
 <script>
-	let today = new Date();
+	window.onload = function() {
+		let today = new Date();
 		let todayDate = document.getElementById('date');
 		let year = today.getFullYear();
 		let month = today.getMonth() + 1;
 		let date = today.getDate();
-	window.onload = function() {
 
 		document.querySelector('#date').innerHTML = year + "년&nbsp" + month
 				+ "월&nbsp" + date + "일"
@@ -255,45 +261,58 @@
 	}
 
 	// 매출 차트
-	google.charts.load('current', {packages: ['corechart', 'bar']});
-   google.charts.setOnLoadCallback(drawBasic);
-
-   function drawBasic() {
-    let data = new google.visualization.DataTable();
-    data.addColumn('date', '날짜');
-    data.addColumn('number', '매출 금액 (원)');
-   /*  오늘 매출 : ${totalPrice} 원
-	<c:forEach var="price" items="${price}" varStatus="status">
-		<p> ${status.index+1}일전 매출 :${price}원</p>
-	</c:forEach> */
+	google.charts.load('current', { packages: ['corechart', 'bar'] });
+	google.charts.setOnLoadCallback(drawingChart);
 	
-    data.addRows([
-    	for(i = 1; i < 8; i ++) {
-    		[ ,${price}],
-    	}
-     [ year+'-'+month+'-'+date , ${totalPrice}],
-    ]);
-
-    let options = {
-     title: '매출 현황',
-     hAxis: {
-      title: '날짜',
-      format: 'yyyy-MM-dd',
-      viewWindow: {
-       min: [7, 30, 0],
-       max: [17, 30, 0]
-      }
-     },
-     vAxis: {
-      title: '매출'
-     }
-    };
-
-    let chart = new google.visualization.ColumnChart(
-    document.getElementById('revenue--chart'));
-
-    chart.draw(data, options);
-   } 
+	function drawingChart() {
+	  $.ajax({
+	    type: 'GET',
+	    url: '/api/totalPrice',
+        dataType: "json"
+	  })
+	  .done(function(response) {
+	    let totalPrice = response; // 매출 데이터를 서버에서 받아옴
+		console.log(totalPrice);
+		console.log(response);
+		let data = new google.visualization.DataTable();
+	    data.addColumn('date', 'Date');
+	    data.addColumn('number', 'Sales');
+	
+	    let chartData = [];
+	
+	    let today = new Date();
+	    today.setHours(0, 0, 0, 0);
+	    
+	    for (let i = 0; i <= 6; i++) {
+	    	let date = new Date(today);
+	      date.setDate(date.getDate() - i);
+	
+	      let revenue = i < totalPrice.length ? totalPrice[totalPrice.length - 1 - i] : 0;
+	
+	      chartData.push([date, revenue]);
+	    }
+	
+	    data.addRows(chartData);
+	
+	    let options = {
+	      title: 'Sales by Date',
+	      hAxis: {
+	        title: 'Date',
+	        format: 'yyyy-MM-dd', 
+	      },
+	      vAxis: {
+	        title: 'Sales',
+	      },
+	    };
+	
+	    let chart = new google.visualization.ColumnChart(document.getElementById('revenue--chart'));
+	
+	    chart.draw(data, options);
+	  })
+	  .fail(function(xhr, status, error) {
+	    console.log('Error:', error);
+	  });
+	}
 
 
 	// 회원 차트
@@ -302,17 +321,17 @@
 
       function drawChart() {
 
-    	  var data = google.visualization.arrayToDataTable([
+    	  let data = google.visualization.arrayToDataTable([
               ['Task', 'Hours per Day'],
               ['회원 가입', ${userTodayCount}],
               ['멤버쉽 가입', ${membershipTodayCount}]
             ]);
 
-        var options = {
+    	  let options = {
           title: '오늘 가입 회원'
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('join--chart'));
+    	  let chart = new google.visualization.PieChart(document.getElementById('join--chart'));
 
         chart.draw(data, options);
       }
