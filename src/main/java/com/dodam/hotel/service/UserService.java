@@ -1,7 +1,10 @@
 package com.dodam.hotel.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +18,7 @@ import com.dodam.hotel.repository.interfaces.MUserRepository;
 import com.dodam.hotel.repository.interfaces.MembershipRepository;
 import com.dodam.hotel.repository.interfaces.PointRepository;
 import com.dodam.hotel.repository.interfaces.UserRepository;
+import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.User;
 
 @Service
@@ -37,6 +41,9 @@ public class UserService {
 
 	@Autowired
 	private PointRepository pointRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Value("${dodam.key}")
 	private String dodamKey;
@@ -45,6 +52,11 @@ public class UserService {
 	@Transactional
 	public UserResponseDto.LoginResponseDto readUserByIdAndPassword(UserRequestDto.LoginFormDto user) {
 		UserResponseDto.LoginResponseDto responseUser = userRepository.findUserByLoginFormDto(user);
+		boolean isLogin = passwordEncoder.matches(user.getPassword(), responseUser.getPassword());
+		if(isLogin != true) {
+			// 예외처리
+			return null;
+		}
 		if (responseUser.getBlacklist()) {
 			// 블랙당한 user
 			// 예외 처리
@@ -61,8 +73,8 @@ public class UserService {
 
 	// 카카오 로그인 (성희)
 	@Transactional
-	public User readUserKakao(String email) {
-		User responseUser = userRepository.findUserByEmail(email);
+	public UserResponseDto.LoginResponseDto readUserKakao(String email) {
+		UserResponseDto.LoginResponseDto responseUser = userRepository.findUserKakao(email);
 		if (responseUser != null) {
 			if (responseUser.getSocialLogin() == false) {
 				// 일반회원 예외처리
@@ -80,7 +92,6 @@ public class UserService {
 		UserResponseDto.MyPageResponseDto responseDto = new UserResponseDto.MyPageResponseDto();
 		responseDto.setId(userEntity.getId());
 		responseDto.setEmail(userEntity.getEmail());
-		responseDto.setPassword(userEntity.getPassword());
 		responseDto.setName(userEntity.getName());
 		responseDto.setGender(userEntity.getGender());
 		responseDto.setBirth(userEntity.getBirth());
@@ -106,21 +117,33 @@ public class UserService {
 	@Transactional
 	public UserRequestDto.InsertDto createUser(UserRequestDto.InsertDto insertDto) {
 		// 중복 회원가입 검사 (todo)
-
-		// 조회 돌리기
-		int resultRowCount = userRepository.insert(insertDto);
-		if (resultRowCount != 1) {
-			System.out.println("회원가입 서비스 오류");
+		User userEntity = userRepository.findUserByOriginEmail(insertDto.getEmail());
+		if(userEntity == null) {
+			// 조회 돌리기
+			// 비밀번호 암호화
+			String hashPwd = passwordEncoder.encode(insertDto.getPassword());
+			insertDto.setPassword(hashPwd);
+			int resultRowCount = userRepository.insert(insertDto);
+			if (resultRowCount != 1) {
+				System.out.println("회원가입 서비스 오류");
+			}
+			// 회원가입 id 검색
+			int userId = userRepository.findIdOrderById(insertDto);
+	
+			// 등급 부여
+			int result = gradeRepository.insertGrade(userId);
+	
+			// 포인트 세팅
+			int pointResult = pointRepository.insertZeroPoint(userId);
+		} else {
+			// 비밀번호 암호화
+			String hashPwd = passwordEncoder.encode(insertDto.getPassword());
+			insertDto.setPassword(hashPwd);
+			int result = userRepository.updateUserByOriginEmail(insertDto);
+			if(result != 1) {
+				// 오류
+			}
 		}
-		// 회원가입 id 검색
-		int userId = userRepository.findIdOrderById(insertDto);
-
-		// 등급 부여
-		int result = gradeRepository.insertGrade(userId);
-
-		// 포인트 세팅
-		int pointResult = pointRepository.insertZeroPoint(userId);
-
 		return insertDto;
 	}
 
@@ -148,6 +171,12 @@ public class UserService {
 		return insertDto;
 	}
 
+	// 오늘 회원가입 회원 조회
+	public List<User> readJoinUserToday() {
+		List<User> UserToday = userRepository.findUserToday();
+		return UserToday;
+	}
+
 	/**
 	 * 멤버쉽 가입 서비스 (성희)
 	 */
@@ -156,6 +185,12 @@ public class UserService {
 		int resultRowCount = membershipRepository.insert(id);
 		// 숙박 쿠폰 자동 등록 처리
 		int couponCount = couponRepository.insert(CouponInfo.MEMBERSHIP, id);
+	}
+
+	// 오늘 멤버쉽 가입 회원 조회
+	public List<MembershipInfo> readJoinMembershipToday() {
+		List<MembershipInfo> membershipToday = membershipRepository.findMembershipToday();
+		return membershipToday;
 	}
 
 	// id 찾는 기능
@@ -175,8 +210,11 @@ public class UserService {
 	// 비밀번호 변경 페이지에서 비밀번호 변경
 	@Transactional
 	public int updateOnlyPw(String password, Integer userId) {
+		// 비밀번호 암호화 처리
+		password = passwordEncoder.encode(password);
 		int resultRow = userRepository.updateOnlyPw(password, userId);
 		if (resultRow == 1) {
+			// 임시 비밀번호 발급 여부 업데이트
 			int resultRow2 = userRepository.updatePwdStatus(userId);
 			if (resultRow2 != 1) {
 				// 예외처리

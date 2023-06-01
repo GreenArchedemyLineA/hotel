@@ -14,6 +14,7 @@
 		<result column="address" property="address"/>
 		<result column="blacklist" property="blacklist"/>
 		<result column="withdrawal" property="withdrawal"/>
+		<result column="origin_email" property="originEmail"/>
 		<result column="created_at" property="createdAt"/>
 		<result column="social_login" property="socialLogin"/>
 		<result column="random_pwd_status" property="randomPwdStatus"/>
@@ -23,7 +24,14 @@
 	<select id="findUserByLoginFormDto" resultType="com.dodam.hotel.dto.UserResponseDto$LoginResponseDto">
 		select *
 		from user_tb
-		where email = #{email} and password = #{password}
+		where email = #{email}
+	</select>
+	
+	<!-- 재가입 유저 조회 -->
+	<select id="findUserByOriginEmail" resultMap="User">
+		select *
+		from user_tb
+		where origin_email = #{email}
 	</select>
 	
 	<!-- 마이페이지 정보 수정 -->
@@ -33,8 +41,23 @@
 		where email = #{email}
 	</update>
 	
+	<!-- 재가입용 update -->
+	<update id="">
+		update user_tb
+		set email = #{email}, password = #{password}, name = #{name}, gender = #{gender},
+			birth = #{birth}, tel = #{tel}, address = #{address}, widthdrawal = 0
+		where origin_email = #{email}
+	</update>
+	
 	<!-- email로 특정 유저 조회 -->
 	<select id="findUserByEmail" resultMap="User">
+		select *
+		from user_tb
+		where email = #{email}
+	</select>
+	
+	<!-- email로 카카오 유저 조회 -->
+	<select id="findUserKakao" resultType="com.dodam.hotel.dto.UserResponseDto$LoginResponseDto">
 		select *
 		from user_tb
 		where email = #{email}
@@ -57,6 +80,12 @@
 		SELECT id FROM user_tb 
 		where email=#{email} and password=#{password} and name=#{name} and gender=#{gender} and 
 		birth=#{birth} and tel=#{tel}
+	</select>
+	
+	<!-- 오늘 회원가입 회원 조회 -->
+	<select id="findUserToday" resultType="com.dodam.hotel.repository.model.User">
+		select * from user_tb
+		where date_format(created_at, "%Y-%m-%d") = curdate()
 	</select>
 	
 	<!-- id 찾기 -->
@@ -86,4 +115,5 @@
 		set random_pwd_status = false
 		where id = #{id}
 	</update>
+	
 </mapper>

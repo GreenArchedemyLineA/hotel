@@ -13,21 +13,33 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
 <style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@300;400&family=WindSong:wght@500&display=swap')
+	;
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 body {
 	height: 100vh;
 }
+
 main {
 	background-color: #64c5f3;
 	width: 100%;
 	height: 100%;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-bottom: 300px;
 }
 
 .img {
@@ -39,25 +51,37 @@ main {
 	display: flex;
 	flex-direction: column;
 	margin-top: 10px;
+	height: 40px;
+	border: none;
+	margin: 10px;
 }
+
 .sub--button {
-		background-color: #fff;
-		color: #000;
-		width: 100%;
-		height: 40px;
-		cursor: pointer;
-		border: none;
-		border-radius: 5px;
-	}
+	background-color: #000;
+	color: #fff;
+	width: 100%;
+	height: 40px;
+	cursor: pointer;
+	border: none;
+	margin-top: 20px;
+}
+
 #username {
 	width: 100%;
-	margin-bottom: 5px;
-	border-radius: 5px;
+	height: 50px; margin-bottom : 15px;
+	border: none;
+	border-bottom: 2px solid black;
+	background-color: #64c5f3;
+	margin-bottom: 15px;
 }
+
 #password {
 	width: 100%;
-	margin-bottom: 10px;
-	border-radius: 5px;
+	height: 50px;
+	margin-bottom: 15px;
+	border: none;
+	border-bottom: 2px solid black;
+	background-color: #64c5f3;
 }
 </style>
 </head>
@@ -65,15 +89,15 @@ main {
 	<main>
 		<div class="content">
 			<div class="img">
-				<img alt="로고이미지" src="/images/adminLogo.png" id="logo">
+				<img alt="로고이미지" src="/images/admin_wlogo.png" id="logo" width="300">
 			</div>
 			<div class="login-form">
 				<form action="/manager/managerSignInProc" method="post" id="login--box">
 					<div class="id--box">
-						<input type="text" id="username" name="username" value="dodam@manager.com" placeholder="아이디를 입력해주세요."> 
+						<input type="text" id="username" name="username" value="dodam@manager.com" placeholder="아이디를 입력해주세요">
 					</div>
 					<div class="password--box">
-						<input type="text" id="password" name="password" value="dodam1234" placeholder="비밀번호를 입력해주세요.">
+						<input type="text" id="password" name="password" value="dodam1234" placeholder="비밀번호를 입력해주세요">
 					</div>
 					<div class="btn--box">
 						<button type="submit" class="sub--button">로그인</button>

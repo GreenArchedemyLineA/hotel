@@ -3,6 +3,21 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <link rel="stylesheet" href="/css/myPage.css" />
 <style>
+	#change--btn[type=button] {
+		background-color: #ccc;
+		border: none;
+	}
+	#change--btn[type=submit] {
+		background-color: #000;
+	}
+	#key--check {
+		width: 100%;
+		padding-left: 35px;
+	}
+	#check--pattern {
+		width: 100%;
+		padding-left: 35px;
+	}
 </style>
 <main class="main--container">
 	<div class="title--container">
@@ -17,8 +32,11 @@
 	</div>
 	<div class="content--container">
 		<form action="/join" method="post" class="form--container">
-		<input type="email" name="email" class="input--box" placeholder="이메일을 입력해 주세요" autocomplete="off"> 
-		<input type="password" name="password" class="input--box" placeholder="비밀번호를 입력해 주세요" autocomplete="off"> 
+		<input type="email" name="email" class="input--box" placeholder="이메일을 입력해 주세요" autocomplete="off" id="email--box">
+		<div id="check--pattern"></div>
+		<input type="password" name="password" class="input--box" placeholder="비밀번호를 입력해 주세요" autocomplete="off" id="password--box"> 
+		<input type="password" name="passwordCheck" class="input--box" placeholder="비밀번호 확인" autocomplete="off" id="password--check">
+		<div id="key--check"></div>
 		<input type="text" name="name" class="input--box" placeholder="이름을 입력해 주세요" autocomplete="off"> 
 		<input type="date" name="birth" class="input--box" placeholder="출생년도" autocomplete="off">
 		<div>
@@ -31,7 +49,7 @@
 			<label><input type="radio" name="gender" value="여성">여성</label>
 		</div>
 		<input type="tel" name="tel" class="input--box" placeholder="전화번호를 입력해주세요" autocomplete="off">
-		<button type="submit" class="sub--button">회원가입</button>
+		<button type="button" id="change--btn" class="sub--button">회원가입</button>
 		</form>
 	</div>
 </main>
@@ -57,6 +75,62 @@
             }
         }).open();
     }
+    
+    let passwordCheck = document.getElementById("password--check");
+    let passwordBox = document.getElementById("password--box");
+   	let checkKey = document.getElementById("key--check");
+	let submitBtn = document.getElementById("change--btn");
+	let emailBox = document.getElementById("email--box");
+	let checkCount = 0;
+	
+	emailBox.addEventListener("keyup", function checkSpecial(str) {
+		let inputPattern = /@/gi;
+		let emailBoxValue = emailBox.value;
+		if(inputPattern.test(emailBoxValue) == true) {
+			count++;
+		} else {
+			let checkPatternDiv = document.getElementById("check--pattern");
+			checkPatternDiv.textContent = "* 이메일은 @를 포함해야 합니다.";
+			checkPatternDiv.style.color = "red";
+			checkPatternDiv.style.fontSize = "14px";
+		}
+	});
+	
+    passwordCheck.addEventListener("keyup", function() {
+    	let passwordBoxValue = passwordBox.value;
+    	let passwordCheckBoxValue = passwordCheck.value;
+    	if(passwordBoxValue.length < 6) {
+			checkKey.textContent = "* 비밀번호는 6자리 이상이어야 합니다.";
+    		checkKey.style.color = "red";
+    		checkKey.style.fontSize = "14px";
+    	} else {
+	    	if(passwordBoxValue != passwordCheckBoxValue){
+	    		checkKey.textContent = "* 비밀번호가 일치하지 않습니다.";
+	    		checkKey.style.color = "red";
+	    		checkKey.style.fontSize = "14px";
+	    	} else {
+	    		checkKey.textContent = "* 비밀번호가 일치합니다!";
+	    		checkKey.style.color = "blue";
+	    		checkKey.style.fontSize = "14px";
+	    		count++;
+	    		submitBtn.type = "submit";
+	    	}
+    	}
+    });
+    
+    passwordCheck.addEventListener("click", function() {
+    	let passwordBoxValue = passwordBox.value;
+    	if(passwordBoxValue.length < 6) {
+			checkKey.textContent = "* 비밀번호는 6자리 이상이어야 합니다.";
+    		checkKey.style.color = "red";
+    		checkKey.style.fontSize = "14px";
+    		submitBtn.type = "button";
+    	}
+    });
+    
+    
+    
+    
 </script>
 <%@ include file="../layout/footer.jsp"%>
 	
