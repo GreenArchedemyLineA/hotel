@@ -263,6 +263,7 @@ public class UserController {
 		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
 		List<Reply> questions = questionService.readQuestionByUserIdPaging(po, principal.getId());
+		System.out.println(questions);
 		model.addAttribute("paging", po);
 		model.addAttribute("questions", questions);
 		return "/user/replyList";

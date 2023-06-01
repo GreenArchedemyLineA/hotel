@@ -2,13 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzkxekb89f"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@300;400&family=WindSong:wght@500&display=swap');
 
@@ -414,6 +411,20 @@ main {
 	:root {
     	--swiper-theme-color: #000;
 	}
+	
+	.map--container {
+		width: 100%;
+		background-color: #f9f9f9;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 500px;
+	}
+	
+	#map {
+		width: 1100px;
+		height: 400px;
+	}
 </style>
 
 
@@ -590,6 +601,10 @@ main {
 	<button type="button" onclick="location.href='/membership'" id="desc--btn">자세히 보기</button>
 </div>
 
+<div class="map--container">
+	<div id="map"></div>
+</div>
+
 
 <!-- 예약 달력 -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -607,6 +622,16 @@ main {
 	      	prevEl: ".swiper-button-prev",
 	    },
 	});
+	
+		var mapOptions = {
+			center : new naver.maps.LatLng(35.1595148,
+					129.0602424),
+			zoom : 17
+		};
+		var map = new naver.maps.Map('map', mapOptions);
+		var map = new naver.maps.Map(document.getElementById('map'), 
+				{center : new naver.maps.LatLng(35.1595148, 129.0602424), zoom : 17});
+		var marker = new naver.maps.Marker({position : new naver.maps.LatLng(35.1595148,129.0602424), map : map});
 </script>
 <script src="js/mainToggle.js"></script>
 <%@ include file="layout/footer.jsp"%>

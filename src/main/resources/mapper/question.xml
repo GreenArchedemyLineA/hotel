@@ -59,7 +59,7 @@
 	
 	<!-- 특정 유저가 한 문의, 답변 조회 -->
 	<select id="selectQuestionByUserId" resultMap="Reply">
-		select q.title, q.content as q_content, r.content as r_content, q.created_at
+		select q.title, q.content as q_content, r.content as r_content, q.created_at, q.upload_file as upload_file
 		from question_tb as q
 		inner join user_tb as u
 		on q.user_id = u.id
@@ -73,7 +73,7 @@
 		from (
  			SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* 
 	        FROM (
-				select q.title, q.content as q_content, r.content as r_content, q.created_at
+				select q.title, q.content as q_content, r.content as r_content, q.created_at, q.upload_file as upload_file
 				from question_tb as q
 				inner join user_tb as u
 				on q.user_id = u.id

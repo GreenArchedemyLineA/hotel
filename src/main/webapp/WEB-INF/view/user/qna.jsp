@@ -82,8 +82,9 @@
 					toolbar : [ [ 'style', [ 'style' ] ],
 							[ 'color', [ 'color' ] ],
 							[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
-							[ 'table', [ 'table' ] ], [ 'insert', [] ], ]
+							[ 'table', [ 'table' ] ], [ 'insert', [] ], ],
 				});
+		
 		$(document).ready(function() {
 			$('#summernote').summernote();
 		});
