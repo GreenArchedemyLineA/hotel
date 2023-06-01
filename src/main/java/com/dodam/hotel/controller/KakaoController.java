@@ -123,13 +123,13 @@ public class KakaoController {
 
       ResponseEntity<KakaoUserInfo> responseUser = restTemplate.exchange(userInfoUri, HttpMethod.GET, reqUserEntity, KakaoUserInfo.class);
       KakaoAccount userInfo = responseUser.getBody().getKakao_account();
-      
    
-      User loginUser = userService.readUserKakao(userInfo.getEmail());
+      UserResponseDto.LoginResponseDto loginUser = userService.readUserKakao(userInfo.getEmail());
     	  if(loginUser != null) {
     		  session.setAttribute(Define.PRINCIPAL, loginUser);
     		  return "redirect:/";
     	  }
+      model.addAttribute("user", userInfo);
       
       return "/user/kakaoJoin";
 	}	

@@ -15,5 +15,9 @@ public interface PointRepository {
 	public int insertZeroPoint(Integer id);
 
 	// 특정 회원 포인트 조회
-	public Point findByUserId(Integer userId);
+	public Integer findByUserId(Integer userId);
+
+	// 포인트 적립 & 사용
+	int insertPoint(Integer point, Integer userId);
+
 }

@@ -9,6 +9,11 @@
 		VALUES (#{userId});
 	</insert>
 
+	<insert id="insertPoint">
+		INSERT INTO point_info_tb (point, user_id, end_date)
+		VALUES (#{point}, #{userId}, curdate() + INTERVAL 1 YEAR);
+	</insert>
+
 	<resultMap type="com.dodam.hotel.repository.model.Point" id="Point">
 		<result column="id" property="id" />
 		<result column="point" property="point" />
@@ -30,8 +35,8 @@
 	</resultMap>
 
 	<!-- 특정 회원 포인트 조회 -->
-	<select id="findByUserId" resultMap="Point">
-		select *
+	<select id="findByUserId" resultType="int">
+		select sum(point)
 		from point_info_tb
 		where
 		user_id = #{userId}

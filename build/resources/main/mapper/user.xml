@@ -39,6 +39,13 @@
 		where email = #{email}
 	</select>
 	
+	<!-- email로 카카오 유저 조회 -->
+	<select id="findUserKakao" resultType="com.dodam.hotel.dto.UserResponseDto$LoginResponseDto">
+		select *
+		from user_tb
+		where email = #{email}
+	</select>
+	
 	<!-- 회원가입 -->
 	<insert id="insert">
 	INSERT INTO user_tb (email, password, name, gender, birth, tel)

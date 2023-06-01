@@ -79,7 +79,7 @@ public class ReservationService {
 		List<Coupon> couponList = couponRepository.findByUserId(reservationRequestDto.getUserId());
 		
 		// 포인트 조회
-		Point point = pointRepository.findByUserId(reservationRequestDto.getUserId());
+		Integer point = pointRepository.findByUserId(reservationRequestDto.getUserId());
 		
 		Map<String, Object> selectList = new HashMap<>();
 		selectList.put("point", point);
@@ -120,8 +120,18 @@ public class ReservationService {
 		int resultRowCount = reservationRepository.insertReserveRoom(reservationRequestDto);
 
 
-		// 결제 낑겨넣기
-		System.out.println(reservationRequestDto.getPrice());
+		// 포인트 처리
+		// 다이아 일때 처리
+		Integer totalPrice = reservationRequestDto.getTotalPrice();
+		if(userGrade.getGrade().getId() == Grade.DIA.getGrade()){
+			pointRepository.insertPoint(Integer.valueOf((int) Math.round(totalPrice * 0.04)), userId);
+		}
+		if(userGrade.getGrade().getId() == Grade.GOLD.getGrade()){
+			pointRepository.insertPoint(Integer.valueOf((int) Math.round(totalPrice * 0.05)), userId);
+		}
+		if(userGrade.getGrade().getId() == Grade.BROWN.getGrade()){
+			pointRepository.insertPoint(Integer.valueOf((int) Math.round(totalPrice * 0.07)), userId);
+		}
 
 
 		Integer nowReservationCount = reservationRequestDto.getDay();
@@ -145,6 +155,7 @@ public class ReservationService {
 				
 			}
 		}
+
 
 		return resultRowCount;
 	}

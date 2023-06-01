@@ -1,27 +1,79 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
+<style>
+.content {
+	width: 100%; display : flex;
+	justify-content: center;
+	align-items: center;
+}
+.table--tr {
+	background-color: #ebebeb;
+	height: 20px;
+}
+
+.table--tr, .table-tr {
+	text-align: center;
+}
+
+#title--box {
+	width: 600px;
+}
+
+.sub--button {
+	background-color: #FF9F8D;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	width: 60px;
+	height: 30px;
+}
+.button--box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+	width: 100%;
+}
+.sub-button {
+	background-color: #000;
+	color: #fff;
+	width: 100px;
+	height: 40px;
+}
+.form--container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.input--box {
+	border: none;
+	border-bottom: 2px solid #ebebeb;
+	margin: 10px;
+}
+
+</style>
 	<div class="content">
+		<h2>예약 리스트</h2>
+			<form class="form--box">
+				<input type="text" name="name" placeholder="예약자 이름을 입력하세요" class="input--box"/> 
+				<input type="submit" value="검색" class="sub-button"/>
+			</form>
 		<div class="main">
-			<header>여짝에 리스트</header>
 			<div class="main--content">
-				<form>
-					<input type="text" name="name" /> 
-					<input type="submit" />
-				</form>
 				<table class="table">
 					<thead>
-						<tr>
-							<th scope="col">예약자</th>
-							<th scope="col">예약자-전화번호</th>
-							<th scope="col">이용시작일</th>
-							<th scope="col">이용종료일</th>
-							<th scope="col">예약인원수</th>
-							<th scope="col">방</th>
+						<tr class="table--tr">
+							<th scope="col">이름</th>
+							<th scope="col">전화번호</th>
+							<th scope="col">체크인</th>
+							<th scope="col">체크아웃</th>
+							<th scope="col">예약인원</th>
+							<th scope="col">룸 타입</th>
 							<th scope="col">식당</th>
 							<th scope="col">피트니스</th>
 							<th scope="col">수영장</th>
 							<th scope="col">스파</th>
-							<th scope="col">패키지</th>
 							<th scope="col">취소</th>
 						</tr>
 					</thead>
@@ -29,7 +81,7 @@
 						<c:choose>
 							<c:when test="${reservationList.size() != 0}">
 								<c:forEach var="reservation" items="${reservationList}">
-									<tr onclick="detailReservation(${reservation.id})"}>
+									<tr onclick="detailReservation(${reservation.id})" class="table-tr">
 										<td>${reservation.user.name}</td>
 										<td>${reservation.user.tel}</td>
 										<td>${reservation.startDate}</td>
@@ -40,13 +92,14 @@
 										<td>${reservation.fitnessId != null ? reservation.fitnessId : "❌"}</td>
 										<td>${reservation.poolId != null ? reservation.poolId : "❌"}</td>
 										<td>${reservation.spaId != null ? reservation.spaId : "❌"}</td>
-										<td>${reservation.h_package.name != null ? reservation.h_package.name : "❌"}</td>
-										<td><button onclick="deleteReservation(${reservation.id})">취소</button></td>
+										<td><button onclick="deleteReservation(${reservation.id})" class="sub--button">취소</button></td>
 									</tr>
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
-					            예약리스트가 없습니다.
+								<tr>
+									<td colspan="11" class="table-tr">예약리스트가 없습니다.</td>
+								</tr>
 					        </c:otherwise>
 						</c:choose>
 					</tbody>
@@ -54,7 +107,6 @@
 			</div>
 		</div>
 	</div>
-</main>
 
 	<script>
 	    function detailReservation(id){

@@ -1,5 +1,6 @@
 package com.dodam.hotel.dto;
 
+import com.dodam.hotel.enums.Grade;
 import com.dodam.hotel.enums.PGType;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,6 @@ import lombok.Data;
 public class PayDto {
     private String payTid;
     private Integer price;
-    private Integer reservationId;
     private PGType pgType;
+    private String grade;
 }
