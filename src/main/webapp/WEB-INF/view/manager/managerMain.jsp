@@ -268,20 +268,17 @@
 	</c:forEach> */
 	
     data.addRows([
-     ['일', 10],
-     ['월', 20],
-     ['화', 3],
-     ['수', 40],
-     ['목', 5],
-     ['금', 60],
-     [ year-month-date, ${totalPrice}],
+    	for(i = 1; i < 8; i ++) {
+    		[ ,${price}],
+    	}
+     [ year+'-'+month+'-'+date , ${totalPrice}],
     ]);
 
     let options = {
      title: '매출 현황',
      hAxis: {
       title: '날짜',
-      format: 'yyyy-mm-dd',
+      format: 'yyyy-MM-dd',
       viewWindow: {
        min: [7, 30, 0],
        max: [17, 30, 0]
