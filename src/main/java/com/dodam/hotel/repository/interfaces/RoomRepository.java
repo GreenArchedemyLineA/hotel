@@ -30,7 +30,13 @@ public interface RoomRepository {
 	public int updateManagerRoom(@Param("id") Integer id, @Param("availability") Boolean availability);
 	
 	// 모든 룸 개수 조회
-	int findAllRoomListCount();
+	public int findAllRoomListCount();
+	
+	// 사용 가능 객실 개수 조회
+	public int findRoomByCount1(); 
+	
+	// 사용 불가 객실 개수 조회
+	public int findRoomByCount0();
 	
 	List<Room> findAllRoomList();
 	List<Room> findAllRoomListPaging(PagingObj obj);

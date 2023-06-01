@@ -1,5 +1,7 @@
 package com.dodam.hotel.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.dodam.hotel.repository.interfaces.MUserRepository;
 import com.dodam.hotel.repository.interfaces.MembershipRepository;
 import com.dodam.hotel.repository.interfaces.PointRepository;
 import com.dodam.hotel.repository.interfaces.UserRepository;
+import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.User;
 
 @Service
@@ -61,8 +64,8 @@ public class UserService {
 
 	// 카카오 로그인 (성희)
 	@Transactional
-	public User readUserKakao(String email) {
-		User responseUser = userRepository.findUserByEmail(email);
+	public UserResponseDto.LoginResponseDto readUserKakao(String email) {
+		UserResponseDto.LoginResponseDto responseUser = userRepository.findUserKakao(email);
 		if (responseUser != null) {
 			if (responseUser.getSocialLogin() == false) {
 				// 일반회원 예외처리
@@ -148,6 +151,12 @@ public class UserService {
 		return insertDto;
 	}
 
+	// 오늘 회원가입 회원 조회
+	public List<User> readJoinUserToday() {
+		List<User> UserToday = userRepository.findUserToday();
+		return UserToday;
+	}
+
 	/**
 	 * 멤버쉽 가입 서비스 (성희)
 	 */
@@ -156,6 +165,12 @@ public class UserService {
 		int resultRowCount = membershipRepository.insert(id);
 		// 숙박 쿠폰 자동 등록 처리
 		int couponCount = couponRepository.insert(CouponInfo.MEMBERSHIP, id);
+	}
+
+	// 오늘 멤버쉽 가입 회원 조회
+	public List<MembershipInfo> readJoinMembershipToday() {
+		List<MembershipInfo> membershipToday = membershipRepository.findMembershipToday();
+		return membershipToday;
 	}
 
 	// id 찾는 기능

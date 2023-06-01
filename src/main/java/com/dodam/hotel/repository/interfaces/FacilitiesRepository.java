@@ -23,4 +23,9 @@ public interface FacilitiesRepository {
 
 	// 피트니스 정보 조회
 	public Fitness findFitness();
+	
+	// 부대시설 상태 조회
+	public int findPoolStatus();
+	public int findSpaStatus();
+	public int findFitnessStatus();
 }

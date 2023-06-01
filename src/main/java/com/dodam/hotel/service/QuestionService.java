@@ -33,6 +33,12 @@ public class QuestionService {
 		}
 	}
 	
+	// 매니저 main - 답변 안달린 질문 개수 조회
+	public int readQuestionCountByStatus0() {
+		int resultCount = questionRepository.findByStatusCount();
+		return resultCount;
+	}
+	
 	// 특정 유저 모든 질문 개수
 	public int readQuestionCountByUserId(Integer userId) {
 		int resultCount = questionRepository.findByUserIdCount(userId);

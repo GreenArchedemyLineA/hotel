@@ -34,6 +34,12 @@ public class EventService {
 		return eventListEntity;
 	}
 	
+	// 행사 일정 메인 리스트 조회
+	public List<Event> findByIdLimit() {
+		List<Event> eventListEntity = eventRepository.findLimit5();
+		return eventListEntity;
+	}
+
 	//행사 일정 리스트 숫자
 	public Integer countEvent() {
 		return eventRepository.count();

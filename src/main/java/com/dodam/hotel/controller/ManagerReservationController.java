@@ -6,6 +6,9 @@ import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.service.ManagerReservationService;
 import com.dodam.hotel.service.ManagerService;
+import com.dodam.hotel.service.ReservationService;
+import com.dodam.hotel.util.DateFormat;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +47,18 @@ public class ManagerReservationController {
             System.out.println(reservationList);
             model.addAttribute("reservationList", reservationList);
         }
+        int totalPrice = managerReservationService.readBeforeTodayTotalPrice();
+        List<Integer> price = new ArrayList<>();
+        for(int i = 1; i < 7; i ++) {
+        	Integer beforetotalPrice = managerReservationService.readBeforeTotalPrice(i);
+        	if(beforetotalPrice == null) {
+        		beforetotalPrice = 0;
+        	}
+        	price.add(beforetotalPrice);
+        	System.out.println(beforetotalPrice);
+        }
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("price", price);
         return "/manager/reservation";
     }
 
@@ -106,4 +125,5 @@ public class ManagerReservationController {
             return succesMsg;
         }
     }
+
 }

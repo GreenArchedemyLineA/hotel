@@ -139,7 +139,6 @@ public class ReservationService {
 				
 			}
 		}
-
 		return resultRowCount;
 	}
 

@@ -22,19 +22,16 @@
 	font-family: 'Noto Sans KR', monospace;
 }
 
-body {
-	height: 100vh;
-}
-
 main {
 	display: flex;
 	height: 100vh;
 }
 
 nav {
-	width: 150px;  /* 로그 크기에 따라 수정할 예정 */	
-	height: 100vh;
+	width: 300px;  /* 로그 크기에 따라 수정할 예정 */	
 	background-color: #64c5f3;
+	height: 100vh;
+	display: flex;
 }
 
 .content {
@@ -44,17 +41,22 @@ nav {
 }
 
 .main--content {
-	border: 2px solid black;
 	width: 1200px;
 	height: 600px;
 	padding: 10px;
+	
 }
 
 li {
 	list-style: none;
-	margin-bottom: 10px;
-	padding-left: 10px;
+	margin-bottom: 15px;
+	padding-left: 20px;
 	cursor: pointer;
+	font-size: 20px;
+	color: #fff;
+}
+li:hover {
+	color: pink;
 }
 
 .main--headers {
@@ -63,11 +65,17 @@ li {
 
 #search--list {
 	display: none;
+	font-size: 15px;
 }
 
 #search--user--wrap {
 	display: flex;
 	justify-content: space-between;
+}
+#logo--li {
+	margin: 20px 20px 100px 20px;
+	display: flex;
+	justify-content: flex-end;
 }
 
 </style>
@@ -75,13 +83,12 @@ li {
 	<main>
 		<nav>
 			<ul>
-				<li id="logo--li" onclick="location.href='/manager/managerMain'"><img alt="dodam" src="/images/white_logo.png" width="100" height="40"></li>
+				<li id="logo--li" onclick="location.href='/manager/managerMain'"><img alt="dodam" src="/images/admin_wlogo.png" width="250" height="50"></li>
 				<li id="room--li" onclick="location.href='/manager/roomStatus'">객실</li>
-				<li id="dining--li" onclick="location.href='#'">다이닝</li>
+				<li id="dining--li" onclick="location.href='/manager/dining'">다이닝</li>
 				<li id="userList--li">
-					<div id="search--user--wrap">
-						<span onclick="location.href='/manager/userList'">회원조회</span>
-						<i class="xi-angle-down-min"></i>
+					<div>
+						<span id="search--user--wrap">회원</span>
 					</div>
 					<ul id="search--list">
 						<li onclick="location.href='/manager/userList'">전체 회원 조회</li>
@@ -95,10 +102,9 @@ li {
 				<li id="faq--li" onclick="location.href='/manager/faq'">FAQ</li>
 			</ul>
 		</nav>
-	
 	<script type="text/javascript">
-		$("#userList--li").on("click", function() {
-			$("#search--user--wrap").siblings().slideToggle()
+		$("#search--user--wrap").on("click", function() {
+			$("#search--list").slideToggle()
 		});
 	</script>
 	

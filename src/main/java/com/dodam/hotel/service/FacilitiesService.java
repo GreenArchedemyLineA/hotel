@@ -49,4 +49,20 @@ public class FacilitiesService {
 		Fitness fitness = facilitiesRepository.findFitness();
 		return fitness;
 	}
+	
+	// 부대시설 상태 조회
+	public int readPoolStatus() {
+		int resultRowCount = facilitiesRepository.findPoolStatus();
+		return resultRowCount;
+	}
+	
+	public int readSpaStatus() {
+		int resultRowCount = facilitiesRepository.findSpaStatus();
+		return resultRowCount;
+	}
+	
+	public int readFitnessStatus() {
+		int resultRowCount = facilitiesRepository.findFitnessStatus();
+		return resultRowCount;
+	}
 }

@@ -40,6 +40,13 @@
 		where email = #{email}
 	</select>
 	
+	<!-- email로 카카오 유저 조회 -->
+	<select id="findUserKakao" resultType="com.dodam.hotel.dto.UserResponseDto$LoginResponseDto">
+		select *
+		from user_tb
+		where email = #{email}
+	</select>
+	
 	<!-- 회원가입 -->
 	<insert id="insert">
 	INSERT INTO user_tb (email, password, name, gender, birth, tel, address)
@@ -57,6 +64,12 @@
 		SELECT id FROM user_tb 
 		where email=#{email} and password=#{password} and name=#{name} and gender=#{gender} and 
 		birth=#{birth} and tel=#{tel}
+	</select>
+	
+	<!-- 오늘 회원가입 회원 조회 -->
+	<select id="findUserToday" resultType="com.dodam.hotel.repository.model.User">
+		select * from user_tb
+		where date_format(created_at, "%Y-%m-%d") = curdate()
 	</select>
 	
 	<!-- id 찾기 -->
@@ -86,4 +99,5 @@
 		set random_pwd_status = false
 		where id = #{id}
 	</update>
+	
 </mapper>
