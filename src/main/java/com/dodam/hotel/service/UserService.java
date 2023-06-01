@@ -85,6 +85,7 @@ public class UserService {
 		responseDto.setGender(userEntity.getGender());
 		responseDto.setBirth(userEntity.getBirth());
 		responseDto.setTel(userEntity.getTel());
+		responseDto.setAddress(userEntity.getAddress());
 		return responseDto;
 	}
 
@@ -103,7 +104,7 @@ public class UserService {
 	 * 회원가입 서비스 (성희)
 	 */
 	@Transactional
-	public UserRequestDto.insertDto createUser(UserRequestDto.insertDto insertDto) {
+	public UserRequestDto.InsertDto createUser(UserRequestDto.InsertDto insertDto) {
 		// 중복 회원가입 검사 (todo)
 
 		// 조회 돌리기
@@ -127,7 +128,7 @@ public class UserService {
 	 * 카카오 회원가입 서비스 (성희)
 	 */
 	@Transactional
-	public UserRequestDto.insertDto createUserKakao(UserRequestDto.insertDto insertDto) {
+	public UserRequestDto.InsertDto createUserKakao(UserRequestDto.InsertDto insertDto) {
 		// 중복 회원가입 검사 (todo)
 
 		insertDto.setPassword(dodamKey);

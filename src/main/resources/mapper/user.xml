@@ -11,6 +11,7 @@
 		<result column="gender" property="gender"/>
 		<result column="birth" property="birth"/>
 		<result column="tel" property="tel"/>
+		<result column="address" property="address"/>
 		<result column="blacklist" property="blacklist"/>
 		<result column="withdrawal" property="withdrawal"/>
 		<result column="created_at" property="createdAt"/>
@@ -33,7 +34,7 @@
 	</update>
 	
 	<!-- email로 특정 유저 조회 -->
-	<select id="findUserByEmail" resultType="com.dodam.hotel.repository.model.User">
+	<select id="findUserByEmail" resultMap="User">
 		select *
 		from user_tb
 		where email = #{email}
@@ -41,8 +42,8 @@
 	
 	<!-- 회원가입 -->
 	<insert id="insert">
-	INSERT INTO user_tb (email, password, name, gender, birth, tel)
-	VALUES (#{email}, #{password}, #{name}, #{gender}, #{birth}, #{tel})
+	INSERT INTO user_tb (email, password, name, gender, birth, tel, address)
+	VALUES (#{email}, #{password}, #{name}, #{gender}, #{birth}, #{tel}, #{address})
 	</insert>
 	
 	<!-- 카카오 회원가입 -->

@@ -21,5 +21,4 @@
     <input type="text" name="content" value="${faq.content}">
     <button>수정</button>
 </form>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

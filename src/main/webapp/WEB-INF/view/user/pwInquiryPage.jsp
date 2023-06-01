@@ -91,5 +91,4 @@
 		<p>이메일을 확인해 주세요.</p>
 	</div>
 </main>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

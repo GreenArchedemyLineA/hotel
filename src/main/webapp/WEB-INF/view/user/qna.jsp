@@ -89,5 +89,4 @@
 		});
 	</script>
 	<script src="js/mainToggle.js"></script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

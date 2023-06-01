@@ -31,13 +31,13 @@
 	<div class="body--container">
 		<div class="navi--bar">
 			<span class="title--box">예약</span>
-				<div class="detail--container">
-					<span class="detail--box"><a href="/selectDate">객실 예약</a></span>
-					<span class="detail--box selected--menu"><a href="/reserveDining">다이닝 예약</a></span>
-				</div>
+		<div class="detail--container">
+			<span class="detail--box"><a href="/selectDate">객실 예약</a></span>
+			<span class="detail--box selected--menu"><a href="/reserveDining">다이닝 예약</a></span>
 		</div>
-		<div class="calender--container">
-		<form action="/search" method="get" id="calender--form">
+	</div>
+	<div class="calender--container">
+		<form action="/dining" method="post" id="calender--form">
 			<div class="calender--wrap">
 				<input type="text" class="dateSelector" id="calender" name="date">
 			</div>
@@ -71,7 +71,7 @@
 					</div>
 				</div>
 				<div id="calender--search--btn">
-					<button class="sub--button">검색</button>
+					<button class="sub--button">예약</button>
 				</div>
 			</div>
 		</form>

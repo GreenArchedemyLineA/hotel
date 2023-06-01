@@ -23,12 +23,14 @@ public class UserRequestDto {
 		private String gender;
 		private Date birth;
 		private String tel;
+		private String address;
+		private String detailAddress;
 	}
 	
 	// todo
 	// 클래스 이름 수정 
 	@Data
-	public static class insertDto {
+	public static class InsertDto {
 		private Integer id;
 		private String email;
 		private String password;
@@ -36,6 +38,8 @@ public class UserRequestDto {
 		private String gender;
 		private Date birth;
 		private String tel;
+		private String address;
+		private String detailAddress;
 		private Boolean socialLogin;
 	}
 	

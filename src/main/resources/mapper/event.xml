@@ -36,6 +36,13 @@
 	    where C.ROWNUM BETWEEN #{start} AND #{end};
 	</select>
 	
+	<select id="findNowEvent" resultType="com.dodam.hotel.repository.model.Event">
+	         SELECT * 
+	         FROM event_tb
+	         WHERE end_date <![CDATA[>=]]> now() 
+	         ORDER BY id DESC 
+	</select>
+	
 	<select id="findByPrevEventPage" resultType="com.dodam.hotel.repository.model.Event">
 		SELECT * from (
 	 		SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* 

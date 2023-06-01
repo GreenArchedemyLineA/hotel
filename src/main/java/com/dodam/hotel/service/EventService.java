@@ -33,6 +33,7 @@ public class EventService {
 		List<Event> eventListEntity = eventRepository.findByAllPage(obj);
 		return eventListEntity;
 	}
+	
 	//행사 일정 리스트 숫자
 	public Integer countEvent() {
 		return eventRepository.count();
@@ -59,6 +60,12 @@ public class EventService {
 	// 진행중인 이벤트 조회 - 현우
 	public List<Event> readOnGoingEvent(PagingObj obj) {
 		List<Event> events = eventRepository.findNowEventByPage(obj);
+		return events;
+	}
+	
+	// 진행중인 이벤트 조회 - 현우
+	public List<Event> readAllOnGoingEvent() {
+		List<Event> events = eventRepository.findNowEvent();
 		return events;
 	}
 	

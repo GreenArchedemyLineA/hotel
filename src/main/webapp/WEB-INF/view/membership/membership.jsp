@@ -205,8 +205,4 @@
 		</div>
 	</div>
 </main>
-</body>
-<script type="text/javascript">
-
-</script>
-</html>
+<%@ include file="../layout/footer.jsp"%>

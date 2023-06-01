@@ -58,5 +58,4 @@
         location.href = "/manager/roomStatusDetail?roomId="+id;
     }
 </script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

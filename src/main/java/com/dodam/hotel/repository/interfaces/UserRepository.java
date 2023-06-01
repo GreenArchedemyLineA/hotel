@@ -22,13 +22,13 @@ public interface UserRepository {
 	public User findUserByEmail(String email);
 	
 	// 회원가입
-	public int insert(UserRequestDto.insertDto insertDto);
+	public int insert(UserRequestDto.InsertDto insertDto);
 	
 	// 카카오 회원가입
-	public int insertKakao(UserRequestDto.insertDto insertDto);
+	public int insertKakao(UserRequestDto.InsertDto insertDto);
 	
 	// 제일 최근 가입 회원 ID 찾기
-	public Integer findIdOrderById(UserRequestDto.insertDto insertDto);
+	public Integer findIdOrderById(UserRequestDto.InsertDto insertDto);
 	
 	// 회원 id 조회
 	public User findUserForIdInquiry(InquiryRequestDto.IdInquiryRequestDto idInquiryRequestDto);

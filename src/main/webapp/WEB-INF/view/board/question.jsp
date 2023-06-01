@@ -61,5 +61,4 @@
 		location.href = "/question/questionDelete/"+id; 
 	}
 </script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

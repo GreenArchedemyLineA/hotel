@@ -25,6 +25,7 @@ public interface EventRepository {
 	// 진행중인 이벤트 조회
 	public int findByNowAll();
 	public List<Event> findNowEventByPage(PagingObj obj);
+	public List<Event> findNowEvent();
 	
 	// 종료된 이벤트 조회
 	public int findByPrevAll();

@@ -20,5 +20,4 @@
     <input type="text" name="content" value="${faq.content}">
     <input type="submit">
 </form>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

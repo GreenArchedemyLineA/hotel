@@ -356,9 +356,6 @@ input[type="number"]::-webkit-inner-spin-button {
 		</div>
 	</form>
 	</div>
-</body>
-
-
 <!-- <script src="/js/price.js"></script> -->
 <script type="text/javascript">
 	const dayResultInput = document.getElementById("day--result");
@@ -571,4 +568,4 @@ input[type="number"]::-webkit-inner-spin-button {
 	
 	totalPrice();
 </script>
-</html>
+<%@ include file="../layout/footer.jsp"%>

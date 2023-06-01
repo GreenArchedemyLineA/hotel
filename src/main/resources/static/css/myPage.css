@@ -363,3 +363,8 @@ a:hover {
 	display: block;	
 }
 
+#no--reservation {
+	display: flex;
+	justify-content: center;
+}
+
