@@ -40,7 +40,10 @@
 						<td>${list.createdAt}</td>
 						<td>${list.payTid}</td>
 						<td>
-						<button onclick="delete(${list.payTid})">환불/예약 취소</button>
+						<form action="/pay/kakao/refund/${list.payTid}/${list.totalPrice}" method="post">
+							<button type="submit">환불/ 예약 취소</button>
+						</form>
+						<%-- <button onclick="deleteReservation(${list.payTid},${list.totalPrice})">환불/예약 취소</button> --%>
 						</td>
 					</tr>
 				</c:forEach>
@@ -66,8 +69,8 @@
 		</c:if>
 	</div>
 	<script type="text/javascript">
-	    function delete(Tid){
-		    	location.href = "/pay/kakao/refund/"+Tid; 
+	    function deleteReservation(tid,totalPrice){
+		    	location.href = "/pay/kakao/refund/"+tid+"/"+totalPrice; 
 	    }
 	</script>
 </body>

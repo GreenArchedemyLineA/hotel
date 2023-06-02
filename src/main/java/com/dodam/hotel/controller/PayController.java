@@ -138,15 +138,13 @@ public class PayController {
 //        return "redirect:/pay/success";
     }
 
-    @GetMapping("/kakao/refund/{Tid}")
-    @ResponseBody
-    public ResponseEntity<?> kakaoPayRefund(@PathVariable String Tid) {
+    @PostMapping("/kakao/refund/{tid}/{totalPrice}")
+    //@ResponseBody
+    public String kakaoPayRefund(@PathVariable("tid") String tid,@PathVariable("totalPrice") String totalPrice) {
     	
-    	KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(Tid);
-    	System.out.println(Tid);
-    	System.out.println("sssssssss");
-        return new ResponseEntity<>(kakaoCancelResponse, HttpStatus.OK);
-        //return new ResponseEntity<>(kakaoCancelResponse, HttpStatus.OK);
+    	KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid,totalPrice);
+    		
+        return "redirect:/myPage";
     }
     
     // 토스결제 성공 시

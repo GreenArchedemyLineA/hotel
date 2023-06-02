@@ -110,6 +110,7 @@ public class ReservationController {
 		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
 		List<Reservation> reservations = reservationService.readAllResrevationByUserIdPaging(po, principal.getId());
+		System.out.println(reservations.get(0).getPayTid());
 		model.addAttribute("paging", po);
 		if(reservations.size() == 0) {
 			model.addAttribute("reservations", null);

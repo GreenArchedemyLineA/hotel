@@ -97,7 +97,7 @@ public class KakaoPay implements PayInterface {
 	}
 
 	//환불
-	public KakaoCancelResponse kakaoCancel(String Tid) {
+	public KakaoCancelResponse kakaoCancel(String tid,String totalPrice) {
 		URI uri = UriComponentsBuilder.fromUriString("https://kapi.kakao.com").path("/v1/payment/cancel").encode()
 				.build().toUri();
 		
@@ -107,8 +107,8 @@ public class KakaoPay implements PayInterface {
 		// 카카오페이 요청
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 		parameters.add("cid", KAKAO_TESTCID);
-		parameters.add("tid", Tid);
-		parameters.add("cancel_amount", "500000");
+		parameters.add("tid", tid);
+		parameters.add("cancel_amount", totalPrice);
 		parameters.add("cancel_tax_free_amount", "0");
 		parameters.add("cancel_vat_amount", "0");
 
