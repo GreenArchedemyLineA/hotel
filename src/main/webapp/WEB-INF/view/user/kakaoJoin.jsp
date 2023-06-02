@@ -20,18 +20,18 @@
 		<form action="/kakaoJoin" method="post" class="form--container">
 			<c:choose>
 				<c:when test="${user.email == null}">
-					<input type="email" name="email" class="input--box" placeholder="이메일을 입력해 주세요"> 			
+					<input type="email" name="email" class="input--box" placeholder="이메일을 입력해 주세요" autocomplete="off"> 			
 				</c:when>
 				<c:otherwise>
-					<input type="email" name="email" class="input--box" value="${user.email}" readonly="readonly"> 								
+					<input type="email" name="email" class="input--box" value="${user.email}" readonly="readonly" autocomplete="off"> 								
 				</c:otherwise>
 			</c:choose>
 			<c:choose>
 				<c:when test="${user.profile.nickname == null}">
-					<input type="text" name="name" class="input--box" placeholder="이름을 입력해 주세요">  			
+					<input type="text" name="name" class="input--box" placeholder="이름을 입력해 주세요" autocomplete="off">  			
 				</c:when>
 				<c:otherwise>
-					<input type="text" name="name" class="input--box" value="${user.profile.nickname}"> 								
+					<input type="text" name="name" class="input--box" value="${user.profile.nickname}" autocomplete="off"> 								
 				</c:otherwise>
 			</c:choose>
 			<input type="date" name="birth" class="input--box" placeholder="출생년도"> 
@@ -39,7 +39,7 @@
 				<label><input type="radio" name="gender" value="남성">남성</label>
 				<label><input type="radio" name="gender" value="여성">여성</label>
 			</div>
-			<input type="tel" name="tel" class="input--box" placeholder=" - 을 포함한 전화번호를 입력해주세요">
+			<input type="tel" name="tel" class="input--box" placeholder=" - 을 포함한 전화번호를 입력해주세요" autocomplete="off">
 			<button type="submit" class="sub--button">회원가입</button>
 		</form>
 	</div>

@@ -124,6 +124,8 @@ public class UserService {
 	@Transactional
 	public UserRequestDto.InsertDto createUser(UserRequestDto.InsertDto insertDto) {
 		// 중복 회원가입 검사 (todo)
+		
+		// 탈퇴한 유저인지 조회
 		User userEntity = userRepository.findUserByOriginEmail(insertDto.getEmail());
 		if(userEntity == null) {
 			// 조회 돌리기

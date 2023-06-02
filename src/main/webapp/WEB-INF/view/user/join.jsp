@@ -164,45 +164,51 @@
     let idCheckBtn = document.getElementById("dup--check--btn");
     idCheckBtn.addEventListener("click", function() {
     	let email = document.getElementById("email--box").value;
-    	if(inputPattern.test(email) == false) {
+	    if(inputPattern.test(email) == false) {
 			alert("이메일은 @를 포함해야 합니다.");	
-    	} else if(email.includes('.com') == false) {
-    		alert("이메일은 .com형식으로 끝나야합니다.")
-    	} else {
-	    	fetch("/api/duplicationUser?email=" + email, ({
-	    		method: "get"
-	    	})).then(async (response) => {
-	    		let result = await response.json();
-	    		if(result.status_code == 200) {
-	    			alert(result.msg);
-	    			checkEmail = true;
-	    			checkSubmit(checkEmail, checkPassword, checkGender, checkName, 
-	    					checkBirth, checkAddress, checkDetailAddress, checkTel)
-	    		} else {
-	    			alert(result.msg);
-	    		}
-	    	});
-    	}
+	    } else if(email.includes('.com') == false) {
+	    	alert("이메일은 .com형식으로 끝나야합니다.")
+	    } else {
+		   	fetch("/api/duplicationUser?email=" + email, ({
+		   		method: "get"
+		   	})).then(async (response) => {
+		   		let result = await response.json();
+		   		if(result.status_code == 200) {
+		   			alert(result.msg);
+		   			checkEmail = true;
+		   			checkSubmit(checkEmail, checkPassword, checkGender, checkName, 
+		   					checkBirth, checkAddress, checkDetailAddress, checkTel)
+		   		} else {
+		   			alert(result.msg);
+		   		}
+		   	});
+	    }
     });
     
 	/* 이메일 폼 검사 */
 	emailBox.addEventListener("keyup", function () {
 		let emailBoxValue = emailBox.value;
-		console.log(emailBoxValue);
-		if(inputPattern.test(emailBoxValue) == false) {
-			checkPatternDiv.textContent = "* 이메일은 @를 포함해야 합니다.";
+		if(emailBoxValue.match(reg)) {
+			console.log("asdfasdf");
+			checkPatternDiv.textContent = "* 공백이 포함되어 있습니다.";
 			checkPatternDiv.style.color = "red";
 			checkPatternDiv.style.fontSize = "14px";
-   			checkEmail = false;
-		} else if(emailBoxValue.includes('.com') == false) {
-			checkPatternDiv.textContent = "이메일은 .com형식으로 끝나야합니다.";
-			checkPatternDiv.style.color = "red";
-			checkPatternDiv.style.fontSize = "14px";
-   			checkEmail = false;
+			checkEmail = false;
     	} else {
-			checkPatternDiv.replaceChildren();
-		}
-		
+			if(inputPattern.test(emailBoxValue) == false) {
+				checkPatternDiv.textContent = "* 이메일은 @를 포함해야 합니다.";
+				checkPatternDiv.style.color = "red";
+				checkPatternDiv.style.fontSize = "14px";
+		   		checkEmail = false;
+			} else if(emailBoxValue.includes('.com') == false) {
+				checkPatternDiv.textContent = "이메일은 .com형식으로 끝나야합니다.";
+				checkPatternDiv.style.color = "red";
+				checkPatternDiv.style.fontSize = "14px";
+		   		checkEmail = false;
+		    } else {
+				checkPatternDiv.replaceChildren();
+			}
+    	}
 	});
 	
 	/* 비밀번호 확인란 검사 */
@@ -246,7 +252,6 @@
     nameBox.addEventListener("keyup", function() {
     	let nameBoxValue = nameBox.value;
     	let nameCheckDiv = document.getElementById("name--check");
-    	// if(글자수 제한 걸기)
     	if(nameBoxValue.match(reg)) {
     		nameCheckDiv.textContent = "* 공백이 포함되어 있습니다.";
     		nameCheckDiv.style.color = "red";

@@ -38,7 +38,8 @@
 						</div>
 						<div>
 							<span>비밀번호</span>
-							<input class="input--box" name="password" type="password" value="${responseUser.password}">
+							<input class="input--box" name="password" type="password" value="${responseUser.password}" id="password--box">
+							<div id="key--check"></div>
 						</div>
 						<div>
 							<span>이름</span>
@@ -46,7 +47,7 @@
 						</div>
 						<div>
 							<span>성별</span>
-							<input class="input--box" name="gender" type="text" value="${responseUser.gender}">
+							<input class="input--box" name="gender" type="text" value="${responseUser.gender}" readonly="readonly">
 						</div>
 						<div>
 							<span>생년월일</span>
@@ -58,7 +59,7 @@
 						</div>
 						<div>
 							<span>전화번호</span>
-							<input class="input--box" name="tel" type="text" value="${responseUser.tel}">
+							<input class="input--box" name="tel" type="text" value="${responseUser.tel}" id="tel--box">
 						</div>
 						<input class="sub--button" type="submit" value="정보 수정">
 					</form>
