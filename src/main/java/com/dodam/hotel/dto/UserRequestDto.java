@@ -25,6 +25,7 @@ public class UserRequestDto {
 		private String tel;
 		private String address;
 		private String detailAddress;
+		private String originEmail;
 	}
 	
 	// todo
@@ -41,6 +42,7 @@ public class UserRequestDto {
 		private String address;
 		private String detailAddress;
 		private Boolean socialLogin;
+		
 	}
 	
 	// 비밀번호 변경

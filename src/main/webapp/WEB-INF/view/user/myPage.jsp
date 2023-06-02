@@ -61,8 +61,7 @@
 							<input class="input--box" name="tel" type="text" value="${responseUser.tel}">
 						</div>
 						<input class="sub--button" type="submit" value="정보 수정">
-						<input class="sub-button" type="submit" value="회원 탈퇴">
-						<button onclick="withdrawUser()"></button>
+						<button class="sub-button" onclick="withdrawUser()">회원 탈퇴</button>
 					</form>
 				</div>
 			</div>
@@ -70,4 +69,13 @@
 	</main>
 	
 	<script src="/js/myinfo.js"></script>
+	<script>
+		function withdrawUser() {
+			if(confirm("정말 탈퇴하시겠어요?")) {
+				location.href = "/delete"
+			} else {
+				location.href = "history.back()"
+			}
+		}
+	</script>
 <%@ include file="../layout/footer.jsp"%>

@@ -157,7 +157,14 @@ public class UserController {
 		userService.createUser(insertDto);
 		return "redirect:/";
 	}
-
+	
+	// 회원 탈퇴 처리 (성희)
+	@GetMapping("/delete")
+	public String withdraw(UserRequestDto.MyPageFormDto myPageDto) {
+		userService.deleteUser(myPageDto);
+		return "redirect:/";
+	}
+	
 	// 카카오 회원가입 처리 (성희)
 	@PostMapping("/kakaoJoin")
 	public String kakaoJoin(UserRequestDto.InsertDto insertDto) {
@@ -186,15 +193,6 @@ public class UserController {
 	@GetMapping("/findIdPw")
 	public String findIdPw() {
 		return "/user/inquiry";
-	}
-
-	@PostMapping("/test")
-	public String test(TestDto dto) {
-		System.out.println(dto.getUsername());
-		System.out.println(dto.getPassword());
-		System.out.println();
-		return "/";
-
 	}
 
 	public String managerLogin() {

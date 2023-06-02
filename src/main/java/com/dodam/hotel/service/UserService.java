@@ -20,6 +20,7 @@ import com.dodam.hotel.repository.interfaces.PointRepository;
 import com.dodam.hotel.repository.interfaces.UserRepository;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.User;
+import com.dodam.hotel.util.CreateRandomStr;
 
 @Service
 public class UserService {
@@ -117,6 +118,8 @@ public class UserService {
 	@Transactional
 	public UserRequestDto.InsertDto createUser(UserRequestDto.InsertDto insertDto) {
 		// 중복 회원가입 검사 (todo)
+		
+		// 탈퇴한 유저인지 조회
 		User userEntity = userRepository.findUserByOriginEmail(insertDto.getEmail());
 		if(userEntity == null) {
 			// 조회 돌리기
@@ -153,8 +156,10 @@ public class UserService {
 	@Transactional
 	public UserRequestDto.InsertDto createUserKakao(UserRequestDto.InsertDto insertDto) {
 		// 중복 회원가입 검사 (todo)
-
+		
+		// 카카오 임시 비밀번호 세팅
 		insertDto.setPassword(dodamKey);
+		
 		int resultRowCount = userRepository.insertKakao(insertDto);
 		if (resultRowCount != 1) {
 			System.out.println("회원가입 서비스 오류");
@@ -170,8 +175,28 @@ public class UserService {
 
 		return insertDto;
 	}
+	
+	// 회원 탈퇴 서비스 (성희)
+	@Transactional
+	public int deleteUser(UserRequestDto.MyPageFormDto user) {
+		int resultRowCount = 0;
+		if(user.getOriginEmail() == null) {
+			// 랜덤 문자열 생성
+			String randomStr = CreateRandomStr.createRandomString();
+			// 원래 이메일 -> 랜덤문자열 이메일로 변경
+			user.setEmail(randomStr+"-"+user.getEmail());
+			// origin email 저장
+			user.setOriginEmail(user.getEmail());
+			resultRowCount = userRepository.deleteUser(user);
+			
+		} else {
+			// 예외처리
+		}
+		return resultRowCount;
+	}
 
 	// 오늘 회원가입 회원 조회
+	@Transactional
 	public List<User> readJoinUserToday() {
 		List<User> UserToday = userRepository.findUserToday();
 		return UserToday;
@@ -188,6 +213,7 @@ public class UserService {
 	}
 
 	// 오늘 멤버쉽 가입 회원 조회
+	@Transactional
 	public List<MembershipInfo> readJoinMembershipToday() {
 		List<MembershipInfo> membershipToday = membershipRepository.findMembershipToday();
 		return membershipToday;
@@ -222,5 +248,5 @@ public class UserService {
 		}
 		return resultRow;
 	}
-
+	
 }
