@@ -17,8 +17,8 @@ public class User {
 	private Date birth;
 	private String tel;
 	private String address;
-	private int blacklist;
-	private int withdrawal;
+	private Boolean blacklist;
+	private Boolean withdrawal;
 	private Timestamp createdAt;
 	private Boolean randomPwdStatus;
 	private String originEmail;

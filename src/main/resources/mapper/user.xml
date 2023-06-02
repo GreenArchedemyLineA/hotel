@@ -58,7 +58,7 @@
 		update user_tb
 		set email = #{email}, password =
 		#{password}, name = #{name}, gender = #{gender},
-		birth = #{birth}, tel = #{tel}, address = #{address}, widthdrawal = 0
+		birth = #{birth}, tel = #{tel}, address = #{address}, withdrawal = 0
 		where
 		origin_email = #{email}
 	</update>

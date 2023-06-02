@@ -42,7 +42,7 @@ public class UserService {
 
 	@Autowired
 	private PointRepository pointRepository;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -54,7 +54,7 @@ public class UserService {
 	public UserResponseDto.LoginResponseDto readUserByIdAndPassword(UserRequestDto.LoginFormDto user) {
 		UserResponseDto.LoginResponseDto responseUser = userRepository.findUserByLoginFormDto(user);
 		boolean isLogin = passwordEncoder.matches(user.getPassword(), responseUser.getPassword());
-		if(isLogin != true) {
+		if (isLogin != true) {
 			// 예외처리
 			return null;
 		}
@@ -100,7 +100,7 @@ public class UserService {
 		responseDto.setAddress(userEntity.getAddress());
 		return responseDto;
 	}
-	
+
 	// 아이디 중복검사
 	@Transactional
 	public User readUserForDuplicationCheck(String email) {
@@ -124,11 +124,9 @@ public class UserService {
 	 */
 	@Transactional
 	public UserRequestDto.InsertDto createUser(UserRequestDto.InsertDto insertDto) {
-		// 중복 회원가입 검사 (todo)
-		
 		// 탈퇴한 유저인지 조회
 		User userEntity = userRepository.findUserByOriginEmail(insertDto.getEmail());
-		if(userEntity == null) {
+		if (userEntity == null) {
 			// 조회 돌리기
 			// 비밀번호 암호화
 			String hashPwd = passwordEncoder.encode(insertDto.getPassword());
@@ -139,10 +137,10 @@ public class UserService {
 			}
 			// 회원가입 id 검색
 			int userId = userRepository.findIdOrderById(insertDto);
-	
+
 			// 등급 부여
 			int result = gradeRepository.insertGrade(userId);
-	
+
 			// 포인트 세팅
 			int pointResult = pointRepository.insertZeroPoint(userId);
 		} else {
@@ -150,7 +148,7 @@ public class UserService {
 			String hashPwd = passwordEncoder.encode(insertDto.getPassword());
 			insertDto.setPassword(hashPwd);
 			int result = userRepository.updateUserByOriginEmail(insertDto);
-			if(result != 1) {
+			if (result != 1) {
 				// 오류
 			}
 		}
@@ -163,44 +161,53 @@ public class UserService {
 	@Transactional
 	public UserRequestDto.InsertDto createUserKakao(UserRequestDto.InsertDto insertDto) {
 		// 중복 회원가입 검사 (todo)
-		
-		// 카카오 임시 비밀번호 세팅
-		insertDto.setPassword(dodamKey);
-		
-		int resultRowCount = userRepository.insertKakao(insertDto);
-		if (resultRowCount != 1) {
-			System.out.println("회원가입 서비스 오류");
+
+		// 탈퇴 유저 조회
+		User userEntity = userRepository.findUserByOriginEmail(insertDto.getEmail());
+		if (userEntity == null) {
+			// 카카오 임시 비밀번호 세팅
+			insertDto.setPassword(dodamKey);
+
+			int resultRowCount = userRepository.insertKakao(insertDto);
+			if (resultRowCount != 1) {
+				System.out.println("회원가입 서비스 오류");
+			}
+			// 회원가입 id 검색
+			int userId = userRepository.findIdOrderById(insertDto);
+
+			// 등급 부여
+			int result = gradeRepository.insertGrade(userId);
+
+			// 포인트 세팅
+			int pointResult = pointRepository.insertZeroPoint(userId);
+
+		} else {
+			int result = userRepository.updateUserByOriginEmail(insertDto);
+			if (result != 1) {
+				// 오류
+			}
 		}
-		// 회원가입 id 검색
-		int userId = userRepository.findIdOrderById(insertDto);
-
-		// 등급 부여
-		int result = gradeRepository.insertGrade(userId);
-
-		// 포인트 세팅
-		int pointResult = pointRepository.insertZeroPoint(userId);
-
 		return insertDto;
 	}
-	
+
 	// 회원 탈퇴 서비스 (성희)
 	@Transactional
 	public int deleteUser(String email) {
 		int resultRowCount = 0;
 		// 1. email로 user 조회
 		User user = userRepository.findUserByEmail(email);
-			if(user.getOriginEmail() == null) {
-				// origin email 저장
-				user.setOriginEmail(user.getEmail());
-				// 랜덤 문자열 생성
-				String randomStr = CreateRandomStr.createRandomString();
-				// 원래 이메일 -> 랜덤문자열 이메일로 변경
-				user.setEmail(randomStr+"-"+user.getEmail());
-				resultRowCount = userRepository.deleteUser(user);
-				
-			} else {
-				// 예외처리
-			}
+		if (user.getWithdrawal() == false) {
+			// origin email 저장
+			user.setOriginEmail(user.getEmail());
+			// 랜덤 문자열 생성
+			String randomStr = CreateRandomStr.createRandomString();
+			// 원래 이메일 -> 랜덤문자열 이메일로 변경
+			user.setEmail(randomStr + "-" + user.getEmail());
+			resultRowCount = userRepository.deleteUser(user);
+
+		} else {
+			// 예외처리
+		}
 		return resultRowCount;
 	}
 
@@ -257,5 +264,5 @@ public class UserService {
 		}
 		return resultRow;
 	}
-	
+
 }
