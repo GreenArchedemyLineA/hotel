@@ -16,6 +16,7 @@ public class User {
 	private String gender;
 	private Date birth;
 	private String tel;
+	private String address;
 	private int blacklist;
 	private int withdrawal;
 	private Timestamp createdAt;

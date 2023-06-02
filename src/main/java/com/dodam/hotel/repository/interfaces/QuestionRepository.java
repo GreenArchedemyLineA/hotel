@@ -33,6 +33,9 @@ public interface QuestionRepository {
 	public int updateById(Integer id); 
 	public List<Question> findByCategory(String category);
 	
+	// 매니저 main -  답변 없는 문의사항 개수 조회
+	public int findByStatusCount();
+	
 	// 특정 유저 질문 개수 조회
 	public int findByUserIdCount(Integer userId);
 	

@@ -18,6 +18,7 @@ public class UserResponseDto {
 		private String originEmail;
 		private Boolean randomPwdStatus;
 		private Boolean socialLogin;
+		private String tel;
 	}
 	
 	@Data
@@ -29,6 +30,7 @@ public class UserResponseDto {
 		private String gender;
 		private Date birth;
 		private String tel;
+		private String address;
 	}
 	
 } // end of class

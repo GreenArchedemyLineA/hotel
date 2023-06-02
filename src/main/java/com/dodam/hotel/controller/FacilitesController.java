@@ -57,4 +57,6 @@ public class FacilitesController {
 		model.addAttribute("fitness", fitness);
 		return "/facilities/fitness";
 	}
+	
+
 }

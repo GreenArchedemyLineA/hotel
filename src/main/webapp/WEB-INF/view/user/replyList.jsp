@@ -26,6 +26,9 @@
 				</div>
 				<div class="contentToggle--container">
 					<div class="qna--content--box">
+						<c:if test="${questions.question.uploadFile != null}">
+							<img src="/images/uploads/${questions.question.uploadFile}" width="300" height="200">
+						</c:if>
 						${questions.question.content}
 					</div>
 					<div class="qna--reply--box">

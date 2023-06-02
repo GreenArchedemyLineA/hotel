@@ -267,6 +267,8 @@ input[type="number"]::-webkit-inner-spin-button {
 			<input type="hidden" value="${selectDetail.roomId}" name="roomId"> 
 			<input type="hidden" name="day" id="day--result">
 		<div>
+		<c:choose>
+		<c:when test="${diningStatus.availability == true}">
 			<div class="facilities--detail">
 				<div class="facilities--detail--title">
 					다이닝신청 (조식)
@@ -274,61 +276,99 @@ input[type="number"]::-webkit-inner-spin-button {
 				<!--  <input type="button" onclick='diningCount("minus")' value="-">-->
 				<div class="facilities--detail--option">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol" onclick='diningMinus()'>do_not_disturb_on</span>
+						<span class="material-symbols-outlined symbol" onclick="diningMinus()">do_not_disturb_on</span>
 					</div>
 					<input type="number" id='diningResult' value="0" name="diningCount" min="0" class="count--box">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol" onclick='diningPlus()'>add_circle</span>
+						<span class="material-symbols-outlined symbol" onclick="diningPlus()">add_circle</span>
 					</div> 
 				</div>
 			</div>
-	
+			</c:when>
+			<c:otherwise>
+			<div class="facilities--detail">
+				<div class="facilities--detail--title">
+					${diningStatus.statusDesc}
+				</div>
+				</div>
+			</c:otherwise>
+	</c:choose>
+	<c:choose>
+		<c:when test="${spaStatus.availability == true}">
 			<div class="facilities--detail">
 				<div class="facilities--detail--title">
 					스파신청
 				</div>
 				<div class="facilities--detail--option">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol" onclick='spaMinus()'>do_not_disturb_on</span>
+						<span class="material-symbols-outlined symbol" onclick="spaMinus()">do_not_disturb_on</span>
 					</div>
 					<input type="number" id='spaResult' value="0" name="spaCount" min="0" class="count--box">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol" onclick='spaPlus()'>add_circle</span>
+						<span class="material-symbols-outlined symbol" onclick="spaPlus()">add_circle</span>
 					</div>  
 				</div>
 			</div>
-	
+	</c:when>
+	<c:otherwise>
+		<div class="facilities--detail">
+				<div class="facilities--detail--title">
+					${spaStatus.statusDesc}
+				</div>
+				</div>
+	</c:otherwise>
+	</c:choose>
+	<c:choose>
+	<c:when test="${poolStatus.availability == true}">
 			<div class="facilities--detail">
 				<div class="facilities--detail--title">
 					수영장신청
 				</div>
 				<div class="facilities--detail--option">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol" onclick='poolMinus()'>do_not_disturb_on</span>
+						<span class="material-symbols-outlined symbol" onclick="poolMinus()">do_not_disturb_on</span>
 					</div>
 					<input type="number" id='poolResult' value="0" name="poolCount" min="0" class="count--box">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol" onclick='poolPlus()'>add_circle</span>
+						<span class="material-symbols-outlined symbol" onclick="poolPlus()">add_circle</span>
 					</div> 
 				</div>
 			</div>
-	
+			</c:when>
+			<c:otherwise>
+				<div class="facilities--detail">
+				<div class="facilities--detail--title">
+					${poolStatus.statusDesc}
+				</div>
+				</div>
+			</c:otherwise>
+	</c:choose>
+	<c:choose>
+	<c:when test="${fitnessStatus.availability == true}">
 			<div class="facilities--detail">
 				<div class="facilities--detail--title">
 					피트니스신청
 				</div>
 				<div class="facilities--detail--option">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol" onclick='fitnessMinus()'>do_not_disturb_on</span>
+						<span class="material-symbols-outlined symbol" onclick="fitnessMinus()">do_not_disturb_on</span>
 					</div>
 					<input type="number" id='fitnessResult' value="0" name="fitnessCount" min="0" class="count--box">
 					<div class="icon--box">
-						<span class="material-symbols-outlined symbol" onclick='fitnessPlus()'>add_circle</span>
+						<span class="material-symbols-outlined symbol" onclick="fitnessPlus()">add_circle</span>
 					</div> 
 				</div>
 			</div>
+			</c:when>
+			<c:otherwise>
+				<div class="facilities--detail">
+				<div class="facilities--detail--title">
+					${fitnessStatus.statusDesc}
+				</div>
+				</div>
+			</c:otherwise>
+		 </c:choose>
 		</div>
-		 
 		</div>
 		
 		<div class="info--container">			
@@ -531,7 +571,6 @@ input[type="number"]::-webkit-inner-spin-button {
 		target.addEventListener("change", totalPrice);
 	})
 	
-	
 	function diningMinus() {
 		const resultElement = document.getElementById("diningResult");
 		let number = resultElement.value;
@@ -544,9 +583,13 @@ input[type="number"]::-webkit-inner-spin-button {
 	
 	function diningPlus() {
 		const resultElement = document.getElementById("diningResult");
+		let maxNumber = ${selectDetail.countPerson} + ${selectDetail.countChild} + ${selectDetail.countBaby};
 		let number = resultElement.value;
-		number = parseInt(number) + 1;
-		resultElement.value = number;
+		if(number < maxNumber) {
+			let number = resultElement.value;
+			number = parseInt(number) + 1;
+			resultElement.value = number;
+		}
 		totalPrice();
 	}
 	
@@ -562,9 +605,13 @@ input[type="number"]::-webkit-inner-spin-button {
 	
 	function spaPlus() {
 		const resultElement = document.getElementById("spaResult");
+		let maxNumber = ${selectDetail.countPerson} + ${selectDetail.countChild} + ${selectDetail.countBaby};
 		let number = resultElement.value;
-		number = parseInt(number) + 1;
-		resultElement.value = number;
+		if(number < maxNumber) {
+			let number = resultElement.value;
+			number = parseInt(number) + 1;
+			resultElement.value = number;
+		}
 		totalPrice();
 	}
 	
@@ -572,17 +619,22 @@ input[type="number"]::-webkit-inner-spin-button {
 		const resultElement = document.getElementById("poolResult");
 		let number = resultElement.value;
 		if(number > 0){
-		number = parseInt(number) - 1;
-		resultElement.value = number;
-		totalPrice();
+			number = parseInt(number) - 1;
+			resultElement.value = number;
+			totalPrice();
 		}
 	}
 	
+	
 	function poolPlus() {
 		const resultElement = document.getElementById("poolResult");
+		let maxNumber = ${selectDetail.countPerson} + ${selectDetail.countChild} + ${selectDetail.countBaby};
 		let number = resultElement.value;
-		number = parseInt(number) + 1;
-		resultElement.value = number;
+		if(number < maxNumber) {
+			let number = resultElement.value;
+			number = parseInt(number) + 1;
+			resultElement.value = number;
+		}
 		totalPrice();
 	}
 	
@@ -598,9 +650,13 @@ input[type="number"]::-webkit-inner-spin-button {
 	
 	function fitnessPlus() {
 		const resultElement = document.getElementById("fitnessResult");
+		let maxNumber = ${selectDetail.countPerson} + ${selectDetail.countChild} + ${selectDetail.countBaby};
 		let number = resultElement.value;
-		number = parseInt(number) + 1;
-		resultElement.value = number;
+		if(number < maxNumber) {
+			let number = resultElement.value;
+			number = parseInt(number) + 1;
+			resultElement.value = number;
+		}
 		totalPrice();
 	}
 	
@@ -681,6 +737,5 @@ input[type="number"]::-webkit-inner-spin-button {
 	}
 
 </script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>
 

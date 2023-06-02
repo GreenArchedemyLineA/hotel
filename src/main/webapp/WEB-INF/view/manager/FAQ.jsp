@@ -1,34 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
-<<<<<<< HEAD
-<style>	
-	.faq--title--wrap {
-		display: flex;
-	}
-	
-	.faq--toggle--title {
-		display: flex;
-		cursor: pointer;
-		background-color: #ebebeb;
-		margin-bottom: 10px;
-	}
-	
-	.faq--content {
-		display: none;
-	}
-	
-	.toggle--content {
-		display: block;
-	}
-	
-	.faq--number {
-		width: 50px;
-		font-size: 20px;
-	}
-	
-	.faq--title {
-		font-size: 20px;
-	}
+<style>
+.faq--title--wrap {
+	display: flex;
+}
+
+.faq--toggle--title {
+	display: flex;
+	cursor: pointer;
+	background-color: #ebebeb;
+	margin-bottom: 10px;
+}
+
+.faq--content {
+	display: none;
+}
+
+.toggle--content {
+	display: block;
+}
+
+.faq--number {
+	width: 50px;
+	font-size: 20px;
+}
+
+.faq--title {
+	font-size: 20px;
+}
+
+.content {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+}
+.sub-button {
+	background-color: #000;
+	color: #fff;
+	width: 100px;
+	height: 40px;
+	margin: 20px 10px;
+}
+.button--box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+	width: 100%;
+}
 </style>
 <div class="content">
 	<h2>FAQ</h2>
@@ -54,37 +75,9 @@
 				</div>
 		</div>
 	</div>
-	
 </div>
-<<<<<<< HEAD
-	<div class="modal" id="insertFaq">
-		<div class="modal-dialog">
-			<div class="modal-content">
-	
-				<div class="modal-header">
-					<h4 class="modal-title">FAQ 등록하세요</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-	
-				<div>
-					<form action="/event/event-insert" method="post">
-						<label>제목</label>
-						<input type="text" name="title">
-						<br> 
-						<label>내용</label> 
-						<input type="text" name="content"> 
-						<br> 
-						<button type="submit" class="btn btn-primary">등록</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
+</main>
 <script>
-	function detailFAQForm(id) {
-		location.href = "/manager/faq/" + id;
-	}
 	function detailFAQForm(id) {
 		location.href = "/manager/faq/" + id;
 	}
@@ -102,8 +95,7 @@
 	
 	  function updateFAQ(id){
 	        location.href = "/manager/faq/update/"+ id;
-	  }
-
+	    }
 	  function deleteFAQ(id){
 	        if(confirm("삭제하시겠습니까?")){
 	            fetch("/manager/delete/faq?id=" + id,{
@@ -120,7 +112,6 @@
 	                location.href = response.redirect_uri;
 	            });
 	        }
-	    }
+	    };
 </script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

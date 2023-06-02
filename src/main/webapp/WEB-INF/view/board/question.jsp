@@ -1,28 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
-<<<<<<< HEAD
-	<div class="content">
-		<div class="main">
-			<h2>문의사항</h2>
-			<div class="main--content">
-				<button type="button" onclick="location.href='/question/questionList'">돌아가기</button>
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">문의 제목</th>
-						<th scope="col">문의자 아이디</th>
-						<th scope="col">답변 상태값</th>
-						<th scope="col">답변하기/삭제</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="questionList" items="${questionList}">
-						<tr>
-							<td>${questionList.title}</td>
-							<td>${questionList.userId}</td>
-							<td>${questionList.status}</td>
-							<c:choose>
-=======
 <style>
 .content {
 	width: 100%;
@@ -73,7 +50,6 @@
 						<td>${questionList.userId}</td>
 						<td>${questionList.status}</td>
 						<c:choose>
->>>>>>> 6d8f4a5185a849b29afaeaf9ade24cd89464f6c7
 							<c:when test="${questionList.status != true}">
 								<td><button onclick="questionDetail(${questionList.id})" class="sub--button">답변</button></td>
 							</c:when>
@@ -105,6 +81,7 @@
 		</div>
 	</div>
 </div>
+</main>
 <script>
 	function questionDetail(id){
 		location.href = "/question/questionDetail/"+id; 
@@ -113,5 +90,4 @@
 		location.href = "/question/questionDelete/"+id; 
 	}
 </script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

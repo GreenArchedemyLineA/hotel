@@ -8,7 +8,7 @@ public class DateFormat {
 	public static String dateFormat(Timestamp date) {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		String formatDate = sdf.format(date);
 		
 		return formatDate;

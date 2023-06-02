@@ -65,6 +65,5 @@ align-items: center;
 </div>
 </div>
 </main>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>
 

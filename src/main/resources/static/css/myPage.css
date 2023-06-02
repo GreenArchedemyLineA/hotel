@@ -291,6 +291,7 @@
 	display: flex;
 	flex-direction: column;
 	display: none;
+	height: 300px;
 }
 
 .qna--title--box {
@@ -361,5 +362,10 @@ a:hover {
 
 .toggle--content {
 	display: block;	
+}
+
+#no--reservation {
+	display: flex;
+	justify-content: center;
 }
 

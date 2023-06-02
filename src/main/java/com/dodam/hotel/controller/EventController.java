@@ -1,5 +1,7 @@
 package com.dodam.hotel.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +34,32 @@ public class EventController {
 		return "/board/eventNotice"; 
 	}
 	
+	// 진행중인 이벤트 페이지
+	@GetMapping("/eventBoard/onGoing")
+	public String onGoingEventBoard(Model model, 
+			@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
+			,@RequestParam(name ="cntPerPage", defaultValue = "4", required=false)String cntPerPage) {
+		int total = eventService.countOnGoingEvent();
+		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		List<Event> viewAll = eventService.readOnGoingEvent(obj);
+		model.addAttribute("paging", obj);
+		model.addAttribute("viewAll", viewAll);
+		return "/user/onGoingEvent";
+	}
+	
+	// 종료된 이벤트 페이지
+	@GetMapping("/eventBoard/closed")
+	public String closedEventBoard(Model model, 
+			@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
+			,@RequestParam(name ="cntPerPage", defaultValue = "4", required=false)String cntPerPage) {
+		int total = eventService.countClosedEvent();
+		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		List<Event> viewAll = eventService.readClosedEvent(obj);
+		model.addAttribute("paging", obj);
+		model.addAttribute("viewAll", viewAll);
+		return "/user/closedEvent";
+	}
+	
 	@PostMapping("/event-insert")
 	public String eventWrite(NoticeInsertForm noticeInsertForm) {
 		int event = eventService.insertEvent(noticeInsertForm);
@@ -44,7 +72,6 @@ public class EventController {
 	@GetMapping("/updateEventPage/{id}")
 	public String updateEventPage(@PathVariable Integer id,Model model) {
 		Event event = eventService.findById(id);
-		System.out.println(event);
 		if (event != null) {
 			model.addAttribute("event", event);
 		}

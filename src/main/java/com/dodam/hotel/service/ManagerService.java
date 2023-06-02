@@ -41,13 +41,16 @@ public class ManagerService {
 		return resultCount;
 	}
 
-	public List<Room> findAllRoomList(PagingObj obj) {
-		List<Room> rooms = roomRepository.findAllRoomListPaging(obj);
+	public List<Room> findAllRoomList() {
+		List<Room> rooms = roomRepository.findAllRoomList();
 		return rooms;
 	}
 
 	public List<Room> findConditionsRoomList(StatusParams statusParams) {
 		Boolean roomStatus = statusParams.getRoomStatus();
+		if(roomStatus == null) {
+			statusParams.setRoomStatus(false);
+		}
 		Integer numberOfp = statusParams.getNumberOfP();
 		Integer price = statusParams.getPrice();
 

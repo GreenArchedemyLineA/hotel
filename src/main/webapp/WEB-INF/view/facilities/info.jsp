@@ -39,8 +39,5 @@
 			</a>
 		</div>
 	</div>
-	<form></form>
 </div>
-
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

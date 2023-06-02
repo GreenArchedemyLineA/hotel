@@ -33,6 +33,13 @@ public class EventService {
 		List<Event> eventListEntity = eventRepository.findByAllPage(obj);
 		return eventListEntity;
 	}
+	
+	// 행사 일정 메인 리스트 조회
+	public List<Event> findByIdLimit() {
+		List<Event> eventListEntity = eventRepository.findLimit5();
+		return eventListEntity;
+	}
+
 	//행사 일정 리스트 숫자
 	public Integer countEvent() {
 		return eventRepository.count();
@@ -55,4 +62,33 @@ public class EventService {
 		int eventDeleteEntity = eventRepository.deleteById(id);
 		return eventDeleteEntity;
 	}
+	
+	// 진행중인 이벤트 조회 - 현우
+	public List<Event> readOnGoingEvent(PagingObj obj) {
+		List<Event> events = eventRepository.findNowEventByPage(obj);
+		return events;
+	}
+	
+	// 진행중인 이벤트 조회 - 현우
+	public List<Event> readAllOnGoingEvent() {
+		List<Event> events = eventRepository.findNowEvent();
+		return events;
+	}
+	
+	// 진행중인 리스트 숫자 - 현우
+	public Integer countOnGoingEvent() {
+		return eventRepository.findByNowAll();
+	}
+	
+	// 종료된 이벤트 조회 - 현우
+	public List<Event> readClosedEvent(PagingObj obj) {
+		List<Event> events = eventRepository.findByPrevEventPage(obj);
+		return events;
+	}
+	
+	// 종료된 리스트 숫자 - 현우
+	public Integer countClosedEvent() {
+		return eventRepository.findByPrevAll();
+	}
+	
 }

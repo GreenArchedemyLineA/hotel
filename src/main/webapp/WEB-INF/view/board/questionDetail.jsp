@@ -53,6 +53,11 @@
 				</div>
 		</div>
 	</div>
+<<<<<<< HEAD
+</div>
+<%@ include file="../layout/footer.jsp"%>
+=======
 </body>
 </html>
+>>>>>>> manager/css
 

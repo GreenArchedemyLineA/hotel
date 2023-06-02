@@ -83,5 +83,4 @@
 		location.href = "/manager/userDetail/"+id; 
 	}
 </script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

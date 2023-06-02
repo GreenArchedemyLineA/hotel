@@ -106,8 +106,4 @@ main {
 			</div>
 		</div>
 	</main>
-	<script type="text/javascript">
-		
-	</script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

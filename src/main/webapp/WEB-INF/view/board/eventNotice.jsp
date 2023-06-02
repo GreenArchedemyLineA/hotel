@@ -52,6 +52,10 @@
 	border-bottom: 2px solid #ebebeb;
 	margin: 10px;
 }
+.modal-content {
+	width: 700px;
+	height: 300px;
+}
 </style>
 	<div class="content">
 	<h2>일정</h2>
@@ -113,21 +117,6 @@
 				</div>
 	
 				<div>
-<<<<<<< HEAD
-					<form action="/event/event-insert" method="post">
-						<label>일정 시작 날짜</label>
-						<input type="text" name="startDate" value="2015-10-13">
-						<br> 
-						<label>일정 종료 날짜</label> 
-						<input type="text" name="endDate" value="2015-10-13"> 
-						<br> 
-						<label>제목</label>
-						<input type="text" name="title"> 
-						<br> 
-						<label>내용</label> 
-						<input type="text" name="content" value="asdasdasdasd">
-						<button type="submit" class="btn btn-primary">작성</button>
-=======
 					<form action="/event/event-insert" method="post" class="form--container">
 						<div>
 							<label>제목</label>
@@ -146,12 +135,12 @@
 							<input type="text" name="endDate" value="2015-10-13" class="input--box">
 						</div>
 						<button type="submit" class="sub--button">작성</button>
->>>>>>> 6d8f4a5185a849b29afaeaf9ade24cd89464f6c7
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+	</main>
 <script>
 	function eventDetail(id){
 		location.href = "/event/updateEventPage/"+id; 
@@ -161,6 +150,5 @@
 	}
 </script>
 
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>
 

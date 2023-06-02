@@ -10,6 +10,33 @@
 		display: flex;
 		align-items: center;
 	}
+	.allInOne {
+		display: flex;
+		flex-wrap: wrap;
+		width: 1300px;
+		justify-content: center;
+		margin-bottom: 30px;
+		margin-top: 30px;
+	}
+	
+	.rooms--wrap {
+		margin: 0 10px;
+	}
+	
+	.rooms--info {
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	.rooms--name {
+		font-size: 20px;
+		font-weight: bolder;
+	}
+	
+	.rooms--nop {
+		font-size: 18px;
+	}
+	
 </style>
 </head>
 <body>
@@ -22,6 +49,7 @@
 						<span onclick="location.href='/room'" style="margin-left: 10px; cursor: pointer;">펼쳐보기</span>
 						<span style="margin-left: 10px; margin-right: 10px;"> | </span>
 						<span style="cursor: pointer;" onclick="location.href='/room?type=AllInOne'">모아보기</span>
+						
 					</div>
 				</c:if>
 			</div>
@@ -51,20 +79,32 @@
 				</div>
 		</div>
 		<div class="main--container">
-			<div>
-				<c:forEach var="roomList" items="${roomList}">
-						<div class="info--container">
-							<a href="/detailRoom/${roomList.id}">
-								<img alt="디럭스" src="images/${roomList.image}" style="width: 1000px; height: 500px;">
-							</a>
-							<div class="info--outline">
-								<p class="title--box">${roomList.name}</p>
-								<p class="desc--box"> | ${roomList.numberOfP}인</p>
-							</div>
+			<div class="allInOne">
+				<c:forEach var="roomList" items="${roomList}" begin="0" end="1" step="1">
+					<div class="rooms--wrap">
+						<a href="/detailRoom/${roomList.id}">
+							<img alt="디럭스" src="images/${roomList.image}" style="width: 400px; height: 250px;">
+						</a>
+						<div class="rooms--info">
+							<p class="rooms--name">${roomList.name}</p>
+							<p class="rooms--nop">${roomList.numberOfP}인</p>
 						</div>
+					</div>
+				</c:forEach>
+			</div>
+			<div class="allInOne">
+				<c:forEach var="roomList" items="${roomList}" begin="2" end="4" step="1">
+					<div class="rooms--wrap">
+						<a href="/detailRoom/${roomList.id}">
+							<img alt="디럭스" src="images/${roomList.image}" style="width: 400px; height: 250px;">
+						</a>
+						<div class="rooms--info">
+							<p class="rooms--name">${roomList.name}</p>
+							<p class="rooms--nop">${roomList.numberOfP}인</p>
+						</div>
+					</div>
 				</c:forEach>
 			</div>
 		</div>
 	</div>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

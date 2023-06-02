@@ -1,5 +1,6 @@
 package com.dodam.hotel.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -10,13 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.dto.UserResponseDto.LoginResponseDto;
 import com.dodam.hotel.repository.model.Point;
+import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.util.Define;
+import com.dodam.hotel.util.PagingObj;
 import com.dodam.hotel.util.ReservationOptionPrice;
 
 @Controller
@@ -70,6 +74,10 @@ public class ReservationController {
 		model.addAttribute("poolPrice", reservationOptionPrice.getPoolPrice());
 		model.addAttribute("fitnessPrice", reservationOptionPrice.getFitnessPrice());
 		
+		model.addAttribute("diningStatus", reservationService.diningStatus().get(0));
+		model.addAttribute("fitnessStatus", reservationService.fitnessStatus().get(0));
+		model.addAttribute("poolStatus", reservationService.poolStatus().get(0));
+		model.addAttribute("spaStatus", reservationService.spaStatus().get(0));
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		selectReserveDetail.setUserId(principal.getId());
 		Map<String, Object> selectList = reservationService.useCouponOrPoint(selectReserveDetail);
@@ -88,9 +96,29 @@ public class ReservationController {
 		int resultRowCount = reservationService.createReserveRoom(requestDto, principal.getId());
 		return "redirect:/";
 	}
-	@GetMapping("/reservation/success")
-	public String successReservation(){
-		return "/pay/paySuccess";
+	
+	// 특정 유저 예약 현황 - 현우
+	@GetMapping("/myReservations")
+	public String myReservations(Model model,
+			@RequestParam(name = "nowPage", defaultValue = "1", required = false) String nowPage,
+			@RequestParam(name = "cntPerPage", defaultValue = "5", required = false) String cntPerPage) {
+		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto) session
+				.getAttribute(Define.PRINCIPAL);
+
+		int total = reservationService.readAllReservationByUserIdCount(principal.getId());
+
+		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+
+		List<Reservation> reservations = reservationService.readAllResrevationByUserIdPaging(po, principal.getId());
+		model.addAttribute("paging", po);
+		if(reservations.size() == 0) {
+			model.addAttribute("reservations", null);
+		}else {
+			model.addAttribute("reservations", reservations);
+		}
+		return "/user/reservationList";
 	}
+	
+
 }
 

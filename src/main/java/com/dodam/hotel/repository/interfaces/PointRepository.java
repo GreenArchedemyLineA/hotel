@@ -1,6 +1,7 @@
 package com.dodam.hotel.repository.interfaces;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.dodam.hotel.repository.model.Point;
 
@@ -18,6 +19,6 @@ public interface PointRepository {
 	public Integer findByUserId(Integer userId);
 
 	// 포인트 적립 & 사용
-	int insertPoint(Integer point, Integer userId);
+	int insertPoint(@Param("point") Integer point, @Param("userId") Integer userId);
 
 }

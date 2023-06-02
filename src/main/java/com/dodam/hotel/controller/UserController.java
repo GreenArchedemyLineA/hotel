@@ -2,6 +2,7 @@ package com.dodam.hotel.controller;
 
 import java.util.List;
 
+
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
@@ -19,11 +20,13 @@ import com.dodam.hotel.dto.TestDto;
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.repository.model.Coupon;
+import com.dodam.hotel.repository.model.Event;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.Reply;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.CouponService;
+import com.dodam.hotel.service.EventService;
 import com.dodam.hotel.service.GradeService;
 import com.dodam.hotel.service.QuestionService;
 import com.dodam.hotel.service.ReservationService;
@@ -55,10 +58,15 @@ public class UserController {
 
 	@Autowired
 	private JavaMailSenderImpl mailSender;
+	
+	@Autowired
+	private EventService eventService;
 
 	// 메인 페이지 (성희)
 	@GetMapping({ "", "/" })
-	public String mainPage() {
+	public String mainPage(Model model) {
+		List<Event> events = eventService.readAllOnGoingEvent();
+		model.addAttribute("events", events);
 		return "/main";
 	}
 
@@ -89,7 +97,8 @@ public class UserController {
 	public String loginProc(UserRequestDto.LoginFormDto loginDto) {
 		UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(loginDto);
 		session.setAttribute(Define.PRINCIPAL, principal);
-
+		session.setAttribute("tel", principal.getTel());
+		System.out.println(session.getAttribute("tel"));
 		if (principal.getRandomPwdStatus()) {
 			return "/user/changePw";
 		}
@@ -122,6 +131,8 @@ public class UserController {
 	public String myPageProc(UserRequestDto.MyPageFormDto myPageDto) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto) session
 				.getAttribute(Define.PRINCIPAL);
+		String address = myPageDto.getAddress() + " " + myPageDto.getDetailAddress();
+		myPageDto.setAddress(address);
 		User responseUser = userService.updateUser(myPageDto);
 
 		// 비밀번호 수정 시, DB 비밀번호랑 맞는지 확인 (암호화 처리 예정) - 다를경우 바뀐 비밀번호로 세팅
@@ -140,14 +151,16 @@ public class UserController {
 
 	// 회원가입 처리 (성희)
 	@PostMapping("/join")
-	public String join(UserRequestDto.insertDto insertDto) {
+	public String join(UserRequestDto.InsertDto insertDto) {
+		String address = insertDto.getAddress() + " " + insertDto.getDetailAddress();
+		insertDto.setAddress(address);
 		userService.createUser(insertDto);
 		return "redirect:/";
 	}
 
 	// 카카오 회원가입 처리 (성희)
 	@PostMapping("/kakaoJoin")
-	public String kakaoJoin(UserRequestDto.insertDto insertDto) {
+	public String kakaoJoin(UserRequestDto.InsertDto insertDto) {
 		insertDto.setSocialLogin(true);
 		userService.createUserKakao(insertDto);
 		return "redirect:/";
@@ -238,23 +251,7 @@ public class UserController {
 		return "redirect:/pwInquiryPage";
 	}
 
-	@GetMapping("/myReservations")
-	public String myReservations(Model model,
-			@RequestParam(name = "nowPage", defaultValue = "1", required = false) String nowPage,
-			@RequestParam(name = "cntPerPage", defaultValue = "5", required = false) String cntPerPage) {
-		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto) session
-				.getAttribute(Define.PRINCIPAL);
-
-		int total = reservationService.readAllReservationByUserIdCount(principal.getId());
-
-		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-
-		List<Reservation> reservations = reservationService.readAllResrevationByUserIdPaging(po, principal.getId());
-		model.addAttribute("paging", po);
-		model.addAttribute("reservations", reservations);
-		return "/user/reservationList";
-	}
-
+	// 유저가 쓴 reply 확인 - 현우
 	@GetMapping("/myReplys")
 	public String myReply(Model model,
 			@RequestParam(name = "nowPage", defaultValue = "1", required = false) String nowPage,
@@ -267,6 +264,7 @@ public class UserController {
 		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
 		List<Reply> questions = questionService.readQuestionByUserIdPaging(po, principal.getId());
+		System.out.println(questions);
 		model.addAttribute("paging", po);
 		model.addAttribute("questions", questions);
 		return "/user/replyList";

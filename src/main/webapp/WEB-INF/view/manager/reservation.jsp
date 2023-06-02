@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../layout/managerHeader.jsp"%>
 <style>
 .content {
@@ -10,7 +11,9 @@
 	background-color: #ebebeb;
 	height: 20px;
 }
-
+.table-tr:hover {
+	cursor: pointer;
+}
 .table--tr, .table-tr {
 	text-align: center;
 }
@@ -87,7 +90,7 @@
 										<td>${reservation.startDate}</td>
 										<td>${reservation.endDate}</td>
 										<td>${reservation.numberOfP}</td>
-										<td>${reservation.room.id != null ? reservation.id : ""}${reservation.room != null ? "-" : ""}${reservation.room.roomType.name != null ?  reservation.room.roomType.name : "❌"}</td>
+										<td>${reservation.room.id != null ? reservation.room.id : ""}${reservation.room != null ? "-" : ""}${reservation.room.roomType.name != null ?  reservation.room.roomType.name : "❌"}</td>
 										<td>${reservation.dining.name != null ? reservation.dining.name : "❌"}</td>
 										<td>${reservation.fitnessId != null ? reservation.fitnessId : "❌"}</td>
 										<td>${reservation.poolId != null ? reservation.poolId : "❌"}</td>
@@ -104,10 +107,14 @@
 						</c:choose>
 					</tbody>
 				</table>
+				오늘 매출 : ${totalPrice} 원
+				<c:forEach var="price" items="${price}" varStatus="status">
+					<p> ${status.index+1}일전 매출 :${price}원</p>
+				</c:forEach>
 			</div>
 		</div>
 	</div>
-
+</main>
 	<script>
 	    function detailReservation(id){
 	        let e = window.event;
@@ -134,6 +141,5 @@
 	        }
 	    }
 	</script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>
 	
