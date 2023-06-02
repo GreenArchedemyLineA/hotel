@@ -22,9 +22,9 @@ public class PayRepositoryTest {
         String tid = reservation.getPayTid();
         Pay payInfo = payRepository.findByTidPay(tid);
         Integer point = payInfo.getPrice();
-        if(Grade.DIA.equals(payInfo.getGrade())){
+        if(Grade.DIA.equals(payInfo.getGradeName())){
             point = Integer.valueOf((int) Math.round(point * 0.07));
-        }else if(Grade.GOLD.equals(payInfo.getGrade())){
+        }else if(Grade.GOLD.equals(payInfo.getGradeName())){
             point = Integer.valueOf((int) Math.round(point * 0.05));
         }else{
             point = Integer.valueOf((int) Math.round(point * 0.04));
