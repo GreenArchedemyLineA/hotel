@@ -61,6 +61,8 @@
 							<input class="input--box" name="tel" type="text" value="${responseUser.tel}">
 						</div>
 						<input class="sub--button" type="submit" value="정보 수정">
+						<input class="sub-button" type="submit" value="회원 탈퇴">
+						<button onclick="withdrawUser()"></button>
 					</form>
 				</div>
 			</div>

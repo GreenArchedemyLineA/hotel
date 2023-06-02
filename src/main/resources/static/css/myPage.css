@@ -7,6 +7,14 @@
 	margin: 0;
 	padding: 0;
 }
+.sub-button {
+	background-color: #ebebeb;
+	border: none;
+	width: 350px;
+	height: 40px;
+	margin: 20px;
+	cursor: pointer;
+}
 
 .main--container {
 	display: flex;
@@ -74,7 +82,7 @@
 	color: #fff;
 	width: 350px;
 	height: 40px;
-	margin: 20px;
+	margin: 20px 0 10px 0;
 	cursor: pointer;
 }
 

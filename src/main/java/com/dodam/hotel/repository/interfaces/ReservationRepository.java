@@ -43,7 +43,7 @@ public interface ReservationRepository {
 	List<DiningReservation> reservationFindDining(Date date);
 
 	// 오늘 예약 매출 조회
-	public int findTodayTotalPrice();
+	public Integer findTodayTotalPrice();
 
 	// 이전 매출 조회
 	public Integer findBeforeTotalPrice(Integer count);

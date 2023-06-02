@@ -94,10 +94,9 @@ public class ApiController {
 	 *  구글 차트 ajax 작업
 	 */
 	// 매출 조회
-	@RequestMapping(value="/totalPrice")
-	@ResponseBody
+	@GetMapping("/totalPrice")
 	public List<Integer> totalPrice() {
-	    int totalPrice = managerReservationService.readBeforeTodayTotalPrice();
+	    Integer totalPrice = managerReservationService.readBeforeTodayTotalPrice();
 	    List<Integer> price = new ArrayList<>();
 	    for (int i = 6; i > 0; i--) {
 	        Integer beforeTotalPrice = managerReservationService.readBeforeTotalPrice(i);
@@ -107,18 +106,6 @@ public class ApiController {
 	        price.add(beforeTotalPrice);
 	    }
 	    price.add(totalPrice);
- 
-	    for (int i = 0; i < price.size(); i++) {
-			System.out.println(price);
-		}
 	    return price;
 	}
-	/*
-	 * @GetMapping("/totalPrice") public List<Integer> totalPrice() { int totalPrice
-	 * = managerReservationService.readBeforeTodayTotalPrice(); List<Integer> price
-	 * = new ArrayList<>(); for (int i = 1; i < 7; i++) { Integer beforetotalPrice =
-	 * managerReservationService.readBeforeTotalPrice(i); if (beforetotalPrice ==
-	 * null) { beforetotalPrice = 0; } price.add(beforetotalPrice); }
-	 * price.add(totalPrice); return price; }
-	 */
 } // end of class

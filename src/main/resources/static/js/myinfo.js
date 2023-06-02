@@ -129,15 +129,21 @@ class MyInfoJs {
 				divAddressTag.append(inputAddressTag);
 				inputAddressTag.value = data.address;
 				
-				// input submit
-				const inputBtnTag = document.createElement("input");
-				inputBtnTag.className = "sub--button";
-				inputBtnTag.type = "submit";
-				inputBtnTag.value = "정보 수정";
+				// input update submit
+				const updateBtnTag = document.createElement("input");
+				updateBtnTag.className = "sub--button";
+				updateBtnTag.type = "submit";
+				updateBtnTag.value = "정보 수정";
+				
+				// input withdraw submit
+				const withdrawBtnTag = document.createElement("input");
+				withdrawBtnTag.className = "sub-button";
+				withdrawBtnTag.type = "submit";
+				withdrawBtnTag.value = "회원 탈퇴";
 
 
 				const childNodeArray = [
-					divEmailTag, divPasswordTag, divNameTag, divGenderTag, divBirthTag, divAddressTag, divTelTag, inputBtnTag
+					divEmailTag, divPasswordTag, divNameTag, divGenderTag, divBirthTag, divAddressTag, divTelTag, updateBtnTag, withdrawBtnTag
 				];
 
 				childNodeArray.forEach((node) => {
@@ -156,50 +162,6 @@ class MyInfoJs {
 		}).then(async (response) => {
 			let data = await response.json();
 
-			// 세션 값 넘어감
-			/*const iframeTag = document.createElement("iframe");
-			iframeTag.setAttribute("src", "/myPage");
-			this.userInfoDiv.append(iframeTag);*/
-			/*this.buttonCoupons.textContent = `쿠폰함(${data.length})`;
-			this.buttonCoupons.textContent = `쿠폰함 (${data.length})`;
-			for (let i = 0; i < data.length; i++) {
-				const couponDivTag = document.createElement("div");
-				couponDivTag.className = "coupon--container";
-				
-				const colorDivTag = document.createElement("div");
-				colorDivTag.className = "color--container";
-				const imgTag = document.createElement("img");
-				imgTag.src = "/images/white_logo.png";
-				imgTag.width = "180";
-				imgTag.height = "50";
-				colorDivTag.append(imgTag);
-				
-				const couponInfoDivTag = document.createElement("div");
-				couponInfoDivTag.className = "coupon--info--container";
-				const nameDivTag = document.createElement("div");
-				nameDivTag.className = "coupon--name--container";
-				const contentDivTag = document.createElement("div");
-				contentDivTag.className = "coupon--content--container";
-				const dateDivTag = document.createElement("div");
-				dateDivTag.className = "coupon--date--container";
-				const startDateDivTag = document.createElement("div");
-				const endDateDivTag = document.createElement("div");
-
-				nameDivTag.textContent = data[i].couponInfo.name;
-				contentDivTag.textContent = data[i].couponInfo.content;
-				startDateDivTag.textContent = data[i].startDate;
-				nameDivTag.textContent = data[i].couponType.name;
-				contentDivTag.textContent = data[i].couponType.content;
-				startDateDivTag.textContent = "유효기간: " + data[i].startDate+" - ";
-				endDateDivTag.textContent = data[i].endDate;
-				
-
-				const childNodeArray = [colorDivTag, couponInfoDivTag];
-				childNodeArray.forEach((node) => {
-					couponDivTag.append(node);
-				});
-			};*/
-			
 			
 			const couponListPage = document.createElement("iframe");
 			couponListPage.src = "/couponList";
@@ -230,75 +192,7 @@ class MyInfoJs {
 			reservationListPage.height = "500px";
 			reservationListPage.frameBorder = "0";
 			this.userInfoDiv.append(reservationListPage);
-			/*const tableTag = document.createElement("table");
 
-			const tableTag = document.createElement("table");
-			tableTag.className = "table--container";
-			const reservationTrTag = document.createElement("tr");
-			reservationTrTag.id = "title--tr--container";
-			const titleStartDateTdTag = document.createElement("td");
-			const titleEndDateTdTag = document.createElement("td");
-			const titleRoomNameTdTag = document.createElement("td");
-			const titleNumberOfPTdTag = document.createElement("td");
-			const titleTotalPriceTdTag = document.createElement("td");
-			const titleCreatedAtTdTag = document.createElement("td");
-			titleStartDateTdTag.textContent = "체크인";
-			titleEndDateTdTag.textContent = "체크아웃";
-			titleRoomNameTdTag.textContent = "룸 / 패키지명";
-			titleNumberOfPTdTag.textContent = "인원";
-			titleTotalPriceTdTag.textContent = "금액";
-			titleCreatedAtTdTag.textContent = "결제일";
-			
-			
-			const childNodeArray2 = [titleStartDateTdTag, titleEndDateTdTag, titleRoomNameTdTag,
-				titleNumberOfPTdTag, titleTotalPriceTdTag, titleCreatedAtTdTag];
-
-			childNodeArray2.forEach((node) => {
-				reservationTrTag.append(node);
-			});
-			
-			tableTag.append(reservationTrTag);
-			
-			this.userInfoDiv.append(tableTag);
-			
-			for (let i = 0; i < data.length; i++) {
-				// 예약한 날짜 format
-				let createdAt = data[i].createdAt.split("T");
-				
-				const reservationTrTag = document.createElement("tr");
-				reservationTrTag.className = "table--tr--container";
-				const startDateTdTag = document.createElement("td");
-				const endDateTdTag = document.createElement("td");
-				const roomNameTdTag = document.createElement("td");
-				const numberOfPTdTag = document.createElement("td");
-				const totalPriceTdTag = document.createElement("td");
-				const createdAtTdTag = document.createElement("td");
-				if (data[i].room != null) {
-					startDateTdTag.textContent = data[i].startDate;
-					endDateTdTag.textContent = data[i].endDate;
-					roomNameTdTag.textContent = data[i].room.roomType.name;
-					numberOfPTdTag.textContent = data[i].numberOfP;
-					totalPriceTdTag.textContent = data[i].totalPrice;
-					createdAtTdTag.textContent = createdAt[0];
-				} else {
-					startDateTdTag.textContent = data[i].startDate;
-					endDateTdTag.textContent = data[i].endDate;
-					roomNameTdTag.textContent = data[i].h_package.name;
-					numberOfPTdTag.textContent = data[i].numberOfP;
-					totalPriceTdTag.textContent = data[i].totalPrice;
-					createdAtTdTag.textContent = createdAt[0];
-				}
-				
-				const childNodeArry = [startDateTdTag, endDateTdTag, roomNameTdTag,
-				numberOfPTdTag, totalPriceTdTag, createdAtTdTag];
-				
-				childNodeArry.forEach((node) => {
-					reservationTrTag.append(node);
-				});
-				
-				tableTag.append(reservationTrTag);
-				
-			};*/
 		});
 	};
 	
@@ -311,70 +205,7 @@ class MyInfoJs {
 			method: "GET"
 		}).then(async (response) => {
 			let data = await response.json();
-			/*console.log(data);
-				const totalDivTag = document.createElement("div");
-				totalDivTag.className = "total--container";	
-			for(let i = 0; i < data.length; i++) {
-				let createdAt = data[i].question.createdAt.split("T");
-				const questionDivTag = document.createElement("div");
-				questionDivTag.className = "question--container";				
-				const titleContainerDivTag = document.createElement("div");
-				titleContainerDivTag.className = "titleToggle--container";
-				const titleDivTag = document.createElement("div");
-				titleDivTag.id = "qna--title--box";
-				const contentContainerDivTag = document.createElement("div");
-				contentContainerDivTag.className = "contentToggle--container";
-				const contentDivTag = document.createElement("div");
-				contentDivTag.id = "qna--content--box";
-				const replyContentDivTag = document.createElement("div");
-				replyContentDivTag.id = "qna--reply--box";
-				const createdAtDivTag = document.createElement("div");
-				const toggleButtonTag = document.createElement("span");
-				
-				titleDivTag.textContent = data[i].question.title;
-				contentDivTag.innerHTML = data[i].question.content;
-				contentDivTag.className = "hidden";
-				replyContentDivTag.textContent = "답변: " +data[i].content;	
-				replyContentDivTag.className = "hidden";
-				createdAtDivTag.textContent = createdAt[0];
-				toggleButtonTag.textContent = "expand_more";
-				toggleButtonTag.className = "material-symbols-outlined";
-				toggleButtonTag.id="toggle-button"
-				toggleButtonTag.setAttribute("id", "toggleBtn" + i);
-				
-				const childNodeArray = [questionDivTag];
 
-				childNodeArray.forEach((node) => {
-					totalDivTag.append(node);
-				});
-				
-				const childNodeArray1 = [titleContainerDivTag , contentContainerDivTag];
-
-				childNodeArray1.forEach((node) => {
-					questionDivTag.append(node);
-				});
-				
-				const childNodeArray2 = [createdAtDivTag, titleDivTag, toggleButtonTag];
-
-				childNodeArray2.forEach((node) => {
-					titleContainerDivTag.append(node);
-				});
-				
-				const childNodeArray3 = [contentDivTag, replyContentDivTag];
-
-				childNodeArray3.forEach((node) => {
-					contentContainerDivTag.append(node);
-				});
-				this.userInfoDiv.append(totalDivTag);
-				
-				
-				let el = document.getElementById("toggleBtn" + i);
-				
-				el.addEventListener('click', function() {
-					replyContentDivTag.classList.toggle('hidden');
-					contentDivTag.classList.toggle('hidden');
-				});
-			};*/
 			const replyListPage = document.createElement("iframe");
 			replyListPage.src = "/myReplys";
 			replyListPage.scrolling = "no";
