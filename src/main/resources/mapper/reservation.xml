@@ -46,6 +46,7 @@
 		<result column="r_number_of_p" property="numberOfP" />
 		<result column="r_created_at" property="createdAt" />
 		<result column="r_total_price" property="totalPrice" />
+		<result column="r_pay_tid" property="payTid" />
 		<collection property="user" resultMap="User"></collection>
 		<collection property="room" resultMap="Room"></collection>
 		<collection property="dining" resultMap="Dining"></collection>
@@ -216,6 +217,7 @@
 			r.number_of_p as r_number_of_p,
 			r.created_at as r_created_at,
 			r.total_price as r_total_price,
+			r.pay_tid as r_pay_tid,
 			
 			ro.id as room_id,
 			ro.availability as room_availability,
@@ -269,6 +271,7 @@
 			re.number_of_p as r_number_of_p,
 			re.created_at as r_created_at,
 			re.total_price as r_total_price,
+			re.pay_tid as r_pay_tid,
             
             u.id as user_id,
             u.name as user_name,
@@ -332,6 +335,7 @@
 			re.number_of_p as r_number_of_p,
 			re.created_at as r_created_at,
 			re.total_price as r_total_price,
+			re.pay_tid as r_pay_tid,
 
             u.id as user_id,
             u.name as user_name,
@@ -404,6 +408,7 @@
 			re.number_of_p as r_number_of_p,
 			re.created_at as r_created_at,
 			re.total_price as r_total_price,
+			re.pay_tid as r_pay_tid,
 			
             u.id as user_id,
             u.name as user_name
@@ -479,6 +484,7 @@
 		where re.dining_id is not null and re.start_date=#{date};
 
 	</select>
+
 	
 	<!-- 오늘 매출 금액 조회 -->
 	<select id="findTodayTotalPrice" resultType="int">
@@ -495,5 +501,6 @@
 	</select>
 
 	
+
 
 </mapper>

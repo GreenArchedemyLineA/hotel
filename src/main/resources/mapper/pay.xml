@@ -8,5 +8,12 @@
 		values
 		    (#{payTid}, #{price}, #{pgType}, #{grade})
 	</insert>
+	<select id="findByTidPay" resultType="com.dodam.hotel.repository.model.Pay">
+		select
+		    *
+		from
+		    pay_tb
+		where pay_tid = #{tid};
 
+	</select>
 </mapper>

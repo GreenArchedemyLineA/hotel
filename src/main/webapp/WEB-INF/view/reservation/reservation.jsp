@@ -736,8 +736,6 @@ input[type="number"]::-webkit-inner-spin-button {
 		}
 	}
 
-
-
 </script>
 <%@ include file="../layout/footer.jsp"%>
 

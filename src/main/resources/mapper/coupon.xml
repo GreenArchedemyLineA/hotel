@@ -71,5 +71,12 @@
         	) as C
 		WHERE C.ROWNUM BETWEEN #{obj.start} AND #{obj.end}
 	</select>
-	
+
+	<delete id="deleteByUserIdandCouponInfoId">
+		delete
+			from coupon_tb
+		where
+		    user_id = #{userId}
+			and coupon_info_id = #{couponId}
+	</delete>
 </mapper>

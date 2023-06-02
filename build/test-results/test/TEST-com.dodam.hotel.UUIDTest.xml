@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.dodam.hotel.UUIDTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-05-22T06:10:43" hostname="ihyeonseoui-MacBookAir.local" time="0.066">
-  <properties/>
-  <testcase name="uuidTest()" classname="com.dodam.hotel.UUIDTest" time="0.066"/>
-  <system-out><![CDATA[1684735843876-2a4e59b9-98f8-4c6e-b2c3-df9cda4d3fb7
-]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
