@@ -57,30 +57,6 @@ public class ApiController {
 		return responseUser;
 	}
 	
-	// 쿠폰 리스트 확인(안쓸듯?)
-	@GetMapping("/myCoupon")
-	public List<Coupon> myCoupon() {
-		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-		List<Coupon> coupons = couponService.readByUserId(principal.getId());
-		return coupons;
-	}
-	
-	// 예약 정보 확인(안쓸듯?)
-	@GetMapping("/myReservation")
-	public List<Reservation> myReservation() {
-		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-		List<Reservation> reservations = reservationService.readAllReservationByUserId(principal.getId());
-		return reservations;
-	}
-	
-	// 내가 한 질문들 확인(안쓸듯?)
-	@GetMapping("/myReply")
-	public List<Reply> myReply() {
-		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-		List<Reply> qna = questionService.readQuestionByUserId(principal.getId());
-		return qna;
-	}
-	
 	// 아이디 중복검사(현우)
 	@GetMapping("/duplicationUser")
 	public ResponseMsg checkDuplicationUser(@RequestParam String email) {

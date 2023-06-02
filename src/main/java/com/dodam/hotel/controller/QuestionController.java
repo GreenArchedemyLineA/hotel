@@ -56,7 +56,7 @@ public class QuestionController {
 		return "/user/qna";
 	}
 	
-	// qna 등록 처리
+	// qna 등록 처리 - 유저
 	@PostMapping("/qnaProc")
 	public String qnaProc(InsertQuestionRequestDto question) {
 		
@@ -95,7 +95,7 @@ public class QuestionController {
 		return "redirect:/";
 	}
 	
-	//문의사항 게시판
+	//문의사항 게시판 - 매니저
 	@GetMapping("/questionList")
 	public String questionList(Model model, @RequestParam(name = "nowPage", defaultValue = "1" , required = false) String nowPage, @RequestParam(name = "cntPerPage", defaultValue = "5" , required = false) String cntPerPage) {
 		//주소 요청시 작성된 계시물 제목 List 로 다불러오기
@@ -109,7 +109,7 @@ public class QuestionController {
 		return "/board/question";
 	}
 	
-	//문의 사항 상세보기
+	//문의 사항 상세보기 - 매니저
 	@GetMapping("/questionDetail/{id}")
 	public String questionDetail(@PathVariable Integer id,Model model) {
 		Question question = questionService.findById(id);
@@ -119,7 +119,7 @@ public class QuestionController {
 		return "/board/questionDetail";
 	}
 	
-	//댓글 달아 보내기
+	//댓글 달아 보내기 - 매니저
 	@PostMapping("/reply/{questionId}/{managerId}")
 	@Transactional
 	public String insertReply(String content,@PathVariable Integer questionId,@PathVariable Integer managerId) {
@@ -128,13 +128,14 @@ public class QuestionController {
 		return "redirect:/question/questionList";
 	}
 	
-	//질문 삭제
+	//질문 삭제 - 매니저
 	@GetMapping("/questionDelete/{questionId}")
 	public String questionDelete(@PathVariable Integer questionId){
 		int deleteQuestion = questionService.questionDeleteById(questionId);
 		return "redirect:/question/questionList";
 	}
 	
+	// 매니저
 	@GetMapping("/category")
 	public String questionCategory(String category,Model model) {
 		List<Question> questionList = questionService.findByCategory(category);

@@ -138,8 +138,20 @@ class MyInfoJs {
 				// input submit
 				const inputBtnTag = document.createElement("input");
 				inputBtnTag.className = "sub--button";
-				inputBtnTag.type = "submit";
+				inputBtnTag.id = "update--btn";
+				inputBtnTag.type = "button";
 				inputBtnTag.value = "정보 수정";
+				
+				inputPasswordTag.addEventListener("keyup", function() {
+			    	let passwordBoxValue = inputPasswordTag.value;
+			    	if(passwordBoxValue.length < 6) {
+						keyCheckTag.textContent = "* 비밀번호는 6자리 이상이어야 합니다.";
+			    		keyCheckTag.style.color = "red";
+			    		keyCheckTag.style.fontSize = "14px";
+			    		inputBtnTag.type = "submit";
+			    	}
+			    });
+				
 
 
 				const childNodeArray = [
@@ -205,7 +217,6 @@ class MyInfoJs {
 					couponDivTag.append(node);
 				});
 			};*/
-			
 			
 			const couponListPage = document.createElement("iframe");
 			couponListPage.src = "/couponList";
@@ -480,16 +491,21 @@ class ReplyDto {
 	}
 }
 
-let passwordBox = document.getElementById("password--box");
-let telBox = document.getElementById("tel--box");
-passwordCheck.addEventListener("keyup", function() {
-    	let passwordBoxValue = passwordBox.value;
-    	if(passwordBoxValue.length < 6) {
-			checkKey.textContent = "* 비밀번호는 6자리 이상이어야 합니다.";
-    		checkKey.style.color = "red";
-    		checkKey.style.fontSize = "14px";
-    		checkPassword = false;
-    	}
-    });
+	let passwordBox = document.getElementById("password--box");
+	let checkKey = document.getElementById("key--check");
+	let updateBtn = document.getElementById("update--btn");
+	passwordBox.addEventListener("keyup", function() {
+	    	let passwordBoxValue = passwordBox.value;
+	    	if(passwordBoxValue.length < 6) {
+				checkKey.textContent = "* 비밀번호는 6자리 이상이어야 합니다.";
+	    		checkKey.style.color = "red";
+	    		checkKey.style.fontSize = "14px";
+	    	} else {
+				checkKey.textContent = "* OK!!";
+	    		checkKey.style.color = "blue";
+	    		checkKey.style.fontSize = "14px";
+	    		updateBtn.type = "submit";
+			}
+	    });
 
 new MyInfoJs();

@@ -3,6 +3,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,0,200" />
 <link rel="stylesheet" href="/css/myPage.css" />
 <style>
+	#update--btn[type=button] {
+		background-color: #ccc;
+		border: none;
+	}
+	#update--btn[type=submit] {
+		background-color: #000;
+	}
 </style>
 	<main class="main--container">
 		<div class="title--container">
@@ -38,12 +45,12 @@
 						</div>
 						<div>
 							<span>비밀번호</span>
-							<input class="input--box" name="password" type="password" value="${responseUser.password}" id="password--box">
+							<input class="input--box" name="password" type="password" value="${responseUser.password}" id="password--box" required="required">
 							<div id="key--check"></div>
 						</div>
 						<div>
 							<span>이름</span>
-							<input class="input--box" name="name" type="text" value="${responseUser.name}">
+							<input class="input--box" name="name" type="text" value="${responseUser.name}" required="required">
 						</div>
 						<div>
 							<span>성별</span>
@@ -55,18 +62,17 @@
 						</div>
 						<div>
 							<span>주소</span>
-							<input class="input--box" name="address" type="text"value="${responseUser.address}">
+							<input class="input--box" name="address" type="text"value="${responseUser.address}" required="required">
 						</div>
 						<div>
 							<span>전화번호</span>
-							<input class="input--box" name="tel" type="text" value="${responseUser.tel}" id="tel--box">
+							<input class="input--box" name="tel" type="text" value="${responseUser.tel}" id="tel--box" required="required">
 						</div>
-						<input class="sub--button" type="submit" value="정보 수정">
+						<input class="sub--button" id="update--btn" type="button" value="정보 수정">
 					</form>
 				</div>
 			</div>
 		</div>
 	</main>
-	
 	<script src="/js/myinfo.js"></script>
 <%@ include file="../layout/footer.jsp"%>

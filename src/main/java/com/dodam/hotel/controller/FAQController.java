@@ -25,6 +25,8 @@ public class FAQController {
     private PackageRepository packageRepository;
     @Autowired
     private HttpSession session;
+    
+    //매니저용 
     @GetMapping("/manager/faq")
     public String faqPage(Model model){
         List<FAQ> faqList = managerFAQService.findAllFAQ();
@@ -32,6 +34,7 @@ public class FAQController {
         return "/manager/FAQ";
     }
 
+    //매니저용 
     @GetMapping("/manager/faq/{id}")
     public String faqDetailPage(@PathVariable Integer id, Model model){
         FAQ faq = managerFAQService.findFAQById(id);
@@ -39,16 +42,20 @@ public class FAQController {
         return "/manager/FAQDetail";
     }
 
+    //매니저용 
     @GetMapping("/manager/faq/write")
     public String faqWritePage(){
         return "/manager/FAQWrtie";
     }
+    
+    //매니저용 
     @PostMapping("/manager/faq/write-proc")
     public String faqWriteProc(FAQ faq){
         managerFAQService.createFAQ(faq);
         return "redirect:/manager/FAQ";
     }
 
+    //매니저용 
     @GetMapping("/manager/faq/update/{id}")
     public String faqUpdatePage(@PathVariable Integer id, Model model){
         FAQ faq = managerFAQService.findFAQById(id);
@@ -56,12 +63,14 @@ public class FAQController {
         return "/manager/FAQUpdate";
     }
 
+    //매니저용 
     @PostMapping("/manager/faq/update-proc")
     public String faqUpdateProc(FAQ faq){
         managerFAQService.updateFAQ(faq);
         return "redirect:/manager/faq";
     }
 
+    //매니저용 
     @DeleteMapping("/manager/delete/faq")
     @ResponseBody
     public ResponseMsg faqDeleteProc(Integer id){

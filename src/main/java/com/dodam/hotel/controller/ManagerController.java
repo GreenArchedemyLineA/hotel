@@ -93,7 +93,6 @@ public class ManagerController {
 				beforetotalPrice = 0;
 			}
 			price.add(beforetotalPrice);
-			System.out.println(beforetotalPrice);
 		}
 		model.addAttribute("totalPrice", totalPrice);
 		model.addAttribute("price", price);

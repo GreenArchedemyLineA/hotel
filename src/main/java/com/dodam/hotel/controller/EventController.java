@@ -23,6 +23,7 @@ public class EventController {
 	@Autowired
 	EventService eventService;
 	
+	// 매니저 notice
 	@GetMapping("/notice")
 	public String eventNotice(Model model
 			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
@@ -60,6 +61,7 @@ public class EventController {
 		return "/user/closedEvent";
 	}
 	
+	// 매니저 insert
 	@PostMapping("/event-insert")
 	public String eventWrite(NoticeInsertForm noticeInsertForm) {
 		int event = eventService.insertEvent(noticeInsertForm);
@@ -69,6 +71,7 @@ public class EventController {
 		return "redirect:/event/notice";
 	}
 	
+	// 매니저 이벤트 수정
 	@GetMapping("/updateEventPage/{id}")
 	public String updateEventPage(@PathVariable Integer id,Model model) {
 		Event event = eventService.findById(id);
@@ -77,6 +80,8 @@ public class EventController {
 		}
 		return "/board/eventUpdatePage";
 	}
+	
+	// 매니저 이벤트 수정
 	@PostMapping("/updateEvent/{id}")
 	public String updateEvent(@PathVariable Integer id, NoticeInsertForm noticeInsertForm) {
 		noticeInsertForm.setId(id);
@@ -86,6 +91,8 @@ public class EventController {
 		}
 		return "redirect:/event/notice";
 	}
+	
+	// 매니저 이벤트 삭제
 	@GetMapping("/deleteEvent/{id}")
 	public String deleteEvent(@PathVariable Integer id) {
 		int event = eventService.eventDelete(id);

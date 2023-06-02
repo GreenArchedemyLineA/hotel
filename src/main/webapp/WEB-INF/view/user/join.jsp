@@ -152,10 +152,8 @@
 			checkBirth, checkAddress, checkDetailAddress, checkTel) {
 		if(checkEmail && checkPassword && checkGender && checkName && checkBirth 
 				&& checkAddress && checkDetailAddress && checkTel) {
-			console.log("전송가능!")
 			submitBtn.type = "submit";
 		} else {
-			console.log("그냥 버튼")
 			submitBtn.type = "button";
 		}
 	}

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dodam.hotel.dto.InquiryRequestDto;
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.dto.UserResponseDto.LoginResponseDto;
 import com.dodam.hotel.enums.CouponInfo;
 import com.dodam.hotel.repository.interfaces.CouponRepository;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
@@ -109,13 +110,20 @@ public class UserService {
 
 	// 회원 정보 수정
 	@Transactional
-	public User updateUser(UserRequestDto.MyPageFormDto user) {
+	public UserResponseDto.LoginResponseDto updateUser(UserRequestDto.MyPageFormDto user) {
+		String hashPwd = passwordEncoder.encode(user.getPassword());
+		user.setPassword(hashPwd);
 		int resultRow = userRepository.updateUserByEmail(user);
 		if (resultRow != 1) {
 			// 예외 처리
 		}
 		User userEntity = userRepository.findUserByEmail(user.getEmail());
-		return userEntity;
+		UserResponseDto.LoginResponseDto newPrincipal = new LoginResponseDto();
+		newPrincipal.setId(userEntity.getId());
+		newPrincipal.setEmail(userEntity.getEmail());
+		newPrincipal.setPassword(userEntity.getPassword());
+		newPrincipal.setName(userEntity.getName());
+		return newPrincipal;
 	}
 
 	/**

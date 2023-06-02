@@ -445,7 +445,7 @@ main {
 								</div>
 								<ul class="navi--bar--detail--room">
 									<li><a href="/room?type=디럭스">디럭스</a></li>
-									<li><a href="/room?type=프리미엄">프리미어</a></li>
+									<li><a href="/room?type=프리미엄">프리미엄</a></li>
 									<li><a href="/room?type=스위트">스위트</a></li>
 									<li><a href="/room">전체객실</a></li>
 								</ul>
@@ -509,15 +509,7 @@ main {
 								<li><a href="/login"><span class="material-symbols-outlined">login</span></a></li>
 							</c:otherwise>
 						</c:choose>
-						<c:choose>
-							<c:when test="${principal != null}">
-								<li><a href="/myPage"><span class="material-symbols-outlined">person</span></a></li>
-							</c:when>
-							<c:otherwise>
-								<li><a href="/login"><span class="material-symbols-outlined">person</span></a></li>
-							</c:otherwise>
-						</c:choose>
-
+						<li><a href="/myPage"><span class="material-symbols-outlined">person</span></a></li>
 						<li><a href="/membership"><span class="material-symbols-outlined">card_membership</span></a></li>
 					</ul>
 				</div>

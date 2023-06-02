@@ -52,17 +52,12 @@ public class KakaoController {
 	@Autowired
 	private HttpSession session;
 	
-    // /oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code
-    @GetMapping({"/", "/index", "/main"})
-    public String index(){
-        return "/kakao/test";
-    }
-    
     // 카카오 회원가입 페이지
     @GetMapping("/kakaoJoin")
     public String kakaoJoin() {
     	return "/user/kakaoJoin";
     }
+    
     /**
      * 
      * @param code
