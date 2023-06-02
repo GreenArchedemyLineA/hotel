@@ -54,7 +54,7 @@
 	</update>
 
 	<!-- 재가입용 update -->
-	<update id="">
+	<update id="updateUserByOriginEmail">
 		update user_tb
 		set email = #{email}, password =
 		#{password}, name = #{name}, gender = #{gender},

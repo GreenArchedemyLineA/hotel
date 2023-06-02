@@ -62,8 +62,8 @@
 							<input class="input--box" name="tel" type="text" value="${responseUser.tel}" id="tel--box">
 						</div>
 						<input class="sub--button" type="submit" value="정보 수정">
-						<button class="sub-button" onclick="withdrawUser()">회원 탈퇴</button>
 					</form>
+						<button class="sub-button" onclick="withdrawUser('${responseUser.email}')">회원 탈퇴</button>
 				</div>
 			</div>
 		</div>
@@ -71,11 +71,22 @@
 	
 	<script src="/js/myinfo.js"></script>
 	<script>
-		function withdrawUser() {
+		function withdrawUser(email) {
 			if(confirm("정말 탈퇴하시겠어요?")) {
-				location.href = "/delete"
+				fetch("/delete?email="+email, ({
+					method: "delete"
+				})).then(async (response) => {
+					let result = await response.json();
+					if(result.status_code == 200) {
+						alert(result.msg);
+						location.href=result.redirect_uri;
+					} else {
+						alert(result.msg);
+						location.href=result.redirect_uri;
+					}
+				});
 			} else {
-				location.href = "history.back()"
+				history.back()
 			}
 		}
 	</script>

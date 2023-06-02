@@ -185,20 +185,22 @@ public class UserService {
 	
 	// 회원 탈퇴 서비스 (성희)
 	@Transactional
-	public int deleteUser(UserRequestDto.MyPageFormDto user) {
+	public int deleteUser(String email) {
 		int resultRowCount = 0;
-		if(user.getOriginEmail() == null) {
-			// 랜덤 문자열 생성
-			String randomStr = CreateRandomStr.createRandomString();
-			// 원래 이메일 -> 랜덤문자열 이메일로 변경
-			user.setEmail(randomStr+"-"+user.getEmail());
-			// origin email 저장
-			user.setOriginEmail(user.getEmail());
-			resultRowCount = userRepository.deleteUser(user);
-			
-		} else {
-			// 예외처리
-		}
+		// 1. email로 user 조회
+		User user = userRepository.findUserByEmail(email);
+			if(user.getOriginEmail() == null) {
+				// origin email 저장
+				user.setOriginEmail(user.getEmail());
+				// 랜덤 문자열 생성
+				String randomStr = CreateRandomStr.createRandomString();
+				// 원래 이메일 -> 랜덤문자열 이메일로 변경
+				user.setEmail(randomStr+"-"+user.getEmail());
+				resultRowCount = userRepository.deleteUser(user);
+				
+			} else {
+				// 예외처리
+			}
 		return resultRowCount;
 	}
 

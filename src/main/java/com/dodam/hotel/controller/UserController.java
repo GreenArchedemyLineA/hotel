@@ -2,28 +2,29 @@ package com.dodam.hotel.controller;
 
 import java.util.List;
 
-
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dodam.hotel.dto.InquiryRequestDto;
-import com.dodam.hotel.dto.TestDto;
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.dto.api.ResponseMsg;
 import com.dodam.hotel.repository.model.Coupon;
 import com.dodam.hotel.repository.model.Event;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.Reply;
-import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.CouponService;
 import com.dodam.hotel.service.EventService;
@@ -122,7 +123,7 @@ public class UserController {
 	@GetMapping("/logout")
 	public String logout() {
 		session.invalidate();
-		return "redirect:/login";
+		return "redirect:/";
 	}
 
 	// 회원정보 수정 처리 (김현우)
@@ -159,10 +160,25 @@ public class UserController {
 	}
 	
 	// 회원 탈퇴 처리 (성희)
-	@GetMapping("/delete")
-	public String withdraw(UserRequestDto.MyPageFormDto myPageDto) {
-		userService.deleteUser(myPageDto);
-		return "redirect:/";
+	@DeleteMapping("/delete")
+	@ResponseBody
+	public ResponseMsg withdraw(String email) {
+		int result = userService.deleteUser(email);
+		if(result != 1) {
+			ResponseMsg failMsg = ResponseMsg.builder()
+					.status_code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+					.msg("다시 시도해주세요")
+					.redirect_uri("/myPage")
+					.build();
+			return failMsg;
+		} else {
+			ResponseMsg successMsg = ResponseMsg.builder()
+					.status_code(HttpStatus.OK.value())
+					.msg("탈퇴 처리 하였습니다. 감사합니다")
+					.redirect_uri("/logout")
+					.build();
+			return successMsg;
+		}
 	}
 	
 	// 카카오 회원가입 처리 (성희)

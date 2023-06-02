@@ -311,16 +311,5 @@ class ReplyDto {
 	}
 }
 
-let passwordBox = document.getElementById("password--box");
-let telBox = document.getElementById("tel--box");
-passwordCheck.addEventListener("keyup", function() {
-    	let passwordBoxValue = passwordBox.value;
-    	if(passwordBoxValue.length < 6) {
-			checkKey.textContent = "* 비밀번호는 6자리 이상이어야 합니다.";
-    		checkKey.style.color = "red";
-    		checkKey.style.fontSize = "14px";
-    		checkPassword = false;
-    	}
-    });
 
 new MyInfoJs();

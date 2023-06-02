@@ -21,7 +21,7 @@ public interface UserRepository {
 	public int updateUserByEmail(UserRequestDto.MyPageFormDto user);
 	
 	// 회원 탈퇴
-	public int deleteUser(UserRequestDto.MyPageFormDto user);
+	public int deleteUser(User user);
 	
 	// 카카오 로그인 유저 찾기
 	public UserResponseDto.LoginResponseDto findUserKakao(String email);
