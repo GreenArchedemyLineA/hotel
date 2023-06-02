@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import java.util.List;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +21,6 @@ import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.repository.model.RoomType;
 import com.dodam.hotel.util.PagingObj;
 
-import net.nurigo.java_sdk.api.Message;
-import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 
 
@@ -44,13 +41,16 @@ public class ManagerService {
 		return resultCount;
 	}
 
-	public List<Room> findAllRoomList(PagingObj obj) {
-		List<Room> rooms = roomRepository.findAllRoomListPaging(obj);
+	public List<Room> findAllRoomList() {
+		List<Room> rooms = roomRepository.findAllRoomList();
 		return rooms;
 	}
 
 	public List<Room> findConditionsRoomList(StatusParams statusParams) {
 		Boolean roomStatus = statusParams.getRoomStatus();
+		if(roomStatus == null) {
+			statusParams.setRoomStatus(false);
+		}
 		Integer numberOfp = statusParams.getNumberOfP();
 		Integer price = statusParams.getPrice();
 

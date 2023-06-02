@@ -29,7 +29,11 @@ public class RoomController {
 		 List<RoomType> rooms = roomService.readAllRoom(type);
 		 model.addAttribute("type", type);
 		 model.addAttribute("roomList", rooms);
-		return "/room/list";
+		 if(type.equals("AllInOne")) {
+			 return "/room/roomList";
+		 } else {
+			 return "/room/list";
+		 }
 	}
 	
 	// 객실 상세 페이지

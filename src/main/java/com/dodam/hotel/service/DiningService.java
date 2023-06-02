@@ -11,15 +11,26 @@ import com.dodam.hotel.repository.model.DiningDesc;
 
 @Service
 public class DiningService {
-	
+
 	@Autowired
 	private DiningRepository diningRepository;
-	
+
 	@Transactional
 	public List<DiningDesc> readAllDining(String type) {
 		List<DiningDesc> diningDescEntitiys = diningRepository.findByTypeAllDining(type);
 		return diningDescEntitiys;
 	}
-	
-	
+
+	// 레스토랑 상태 조회
+	public int readRestaurantStatus() {
+		int resultRowCount = diningRepository.findStatusRestaurant();
+		return resultRowCount;
+	}
+
+	// 라운지&바 상태 조회
+	public int readBarStatus() {
+		int resultRowCount = diningRepository.findStatusBar();
+		return resultRowCount;
+	}
+
 } // end of class

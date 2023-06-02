@@ -2,39 +2,76 @@
 <%@ include file="../layout/managerHeader.jsp"%>
 <!-- writer -->
 <style>
+.content {
+	width: 100%; display : flex;
+	justify-content: center;
+	align-items: center;
+}
+.button--box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+	width: 100%;
+}
+.sub-button {
+	background-color: #000;
+	color: #fff;
+	width: 100px;
+	height: 40px;
+}
+.form--container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.input--box {
+	border: none;
+}
+
 .selected {
 	display: flex;
-	width: 500px;
+	width: 300px;
 	justify-content: space-between;
+	font-size: 20px;
+}
+.reservation {
+	border-bottom: 2px solid #FF9F8Ds;
+	margin-bottom: 10px;
 }
 </style>
 	<div class="content">
+		<h2>예약 정보</h2>
 		<div class="main--content">
-			<form action="/manager/reservation/update" method="post">
-				<input type="hidden" name="id" value="${reservation.id}"> <input type="hidden" name="userId" value="${reservation.userId}"> <input type="hidden" name="startDate"
-					value="${reservation.startDate}"> <input type="hidden" name="endDate" value="${reservation.endDate}"> <input type="hidden" name="numberOfp" value="${reservation.numberOfP}">
+			<form action="/manager/reservation/update" method="post" class="form--container">
+				<input type="hidden" name="id" value="${reservation.id}"> 
+				<input type="hidden" name="userId" value="${reservation.userId}"> 
+				<input type="hidden" name="startDate" value="${reservation.startDate}"> 
+				<input type="hidden" name="endDate" value="${reservation.endDate}"> 
+				<input type="hidden" name="numberOfp" value="${reservation.numberOfP}">
 				<div>
 					<div class="selected">
-						<div class="reservation">예약자 이름</div>
-						<div class="reservation">${reservation.user.name}</div>
+						<div class="reservation">예약자명</div>
+						<div class="reservation--">${reservation.user.name}</div>
 					</div>
 					<div class="selected">
-						<div class="reservation">예약자 시작날짜</div>
-						<div class="reservation">${reservation.startDate}</div>
+						<div class="reservation">체크인</div>
+						<div class="reservation--">${reservation.startDate}</div>
 					</div>
 					<div class="selected">
-						<div class="reservation">예약자 종료날짜</div>
-						<div class="reservation">${reservation.endDate}</div>
+						<div class="reservation">체크아웃</div>
+						<div class="reservation--">${reservation.endDate}</div>
 					</div>
 					<div class="selected">
-						<div class="reservation">예약 인원 수</div>
-						<div class="reservation">${reservation.numberOfP}</div>
+						<div class="reservation">인원</div>
+						<div class="reservation--">${reservation.numberOfP}</div>
 					</div>
 			
 					<div class="selected">
-						<div class="reservation">예약 방</div>
-						<div class="reservation">
-							<select name="roomId">
+						<div class="reservation">객실</div>
+						<div class="reservation--">
+							<select name="roomId" class="input--box">
 								<c:forEach var="room" items="${roomList}">
 									<c:choose>
 										<c:when test="${room.id == reservation.roomId}">
@@ -48,8 +85,11 @@
 							</select>
 						</div>
 					</div>
-			
-					<div class="selected">
+				<div class="button--box">
+					<input type="submit" value="수정" class="sub-button">
+				</div>
+			</form>
+					<%-- <div class="selected">
 						<div class="reservation">예약 식당</div>
 						<div class="reservation">
 							<select name="diningId">
@@ -147,12 +187,9 @@
 							</select>
 						</div>
 					</div>
-				</div>
-				<input type="submit" value="수정">
-			</form>
+				</div> --%>
+				
 		</div>
 	</div>
 </main>
-
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

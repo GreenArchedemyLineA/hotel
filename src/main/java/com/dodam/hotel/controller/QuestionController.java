@@ -118,6 +118,7 @@ public class QuestionController {
 		}
 		return "/board/questionDetail";
 	}
+	
 	//댓글 달아 보내기
 	@PostMapping("/reply/{questionId}/{managerId}")
 	@Transactional
@@ -126,6 +127,7 @@ public class QuestionController {
 		int insertReply = questionService.insertReply(content, questionId, managerId);
 		return "redirect:/question/questionList";
 	}
+	
 	//질문 삭제
 	@GetMapping("/questionDelete/{questionId}")
 	public String questionDelete(@PathVariable Integer questionId){

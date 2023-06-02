@@ -82,12 +82,12 @@
 					toolbar : [ [ 'style', [ 'style' ] ],
 							[ 'color', [ 'color' ] ],
 							[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
-							[ 'table', [ 'table' ] ], [ 'insert', [] ], ]
+							[ 'table', [ 'table' ] ], [ 'insert', [] ], ],
 				});
+		
 		$(document).ready(function() {
 			$('#summernote').summernote();
 		});
 	</script>
 	<script src="js/mainToggle.js"></script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

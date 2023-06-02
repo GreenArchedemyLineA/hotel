@@ -33,8 +33,11 @@ public class CouponController {
 		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		List<Coupon> coupons = couponService.readCouponByUserId(po, principal.getId());
 		model.addAttribute("paging", po);
-		model.addAttribute("coupons", coupons);
-		
+		if(coupons.size() == 0) {
+			model.addAttribute("coupons", null);
+		} else {
+			model.addAttribute("coupons", coupons);
+		}
 		return "/user/couponList";
 	}
 }

@@ -30,6 +30,7 @@ public class UserResponseDto {
 		private String gender;
 		private Date birth;
 		private String tel;
+		private String address;
 	}
 	
 } // end of class

@@ -22,9 +22,9 @@
 		<input type="text" name="name" class="input--box" placeholder="이름을 입력해 주세요" autocomplete="off"> 
 		<input type="date" name="birth" class="input--box" placeholder="출생년도" autocomplete="off">
 		<div>
-			<input type="text" class="input--box" id="address" placeholder="주소" name="address" readonly="readonly" style="width:300px;">
+			<input type="text" class="input--box" id="address" placeholder="주소" name="address" readonly="readonly" style="width:300px;" autocomplete="off">
 			<input type="button" class="sub--button" onclick="postCode()" value="검색" style="width:50px; margin: 0; background-color: #fff; border: 1px solid #000; color: #000;"><br>
-			<input type="text" class="input--box" id="detailAddress" name="detailAddress" placeholder="상세주소"><br>
+			<input type="text" class="input--box" id="detailAddress" name="detailAddress" placeholder="상세주소" autocomplete="off"><br>
 		</div>
 		<div>
 			<label><input type="radio" name="gender" value="남성">남성</label>
@@ -58,6 +58,5 @@
         }).open();
     }
 </script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>
 	

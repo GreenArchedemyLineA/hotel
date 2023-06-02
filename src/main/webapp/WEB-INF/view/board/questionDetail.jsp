@@ -1,103 +1,63 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzkxekb89f"></script>
 <style>
-.container {
-	color: black;
-}
-
-header {
-	font-size: 30px;
-	color: black;
-}
-
 .content {
+	width: 100%;
 	display: flex;
-}
-
-.navi {
-	display: flex;
-	flex: 1;
-}
-
-.main {
-	display: flex;
-	flex-direction: column;
-	flex: 3;
-}
-
-.navi {
-	display: flex;
-	height: 100vh;
 	justify-content: center;
-}
-
-.content {
+	align-items: center;
 	display: flex;
-	height: 100vh;
 }
-
-.main--content {
-	border: 2px solid black;
-	width: 1200px;
-	height: 600px;
-	margin-left: 30px;
-	margin-top: 30px;
+.sub-button {
+	background-color: #000;
+	color: #fff;
+	width: 400px;
+	height: 40px;
+	margin: 20px 10px;
 }
-
-.navi--bar {
-	border: 2px solid black;
-	margin-top: 30px;
-	width: 200px;
-	height: 400px;
+.button--box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+	width: 100%;
 }
-
-li {
-	list-style: none;
+.input--box {
+	border: none;
+	border-bottom: 2px solid #ebebeb;
+	margin: 10px;
+}
+.content--box {
+	height: 500px;
 }
 </style>
 
 <div class="content">
-	<div class="navi">
-		<div class="navi--bar">
-			<ul>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-		</div>
-	</div>
-	<div class="main">
-		<header>여짝에 이제 리스트 들을 띄어줄 생각입니다</header>
-		<div id="map" class="main--content">
-		<h5>문의 내용</h5>
+		<h2>문의사항</h2>
+		<div class="main--content">
 			<div>
 				<div>
-					<label class="form-label">제목</label> 
-					<br>
-					<label class="form-label">${question.title}</label>
+					<label>작성자 : ${question.userId}</label>
 				</div>
 				<div>
-					<label class="form-label">내용</label> 
-					<br>
-					<label class="form-label">${question.content}</label>
+					<label style="font-weight: bold">${question.title}</label>
+				</div>
+				<div>
+					<label>${question.content}</label>
 				</div>
 			
-				<div>
-					<label class="form-label">작성자 아이디</label>
-					<br>
-					<label class="form-label">${question.userId}</label>
-				</div>
-				<form action="/question/reply/${question.id}/${principal.id}" method="post" class="col-md-6">
-				<input type="text" name="content">
-				<button type="submit" class="btn btn-danger">댓글 달기</button>
+				<form action="/question/reply/${question.id}/${principal.id}" method="post">
+				<input type="text" name="content" class="input--box">
+				<button type="submit" class="sub-button">댓글 달기</button>
 				</form>
 				</div>
 		</div>
 	</div>
+<<<<<<< HEAD
 </div>
+<%@ include file="../layout/footer.jsp"%>
+=======
 </body>
 </html>
+>>>>>>> manager/css
 

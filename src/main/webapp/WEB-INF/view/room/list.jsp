@@ -3,12 +3,28 @@
 <%@ include file="../layout/header.jsp"%>
 <link rel="stylesheet" href="/css/navi.css" />
 <style type="text/css">
+	.room--title {
+		display: flex;
+	}
+	.change--view {
+		display: flex;
+		align-items: center;
+	}
 </style>
 </head>
 <body>
 	<div class="body--container">
 		<div class="navi--bar">
-			<span class="title--box" onclick="location.href='/room'">객실</span>
+			<div class="room--title">
+				<span class="title--box" onclick="location.href='/room'">객실</span>
+				<c:if test="${type eq 'All' || type eq 'AllInOne'}">
+					<div class="change--view">
+						<span onclick="location.href='/room'" style="margin-left: 10px; cursor: pointer;">펼쳐보기</span>
+						<span style="margin-left: 10px; margin-right: 10px;"> | </span>
+						<span style="cursor: pointer;" onclick="location.href='/room?type=AllInOne'">모아보기</span>
+					</div>
+				</c:if>
+			</div>
 				<div>
 					<c:choose>
 						<c:when test="${type eq '디럭스'}">
@@ -39,25 +55,11 @@
 				<c:forEach var="roomList" items="${roomList}">
 						<div class="info--container">
 							<a href="/detailRoom/${roomList.id}">
-							<c:if test="${roomList.id == 1}">
-								<img alt="디럭스" src="images/deluxe.jpg" style="width: 1000px; height: 500px;">
-							</c:if> 
-							<c:if test="${roomList.id == 2}">
-								<img alt="비즈니스 디럭스" src="images/business.jpg" style="width: 1000px; height: 500px;">
-							</c:if> 
-							<c:if test="${roomList.id == 3}">
-								<img alt="프리미엄" src="images/premium.jpg" style="width: 1000px; height: 500px;">
-							</c:if>
-							<c:if test="${roomList.id == 4}">
-								<img alt="스위트" src="images/suite.jpg" style="width: 1000px; height: 500px;"> 
-							</c:if> 
-							<c:if test="${roomList.id == 5}">
-								<img alt="코너 스위트" src="images/corner.png" style="width: 1000px; height: 500px;">
-							</c:if> 
+								<img alt="디럭스" src="images/${roomList.image}" style="width: 1000px; height: 500px;">
 							</a>
 							<div class="info--outline">
 								<p class="title--box">${roomList.name}</p>
-								<p class="desc--box">|  ${roomList.numberOfP}인</p>
+								<p class="desc--box"> | ${roomList.numberOfP}인</p>
 							</div>
 						</div>
 				</c:forEach>

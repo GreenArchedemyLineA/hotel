@@ -22,4 +22,5 @@ public class KakaoSinglePayment implements PayApproveRequest {
     private Date created_at;
     private Date approved_at;
     private String payload;
+
 }

@@ -96,5 +96,4 @@
 		<p>${responseUser.name}님의 이메일은 ${responseUser.email}입니다.</p>
 	</div>
 </main>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

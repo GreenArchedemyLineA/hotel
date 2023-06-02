@@ -17,16 +17,30 @@
 			<td>Total Price</td>
 			<td>Date</td>
 		</tr>
-		<c:forEach items="${reservations}" var="list">
-			<tr class="table--tr--container">
-				<td>${list.startDate}</td>
-				<td>${list.endDate}</td>
-				<td>${list.room.roomType.name}</td>
-				<td>${list.numberOfP}</td>
-				<td>${list.totalPrice}</td>
-				<td>${list.createdAt}</td>
-			</tr>
-		</c:forEach>
+		<c:choose>
+			<c:when test="${reservations == null}">
+				<tr id="no--reservation">
+					<td colspan="5"><h2>예약 내역이 없습니다.</h2></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</c:when>
+			<c:otherwise>
+				<c:forEach items="${reservations}" var="list">
+					<tr class="table--tr--container">
+						<td>${list.startDate}</td>
+						<td>${list.endDate}</td>
+						<td>${list.room.roomType.name}</td>
+						<td>${list.numberOfP}</td>
+						<td>${list.totalPrice}</td>
+						<td>${list.createdAt}</td>
+					</tr>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
 	</table>
 	<div style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1}">

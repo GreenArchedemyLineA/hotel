@@ -8,7 +8,7 @@
 		<div class="title--container">
 		<div class="title--logo">
 			<span class="material-symbols-outlined back--icon" onclick="history.back()">arrow_back</span>
-			<img alt="" src="/images/dodam_wlogo.png" id="logo--image" height="65" width="150" onclick="location.href='/'">	
+			<img alt="" src="/images/dodam_wlogo.png" id="logo--image" height="40"onclick="location.href='/'">	
 		</div>
 		<div class="title--text">
 			<p>내 정보를</p>
@@ -53,6 +53,10 @@
 							<input class="input--box" name="birth" type="text" id="text" value="${responseUser.birth}" readonly="readonly">
 						</div>
 						<div>
+							<span>주소</span>
+							<input class="input--box" name="address" type="text"value="${responseUser.address}">
+						</div>
+						<div>
 							<span>전화번호</span>
 							<input class="input--box" name="tel" type="text" value="${responseUser.tel}">
 						</div>
@@ -64,5 +68,4 @@
 	</main>
 	
 	<script src="/js/myinfo.js"></script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

@@ -111,8 +111,9 @@ public class ReservationService {
 		List<Coupon> couponList = couponRepository.findByUserId(reservationRequestDto.getUserId());
 
 		// 포인트 조회
-		Point point = pointRepository.findByUserId(reservationRequestDto.getUserId());
 
+		Integer point = pointRepository.findByUserId(reservationRequestDto.getUserId());
+		
 		Map<String, Object> selectList = new HashMap<>();
 		selectList.put("point", point);
 		selectList.put("couponList", couponList);
@@ -150,6 +151,22 @@ public class ReservationService {
 		});
 
 		int resultRowCount = reservationRepository.insertReserveRoom(reservationRequestDto);
+
+
+		// 포인트 처리
+		// 다이아 일때 처리
+		Integer totalPrice = reservationRequestDto.getTotalPrice();
+		if(userGrade.getGrade().getId() == Grade.DIA.getGrade()){
+			pointRepository.insertPoint(Integer.valueOf((int) Math.round(totalPrice * 0.04)), userId);
+		}
+		if(userGrade.getGrade().getId() == Grade.GOLD.getGrade()){
+			pointRepository.insertPoint(Integer.valueOf((int) Math.round(totalPrice * 0.05)), userId);
+		}
+		if(userGrade.getGrade().getId() == Grade.BROWN.getGrade()){
+			pointRepository.insertPoint(Integer.valueOf((int) Math.round(totalPrice * 0.07)), userId);
+		}
+
+
 		Integer nowReservationCount = reservationRequestDto.getDay();
 		count += nowReservationCount;
 		if (resultRowCount != 1) {
@@ -171,6 +188,7 @@ public class ReservationService {
 
 			}
 		}
+
 		if (resultRowCount == 1) {
 			String subject = (String)((UserResponseDto.LoginResponseDto)session.getAttribute("principal")).getName() + "님의 새로운 예약이 들어왔습니다";
 			String content = "<p>예약 현황을 숙지하여 차질이 없도록 하세요.</p> <br> <h2>호텔 도담 이사회</h2>";

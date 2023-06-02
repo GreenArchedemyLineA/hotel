@@ -136,8 +136,8 @@
 
 	<!-- 다이닝 예약 -->
 	<insert id="insertReserveDining">
-		INSERT INTO reservation_tb (start_date, end_date, number_of_p, user_id, dining_id)
-		VALUES (#{startDate}, #{endDate}, #{numberOfP}, #{userId}, 1)
+		INSERT INTO reservation_tb (start_date, end_date, number_of_p, user_id, dining_id, total_price)
+		VALUES (#{startDate}, #{endDate}, #{numberOfP}, #{userId}, 1, 0)
 	</insert>
 	
 	<!-- 특정 유저 예약정보 페이징 -->
@@ -318,8 +318,8 @@
                 left join pool_tb as p
                     on re.pool_id = p.id
                 left join spa_tb as s
-                    on re.spa_id = s.id
-            where
+	                  on re.spa_id = s.id
+	       		 where
                 date_format(start_date, "%Y-%m-%d") = curdate()
 
     </select>
@@ -391,9 +391,9 @@
 
 	
 	<insert id="insertReserveRoom">
-		INSERT INTO reservation_tb (total_price, start_date, end_date, number_of_p, user_id, room_id, dining_id, fitness_id, pool_id, spa_id)
+		INSERT INTO reservation_tb (total_price, start_date, end_date, number_of_p, user_id, room_id, dining_id, fitness_id, pool_id, spa_id, pay_tid)
 		VALUES
-		(#{totalPrice}, #{startDate}, #{endDate}, #{numberOfP}, #{userId}, #{roomId}, #{diningId}, #{fitnessId}, #{poolId}, #{spaId})
+		(#{totalPrice}, #{startDate}, #{endDate}, #{numberOfP}, #{userId}, #{roomId}, #{diningId}, #{fitnessId}, #{poolId}, #{spaId}, #{tid})
 	</insert>
 	
 	 <select id="findReservationById" resultMap="Reservation">
@@ -477,6 +477,23 @@
 		left join user_tb as u
 			on re.user_id = u.id
 		where re.dining_id is not null and re.start_date=#{date};
-	</select>	
+
+	</select>
 	
+	<!-- 오늘 매출 금액 조회 -->
+	<select id="findTodayTotalPrice" resultType="int">
+		select sum(total_price) 
+		from reservation_tb
+		where date_format(start_date, "%Y-%m-%d") = CURDATE()
+	</select>
+	
+	<!-- 이전 매출 금액 조회 -->
+	<select id="findBeforeTotalPrice" resultType="Integer">
+		select sum(total_price) 
+		from reservation_tb
+		where date_format(start_date, "%Y-%m-%d") = CURDATE() - INTERVAL #{count} DAY;
+	</select>
+
+	
+
 </mapper>

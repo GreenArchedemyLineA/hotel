@@ -114,14 +114,12 @@
 			</div>
 		</div>
 	</div>
-	<script src="js/mainToggle.js"></script>
 	<script>
-	  var swiper = new Swiper(".mySwiper", {
+	  let swiper = new Swiper(".mySwiper", {
 	      navigation: {
 	      	nextEl: ".swiper-button-next",
 	      	prevEl: ".swiper-button-prev",
 	    },
 	  });
 	</script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

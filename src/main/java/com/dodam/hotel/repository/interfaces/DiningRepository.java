@@ -17,4 +17,10 @@ import com.dodam.hotel.repository.model.DiningDesc;
 public interface DiningRepository {
     List<Dining> findAllDining();
     public List<DiningDesc> findByTypeAllDining(String type);
+    
+    // 레스토랑 상태 확인
+    public int findStatusRestaurant();
+    
+    // 라운지&바 상태 확인
+    public int findStatusBar();
 }
