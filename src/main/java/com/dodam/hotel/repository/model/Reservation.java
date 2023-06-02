@@ -21,6 +21,7 @@ public class Reservation {
     private Integer fitnessId;
     private Integer poolId;
     private Integer spaId;
+    private String payTid;
 
     // ========= Mapping ===========
     private User user;

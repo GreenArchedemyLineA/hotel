@@ -16,6 +16,7 @@
 			<td>Person</td>
 			<td>Total Price</td>
 			<td>Date</td>
+			<td>Delete</td>
 		</tr>
 		<c:choose>
 			<c:when test="${reservations == null}">
@@ -37,6 +38,10 @@
 						<td>${list.numberOfP}</td>
 						<td>${list.totalPrice}</td>
 						<td>${list.createdAt}</td>
+						<td>${list.payTid}</td>
+						<td>
+						<button onclick="delete(${list.payTid})">환불/예약 취소</button>
+						</td>
 					</tr>
 				</c:forEach>
 			</c:otherwise>
@@ -60,5 +65,10 @@
 			<a href="/myReservations?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">&gt;</a>
 		</c:if>
 	</div>
+	<script type="text/javascript">
+	    function delete(Tid){
+		    	location.href = "/pay/kakao/refund/"+Tid; 
+	    }
+	</script>
 </body>
 </html>
