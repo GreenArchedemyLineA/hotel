@@ -42,6 +42,7 @@ class MyInfoJs {
 				const divEmailTag = document.createElement("div");
 				const inputEmailTag = document.createElement("input");
 				inputEmailTag.className = "input--box";
+				inputEmailTag.setAttribute("readonly", "readonly");
 				inputEmailTag.name = "email";
 				inputEmailTag.type = "email";
 				inputEmailTag.readOnly = true;
@@ -55,11 +56,14 @@ class MyInfoJs {
 
 				const divPasswordTag = document.createElement("div");
 				const inputPasswordTag = document.createElement("input");
+				const keyCheckTag = document.createElement("div");
+				keyCheckTag.id = "key--check";
 				inputPasswordTag.className = "input--box";
 				inputPasswordTag.name = "password";
 				inputPasswordTag.type = "password";
 				divPasswordTag.append(passwordSpanTag);
 				divPasswordTag.append(inputPasswordTag);
+				divPasswordTag.append(keyCheckTag);
 				inputPasswordTag.value = data.password;
 
 				// 이름
@@ -84,6 +88,7 @@ class MyInfoJs {
 				inputGenderTag.className = "input--box";
 				inputGenderTag.name = "gender";
 				inputGenderTag.type = "text";
+				inputGenderTag.setAttribute("readonly", "readonly");
 				divGenderTag.append(genderSpanTag);
 				divGenderTag.append(inputGenderTag);
 				inputGenderTag.value = data.gender;
@@ -95,6 +100,7 @@ class MyInfoJs {
 				const divBirthTag = document.createElement("div");
 				const inputBirthTag = document.createElement("input");
 				inputBirthTag.className = "input--box";
+				inputBirthTag.setAttribute("readonly", "readonly");
 				inputBirthTag.name = "birth";
 				inputBirthTag.type = "text";
 				inputBirthTag.id = "text";
@@ -304,5 +310,17 @@ class ReplyDto {
 		return JSON.stringify(object);
 	}
 }
+
+let passwordBox = document.getElementById("password--box");
+let telBox = document.getElementById("tel--box");
+passwordCheck.addEventListener("keyup", function() {
+    	let passwordBoxValue = passwordBox.value;
+    	if(passwordBoxValue.length < 6) {
+			checkKey.textContent = "* 비밀번호는 6자리 이상이어야 합니다.";
+    		checkKey.style.color = "red";
+    		checkKey.style.fontSize = "14px";
+    		checkPassword = false;
+    	}
+    });
 
 new MyInfoJs();

@@ -116,13 +116,13 @@ public class ManagerReservationController {
                     .build();
             return failMsg;
         }else{
-            ResponseMsg succesMsg = ResponseMsg
+            ResponseMsg successMsg = ResponseMsg
                     .builder()
                     .status_code(HttpStatus.OK.value())
                     .msg("삭제되었습니다")
                     .redirect_uri("/reservation")
                     .build();
-            return succesMsg;
+            return successMsg;
         }
     }
 

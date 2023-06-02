@@ -100,6 +100,13 @@ public class UserService {
 		responseDto.setAddress(userEntity.getAddress());
 		return responseDto;
 	}
+	
+	// 아이디 중복검사
+	@Transactional
+	public User readUserForDuplicationCheck(String email) {
+		User userEntity = userRepository.findUserByEmail(email);
+		return userEntity;
+	}
 
 	// 회원 정보 수정
 	@Transactional
