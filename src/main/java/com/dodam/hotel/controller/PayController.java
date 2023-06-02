@@ -19,6 +19,7 @@ import com.dodam.hotel.enums.Grade;
 import com.dodam.hotel.enums.PGType;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.model.GradeInfo;
+import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.PayService;
 import com.dodam.hotel.util.Define;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -55,7 +56,7 @@ public class PayController {
     private PayService payService;
     @Autowired
     private GradeRepository gradeRepository;
-   
+    
     
     @GetMapping("/payReady")
     public String paySelectController(PayOption payOption, Model model){
@@ -138,13 +139,19 @@ public class PayController {
 //        return "redirect:/pay/success";
     }
 
-    @PostMapping("/kakao/refund/{tid}/{totalPrice}")
+    @PostMapping("/kakao/refund/{tid}/{totalPrice}/{reservationId}")
     //@ResponseBody
-    public String kakaoPayRefund(@PathVariable("tid") String tid,@PathVariable("totalPrice") String totalPrice) {
-    	
+    public String kakaoPayRefund(@PathVariable("tid") String tid,@PathVariable("totalPrice") String totalPrice
+    		,@PathVariable("reservationId") Integer reservationId) {
+    	UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
     	KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid,totalPrice);
-    		
-        return "redirect:/myPage";
+    	if(kakaoCancelResponse == null) {
+    		System.out.println("결제실패됨");
+    		return null;
+    	}else if(kakaoCancelResponse != null) {
+    		payService.refundPay(reservationId, user.getId());
+    	}
+        return "redirect:/myReservations";
     }
     
     // 토스결제 성공 시

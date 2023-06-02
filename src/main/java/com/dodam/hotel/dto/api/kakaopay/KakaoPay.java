@@ -117,11 +117,14 @@ public class KakaoPay implements PayInterface {
 
 		// 외부에 보낼 url
 		RestTemplate restTemplate = new RestTemplate();
-
-		KakaoCancelResponse cancelResponse = restTemplate.postForObject(uri,
-				requestEntity, KakaoCancelResponse.class);
-
-		return cancelResponse;
+		
+		try {
+			KakaoCancelResponse cancelResponse = restTemplate.postForObject(uri,
+					requestEntity, KakaoCancelResponse.class);
+			return cancelResponse;
+		}catch(Exception e) {
+			return null;
+		}
 	}
 
 }
