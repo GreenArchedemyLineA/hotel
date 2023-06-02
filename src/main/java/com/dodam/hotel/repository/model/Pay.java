@@ -13,5 +13,5 @@ public class Pay {
     private Integer price;
     private Timestamp createdAt;
     private PGType pgType;
-    private String grade;
+    private String gradeName;
 }

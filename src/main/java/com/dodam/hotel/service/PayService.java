@@ -42,7 +42,7 @@ public class PayService {
         String tid = reservation.getPayTid();
         Pay payInfo = payRepository.findByTidPay(tid);
         Integer point = payInfo.getPrice();
-        String beforeUserGrade = payInfo.getGrade();
+        String beforeUserGrade = payInfo.getGradeName();
         if(Grade.DIA.equals(beforeUserGrade)){
             point = Integer.valueOf((int) Math.round(point * 0.07));
         }else if(Grade.GOLD.equals(beforeUserGrade)){
@@ -55,8 +55,8 @@ public class PayService {
         pointRepository.insertPoint(point, userId);
         reservationRepository.deleteReservation(reservationId);
 
-        Grade grade = null;
         GradeInfo userGrade = gradeRepository.findGradeByUserId(userId);
+        Grade grade = Grade.valueOf(userGrade.getGrade().getName());
         if(!beforeUserGrade.equals(userGrade.getGrade().getName())){
             if(Grade.DIA.equals(beforeUserGrade)){
                 grade = Grade.DIA;
@@ -67,7 +67,7 @@ public class PayService {
             }
             gradeRepository.updateUserGrade(userId, grade);
         }
-
+        System.out.println(grade);
         if(grade.getGrade() == 1){
             couponRepository.deleteByUserIdandCouponInfoId(userId, 2);
             couponRepository.deleteByUserIdandCouponInfoId(userId, 3);
