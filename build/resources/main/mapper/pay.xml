@@ -4,9 +4,16 @@
 <mapper namespace="com.dodam.hotel.repository.interfaces.PayRepository">
 
 	<insert id="insertPay">
-		insert into pay_tb(pay_tid, price, pg_type)
+		insert into pay_tb(pay_tid, price, pg_type, grade)
 		values
-		    (#{payTid}, #{price}, #{pgType})
+		    (#{payTid}, #{price}, #{pgType}, #{grade})
 	</insert>
+	<select id="findByTidPay" resultType="com.dodam.hotel.repository.model.Pay">
+		select
+		    *
+		from
+		    pay_tb
+		where pay_tid = #{tid};
 
+	</select>
 </mapper>

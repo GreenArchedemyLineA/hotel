@@ -1,34 +1,24 @@
-package com.dodam.hotel.service;
+package com.dodam.hotel;
 
-import com.dodam.hotel.dto.PayDto;
 import com.dodam.hotel.enums.Grade;
 import com.dodam.hotel.repository.interfaces.PayRepository;
-import com.dodam.hotel.repository.interfaces.PointRepository;
 import com.dodam.hotel.repository.interfaces.ReservationRepository;
 import com.dodam.hotel.repository.model.Pay;
 import com.dodam.hotel.repository.model.Reservation;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@Service
-public class PayService {
+@SpringBootTest
+public class PayRepositoryTest {
     @Autowired
     private PayRepository payRepository;
     @Autowired
-    private PointRepository pointRepository;
-    @Autowired
     private ReservationRepository reservationRepository;
-    @Transactional
-    public int createPay(PayDto payDto){
-        int result = payRepository.insertPay(payDto);
-        return result == 1 ? 1 : 0;
-    }
 
-    @Transactional
-    public int refundPay(Integer reservationId, Integer userId){
-        Reservation reservation = reservationRepository.findReservationById(reservationId);
+    @Test
+    public void PayObjectTest(){
+        Reservation reservation = reservationRepository.findReservationById(53);
         String tid = reservation.getPayTid();
         Pay payInfo = payRepository.findByTidPay(tid);
         Integer point = payInfo.getPrice();
@@ -39,10 +29,7 @@ public class PayService {
         }else{
             point = Integer.valueOf((int) Math.round(point * 0.04));
         }
-        point *= -1;
 
-        pointRepository.insertPoint(point, userId);
-        reservationRepository.deleteReservation(reservationId);
-        return 0;
+        System.out.println(point);
     }
 }

@@ -680,8 +680,6 @@ input[type="number"]::-webkit-inner-spin-button {
 		}
 	}
 
-
-
 </script>
 </body>
 </html>
