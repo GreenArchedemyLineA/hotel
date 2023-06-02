@@ -23,6 +23,7 @@ import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.repository.model.MembershipInfo;
+import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.DiningService;
@@ -31,6 +32,7 @@ import com.dodam.hotel.service.FacilitiesService;
 import com.dodam.hotel.service.ManagerReservationService;
 import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.QuestionService;
+import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.RoomService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.PagingObj;
@@ -57,6 +59,8 @@ public class ManagerController {
 	private FacilitiesService facilitiesService;
 	@Autowired
 	private ManagerReservationService managerReservationService;
+	@Autowired
+	private ReservationService reservationService;
 
 	@GetMapping("/managerPage")
 	public String managerPage() {
@@ -111,7 +115,6 @@ public class ManagerController {
 
 	// 유저 리스트
 	@GetMapping("/userList")
-
 	public String mUserListAll(Model model
 			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage){
@@ -161,12 +164,28 @@ public class ManagerController {
 		if (userGradeList != null) {
 			model.addAttribute("userList", userGradeList);
 		}
-		System.out.println("total: " + total);
 		model.addAttribute("paging", obj);
 		model.addAttribute("viewAll", userGradeList);
 		return "/manager/userGrade";
 	}
-
+	
+	// 회원 정보 상세 조회 or
+	@GetMapping("/userDetail/{id}")
+	public String userDetail(@PathVariable Integer id, Model model
+			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
+			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage) {
+		int total = reservationService.readAllReservationByUserIdCount(id);
+		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		List<Reservation> reservations = reservationService.readAllResrevationByUserIdPaging(obj, id);
+		GradeInfo userGradeDetail = managerService.selectUserGrade(id);
+		if (userGradeDetail != null) {
+			model.addAttribute("userDetail", userGradeDetail);
+			model.addAttribute("paging", obj);
+			model.addAttribute("reservations", reservations);
+		}
+		return "/manager/userDetail";
+	}
+	
 	// 맴버쉽 회원 조회
 	@GetMapping("/membershipUserList")
 	public String membershipUserList(Model model
@@ -199,18 +218,6 @@ public class ManagerController {
 		return "/manager/userBlackList";
 	}
 
-	// 블랙리스트 탈퇴처리
-	@GetMapping("/userWithdrawal/{id}/{email}")
-	@Transactional
-	public String userWithdrawal(@PathVariable Integer id, @PathVariable String email) {
-
-		int userWithdrawal = managerService.userUpdateWithdrawal(id);
-		int userOriginEmail = managerService.userUpdateOriginEmail(email, id);
-		// 현우 쪽이랑 합친뒤 유틸 패키지에 있는 랜덤 문자 매서드 를 불러와서 이메일 뒤에 합쳐준다
-		int WithdrawalEmail = managerService.withdrawalEmail(email + "/", id);
-		return "redirect:/manager/blackList";
-	}
-
 	// 매니저 로그인
 	@PostMapping("/managerSignInProc")
 	public String managersign(ManagerSignInFormDto managerSignInFormDto) {
@@ -219,7 +226,7 @@ public class ManagerController {
 		if (principal != null) {
 			session.setAttribute("principal", principal);
 		}
-		return "/manager/managerMain";
+		return "redirect:/manager/managerMain";
 	}
 
 	/*
@@ -281,15 +288,7 @@ public class ManagerController {
 		return "redirect:/manager/roomStatus";
 	}
 
-	// 회원 정보 상세 조회 or
-	@GetMapping("/userDetail/{id}")
-	public String userDetail(@PathVariable Integer id, Model model) {
-		GradeInfo userGradeDetail = managerService.selectUserGrade(id);
-		if (userGradeDetail != null) {
-			model.addAttribute("userDetail", userGradeDetail);
-		}
-		return "/manager/userDetail";
-	}
+
 
 	// 블랙 리스트 지정
 	@GetMapping("/updateBlack/{id}")

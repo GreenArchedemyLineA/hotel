@@ -162,13 +162,6 @@ class MyInfoJs {
 		while (this.userInfoDiv.firstChild) {
 			this.userInfoDiv.removeChild(this.userInfoDiv.firstChild);
 		};
-
-		fetch("/api/myCoupon", {
-			method: "GET"
-		}).then(async (response) => {
-			let data = await response.json();
-
-			
 			const couponListPage = document.createElement("iframe");
 			couponListPage.src = "/couponList";
 			couponListPage.scrolling = "no";
@@ -176,9 +169,6 @@ class MyInfoJs {
 			couponListPage.height = "500px";
 			couponListPage.frameBorder = "0";
 			this.userInfoDiv.append(couponListPage);
-				
-			}
-		);
 	};
 
 	createReservationListForm() {
@@ -186,11 +176,6 @@ class MyInfoJs {
 			this.userInfoDiv.removeChild(this.userInfoDiv.firstChild);
 		};
 
-		fetch("/api/myReservation", {
-			method: "GET"
-		}).then(async (response) => {
-			let data = await response.json();
-			
 			const reservationListPage = document.createElement("iframe");
 			reservationListPage.src = "/myReservations";
 			reservationListPage.scrolling = "no";
@@ -199,18 +184,12 @@ class MyInfoJs {
 			reservationListPage.frameBorder = "0";
 			this.userInfoDiv.append(reservationListPage);
 
-		});
 	};
 	
 		createQnAListForm() {
 		while (this.userInfoDiv.firstChild) {
 			this.userInfoDiv.removeChild(this.userInfoDiv.firstChild);
 		};
-
-		fetch("/api/myReply", {
-			method: "GET"
-		}).then(async (response) => {
-			let data = await response.json();
 
 			const replyListPage = document.createElement("iframe");
 			replyListPage.src = "/myReplys";
@@ -219,7 +198,6 @@ class MyInfoJs {
 			replyListPage.height = "500px";
 			replyListPage.frameBorder = "0";
 			this.userInfoDiv.append(replyListPage);
-		});
 	};
 }
 

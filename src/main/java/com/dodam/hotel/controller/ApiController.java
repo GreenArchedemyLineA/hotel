@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,7 @@ import com.dodam.hotel.service.QuestionService;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.Define;
+import com.dodam.hotel.util.PagingObj;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 /**
@@ -109,4 +111,12 @@ public class ApiController {
 		 return failMsg;
 		}
 	}
+	
+	// 예약조회
+	@GetMapping("/reserve")
+	public List<Reservation> reserveDetail(Integer id) {		
+			List<Reservation> reservations = reservationService.readAllReservationByUserId(id);
+			return reservations;
+		}
+	
 } // end of class

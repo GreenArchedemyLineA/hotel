@@ -8,24 +8,23 @@
 	justify-content: center;
 	align-items: center;
 }
-.title--container {
+.main--content {
+	margin-top: 50px;
 	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
-.table--tr {
-	background-color: #ebebeb;
-	height: 20px;
-	text-align: center;
+.form--container {
+	display: flex;
+	align-items: center;
+	border: 4px solid #9ACBF1;
+	border-radius: 20px;
+	width: 700px;
+	height: 300px;
 }
-
-.table-tr {
-	text-align: center;
-	font-size: 20px;
-}
-
 #title--box {
 	width: 600px;
 }
-
 .sub--button {
 	background-color: #FF9F8D;
 	border: none;
@@ -55,27 +54,50 @@
 .search--container {
 	display: flex;
 	justify-content: flex-end;
+	width: 100%;
+	margin-right: 200px;
 }
 .title--button {
 	margin-top: 6px;
 	margin-left: 20px;
 }
 .modal-content {
-	width: 700px;
-	height: 300px;
+	width: 670px;
+	height: 600px;
+}
+.paging--box > a {
+	text-decoration: none;
+	color: #9ACBF1;
+}
+.table--container {
+	width: 1000px;
+	text-align: center;
+	
+}
+.tr--box {
+	background-color: #ebebeb;
+	font-weight: bold;
+	height: 30px;
+}
+.content--box {
+	height: 50px;
+	border-bottom: 1px solid #ebebeb;
+}
+.title--container {
+	display: flex;
 }
 </style>
 		<div class="content">
 			<div class="title--container">
 				<h2>회원 리스트</h2>
-				<button class="sub-button title--button" data-toggle="modal" data-target="#myModal">차트</button>
+				<button class="sub--button title--button" data-toggle="modal" data-target="#myModal">차트</button>
 			</div>
 			<div class="main--content">
 				<div class="search--container">
 					<div>
 						<form action="/manager/userNameList" method="get">
-							<input type="text" name="name" class="input--box" placeholder="이름을 입력해주세요">
-							<button type="submit" class="sub--button">검색</button>
+							<input type="text" name="name" class="input--box" placeholder="이름을 입력해주세요" id="name--search--box">
+							<button type="submit" class="sub-button" id="search--btn">검색</button>
 						</form>
 					</div>
 				<div>
@@ -85,16 +107,16 @@
 							<option value="2">골드</option>
 							<option value="3">다이아</option>
 						</select>
-						<button type="submit" class="sub--button">조회</button>
+						<button type="submit" class="sub-button">조회</button>
 					</form>
 				</div>
 				</div>
-				<div id="grade--chart"></div>
-				<table class="table">
+
+				<table class="table--container">
 					<thead>
-						<tr class="table--tr">
+						<tr class="tr--box">
 							<th scope="col">이름</th>
-							<th scope="col">이메일</th>
+							<th scope="col" style="width: 410px;">이메일</th>
 							<th scope="col">전화번호</th>
 							<th scope="col">생년월일</th>
 							<th scope="col">정보</th>
@@ -102,17 +124,17 @@
 					</thead>
 					<tbody>
 						<c:forEach var="user" items="${viewAll}">
-							<tr>
+							<tr class="content--box">
 								<td>${user.name}</td>
-								<td>${user.email}</td>
+								<td style="width: 410px;">${user.email}</td>
 								<td>${user.tel}</td>
 								<td>${user.birth}</td>
-								<td><button onclick="userDetail(${user.id})" class="sub-button">상세</button></td>
+								<td><button onclick="userDetail(${user.id})" class="sub--button">상세</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
-					<div style="display: block; text-align: center;">
+					<div style="display: block; text-align: center;" class="paging--box">
 					<c:if test="${paging.startPage != 1}">
 						<a href="/manager/userList?nowPage=${paging.startPage - 1}&cntPerPage=${paging.cntPerPage}">&lt;</a>
 					</c:if>
@@ -162,15 +184,15 @@
 								<div id="title--box">오늘 멤버쉽 가입 고객이 없습니다</div>
 							</c:otherwise>
 						</c:choose>
-							
 					</div>
-
+				<div id="grade--chart"></div>
 				</div>
 			
 			</div>
 		</div>
 	</div>
 <script>
+	
 	function userDetail(id){
 		// 유저 정보 확인과 등급 수정 할수 있는 페이지로
 		location.href = "/manager/userDetail/"+id; 

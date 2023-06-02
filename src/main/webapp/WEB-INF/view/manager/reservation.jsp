@@ -59,6 +59,7 @@
 	<div class="content">
 		<h2>예약 리스트</h2>
 			<form class="form--box">
+				<input type="checkbox" name="roomStatus"> 오늘 예약만 보기
 				<input type="text" name="name" placeholder="예약자 이름을 입력하세요" class="input--box"/> 
 				<input type="submit" value="검색" class="sub-button"/>
 			</form>
@@ -107,10 +108,6 @@
 						</c:choose>
 					</tbody>
 				</table>
-				오늘 매출 : ${totalPrice} 원
-				<c:forEach var="price" items="${price}" varStatus="status">
-					<p> ${status.index+1}일전 매출 :${price}원</p>
-				</c:forEach>
 			</div>
 		</div>
 	</div>

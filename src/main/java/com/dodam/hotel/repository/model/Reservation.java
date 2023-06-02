@@ -3,6 +3,8 @@ package com.dodam.hotel.repository.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import com.dodam.hotel.util.DateFormat;
+
 import lombok.Data;
 
 @Data
@@ -31,5 +33,9 @@ public class Reservation {
     private Pool pool;
     private Spa spa;
     
+    public String dateFormat() {
+		String formatDate = DateFormat.dateFormat(this.createdAt);
+		return formatDate;
+	}
     
 }

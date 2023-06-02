@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import java.sql.Timestamp;
 
+import com.dodam.hotel.util.DateFormat;
+
 import lombok.Data;
 
 @Data
@@ -23,6 +25,11 @@ public class User {
 	private Boolean randomPwdStatus;
 	private String originEmail;
 	private Boolean socialLogin;
+	
+	public String dateFormat() {
+		String formatDate = DateFormat.dateFormat(this.createdAt);
+		return formatDate;
+	}
 
 }
 
