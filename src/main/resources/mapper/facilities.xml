@@ -99,7 +99,20 @@
     <select id="findAllPool" resultType="com.dodam.hotel.repository.model.Pool">
         select * from pool_tb;
     </select>
+    
 	<select id="findAllSpa" resultType="com.dodam.hotel.repository.model.Spa">
+        select * from spa_tb;
+    </select>
+	
+	<select id="findByAllFitness" resultType="com.dodam.hotel.repository.model.Fitness">
+        select * from fitness_tb;
+    </select>
+    
+    <select id="findByAllPool" resultType="com.dodam.hotel.repository.model.Pool">
+        select * from pool_tb;
+    </select>
+    
+	<select id="findByAllSpa" resultType="com.dodam.hotel.repository.model.Spa">
         select * from spa_tb;
     </select>
 	

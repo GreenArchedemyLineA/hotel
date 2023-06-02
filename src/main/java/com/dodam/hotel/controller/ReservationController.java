@@ -70,13 +70,9 @@ public class ReservationController {
 		model.addAttribute("fitnessPrice", reservationOptionPrice.getFitnessPrice());
 		
 		model.addAttribute("diningStatus", reservationService.diningStatus().get(0));
-		System.out.println(reservationService.diningStatus().get(0));
 		model.addAttribute("fitnessStatus", reservationService.fitnessStatus().get(0));
-		System.out.println(reservationService.fitnessStatus().get(0));
 		model.addAttribute("poolStatus", reservationService.poolStatus().get(0));
-		System.out.println(reservationService.poolStatus().get(0));
-//		model.addAttribute("spaStatus", reservationService.spaStatus().get(0));
-//		System.out.println(reservationService.spaStatus().get(0));
+		model.addAttribute("spaStatus", reservationService.spaStatus().get(0));
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		selectReserveDetail.setUserId(principal.getId());
 		Map<String, Object> selectList = reservationService.useCouponOrPoint(selectReserveDetail);

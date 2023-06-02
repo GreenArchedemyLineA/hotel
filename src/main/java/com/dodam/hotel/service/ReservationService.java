@@ -20,6 +20,7 @@ import com.dodam.hotel.enums.CouponInfo;
 import com.dodam.hotel.enums.Grade;
 import com.dodam.hotel.repository.interfaces.CouponRepository;
 import com.dodam.hotel.repository.interfaces.DiningRepository;
+import com.dodam.hotel.repository.interfaces.FacilitiesRepository;
 import com.dodam.hotel.repository.interfaces.FitnessRepository;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.interfaces.PointRepository;
@@ -64,16 +65,10 @@ public class ReservationService {
 	private HttpSession session;
 	
 	@Autowired
-	private PoolRepository poolRepository;
-	
-	@Autowired
-	private SpaRepository spaRepository;
+	private FacilitiesRepository facilitiesRepository;
 	
 	@Autowired
 	private DiningRepository diningRepository;
-	
-	@Autowired
-	private FitnessRepository fitnessRepository;
 	
 	// 특정 유저의 모든 예약 정보 출력
 	@Transactional
@@ -219,12 +214,12 @@ public class ReservationService {
 		return diningRepository.findAllDining();
 	}
 	public List<Spa> spaStatus(){
-		return spaRepository.findAllSpa();
+		return facilitiesRepository.findByAllSpa();
 	}
 	public List<Fitness> fitnessStatus(){
-		return fitnessRepository.findAllFitness();
+		return facilitiesRepository.findByAllFitness();
 	}
 	public List<Pool> poolStatus(){
-		return poolRepository.findAllPool();
+		return facilitiesRepository.findByAllPool();
 	}
 }
