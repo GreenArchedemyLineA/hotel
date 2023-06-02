@@ -217,6 +217,7 @@
 			r.number_of_p as r_number_of_p,
 			r.created_at as r_created_at,
 			r.total_price as r_total_price,
+			r.pay_tid as r_pay_tid,
 			
 			ro.id as room_id,
 			ro.availability as room_availability,
@@ -270,6 +271,7 @@
 			re.number_of_p as r_number_of_p,
 			re.created_at as r_created_at,
 			re.total_price as r_total_price,
+			re.pay_tid as r_pay_tid,
             
             u.id as user_id,
             u.name as user_name,
@@ -333,6 +335,7 @@
 			re.number_of_p as r_number_of_p,
 			re.created_at as r_created_at,
 			re.total_price as r_total_price,
+			re.pay_tid as r_pay_tid,
 
             u.id as user_id,
             u.name as user_name,

@@ -2,6 +2,7 @@ package com.dodam.hotel.service;
 
 import com.dodam.hotel.dto.PayDto;
 import com.dodam.hotel.enums.Grade;
+import com.dodam.hotel.repository.interfaces.CouponRepository;
 import com.dodam.hotel.repository.interfaces.PayRepository;
 import com.dodam.hotel.repository.interfaces.PointRepository;
 import com.dodam.hotel.repository.interfaces.ReservationRepository;
@@ -20,6 +21,8 @@ public class PayService {
     private PointRepository pointRepository;
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private CouponRepository couponRepository;
     @Transactional
     public int createPay(PayDto payDto){
         int result = payRepository.insertPay(payDto);
@@ -43,6 +46,8 @@ public class PayService {
 
         pointRepository.insertPoint(point, userId);
         reservationRepository.deleteReservation(reservationId);
+
+        couponRepository.deleteByUserIdandCouponInfoId(userId, 1);
         return 0;
     }
 }
