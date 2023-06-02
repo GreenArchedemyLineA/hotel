@@ -50,4 +50,10 @@ public interface UserRepository {
 	// 임시 비밀번호 발급 상태 변경
 	public int updatePwdStatus(Integer userId);
 	
+	// 재가입 유저 조회용
+	public User findUserByOriginEmail(String email);
+	
+	// 재가입 유저 회원가입용
+	public int updateUserByOriginEmail(UserRequestDto.InsertDto insertDto);
+	
 }

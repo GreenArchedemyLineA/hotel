@@ -137,6 +137,7 @@ public class UserController {
 		// 비밀번호 수정 시, DB 비밀번호랑 맞는지 확인 (암호화 처리 예정) - 다를경우 바뀐 비밀번호로 세팅
 		if (principal.getPassword() != responseUser.getPassword()) {
 			principal.setPassword(myPageDto.getPassword());
+			session.setAttribute(Define.PRINCIPAL, responseUser);
 		}
 
 		return "redirect:/myPage";

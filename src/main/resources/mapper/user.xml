@@ -14,6 +14,7 @@
 		<result column="address" property="address"/>
 		<result column="blacklist" property="blacklist"/>
 		<result column="withdrawal" property="withdrawal"/>
+		<result column="origin_email" property="originEmail"/>
 		<result column="created_at" property="createdAt"/>
 		<result column="social_login" property="socialLogin"/>
 		<result column="random_pwd_status" property="randomPwdStatus"/>
@@ -23,7 +24,14 @@
 	<select id="findUserByLoginFormDto" resultType="com.dodam.hotel.dto.UserResponseDto$LoginResponseDto">
 		select *
 		from user_tb
-		where email = #{email} and password = #{password}
+		where email = #{email}
+	</select>
+	
+	<!-- 재가입 유저 조회 -->
+	<select id="findUserByOriginEmail" resultMap="User">
+		select *
+		from user_tb
+		where origin_email = #{email}
 	</select>
 	
 	<!-- 마이페이지 정보 수정 -->
@@ -31,6 +39,14 @@
 		update user_tb
 		set password = #{password}, tel = #{tel}
 		where email = #{email}
+	</update>
+	
+	<!-- 재가입용 update -->
+	<update id="">
+		update user_tb
+		set email = #{email}, password = #{password}, name = #{name}, gender = #{gender},
+			birth = #{birth}, tel = #{tel}, address = #{address}, widthdrawal = 0
+		where origin_email = #{email}
 	</update>
 	
 	<!-- email로 특정 유저 조회 -->
