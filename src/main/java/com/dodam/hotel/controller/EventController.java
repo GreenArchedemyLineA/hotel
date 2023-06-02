@@ -3,8 +3,11 @@ package com.dodam.hotel.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.NoticeInsertForm;
+import com.dodam.hotel.handler.exception.CustomRestFullException;
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
 import com.dodam.hotel.repository.model.Event;
 import com.dodam.hotel.service.EventService;
 import com.dodam.hotel.util.PagingObj;
@@ -63,7 +68,12 @@ public class EventController {
 	
 	// 매니저 insert
 	@PostMapping("/event-insert")
-	public String eventWrite(NoticeInsertForm noticeInsertForm) {
+	public String eventWrite(@Validated NoticeInsertForm noticeInsertForm, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
 		int event = eventService.insertEvent(noticeInsertForm);
 		if (event == 0) {
 			return null;
@@ -83,7 +93,12 @@ public class EventController {
 	
 	// 매니저 이벤트 수정
 	@PostMapping("/updateEvent/{id}")
-	public String updateEvent(@PathVariable Integer id, NoticeInsertForm noticeInsertForm) {
+	public String updateEvent(@PathVariable Integer id, @Validated NoticeInsertForm noticeInsertForm, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
 		noticeInsertForm.setId(id);
 		int event = eventService.updateEvent(noticeInsertForm);
 		if (event == 0) {

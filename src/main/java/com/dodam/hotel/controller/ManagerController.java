@@ -1,16 +1,17 @@
 package com.dodam.hotel.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dodam.hotel.dto.ManagerSignInFormDto;
 import com.dodam.hotel.dto.StatusParams;
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
@@ -182,8 +184,12 @@ public class ManagerController {
 
 	// 매니저 로그인
 	@PostMapping("/managerSignInProc")
-	public String managersign(ManagerSignInFormDto managerSignInFormDto) {
-
+	public String managersign(@Validated ManagerSignInFormDto managerSignInFormDto, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
 		Manager principal = managerService.managerSign(managerSignInFormDto);
 		if (principal != null) {
 			session.setAttribute("principal", principal);
@@ -211,6 +217,7 @@ public class ManagerController {
 	 * return "/manager/status"; }
 	 */
 
+	// 유효성 검사 해야되나?
 	@GetMapping("/roomStatus")
 	public String Check(StatusParams statusParams, Integer roomId, Model model) {
 		List<Room> rooms;

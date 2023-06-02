@@ -8,9 +8,12 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dodam.hotel.dto.QuestionRequestDto.InsertQuestionRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.handler.exception.CustomRestFullException;
 import com.dodam.hotel.repository.model.FAQ;
 import com.dodam.hotel.repository.model.Question;
 import com.dodam.hotel.service.QuestionService;
@@ -58,8 +62,12 @@ public class QuestionController {
 	
 	// qna 등록 처리 - 유저
 	@PostMapping("/qnaProc")
-	public String qnaProc(InsertQuestionRequestDto question) {
-		
+	public String qnaProc(@Validated InsertQuestionRequestDto question, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new CustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		
 		question.setUserId(principal.getId());
@@ -97,7 +105,9 @@ public class QuestionController {
 	
 	//문의사항 게시판 - 매니저
 	@GetMapping("/questionList")
-	public String questionList(Model model, @RequestParam(name = "nowPage", defaultValue = "1" , required = false) String nowPage, @RequestParam(name = "cntPerPage", defaultValue = "5" , required = false) String cntPerPage) {
+	public String questionList(Model model, 
+			@RequestParam(name = "nowPage", defaultValue = "1" , required = false) String nowPage, 
+			@RequestParam(name = "cntPerPage", defaultValue = "5" , required = false) String cntPerPage) {
 		//주소 요청시 작성된 계시물 제목 List 로 다불러오기
 		int total = questionService.readAllQuestionCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));

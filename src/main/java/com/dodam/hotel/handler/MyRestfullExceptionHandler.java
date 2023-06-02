@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.dodam.hotel.handler.exception.CustomRestFullException;
 import com.dodam.hotel.handler.exception.LoginException;
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
 import com.dodam.hotel.handler.exception.ManagerLoginException;
 
 @RestControllerAdvice
@@ -14,6 +15,16 @@ public class MyRestfullExceptionHandler {
 	
 	@ExceptionHandler(CustomRestFullException.class)
 	public String basicException(CustomRestFullException e) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		sb.append("alert('"+e.getMessage()+"');");
+		sb.append("history.back();");
+		sb.append("</script>");
+		return sb.toString();
+	}
+	
+	@ExceptionHandler(ManagerCustomRestFullException.class)
+	public String basicException(ManagerCustomRestFullException e) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<script>");
 		sb.append("alert('"+e.getMessage()+"');");

@@ -251,7 +251,16 @@ public class UserController {
 
 	// pw 찾기 기능
 	@PostMapping("/pwInquiry")
-	public String pwInquiry(InquiryRequestDto.PwInquiryRequestDto pwInquiryRequestDto) {
+	public String pwInquiry(@Validated InquiryRequestDto.PwInquiryRequestDto pwInquiryRequestDto, BindingResult bindingResult) {
+		if(pwInquiryRequestDto.getBirth() == null) {
+			throw new CustomRestFullException("생일을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new CustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
 		// 랜덤 비밀번호 생성
 		String randomStr = CreateRandomStr.createRandomString();
 

@@ -1,6 +1,7 @@
 package com.dodam.hotel.controller;
 
 import com.dodam.hotel.dto.api.ResponseMsg;
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
 import com.dodam.hotel.repository.interfaces.FAQRepository;
 import com.dodam.hotel.repository.interfaces.PackageRepository;
 import com.dodam.hotel.repository.model.FAQ;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -50,7 +53,12 @@ public class FAQController {
     
     //매니저용 
     @PostMapping("/manager/faq/write-proc")
-    public String faqWriteProc(FAQ faq){
+    public String faqWriteProc(@Validated FAQ faq, BindingResult bindingResult){
+    	if(bindingResult.hasErrors()) {
+    		bindingResult.getAllErrors().forEach(e -> {
+    			throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+    		});
+    	}
         managerFAQService.createFAQ(faq);
         return "redirect:/manager/FAQ";
     }
@@ -65,7 +73,12 @@ public class FAQController {
 
     //매니저용 
     @PostMapping("/manager/faq/update-proc")
-    public String faqUpdateProc(FAQ faq){
+    public String faqUpdateProc(@Validated FAQ faq, BindingResult bindingResult){
+    	if(bindingResult.hasErrors()) {
+    		bindingResult.getAllErrors().forEach(e -> {
+    			throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+    		});
+    	}
         managerFAQService.updateFAQ(faq);
         return "redirect:/manager/faq";
     }
