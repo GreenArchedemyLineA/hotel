@@ -117,6 +117,9 @@
 .date--box {
 	height: 500px;
 }
+a:hover {
+	text-decoration: none;
+}
 </style>
 <div class="main--container">
 	<div id="date"></div>
@@ -146,7 +149,7 @@
 					<c:when test="${question != 0}">
 						<span style="color: red; font-weight: bold;">new</span>
 						<div class="question--count">
-							<a href="">답변을 기다리는 문의가 ${question} 개 있습니다</a>
+							<a href="/question/questionList">답변을 기다리는 문의가 ${question} 개 있습니다</a>
 						</div>
 					</c:when>
 					<c:otherwise>

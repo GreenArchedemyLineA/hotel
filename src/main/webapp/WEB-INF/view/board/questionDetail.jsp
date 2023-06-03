@@ -27,37 +27,70 @@
 	border-bottom: 2px solid #ebebeb;
 	margin: 10px;
 }
-.content--box {
-	height: 500px;
+
+.main--content {
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.reply--form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.reply--box {
+	width: 1000px;
+	height: 200px;
+	width: 100%;
+}
+.reply--box:focus {
+	outline: none;
+	border: 1px solid #ebebeb;
+}
+
+.q--title--box {
+	display: flex;
+	justify-content: space-between;
+	width: 800px;
+	background-color: #ebebeb;
+	height: 30px;
+}
+
+#category, #userId {
+	display: flex;
+	align-items: center;
+}
+.title--and--content {
+	display: flex;
+	flex-direction: column;
+	height: 300px;
+	padding-top: 20px;
 }
 </style>
 
 <div class="content">
 		<h2>문의사항</h2>
 		<div class="main--content">
-			<div>
-				<div>
-					<label>작성자 : ${question.userId}</label>
-				</div>
-				<div>
-					<label style="font-weight: bold">${question.title}</label>
-				</div>
-				<div>
+			<div class="q--container">
+				<div class="q--box">
+					<div class="q--title--box">
+						<div id="category">[${question.category}]</div>
+						<div id="userId">회원 ID : ${question.userId}</div>
+					</div>
+				<div class="title--and--content">
+					<label style="font-weight: bold; font-size: 20px;">${question.title}</label>
 					<label>${question.content}</label>
 				</div>
-			
-				<form action="/question/reply/${question.id}/${principal.id}" method="post">
-				<input type="text" name="content" class="input--box">
-				<button type="submit" class="sub-button">댓글 달기</button>
+				</div>
+				<form action="/question/reply/${question.id}/${principal.id}" method="post" class="reply--form">
+				<input type="text" name="content" class="reply--box" placeholder="답변을 작성해주세요">
+				<button type="submit" class="sub-button">답변 작성</button>
 				</form>
 				</div>
 		</div>
 	</div>
-<<<<<<< HEAD
-</div>
-<%@ include file="../layout/footer.jsp"%>
-=======
 </body>
 </html>
->>>>>>> manager/css
 

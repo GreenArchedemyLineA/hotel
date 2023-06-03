@@ -52,7 +52,9 @@
 }
 </style>
 <div class="content">
-	<h2>FAQ</h2>
+	<div>
+		<h2>FAQ</h2>
+	</div>
 	<div class="main--content">
 		<div id="faq--wrap">
 			<c:forEach var="faq" items="${faqList}">
