@@ -159,6 +159,13 @@ public class PayController {
     public String payRefund(@PathVariable("tid") String tid
     		,@PathVariable("reservationId") Integer reservationId) {
     	Pay payType = payService.searchType(tid);
+    	
+    	if(payType.getPgType().equals("KAKAO")) {
+    		KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid,String.valueOf(payType.getPrice()));
+    		if(kakaoCancelResponse == null){
+    			
+    		}
+    	}
     	return "redirect:/myReservations";
     }
     // 토스결제 성공 시
