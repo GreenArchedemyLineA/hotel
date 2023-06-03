@@ -151,19 +151,66 @@
 			<p class="find--pwd">비밀번호 찾기</p>
 		</div>
 		<form action="/idInquiry" method="post" class="form--container" id="id--container">
-			<input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box"> <input type="date" name="birth" placeholder="생년월일 입력해 주세요" class="input--box"> <input type="text"
-				name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
-			<button type="submit" class="sub--button">아이디 찾기</button>
+			<input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box">
+			<input type="date" name="birth" placeholder="생년월일 입력해 주세요" class="input--box">
+			<input type="text" name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
+			<button type="button" class="sub--button" onclick="idFormCheck()">아이디 찾기</button>
 		</form>
 		<form action="/pwInquiry" method="post" class="form--container" id="pwd--container">
-			<input type="email" name="email" placeholder="이메일을 입력해 주세요" class="input--box"> <input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box"> <input type="date"
-				name="birth" placeholder="생년월일 입력해 주세요" class="input--box"> <input type="text" name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
-			<button type="submit" class="sub--button">비밀번호 찾기</button>
+			<input type="email" name="email" placeholder="이메일을 입력해 주세요" class="input--box">
+			<input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box">
+			<input type="date" name="birth" placeholder="생년월일 입력해 주세요" class="input--box">
+			<input type="text" name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
+			<button type="button" class="sub--button" onclick="pwdFormCheck()">비밀번호 찾기</button>
 		</form>
 
 	</div>
 
 	<script>
+		function idFormCheck(){
+			let idFormTag = document.getElementById("id--container");
+			let nameInputTag = idFormTag.name
+			let birthInputTag = idFormTag.birth
+			let	telInputTag = idFormTag.tel
+			let isSuccess = false;
+			if(nameInputTag == ""){
+				alert("이름을 입력해주세요")
+			}else if(birthInputTag == ""){
+				alert("생일을 입력해 주세요")
+			}else if(telInputTag == ""){
+				alert("전화번호를 입력해 주세요")
+			}else{
+				isSuccess = true;
+			}
+			if(isSuccess){
+				idFormTag.submit();
+			}
+		}
+
+		function pwdFormCheck(){
+			let pwdFormTag = document.getElementById("pwd--container");
+			let emailInputTag = pwdFormTag.email
+			let nameInputTag = pwdFormTag.name
+			let birthInputTag = pwdFormTag.birth
+			let	telInputTag = pwdFormTag.tel
+			let isSuccess = false;
+
+			if(emailInputTag == ""){
+				alert("이메일을 입력해주세요")
+			}else if(nameInputTag == ""){
+				alert("이름을 입력해주세요")
+			}else if(birthInputTag == ""){
+				alert("생일을 입력해 주세요")
+			}else if(telInputTag == ""){
+				alert("전화번호를 입력해 주세요")
+			}else{
+				isSuccess = true;
+			}
+			if(isSuccess){
+				pwdFormTag.submit();
+			}
+		}
+
 		$(document).ready(function() {
 			$("#pwd--container").hide();
 			$(".find--id").addClass("change--background");

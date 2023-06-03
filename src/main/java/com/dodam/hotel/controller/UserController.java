@@ -91,7 +91,6 @@ public class UserController {
 		model.addAttribute("responseUser", responseUser);
 		return "/user/myPage";
 	}
-
 	// 로그인 기능 구현 (현우)
 	@PostMapping("/loginProc")
 	public String loginProc(UserRequestDto.LoginFormDto loginDto) {

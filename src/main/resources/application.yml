@@ -16,8 +16,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
     url: jdbc:mysql://localhost:3306/dodam?serverTimezone=Asia/Seoul
-    username: root
-    password: asd1234
+    username: dodam
+    password: dodam1234
 
   mail:
     host: smtp.gmail.com

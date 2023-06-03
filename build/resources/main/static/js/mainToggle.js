@@ -3,7 +3,7 @@
  */
 		let timer;
 		$(document).ready(function() {
-			$(".toggle--box--room").click(function() {
+			$(".toggle--wrap--room").click(function() {
 				if($(".navi--bar--detail--fac").show() || 
 					$(".navi--bar--detail--reserve").show() ||
 					$(".navi--bar--detail--qna").show()) {
@@ -21,7 +21,7 @@
 		});
 
 		$(document).ready(function() {
-			$(".toggle--box--fac").click(function() {
+			$(".toggle--wrap--fac").click(function() {
 				if($(".navi--bar--detail--room").show() || 
 					$(".navi--bar--detail--reserve").show() ||
 					$(".navi--bar--detail--qna").show()) {
@@ -40,7 +40,7 @@
 			});
 		});
 		$(document).ready(function() {
-			$(".toggle--box--reserve").click(function() {
+			$(".toggle--wrap--reserve").click(function() {
 				if($(".navi--bar--detail--room").show() || 
 					$(".navi--bar--detail--fac").show() ||
 					$(".navi--bar--detail--qna").show()) {
@@ -57,7 +57,7 @@
 			});
 		});
 		$(document).ready(function() {
-			$(".toggle--box--qna").click(function() {
+			$(".toggle--wrap--qna").click(function() {
 				if($(".navi--bar--detail--room").show() || 
 					$(".navi--bar--detail--fac").show() ||
 					$(".navi--bar--detail--reserve").show()) {

@@ -116,6 +116,19 @@ class MyInfoJs {
 				divTelTag.append(inputTelTag);
 				inputTelTag.value = data.tel;
 				
+				// 주소
+				const addressSpanTag = document.createElement("span");
+				addressSpanTag.textContent = "주소";
+				
+				const divAddressTag = document.createElement("div");
+				const inputAddressTag = document.createElement("input");
+				inputAddressTag.className = "input--box";
+				inputAddressTag.name = "address";
+				inputAddressTag.type = "text";
+				divAddressTag.append(addressSpanTag);
+				divAddressTag.append(inputAddressTag);
+				inputAddressTag.value = data.address;
+				
 				// input submit
 				const inputBtnTag = document.createElement("input");
 				inputBtnTag.className = "sub--button";
@@ -124,7 +137,7 @@ class MyInfoJs {
 
 
 				const childNodeArray = [
-					divEmailTag, divPasswordTag, divNameTag, divGenderTag, divBirthTag, divTelTag, inputBtnTag
+					divEmailTag, divPasswordTag, divNameTag, divGenderTag, divBirthTag, divAddressTag, divTelTag, inputBtnTag
 				];
 
 				childNodeArray.forEach((node) => {

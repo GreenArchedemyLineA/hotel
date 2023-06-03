@@ -4,7 +4,7 @@
 <mapper namespace="com.dodam.hotel.repository.interfaces.PayRepository">
 
 	<insert id="insertPay">
-		insert into pay_tb(pay_tid, price, pg_type, grade)
+		insert into pay_tb(pay_tid, price, pg_type, grade_name)
 		values
 		    (#{payTid}, #{price}, #{pgType}, #{grade})
 	</insert>
