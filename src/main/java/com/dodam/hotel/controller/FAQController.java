@@ -33,8 +33,8 @@ public class FAQController {
     //매니저용 
     @GetMapping("/manager/faq")
     public String faqPage(Model model){
-        List<FAQ> faqList = managerFAQService.findAllFAQ();
-        model.addAttribute("faqList", faqList);
+        List<FAQ> responseFaqs = managerFAQService.findAllFAQ();
+        model.addAttribute("faqList", responseFaqs);
         return "/manager/FAQ";
     }
 
@@ -44,8 +44,8 @@ public class FAQController {
     	if(id == null) {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
-        FAQ faq = managerFAQService.findFAQById(id);
-        model.addAttribute("faq", faq);
+        FAQ responseFaq = managerFAQService.findFAQById(id);
+        model.addAttribute("faq", responseFaq);
         return "/manager/FAQDetail";
     }
 
@@ -73,8 +73,8 @@ public class FAQController {
     	if(id == null) {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
-        FAQ faq = managerFAQService.findFAQById(id);
-        model.addAttribute("faq", faq);
+        FAQ responseFaq = managerFAQService.findFAQById(id);
+        model.addAttribute("faq", responseFaq);
         return "/manager/FAQUpdate";
     }
 
@@ -99,7 +99,6 @@ public class FAQController {
     	}
         Manager manager = (Manager) session.getAttribute("manager");
         if(manager == null){
-
             ResponseMsg failMsg = ResponseMsg
                     .builder()
                     .status_code(HttpStatus.FORBIDDEN.value())

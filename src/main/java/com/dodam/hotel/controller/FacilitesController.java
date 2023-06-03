@@ -24,36 +24,36 @@ public class FacilitesController {
 	// 부대시설 페이지
 	@GetMapping("/facilities")
 	public String facilitesPage(Model model) {
-		Pool pool = facilitiesService.readPoolAll();
-		Spa spa = facilitiesService.readSpaAll();
-		Fitness fitness = facilitiesService.readFitnessAll();
-		model.addAttribute("pool", pool);
-		model.addAttribute("spa", spa);
-		model.addAttribute("fitness", fitness);
+		Pool responsePool = facilitiesService.readPoolAll();
+		Spa responseSpa = facilitiesService.readSpaAll();
+		Fitness responaseFitness = facilitiesService.readFitnessAll();
+		model.addAttribute("pool", responsePool);
+		model.addAttribute("spa", responseSpa);
+		model.addAttribute("fitness", responaseFitness);
 		return "/facilities/info";
 	}
 
 	// 수영장 페이지
 	@GetMapping("/pool")
 	public String poolPage(Model model) {
-		Pool pool = facilitiesService.readPoolAll();
-		model.addAttribute("pool", pool);
+		Pool responsePool = facilitiesService.readPoolAll();
+		model.addAttribute("pool", responsePool);
 		return "/facilities/pool";
 	}
 
 	// 스파 페이지
 	@GetMapping("/spa")
 	public String spaPage(Model model) {
-		Spa spa = facilitiesService.readSpaAll();
-		model.addAttribute("spa", spa);
+		Spa responseSpa = facilitiesService.readSpaAll();
+		model.addAttribute("spa", responseSpa);
 		return "/facilities/spa";
 	}
 
 	// 피트니스 페이지
 	@GetMapping("/fitness")
 	public String fitnessPage(Model model) {
-		Fitness fitness = facilitiesService.readFitnessAll();
-		model.addAttribute("fitness", fitness);
+		Fitness responseFitness = facilitiesService.readFitnessAll();
+		model.addAttribute("fitness", responseFitness);
 		return "/facilities/fitness";
 	}
 	

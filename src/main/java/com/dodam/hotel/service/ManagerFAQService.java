@@ -1,8 +1,10 @@
 package com.dodam.hotel.service;
 
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
 import com.dodam.hotel.repository.interfaces.FAQRepository;
 import com.dodam.hotel.repository.model.FAQ;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,28 +22,43 @@ public class ManagerFAQService {
     private FAQRepository faqRepository;
 
     public List<FAQ> findAllFAQ(){
-        List<FAQ> faqList = faqRepository.findAllFAQ();
-        return faqList;
+        List<FAQ> faqEntitys = faqRepository.findAllFAQ();
+        if(faqEntitys == null) {
+        	throw new ManagerCustomRestFullException("faq 조회 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return faqEntitys;
     }
 
     public FAQ findFAQById(Integer id){
-        FAQ faqList = faqRepository.findFAQById(id);
-        return faqList;
+        FAQ faqEntity = faqRepository.findFAQById(id);
+        if(faqEntity == null) {
+        	throw new ManagerCustomRestFullException("faq 조회 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return faqEntity;
     }
 
     @Transactional
     public int createFAQ(FAQ faq){
-        int result = faqRepository.insertFAQ(faq);
-        return result;
+        int resultRow = faqRepository.insertFAQ(faq);
+        if(resultRow == 0) {
+        	throw new ManagerCustomRestFullException("insert 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return resultRow;
     }
     @Transactional
     public int updateFAQ(FAQ faq){
-        int result = faqRepository.updateFAQById(faq);
-        return result;
+        int resultRow = faqRepository.updateFAQById(faq);
+        if(resultRow == 0) {
+        	throw new ManagerCustomRestFullException("update 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return resultRow;
     }
     @Transactional
     public int deleteFAQ(Integer id){
-        int result = faqRepository.deleteFAQById(id);
-        return result;
+        int resultRow = faqRepository.deleteFAQById(id);
+        if(resultRow == 0) {
+        	throw new ManagerCustomRestFullException("delete 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return resultRow;
     }
 }

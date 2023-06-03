@@ -66,7 +66,7 @@ public class ManagerController {
 
 	@GetMapping("/managerMain")
 	public String managerMain(Model model) {
-		model.addAttribute("viewAll", eventService.findByIdLimit());
+		model.addAttribute("event", eventService.findByIdLimit());
 		model.addAttribute("question", questionService.readQuestionCountByStatus0());
 		model.addAttribute("availableRoom", roomService.readRoomAvailableCount());
 		model.addAttribute("notAvailableRoom", roomService.readRoomNotAvailableCount());
@@ -76,15 +76,15 @@ public class ManagerController {
 		model.addAttribute("spa", facilitiesService.readSpaStatus());
 		model.addAttribute("fitness", facilitiesService.readFitnessStatus());
 
-		List<User> userToday = userService.readJoinUserToday();
-		int userTodayCount = userToday.size();
-		List<MembershipInfo> membershipToday = userService.readJoinMembershipToday();
-		int membershipTodayCount = membershipToday.size();
-		if (userToday != null) {
-			model.addAttribute("userTodayCount", userTodayCount);
+		List<User> todayJoinUser = userService.readJoinUserToday();
+		int todayJoinUserCount = todayJoinUser.size();
+		List<MembershipInfo> todayJoinMembership = userService.readJoinMembershipToday();
+		int todayJoinMembershipCount = todayJoinMembership.size();
+		if (todayJoinUser != null) {
+			model.addAttribute("userTodayCount", todayJoinUserCount);
 		}
-		if (membershipToday != null) {
-			model.addAttribute("membershipTodayCount", membershipTodayCount);
+		if (todayJoinMembership != null) {
+			model.addAttribute("membershipTodayCount", todayJoinMembershipCount);
 		}
 
 		int totalPrice = managerReservationService.readBeforeTodayTotalPrice();
@@ -112,16 +112,16 @@ public class ManagerController {
 	@GetMapping("/userList")
 	public String mUserListAll(Model model) {
 
-		List<MUser> userList = managerService.managerUserListAll();
-		List<User> userToday = userService.readJoinUserToday();
-		int userTodayCount = userToday.size();
+		List<MUser> responseUsers = managerService.managerUserListAll();
+		List<User> todayJoinUser = userService.readJoinUserToday();
+		int todayJoinUserCount = todayJoinUser.size();
 		List<MembershipInfo> membershipToday = userService.readJoinMembershipToday();
 		int membershipTodayCount = membershipToday.size();
-		if (userList != null) {
-			model.addAttribute("userList", userList);
+		if (responseUsers != null) {
+			model.addAttribute("userList", responseUsers);
 		}
-		if (userToday != null) {
-			model.addAttribute("userTodayCount", userTodayCount);
+		if (todayJoinUser != null) {
+			model.addAttribute("userTodayCount", todayJoinUserCount);
 		}
 		if (membershipToday != null) {
 			model.addAttribute("membershipTodayCount", membershipTodayCount);

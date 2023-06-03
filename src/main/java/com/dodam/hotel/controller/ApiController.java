@@ -2,6 +2,7 @@ package com.dodam.hotel.controller;
 
 import javax.servlet.http.HttpSession;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,11 +30,11 @@ public class ApiController {
 	@Autowired
 	private UserService userService;
 	
-	// 회원 정보 수정용
+	// 회원 정보 수정
 	@GetMapping("/myInfo")
 	public UserResponseDto.MyPageResponseDto updateUserInfo() {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-		// 회원 정보 불러오기
+		// 바뀐 회원정보 출력 용도
 		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
 		
 		return responseUser;
@@ -61,4 +62,4 @@ public class ApiController {
 		}
 	}
 	
-} // end of class
+}

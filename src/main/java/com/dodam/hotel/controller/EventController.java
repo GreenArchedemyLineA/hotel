@@ -26,7 +26,7 @@ import com.dodam.hotel.util.PagingObj;
 public class EventController {
 	
 	@Autowired
-	EventService eventService;
+	private EventService eventService;
 	
 	// 매니저 notice
 	@GetMapping("/notice")
@@ -35,8 +35,9 @@ public class EventController {
 			,@RequestParam(name ="cntPerPage", defaultValue = "5", required=false)String cntPerPage){
 		int total = eventService.countEvent();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		List<Event> responseEvents = eventService.findByEventAllPaging(obj);
 		model.addAttribute("paging", obj);
-		model.addAttribute("viewAll", eventService.findByEventAllPaging(obj));
+		model.addAttribute("viewAll", responseEvents);
 		return "/board/eventNotice"; 
 	}
 	
@@ -47,9 +48,9 @@ public class EventController {
 			,@RequestParam(name ="cntPerPage", defaultValue = "4", required=false)String cntPerPage) {
 		int total = eventService.countOnGoingEvent();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		List<Event> viewAll = eventService.readOnGoingEvent(obj);
+		List<Event> responseEvents = eventService.readOnGoingEvent(obj);
 		model.addAttribute("paging", obj);
-		model.addAttribute("viewAll", viewAll);
+		model.addAttribute("viewAll", responseEvents);
 		return "/user/onGoingEvent";
 	}
 	
@@ -60,9 +61,9 @@ public class EventController {
 			,@RequestParam(name ="cntPerPage", defaultValue = "4", required=false)String cntPerPage) {
 		int total = eventService.countClosedEvent();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		List<Event> viewAll = eventService.readClosedEvent(obj);
+		List<Event> responseEvents = eventService.readClosedEvent(obj);
 		model.addAttribute("paging", obj);
-		model.addAttribute("viewAll", viewAll);
+		model.addAttribute("viewAll", responseEvents);
 		return "/user/closedEvent";
 	}
 	
@@ -74,10 +75,7 @@ public class EventController {
 				throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
 			});
 		}
-		int event = eventService.insertEvent(noticeInsertForm);
-		if (event == 0) {
-			return null;
-		}
+		eventService.insertEvent(noticeInsertForm);
 		return "redirect:/event/notice";
 	}
 	
@@ -87,10 +85,8 @@ public class EventController {
 		if(id == null) {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
-		Event event = eventService.findById(id);
-		if (event != null) {
-			model.addAttribute("event", event);
-		}
+		Event responseEvent = eventService.findById(id);
+		model.addAttribute("event", responseEvent);
 		return "/board/eventUpdatePage";
 	}
 	
@@ -106,10 +102,7 @@ public class EventController {
 			});
 		}
 		noticeInsertForm.setId(id);
-		int event = eventService.updateEvent(noticeInsertForm);
-		if (event == 0) {
-			return null;
-		}
+		eventService.updateEvent(noticeInsertForm);
 		return "redirect:/event/notice";
 	}
 	
@@ -119,10 +112,7 @@ public class EventController {
 		if(id == null) {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
-		int event = eventService.eventDelete(id);
-		if(event == 0) {
-			return null;
-		}
+		eventService.eventDelete(id);
 		return "redirect:/event/notice";
 	}
 }

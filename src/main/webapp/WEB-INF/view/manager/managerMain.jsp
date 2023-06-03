@@ -129,7 +129,7 @@
 			<div class="content--box" id="event--box">
 				<b class="title--box">일정</b>
 				<div class="event--box">
-					<c:forEach items="${viewAll}" var="list">
+					<c:forEach items="${event}" var="list">
 						<div id="title--box">${list.startDate}${list.title}</div>
 					</c:forEach>
 				</div>
