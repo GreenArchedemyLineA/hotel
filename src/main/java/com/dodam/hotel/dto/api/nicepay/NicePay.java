@@ -58,4 +58,5 @@ public class NicePay implements PayInterface {
     public PayApproveRequest payApprove(String pgToken) {
         return null;
     }
+    
 }
