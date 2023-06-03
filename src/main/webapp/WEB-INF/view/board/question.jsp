@@ -50,6 +50,10 @@
 .title--container {
 	display: flex;
 }
+.paging--box > a {
+	text-decoration: none;
+	color: #9ACBF1;
+}
 </style>
 <div class="content">
 	<h2>문의사항</h2>
@@ -88,7 +92,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<div style="display: block; text-align: center;">
+		<div style="display: block; text-align: center;" class="paging--box">
 			<c:if test="${paging.startPage != 1}">
 				<a href="/question/questionList?nowPage=${paging.startPage - 1}&cntPerPage=${paging.cntPerPage}">&lt;</a>
 			</c:if>

@@ -15,7 +15,7 @@
 .sub-button {
 	background-color: #000;
 	color: #fff;
-	width: 100px;
+	width: 400px;
 	height: 40px;
 	margin: 20px 10px;
 }
@@ -29,16 +29,26 @@
 .form--container {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 }
 .input--box {
 	border: none;
 	border-bottom: 2px solid #ebebeb;
 	margin: 10px;
 }
-.content {
-	width: 100%; 
-	display : flex;
+.input--title--box {
+	border: none;
+	background-color: #ebebeb;
+	margin: 10px;
+	height: 40px;
+}
+.content--box {
+	height: 500px;
+}
+textarea {
+	border: 3px solid #ebebeb;
+}
+.input--title--box:focus ,textarea:focus{
+	outline: none;
 }
 </style>
 <body>
@@ -46,9 +56,11 @@
 	<h2>FAQ</h2>
 	<div class="main--content">
 		<form method="post" action="/manager/faq/write-proc" class="form--container">
-		    <input type="text" name="title" value="${faq.title}" class="input--box" placeholder="일정 제목을 입력하세요">
-		    <input type="text" name="content" value="${faq.content}" class="input--box" placeholder="일정 내용을 입력하세요">
-		    <input type="submit" value="등록" class="sub-button">
+		    <input type="text" name="title" value="${faq.title}" class="input--title--box" placeholder="FAQ 제목을 입력하세요" >
+		    <textarea rows="20" cols="100" name="content" ></textarea>
+		    <div class="button--box">
+		    	<input type="submit" value="등록" class="sub-button">
+		    </div>
 		</form>
 	</div>
 	

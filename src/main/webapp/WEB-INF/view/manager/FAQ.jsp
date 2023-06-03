@@ -111,7 +111,7 @@
 	                    case 403:
 	                        alert("재 로그인 해주세요!")
 	                }
-	                location.href = response.redirect_uri;
+	                location.href = "/manager/faq";
 	            });
 	        }
 	    };

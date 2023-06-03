@@ -36,12 +36,13 @@ public class FAQController {
     public String faqDetailPage(@PathVariable Integer id, Model model){
         FAQ faq = managerFAQService.findFAQById(id);
         model.addAttribute("faq", faq);
+        faq.setContent(faq.getContent().replace("\r\n", "<br>"));
         return "/manager/FAQDetail";
     }
 
     @GetMapping("/manager/faq/write")
     public String faqWritePage(){
-        return "/manager/FAQWrtie";
+        return "/manager/FAQWrite";
     }
     @PostMapping("/manager/faq/write-proc")
     public String faqWriteProc(FAQ faq){

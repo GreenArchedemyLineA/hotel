@@ -68,6 +68,7 @@
 	height: 300px;
 	padding-top: 20px;
 }
+
 </style>
 
 <div class="content">
