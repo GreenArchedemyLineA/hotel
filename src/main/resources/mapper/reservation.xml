@@ -386,8 +386,10 @@
                 on re.spa_id = s.id
 
         where
-            user_id = #{userId} and
-            start_date >= curdate()
+            user_id = #{userId}
+            order by start_date desc 
+            <!-- and
+            start_date >= curdate() -->
     </select>
 
 	

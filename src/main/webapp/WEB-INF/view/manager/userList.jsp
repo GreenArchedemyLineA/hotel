@@ -84,6 +84,9 @@
 	height: 50px;
 	border-bottom: 1px solid #ebebeb;
 }
+.content--box:hover {
+	cursor: pointer;
+}
 .title--container {
 	display: flex;
 }
@@ -120,17 +123,15 @@
 							<th scope="col" style="width: 410px;">이메일</th>
 							<th scope="col">전화번호</th>
 							<th scope="col">생년월일</th>
-							<th scope="col">정보</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="user" items="${viewAll}">
-							<tr class="content--box">
+							<tr onclick="userDetail(${user.id})" class="content--box">
 								<td>${user.name}</td>
 								<td style="width: 410px;">${user.email}</td>
 								<td>${user.tel}</td>
 								<td>${user.birth}</td>
-								<td><button onclick="userDetail(${user.id})" class="sub--button">상세</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>

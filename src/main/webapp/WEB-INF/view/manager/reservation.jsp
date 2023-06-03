@@ -24,8 +24,7 @@
 }
 .search--container {
 	display: flex;
-	justify-content: flex-end;
-	width: 100%;
+	justify-content: center;
 	margin-right: 200px;
 }
 
@@ -61,7 +60,7 @@
 	margin: 10px;
 }
 .search--buttons {
-	width: 100vh;
+	width: 900px;
 	display: flex;
 	justify-content: space-between;
 }
@@ -88,6 +87,9 @@
 	height: 50px;
 	border-bottom: 1px solid #ebebeb;
 }
+.content--box:hover {
+	cursor: pointer;
+}
 .title--container {
 	display: flex;
 }
@@ -97,17 +99,16 @@
 			<h2>예약 리스트</h2>
 		</div>
 		<div class="main--content">
-			<div class="search--container">
 				<div class="search--buttons">
 					<div class="all--reserve">
-						<input type="checkbox" name="roomStatus" style="margin-right: 8px;"> 전체 예약 보기
+						<input type="button" name="roomStatus" style="margin-right: 8px;" value="전체 예약 보기">
+						<input type="button" name="roomStatus" style="margin-right: 8px;" value="다이닝 예약 보기">
 					</div>
 					<form class="form--box">
 						<input type="text" name="name" placeholder="예약자 이름을 입력하세요" class="input--box"/> 
 						<input type="submit" value="검색" class="sub-button"/>
 					</form>
 				</div>
-			</div>
 				<table class="table--container">
 					<thead>
 						<tr class="tr--box">
@@ -169,6 +170,37 @@
 						<a href="/manager/userList?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">&gt;</a>
 					</c:if>
 				</div>
+				<div class="modal" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+	
+				<div class="modal-header">
+					<h4 class="modal-title">이벤트 등록</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+	
+				<div>
+					<form action="/event/event-insert" method="post" class="form-container">
+						<div>
+							<label>시작일</label> 
+							<input type="date" name="startDate" value="2015-10-13" class="input--box"> 
+							<label>종료일</label> 
+							<input type="date" name="endDate" value="2015-10-13" class="input--box">
+						</div>
+						<div>
+							<label>제목</label>
+							<input type="text" name="title" value="asdsadasd" class="input--box" style="width: 320px;"> 
+						</div>
+						<div>
+							<label>내용</label> 
+							<input type="text" name="content" value="asdasdasdasd" class="input--box" style="width: 320px; height: 200px;">
+						</div>
+						<button type="submit" class="sub--button">등록</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 			</div>
 		</div>
 </main>

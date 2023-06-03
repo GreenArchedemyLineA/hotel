@@ -38,11 +38,12 @@
 	width: 200px;
 	height: 40px;
 }
-.form--container {
+.form-container {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	margin: 20px;
 }
 .input--box {
 	border: none;
@@ -54,7 +55,7 @@
 }
 .modal-content {
 	width: 700px;
-	height: 300px;
+	height: 500px;
 }
 .paging--box > a {
 	text-decoration: none;
@@ -130,12 +131,12 @@
 			<div class="modal-content">
 	
 				<div class="modal-header">
-					<h4 class="modal-title">이벤트 일정 작성</h4>
+					<h4 class="modal-title">이벤트 등록</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 	
 				<div>
-					<form action="/event/event-insert" method="post" class="form--container">
+					<form action="/event/event-insert" method="post" class="form-container">
 						<div>
 							<label>시작일</label> 
 							<input type="date" name="startDate" value="2015-10-13" class="input--box"> 
@@ -144,13 +145,13 @@
 						</div>
 						<div>
 							<label>제목</label>
-							<input type="text" name="title" value="asdsadasd" class="input--box" style="width: 400px;"> 
+							<input type="text" name="title" value="asdsadasd" class="input--box" style="width: 320px;"> 
 						</div>
 						<div>
 							<label>내용</label> 
-							<input type="text" name="content" value="asdasdasdasd" class="input--box">
+							<input type="text" name="content" value="asdasdasdasd" class="input--box" style="width: 320px; height: 200px;">
 						</div>
-						<button type="submit" class="sub--button">작성</button>
+						<button type="submit" class="sub--button">등록</button>
 					</form>
 				</div>
 			</div>

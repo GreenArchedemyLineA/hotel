@@ -29,7 +29,7 @@ main {
 
 nav {
 	width: 300px;  /* 로그 크기에 따라 수정할 예정 */	
-	background-color: #64c5f3;
+	background-color: #84C9FF;
 	height: 100vh;
 	display: flex;
 }
@@ -52,11 +52,12 @@ li {
 	margin-bottom: 15px;
 	padding-left: 20px;
 	cursor: pointer;
-	font-size: 20px;
+	font-size: 25px;
+	font-weight: 400;
 	color: #fff;
 }
 li:hover {
-	color: pink;
+	color: #103B93;
 }
 
 .main--headers {
@@ -97,7 +98,7 @@ li:hover {
 					</ul>	
 				</li>
 				<li id="reservation--li" onclick="location.href='/manager/reservation'">예약</li>
-				<li id="event--li" onclick="location.href='/event/notice'">호텔 일정</li>
+				<li id="event--li" onclick="location.href='/event/notice'">이벤트</li>
 				<li id="qna--li" onclick="location.href='/question/questionList'">문의 사항</li>
 				<li id="faq--li" onclick="location.href='/manager/faq'">FAQ</li>
 			</ul>
