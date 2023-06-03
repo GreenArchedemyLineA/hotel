@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -174,7 +176,12 @@ public class ManagerController {
 	@GetMapping("/userWithdrawal/{id}/{email}")
 	@Transactional
 	public String userWithdrawal(@PathVariable Integer id, @PathVariable String email) {
-
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
+		if(email == null) {
+			throw new ManagerCustomRestFullException("이메일이 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+		}
 		int userWithdrawal = managerService.userUpdateWithdrawal(id);
 		int userOriginEmail = managerService.userUpdateOriginEmail(email, id);
 		// 현우 쪽이랑 합친뒤 유틸 패키지에 있는 랜덤 문자 매서드 를 불러와서 이메일 뒤에 합쳐준다
@@ -253,6 +260,9 @@ public class ManagerController {
 	// 객실 사용가능 상태값 변경
 	@PostMapping("/roomStatus/{id}")
 	public String roomStatus(@PathVariable Integer id, Boolean availability) {
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
 		int roomStatus = roomService.RoomStatusTrueAndFalse(id, availability);
 		return "redirect:/manager/roomStatus";
 	}
@@ -260,6 +270,9 @@ public class ManagerController {
 	// 회원 정보 상세 조회 or
 	@GetMapping("/userDetail/{id}")
 	public String userDetail(@PathVariable Integer id, Model model) {
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
 		GradeInfo userGradeDetail = managerService.selectUserGrade(id);
 		if (userGradeDetail != null) {
 			model.addAttribute("userDetail", userGradeDetail);
@@ -270,6 +283,9 @@ public class ManagerController {
 	// 블랙 리스트 지정
 	@GetMapping("/updateBlack/{id}")
 	public String updateBlackList(@PathVariable Integer id) {
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
 		int blackList = managerService.updateBlackList(id);
 		return "redirect:/manager/userDetail/{id}";
 	}
@@ -277,6 +293,9 @@ public class ManagerController {
 	// 블랙 리스트 해제
 	@GetMapping("/updateWhite/{id}")
 	public String updateWhiteList(@PathVariable Integer id) {
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
 		int blackList = managerService.updateWhiteList(id);
 		return "redirect:/manager/userDetail/{id}";
 	}
@@ -284,6 +303,9 @@ public class ManagerController {
 	// 등급 수정
 	@PostMapping("/updateGrade/{id}")
 	public String updateGradeProc(@PathVariable Integer id, Integer gradeId) {
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
 		managerService.changeGradeByUserIdAndGradeId(gradeId, id);
 		return "redirect:/manager/userDetail/" + id;
 	}

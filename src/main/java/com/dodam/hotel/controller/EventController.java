@@ -84,6 +84,9 @@ public class EventController {
 	// 매니저 이벤트 수정
 	@GetMapping("/updateEventPage/{id}")
 	public String updateEventPage(@PathVariable Integer id,Model model) {
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
 		Event event = eventService.findById(id);
 		if (event != null) {
 			model.addAttribute("event", event);
@@ -94,6 +97,9 @@ public class EventController {
 	// 매니저 이벤트 수정
 	@PostMapping("/updateEvent/{id}")
 	public String updateEvent(@PathVariable Integer id, @Validated NoticeInsertForm noticeInsertForm, BindingResult bindingResult) {
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
 		if(bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach(e -> {
 				throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
@@ -110,6 +116,9 @@ public class EventController {
 	// 매니저 이벤트 삭제
 	@GetMapping("/deleteEvent/{id}")
 	public String deleteEvent(@PathVariable Integer id) {
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
 		int event = eventService.eventDelete(id);
 		if(event == 0) {
 			return null;

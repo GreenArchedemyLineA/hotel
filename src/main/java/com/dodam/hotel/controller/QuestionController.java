@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dodam.hotel.dto.QuestionRequestDto.InsertQuestionRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.handler.exception.CustomRestFullException;
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
 import com.dodam.hotel.repository.model.FAQ;
 import com.dodam.hotel.repository.model.Question;
 import com.dodam.hotel.service.QuestionService;
@@ -122,6 +123,9 @@ public class QuestionController {
 	//문의 사항 상세보기 - 매니저
 	@GetMapping("/questionDetail/{id}")
 	public String questionDetail(@PathVariable Integer id,Model model) {
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
 		Question question = questionService.findById(id);
 		if(question != null) {
 			model.addAttribute("question",question);
@@ -133,6 +137,12 @@ public class QuestionController {
 	@PostMapping("/reply/{questionId}/{managerId}")
 	@Transactional
 	public String insertReply(String content,@PathVariable Integer questionId,@PathVariable Integer managerId) {
+		if(questionId == null) {
+    		throw new ManagerCustomRestFullException("questionId가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
+		if(managerId == null) {
+			throw new ManagerCustomRestFullException("managerId가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+		}
 		int questionStatus = questionService.updateStatusById(questionId);
 		int insertReply = questionService.insertReply(content, questionId, managerId);
 		return "redirect:/question/questionList";
@@ -141,6 +151,9 @@ public class QuestionController {
 	//질문 삭제 - 매니저
 	@GetMapping("/questionDelete/{questionId}")
 	public String questionDelete(@PathVariable Integer questionId){
+		if(questionId == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
 		int deleteQuestion = questionService.questionDeleteById(questionId);
 		return "redirect:/question/questionList";
 	}

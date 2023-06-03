@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.dto.UpdateRoomStatusDto;
+import com.dodam.hotel.handler.exception.CustomRestFullException;
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.repository.model.RoomType;
 import com.dodam.hotel.service.RoomService;
@@ -39,6 +42,9 @@ public class RoomController {
 	// 객실 상세 페이지
 	@GetMapping("/detailRoom/{id}")
 	public String roomDetailPage(Model model, @PathVariable Integer id) {
+		if(id == null) {
+    		throw new CustomRestFullException("객실 아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
 		RoomType responseRoom = roomService.readRoomById(id);
 		model.addAttribute("room", responseRoom);
 		return "/room/roomDetail";

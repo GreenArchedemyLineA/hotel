@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.dto.UserResponseDto.LoginResponseDto;
+import com.dodam.hotel.handler.exception.CustomRestFullException;
 import com.dodam.hotel.repository.model.Point;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.service.ReservationService;
@@ -37,6 +39,9 @@ public class ReservationController {
 	// 메인페이지 -> 예약버튼 처리 (성희)
 	@GetMapping("/reserve")
 	public String reserveMain(ReservationRequestDto requestDto, Model model) {
+		if(requestDto == null) {
+			throw new CustomRestFullException("예약 정보가 제대로 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+		}
 		String[] array = requestDto.getDate().split(" to ");
 		System.out.println(array[0]);
 		System.out.println(array[1]);
@@ -59,6 +64,9 @@ public class ReservationController {
 	// 다이닝 예약 처리
 	@PostMapping("/dining")
 	public String reserveDining(ReservationRequestDto requestDto) {
+		if(requestDto == null) {
+			throw new CustomRestFullException("예약 정보가 제대로 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+		}
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		reservationService.createReserveDining(requestDto, principal.getId());
 		return "redirect:/";
@@ -67,6 +75,9 @@ public class ReservationController {
 	// 객실 예약 상세 페이지
 	@GetMapping("/reserveRoom")
 	public String reservation(ReservationRequestDto selectReserveDetail, Model model) {
+		if(selectReserveDetail == null) {
+			throw new CustomRestFullException("예약 정보가 제대로 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+		}
 		model.addAttribute("selectDetail", selectReserveDetail);
 		model.addAttribute("diningPrice", reservationOptionPrice.getDiningPrice());
 		model.addAttribute("spaPrice", reservationOptionPrice.getSpaPrice());
@@ -85,6 +96,9 @@ public class ReservationController {
 	// 객실 예약 처리
 	@PostMapping("/reserveRoom")
 	public String reserveRoom(ReservationRequestDto requestDto) {
+		if(requestDto == null) {
+			throw new CustomRestFullException("예약 정보가 제대로 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+		}
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		reservationService.createReserveRoom(requestDto, principal.getId());
 		return "redirect:/";

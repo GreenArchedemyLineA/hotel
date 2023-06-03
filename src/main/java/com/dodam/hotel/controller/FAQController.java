@@ -40,6 +40,9 @@ public class FAQController {
     //매니저용 
     @GetMapping("/manager/faq/{id}")
     public String faqDetailPage(@PathVariable Integer id, Model model){
+    	if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
         FAQ faq = managerFAQService.findFAQById(id);
         model.addAttribute("faq", faq);
         return "/manager/FAQDetail";
@@ -66,6 +69,9 @@ public class FAQController {
     //매니저용 
     @GetMapping("/manager/faq/update/{id}")
     public String faqUpdatePage(@PathVariable Integer id, Model model){
+    	if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
         FAQ faq = managerFAQService.findFAQById(id);
         model.addAttribute("faq", faq);
         return "/manager/FAQUpdate";
@@ -87,6 +93,9 @@ public class FAQController {
     @DeleteMapping("/manager/delete/faq")
     @ResponseBody
     public ResponseMsg faqDeleteProc(Integer id){
+    	if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
         Manager manager = (Manager) session.getAttribute("manager");
         /*
         // 성공케이스

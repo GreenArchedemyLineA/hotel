@@ -1,7 +1,7 @@
 package com.dodam.hotel.controller;
 
 import com.dodam.hotel.dto.api.ResponseMsg;
-
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
 import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.service.ManagerReservationService;
@@ -38,7 +38,6 @@ public class ManagerReservationController {
 
     @GetMapping("/reservation")
     public String reservationList(String name, Model model){
-        System.out.println(name);
         if(name == null || name.equals("")){
             List<Reservation> reservationList = managerReservationService.findTodayAllReservation();
             model.addAttribute("reservationList", reservationList);
@@ -64,8 +63,10 @@ public class ManagerReservationController {
 
     @GetMapping("/reservation/{id}")
     public String reservationDetail(@PathVariable Integer id, Model model){
+    	if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
         Map<String, Object> reservationMap = managerReservationService.findReservationById(id);
-        System.out.println(reservationMap.get("reservation"));
         model.addAttribute("reservation", reservationMap.get("reservation"));
         model.addAttribute("roomList", reservationMap.get("roomList"));
         model.addAttribute("spaList", reservationMap.get("spaList"));
