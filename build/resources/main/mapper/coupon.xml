@@ -34,6 +34,7 @@
 		<result column="gender" property="gender"/>
 		<result column="birth" property="birth"/>
 		<result column="tel" property="tel"/>
+		<result column="address" property="address"/>
 		<result column="blacklist" property="blacklist"/>
 		<result column="withdrawal" property="withdrawal"/>
 		<result column="created_at" property="createdAt"/>
@@ -70,5 +71,12 @@
         	) as C
 		WHERE C.ROWNUM BETWEEN #{obj.start} AND #{obj.end}
 	</select>
-	
+
+	<delete id="deleteByUserIdandCouponInfoId">
+		delete
+			from coupon_tb
+		where
+		    user_id = #{userId}
+			and coupon_info_id = #{couponId}
+	</delete>
 </mapper>

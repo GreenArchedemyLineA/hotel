@@ -92,13 +92,13 @@ public class UserController {
 		model.addAttribute("responseUser", responseUser);
 		return "/user/myPage";
 	}
-
 	// 로그인 기능 구현 (현우)
 	@PostMapping("/loginProc")
 	public String loginProc(UserRequestDto.LoginFormDto loginDto) {
 		UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(loginDto);
 		session.setAttribute(Define.PRINCIPAL, principal);
-
+		session.setAttribute("tel", principal.getTel());
+		System.out.println(session.getAttribute("tel"));
 		if (principal.getRandomPwdStatus()) {
 			return "/user/changePw";
 		}

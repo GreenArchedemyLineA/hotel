@@ -75,6 +75,10 @@ public class ReservationController {
 		model.addAttribute("poolPrice", reservationOptionPrice.getPoolPrice());
 		model.addAttribute("fitnessPrice", reservationOptionPrice.getFitnessPrice());
 		
+		model.addAttribute("diningStatus", reservationService.diningStatus().get(0));
+		model.addAttribute("fitnessStatus", reservationService.fitnessStatus().get(0));
+		model.addAttribute("poolStatus", reservationService.poolStatus().get(0));
+		model.addAttribute("spaStatus", reservationService.spaStatus().get(0));
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		selectReserveDetail.setUserId(principal.getId());
 		Map<String, Object> selectList = reservationService.useCouponOrPoint(selectReserveDetail);
@@ -107,6 +111,7 @@ public class ReservationController {
 		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
 		List<Reservation> reservations = reservationService.readAllResrevationByUserIdPaging(po, principal.getId());
+		System.out.println(reservations.get(0).getPayTid());
 		model.addAttribute("paging", po);
 		if(reservations.size() == 0) {
 			model.addAttribute("reservations", null);

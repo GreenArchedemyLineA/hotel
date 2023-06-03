@@ -40,7 +40,7 @@ a:hover {
 	margin-right: 20px;
 }
 
-.navi--wrap, #navi--2--wrap, #navi--3--wrap, #navi--4--wrap {
+#navi--1--wrap, #navi--2--wrap, #navi--3--wrap, #navi--4--wrap {
 	flex: 1;
 }
 
@@ -64,7 +64,7 @@ a:hover {
 	display: none;
 	position: absolute;
 	left: -20px;
-	z-index: 1;
+	z-index: 10000;
 	background-color: #ebebeb;
 	width: 150px;
 }
@@ -156,8 +156,21 @@ a:hover {
 	align-items: center;
 }
 
-.toggle--wrap {
+.toggle--wrap--room {
 	display: flex;
+	cursor: pointer;
+}
+.toggle--wrap--fac {
+	display: flex;
+	cursor: pointer;
+}
+.toggle--wrap--reserve {
+	display: flex;
+	cursor: pointer;
+}
+.toggle--wrap--qna {
+	display: flex;
+	cursor: pointer;
 }
 
 #reservation--toggle--wrap {

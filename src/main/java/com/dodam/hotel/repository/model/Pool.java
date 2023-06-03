@@ -9,7 +9,7 @@ public class Pool {
 	private String hours;
 	private Boolean availability;
 	private Integer price;
-	private String status_desc;
+	private String statusDesc;
 	private Facilities facilities;
 	private FacilitiesDesc facilitiesDesc;
 }

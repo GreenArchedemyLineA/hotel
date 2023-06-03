@@ -67,7 +67,12 @@ public class ManagerController {
 
 		return "/manager/managerLogin";
 	}
-
+	
+    @GetMapping("/payCancel")
+    public String payCancel() {
+    	return "/user/payCancel";
+    }
+	
 	@GetMapping("/managerMain")
 	public String managerMain(Model model) {
 		model.addAttribute("viewAll", eventService.findByIdLimit());

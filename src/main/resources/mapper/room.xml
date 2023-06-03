@@ -176,8 +176,8 @@
         	on r.room_type_id = rt.id
         where 
         	r.availability = #{roomStatus}
-            or rt.number_of_p >= #{numberOfP}
-           	or rt.price = #{price};
+            and rt.number_of_p >= #{numberOfP}
+           	and rt.price >= #{price};
 	</select>
 
 	<!-- writer: 이현서 hotfix -->

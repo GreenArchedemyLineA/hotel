@@ -41,12 +41,13 @@ public interface ReservationRepository {
 	Reservation findReservationById(Integer id);
 
 	List<DiningReservation> reservationFindDining(Date date);
+	
+	//예약시 부대시설 사용가능 조회 - 민우
 
 	// 오늘 예약 매출 조회
 	public Integer findTodayTotalPrice();
 
 	// 이전 매출 조회
 	public Integer findBeforeTotalPrice(Integer count);
-
 
 }

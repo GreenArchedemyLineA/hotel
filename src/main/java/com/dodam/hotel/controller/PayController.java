@@ -3,6 +3,7 @@ package com.dodam.hotel.controller;
 import com.dodam.hotel.dto.PayDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.dto.api.ResponseMsg;
+import com.dodam.hotel.dto.api.kakaopay.KakaoCancelResponse;
 import com.dodam.hotel.dto.api.kakaopay.KakaoPay;
 import com.dodam.hotel.dto.api.kakaopay.KakaoRequestDto;
 import com.dodam.hotel.dto.api.nicepay.NicePay;
@@ -18,6 +19,7 @@ import com.dodam.hotel.enums.Grade;
 import com.dodam.hotel.enums.PGType;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.model.GradeInfo;
+import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.PayService;
 import com.dodam.hotel.util.Define;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,8 +29,10 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -52,7 +56,8 @@ public class PayController {
     private PayService payService;
     @Autowired
     private GradeRepository gradeRepository;
-
+    
+    
     @GetMapping("/payReady")
     public String paySelectController(PayOption payOption, Model model){
         model.addAttribute("option", payOption.getPaySelect());
@@ -109,9 +114,7 @@ public class PayController {
         KakaoPaymentDto kakaoPaymentDto = (KakaoPaymentDto) kakaoPay.payReady(kakaoRequestDto);
         return "redirect:" +kakaoPaymentDto.getNext_redirect_pc_url();
     }
-
-
-
+    
     @GetMapping("/kakao/success")
     public void kakaoPaySuccessControler(String pg_token, HttpServletResponse response) throws IOException {
         System.out.println("pgToken: " + pg_token);
@@ -136,6 +139,21 @@ public class PayController {
 //        return "redirect:/pay/success";
     }
 
+    @PostMapping("/kakao/refund/{tid}/{totalPrice}/{reservationId}")
+    //@ResponseBody
+    public String kakaoPayRefund(@PathVariable("tid") String tid,@PathVariable("totalPrice") String totalPrice
+    		,@PathVariable("reservationId") Integer reservationId) {
+    	UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+    	KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid,totalPrice);
+    	if(kakaoCancelResponse == null) {
+    		System.out.println("결제실패됨");
+    		return null;
+    	}else if(kakaoCancelResponse != null) {
+    		payService.refundPay(reservationId, user.getId());
+    	}
+        return "redirect:/myReservations";
+    }
+    
     // 토스결제 성공 시
     @GetMapping("/toss/success")
     public String tossSuccessController(TosspayRequest tosspayRequest){

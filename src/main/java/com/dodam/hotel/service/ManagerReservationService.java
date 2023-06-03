@@ -112,11 +112,8 @@ public class ManagerReservationService {
 
 	// 오늘 예약 매출 조회
 	@Transactional
-	public Integer readBeforeTodayTotalPrice() {
-		Integer resultRowCount = reservationRepository.findTodayTotalPrice();
-		if(resultRowCount == null) {
-			resultRowCount = 0;
-		}
+	public int readBeforeTodayTotalPrice() {
+		int resultRowCount = reservationRepository.findTodayTotalPrice() == null ? 0 : reservationRepository.findTodayTotalPrice();
 		return resultRowCount;
 	}
 

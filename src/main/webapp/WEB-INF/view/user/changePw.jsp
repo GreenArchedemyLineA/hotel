@@ -88,12 +88,42 @@
 		<p>비밀번호 변경</p>
 	</div>
 	<div class="content--container">
-		<form action="/changePwProc" method="post" class="form--container">
+		<form action="/changePwProc" method="post" class="form--container" id="changeForm">
 			<input type="password" name="currentPwd" placeholder="현재 비밀번호를 입력해주세요" class="input--box">
 			<input type="password" name="changePwd" placeholder="변경할 비밀번호를 입력해주세요" class="input--box">
 			<input type="password" name="checkChangePwd" placeholder="비밀번호를 한번 더 입력해주세요" class="input--box">
-			<button type="submit" class="sub--button">pw 변경</button>
+			<button type="button" class="sub--button" onclick="formCheck()">pw 변경</button>
 		</form>
 	</div>
 </main>
+
+<script>
+	let changeForm = document.getElementById("changeForm");
+	let currentPwd = changeForm.currentPwd;
+	let changePwd = changeForm.changePwd;
+	let checkChangePwd = changeForm.checkChangePwd;
+	function formCheck(){
+		let success = false;
+		if(currentPwd.value === ""){
+			alert("현재 비밀번호를 입력하세요.")
+		}
+		else if(changePwd.value === ""){
+			alert("변경할 비밀번호를 입력하세요,")
+		}
+		else if(checkChangePwd.value === ""){
+			alert("변경할 재입력비밀번호를 입력하세요.")
+		}
+		else if(changePwd.value !== checkChangePwd.value){
+			alert("비밀번호가 일치 하지 않습니다")
+		}else{
+			success = true;
+		}
+
+
+		if(success){
+			changeForm.submit();
+		}
+	}
+
+</script>
 <%@ include file="../layout/footer.jsp"%>
