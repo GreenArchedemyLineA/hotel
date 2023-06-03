@@ -186,7 +186,7 @@
 	
 	<div class="reserve--container">
 		<div class="reserve--select--box">
-			<h4 class="reserve--select--title">예약 내역 조회</h4>
+			<h4 class="reserve--select--title">예약 내역</h4>
 		</div>
 		<div>
 			<table class="table--container">
@@ -275,4 +275,3 @@
 	
 	
 </script>
-<%@ include file="../layout/footer.jsp"%>

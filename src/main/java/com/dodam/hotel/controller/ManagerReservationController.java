@@ -8,6 +8,7 @@ import com.dodam.hotel.service.ManagerReservationService;
 import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.util.DateFormat;
+import com.dodam.hotel.util.PagingObj;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,30 +36,24 @@ public class ManagerReservationController {
     private ManagerReservationService managerReservationService;
     @Autowired
     private ManagerService managerService;
+    @Autowired
+    private ReservationService reservationService;
 
     @GetMapping("/reservation")
-    public String reservationList(String name, Model model){
-        System.out.println(name);
+    public String reservationList(String name, Model model 	,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
+			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage){
+    	int total = 0;
+    	PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+    	model.addAttribute("paging", obj);
         if(name == null || name.equals("")){
             List<Reservation> reservationList = managerReservationService.findTodayAllReservation();
             model.addAttribute("reservationList", reservationList);
         }else{
             List<Reservation> reservationList = managerReservationService.findUserReservation(name);
-            System.out.println(reservationList);
             model.addAttribute("reservationList", reservationList);
+            total = reservationService.readAllReservationByUserIdCount(reservationList.get(1).getUserId());
+            model.addAttribute("viewAll",reservationService.readAllResrevationByUserIdPaging(obj, reservationList.get(1).getUserId()));
         }
-        int totalPrice = managerReservationService.readBeforeTodayTotalPrice();
-        List<Integer> price = new ArrayList<>();
-        for(int i = 1; i < 7; i ++) {
-        	Integer beforetotalPrice = managerReservationService.readBeforeTotalPrice(i);
-        	if(beforetotalPrice == null) {
-        		beforetotalPrice = 0;
-        	}
-        	price.add(beforetotalPrice);
-        	System.out.println(beforetotalPrice);
-        }
-        model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("price", price);
         return "/manager/reservation";
     }
 
@@ -78,18 +73,7 @@ public class ManagerReservationController {
 
     @PostMapping("/reservation/update")
     public String reservationUpdate(Reservation reservation){
-//        Manager manager = (Manager) session.getAttribute("principal");
-
-//        if(manager == null){
-//            return null;
-//        }
         int result = managerReservationService.updateReservation(reservation);
-//        if(result == 0){
-//            // Exception Error
-//            return null;
-//        }else{
-//            return "redirect:/manager/reservation";
-//        }
         return "redirect:/manager/reservation";
     }
 
@@ -120,7 +104,7 @@ public class ManagerReservationController {
                     .builder()
                     .status_code(HttpStatus.OK.value())
                     .msg("삭제되었습니다")
-                    .redirect_uri("/reservation")
+                    .redirect_uri("/manager/reservation")
                     .build();
             return successMsg;
         }

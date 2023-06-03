@@ -26,7 +26,7 @@
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	margin: 30px 0;
+	margin: 20px 0;
 }
 
 .main--container {
@@ -339,4 +339,3 @@
 	// 예약 달력
 
 </script>
-<%@ include file="../layout/footer.jsp"%>

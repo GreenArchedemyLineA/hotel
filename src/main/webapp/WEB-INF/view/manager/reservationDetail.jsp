@@ -192,4 +192,3 @@
 		</div>
 	</div>
 </main>
-<%@ include file="../layout/footer.jsp"%>

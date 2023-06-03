@@ -103,4 +103,3 @@
 			location.href = "/manager/userWithdrawal/"+id+"/"+email; 
 		}
 	</script>
-<%@ include file="../layout/footer.jsp"%>

@@ -164,4 +164,3 @@
 
 checkStatus();
 </script>
-<%@ include file="../layout/footer.jsp"%>

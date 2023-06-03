@@ -215,11 +215,6 @@
           and rt.price = #{price};
     </select>
 
-	<!-- 이현서: 저도 잘 모르겠습니다 이게 무엇인지..? -->
-<!--    <insert id="insertRoom">-->
-<!--        insert into room_tb(name, price, description, availability, image, status_desc, number_of_p)-->
-<!--        values(#{name}, #{price}, #{description}, #{availability}, #{image}, #{statusDesc}, #{numberOfP})-->
-<!--	</insert>-->
 
 	<update id="updateManagerRoom">
 		update room_tb set availability = #{availability}

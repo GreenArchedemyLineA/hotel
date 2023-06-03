@@ -3,19 +3,30 @@
 <%@ include file="../layout/managerHeader.jsp"%>
 <style>
 .content {
-	width: 100%; display : flex;
+	width: 100%; 
+	display : flex;
 	justify-content: center;
 	align-items: center;
 }
-.table--tr {
-	background-color: #ebebeb;
-	height: 20px;
+.main--content {
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
-.table-tr:hover {
-	cursor: pointer;
+.form--container {
+	display: flex;
+	align-items: center;
+	border: 4px solid #9ACBF1;
+	border-radius: 20px;
+	width: 700px;
+	height: 300px;
 }
-.table--tr, .table-tr {
-	text-align: center;
+.search--container {
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+	margin-right: 200px;
 }
 
 #title--box {
@@ -43,31 +54,63 @@
 	width: 100px;
 	height: 40px;
 }
-.form--container {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
+
 .input--box {
 	border: none;
 	border-bottom: 2px solid #ebebeb;
 	margin: 10px;
 }
-
+.search--buttons {
+	width: 100vh;
+	display: flex;
+	justify-content: space-between;
+}
+.all--reserve {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.paging--box > a {
+	text-decoration: none;
+	color: #9ACBF1;
+}
+.table--container {
+	width: 1000px;
+	text-align: center;
+	
+}
+.tr--box {
+	background-color: #ebebeb;
+	font-weight: bold;
+	height: 30px;
+}
+.content--box {
+	height: 50px;
+	border-bottom: 1px solid #ebebeb;
+}
+.title--container {
+	display: flex;
+}
 </style>
 	<div class="content">
-		<h2>예약 리스트</h2>
-			<form class="form--box">
-				<input type="checkbox" name="roomStatus"> 오늘 예약만 보기
-				<input type="text" name="name" placeholder="예약자 이름을 입력하세요" class="input--box"/> 
-				<input type="submit" value="검색" class="sub-button"/>
-			</form>
-		<div class="main">
-			<div class="main--content">
-				<table class="table">
+		<div class="title--container">
+			<h2>예약 리스트</h2>
+		</div>
+		<div class="main--content">
+			<div class="search--container">
+				<div class="search--buttons">
+					<div class="all--reserve">
+						<input type="checkbox" name="roomStatus" style="margin-right: 8px;"> 전체 예약 보기
+					</div>
+					<form class="form--box">
+						<input type="text" name="name" placeholder="예약자 이름을 입력하세요" class="input--box"/> 
+						<input type="submit" value="검색" class="sub-button"/>
+					</form>
+				</div>
+			</div>
+				<table class="table--container">
 					<thead>
-						<tr class="table--tr">
+						<tr class="tr--box">
 							<th scope="col">이름</th>
 							<th scope="col">전화번호</th>
 							<th scope="col">체크인</th>
@@ -85,7 +128,7 @@
 						<c:choose>
 							<c:when test="${reservationList.size() != 0}">
 								<c:forEach var="reservation" items="${reservationList}">
-									<tr onclick="detailReservation(${reservation.id})" class="table-tr">
+									<tr onclick="detailReservation(${reservation.id})" class="content--box">
 										<td>${reservation.user.name}</td>
 										<td>${reservation.user.tel}</td>
 										<td>${reservation.startDate}</td>
@@ -102,15 +145,32 @@
 							</c:when>
 							<c:otherwise>
 								<tr>
-									<td colspan="11" class="table-tr">예약리스트가 없습니다.</td>
+									<td colspan="11" class="content--box">예약리스트가 없습니다.</td>
 								</tr>
 					        </c:otherwise>
 						</c:choose>
 					</tbody>
 				</table>
+					<div style="display: block; text-align: center;" class="paging--box">
+					<c:if test="${paging.startPage != 1}">
+						<a href="/manager/userList?nowPage=${paging.startPage - 1}&cntPerPage=${paging.cntPerPage}">&lt;</a>
+					</c:if>
+					<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+						<c:choose>
+							<c:when test="${p == paging.nowPage}">
+								<b>${p}</b>
+							</c:when>
+							<c:when test="${p != paging.nowPage}">
+								<a href="/manager/userList?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+					<c:if test="${paging.endPage != paging.lastPage}">
+						<a href="/manager/userList?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">&gt;</a>
+					</c:if>
+				</div>
 			</div>
 		</div>
-	</div>
 </main>
 	<script>
 	    function detailReservation(id){
@@ -138,5 +198,4 @@
 	        }
 	    }
 	</script>
-<%@ include file="../layout/footer.jsp"%>
 	

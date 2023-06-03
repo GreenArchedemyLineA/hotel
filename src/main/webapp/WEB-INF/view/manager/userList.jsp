@@ -4,7 +4,8 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style>
 .content {
-	width: 100%; display : flex;
+	width: 100%; 
+	display : flex;
 	justify-content: center;
 	align-items: center;
 }
@@ -229,4 +230,3 @@
      }
 	
 </script>
-<%@ include file="../layout/footer.jsp"%>
