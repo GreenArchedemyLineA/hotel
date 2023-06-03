@@ -45,7 +45,7 @@ public interface ReservationRepository {
 	//예약시 부대시설 사용가능 조회 - 민우
 
 	// 오늘 예약 매출 조회
-	public int findTodayTotalPrice();
+	public Integer findTodayTotalPrice();
 
 	// 이전 매출 조회
 	public Integer findBeforeTotalPrice(Integer count);

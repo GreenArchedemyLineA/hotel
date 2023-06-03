@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -21,21 +20,16 @@ import com.dodam.hotel.enums.Grade;
 import com.dodam.hotel.repository.interfaces.CouponRepository;
 import com.dodam.hotel.repository.interfaces.DiningRepository;
 import com.dodam.hotel.repository.interfaces.FacilitiesRepository;
-import com.dodam.hotel.repository.interfaces.FitnessRepository;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.interfaces.PointRepository;
-import com.dodam.hotel.repository.interfaces.PoolRepository;
 import com.dodam.hotel.repository.interfaces.ReservationRepository;
-import com.dodam.hotel.repository.interfaces.SpaRepository;
 import com.dodam.hotel.repository.model.Coupon;
 import com.dodam.hotel.repository.model.Dining;
 import com.dodam.hotel.repository.model.Fitness;
 import com.dodam.hotel.repository.model.GradeInfo;
-import com.dodam.hotel.repository.model.Point;
 import com.dodam.hotel.repository.model.Pool;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.Spa;
-import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.util.Define;
 import com.dodam.hotel.util.PagingObj;
 
@@ -111,7 +105,6 @@ public class ReservationService {
 		List<Coupon> couponList = couponRepository.findByUserId(reservationRequestDto.getUserId());
 
 		// 포인트 조회
-
 		Integer point = pointRepository.findByUserId(reservationRequestDto.getUserId());
 		
 		Map<String, Object> selectList = new HashMap<>();
@@ -165,7 +158,6 @@ public class ReservationService {
 		if(userGrade.getGrade().getId() == Grade.BROWN.getGrade()){
 			pointRepository.insertPoint(Integer.valueOf((int) Math.round(totalPrice * 0.07)), userId);
 		}
-
 
 		Integer nowReservationCount = reservationRequestDto.getDay();
 		count += nowReservationCount;

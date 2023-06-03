@@ -38,7 +38,6 @@ public class ManagerReservationController {
 
     @GetMapping("/reservation")
     public String reservationList(String name, Model model){
-        System.out.println(name);
         if(name == null || name.equals("")){
             List<Reservation> reservationList = managerReservationService.findTodayAllReservation();
             model.addAttribute("reservationList", reservationList);
@@ -55,7 +54,6 @@ public class ManagerReservationController {
         		beforetotalPrice = 0;
         	}
         	price.add(beforetotalPrice);
-        	System.out.println(beforetotalPrice);
         }
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("price", price);

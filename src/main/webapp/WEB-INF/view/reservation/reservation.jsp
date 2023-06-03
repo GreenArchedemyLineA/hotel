@@ -453,8 +453,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	const startDate = ${selectDetail.startDate};
 	const endDate = ${selectDetail.endDate};
 	let nights = endDate - startDate;
-	console.log(startDate);
-		
+
 	// 총 계산
 	function totalPrice(){
 		while(totalPriceTag.firstChild)  {
@@ -567,7 +566,6 @@ input[type="number"]::-webkit-inner-spin-button {
 	});
 	
 	
-	console.log(tagetDivArray)
 	tagetDivArray.forEach((target)=>{
 		target.addEventListener("change", totalPrice);
 	})
@@ -681,7 +679,6 @@ input[type="number"]::-webkit-inner-spin-button {
 			goodsName: '${orderName}',
 			returnUrl: 'http://localhost:8080/pay/payments',
 			fnError: function (result) {
-				console.log(result)
 				alert(result.errorMsg)
 			}
 		});
@@ -689,10 +686,8 @@ input[type="number"]::-webkit-inner-spin-button {
 
 
 	let form = document.getElementById("reservation");
-	console.log(form)
 	let e = window.event;
 	let pgArray = [...document.getElementsByClassName("pg-type")];
-	console.log(totalPriceValue)
 	function payEvent() {
 		let payType;
 		pgArray.some((pgInput) => {

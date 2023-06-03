@@ -488,8 +488,8 @@
 
 	
 	<!-- 오늘 매출 금액 조회 -->
-	<select id="findTodayTotalPrice" resultType="int">
-		select sum(total_price) 
+	<select id="findTodayTotalPrice" resultType="Integer">
+		select sum(total_price)
 		from reservation_tb
 		where date_format(start_date, "%Y-%m-%d") = CURDATE()
 	</select>
