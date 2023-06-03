@@ -2,7 +2,6 @@ package com.dodam.hotel.controller;
 
 import java.util.List;
 
-
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
@@ -19,22 +18,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.InquiryRequestDto;
-import com.dodam.hotel.dto.TestDto;
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
-import com.dodam.hotel.dto.UserResponseDto.LoginResponseDto;
 import com.dodam.hotel.handler.exception.CustomRestFullException;
 import com.dodam.hotel.repository.model.Coupon;
 import com.dodam.hotel.repository.model.Event;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.Reply;
-import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.CouponService;
 import com.dodam.hotel.service.EventService;
 import com.dodam.hotel.service.GradeService;
 import com.dodam.hotel.service.QuestionService;
-import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.CreateRandomStr;
 import com.dodam.hotel.util.Define;
@@ -54,9 +49,6 @@ public class UserController {
 
 	@Autowired
 	private CouponService couponService;
-
-	@Autowired
-	private ReservationService reservationService;
 
 	@Autowired
 	private QuestionService questionService;

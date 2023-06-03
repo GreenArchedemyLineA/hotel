@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.enums.CouponInfo;
 import com.dodam.hotel.enums.Grade;
+import com.dodam.hotel.handler.exception.CustomRestFullException;
 import com.dodam.hotel.repository.interfaces.CouponRepository;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.interfaces.PointRepository;
@@ -53,6 +55,7 @@ public class ReservationService {
 	}
 	
 	// 특정 유저 모든 예약 정보 페이징
+	@Transactional
 	public List<Reservation> readAllResrevationByUserIdPaging(PagingObj obj, Integer userId) {
 		List<Reservation> reservationEntitys = reservationRepository.findAllReservationByUserIdPaging(obj, userId);
 		return reservationEntitys;
@@ -121,7 +124,7 @@ public class ReservationService {
 		Integer nowReservationCount = reservationRequestDto.getDay();
 		count += nowReservationCount;
 		if(resultRowCount != 1) {
-			// 예외 처리
+			throw new CustomRestFullException("예약에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		} else {
 			if(count >= 5 && userGrade.getGrade().getId() < 3) {
 				// 골드 등급업 처리
@@ -136,7 +139,6 @@ public class ReservationService {
 				// 쿠폰 부여
 				couponRepository.insert(CouponInfo.GOLD , userId);
 				System.out.println("골드 등급업 !!!");
-				
 			}
 		}
 		return resultRowCount;

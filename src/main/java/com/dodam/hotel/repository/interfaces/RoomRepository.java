@@ -2,14 +2,11 @@ package com.dodam.hotel.repository.interfaces;
 
 import java.util.List;
 
-
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.dto.StatusParams;
-import com.dodam.hotel.dto.UpdateRoomStatusDto;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.repository.model.RoomType;
 import com.dodam.hotel.util.PagingObj;

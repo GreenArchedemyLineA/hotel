@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -224,7 +222,6 @@ public class ManagerController {
 	 * return "/manager/status"; }
 	 */
 
-	// 유효성 검사 해야되나?
 	@GetMapping("/roomStatus")
 	public String Check(StatusParams statusParams, Integer roomId, Model model) {
 		List<Room> rooms;
@@ -238,13 +235,9 @@ public class ManagerController {
 		}
 		// 선택 조회(?? 변경 필요)
 		else {
-			// 페이징처리 안했음
 			rooms = managerService.findConditionsRoomList(statusParams);
 		}
 		model.addAttribute("roomList", rooms);
-		for (int i = 0; i < 16; i++) {
-			System.out.println(managerReservationService.findTodayAllReservation());
-		}
 		model.addAttribute("reservation", managerReservationService.findTodayAllReservation());
 		return "/manager/status";
 	}

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
-import com.dodam.hotel.dto.UpdateRoomStatusDto;
 import com.dodam.hotel.repository.interfaces.RoomRepository;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.repository.model.RoomType;
@@ -37,18 +36,21 @@ public class RoomService {
 	}
 	
 	//룸 사용가능 상태 변경 <- 매니저 부분
+	@Transactional
 	public int RoomStatusTrueAndFalse(Integer id,Boolean availability) {
 		int roomEntity = roomRepository.updateManagerRoom(id,availability);
 		return roomEntity;
 	}
 	
 	// 사용 가능 객실 갯수 조회
+	@Transactional
 	public int readRoomAvailableCount() {
 		int resultRowCount = roomRepository.findRoomByCount1();
 		return resultRowCount;
 	}
 	
 	// 사용 불가 객실 객수 조회
+	@Transactional
 	public int readRoomNotAvailableCount() {
 		int resultRowCount = roomRepository.findRoomByCount0();
 		return resultRowCount;
@@ -74,7 +76,5 @@ public class RoomService {
 		
 		return selectList;
 	}
-	
-	
 	
 } // end of class

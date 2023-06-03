@@ -22,7 +22,6 @@ public class Reservation {
     private Integer totalPrice;
     private Timestamp createdAt;
     private Integer diningId;
-    private Integer packageId;
     private Integer fitnessId;
     private Integer poolId;
     private Integer spaId;
@@ -31,7 +30,6 @@ public class Reservation {
     private User user;
     private Room room;
     private Dining dining;
-    private Package h_package;
     private Fitness fitness;
     private Pool pool;
     private Spa spa;

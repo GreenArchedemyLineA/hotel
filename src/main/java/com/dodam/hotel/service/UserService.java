@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +14,9 @@ import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.dto.UserResponseDto.LoginResponseDto;
 import com.dodam.hotel.enums.CouponInfo;
+import com.dodam.hotel.handler.exception.CustomRestFullException;
 import com.dodam.hotel.repository.interfaces.CouponRepository;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
-import com.dodam.hotel.repository.interfaces.MUserRepository;
 import com.dodam.hotel.repository.interfaces.MembershipRepository;
 import com.dodam.hotel.repository.interfaces.PointRepository;
 import com.dodam.hotel.repository.interfaces.UserRepository;
@@ -27,9 +28,6 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-
-	@Autowired
-	private MUserRepository mUserRepository;
 
 	@Autowired
 	private MembershipRepository membershipRepository;
@@ -55,18 +53,16 @@ public class UserService {
 		UserResponseDto.LoginResponseDto responseUser = userRepository.findUserByLoginFormDto(user);
 		boolean isLogin = passwordEncoder.matches(user.getPassword(), responseUser.getPassword());
 		if(isLogin != true) {
-			// 예외처리
-			return null;
+			// 비밀번호 불일치
+			throw new CustomRestFullException("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
 		}
 		if (responseUser.getBlacklist()) {
 			// 블랙당한 user
-			// 예외 처리
-			return null;
+			throw new CustomRestFullException("차단당한 유저입니다.", HttpStatus.FORBIDDEN);
 		}
 		if (responseUser.getWithdrawal()) {
 			// 탈퇴한 유저
-			// 예외처리
-			return null;
+			throw new CustomRestFullException("탈퇴한 계정입니다.", HttpStatus.BAD_REQUEST);
 		}
 
 		return responseUser;
@@ -79,7 +75,7 @@ public class UserService {
 		if (responseUser != null) {
 			if (responseUser.getSocialLogin() == false) {
 				// 일반회원 예외처리
-				return null;
+				throw new CustomRestFullException("일반회원 로그인을 이용해주세요.", HttpStatus.BAD_REQUEST);
 			}
 		}
 
@@ -116,6 +112,7 @@ public class UserService {
 		int resultRow = userRepository.updateUserByEmail(user);
 		if (resultRow != 1) {
 			// 예외 처리
+			throw new CustomRestFullException("회원 정보 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		User userEntity = userRepository.findUserByEmail(user.getEmail());
 		UserResponseDto.LoginResponseDto newPrincipal = new LoginResponseDto();
@@ -189,6 +186,7 @@ public class UserService {
 	}
 
 	// 오늘 회원가입 회원 조회
+	@Transactional
 	public List<User> readJoinUserToday() {
 		List<User> UserToday = userRepository.findUserToday();
 		return UserToday;
@@ -205,6 +203,7 @@ public class UserService {
 	}
 
 	// 오늘 멤버쉽 가입 회원 조회
+	@Transactional
 	public List<MembershipInfo> readJoinMembershipToday() {
 		List<MembershipInfo> membershipToday = membershipRepository.findMembershipToday();
 		return membershipToday;
@@ -233,9 +232,8 @@ public class UserService {
 		if (resultRow == 1) {
 			// 임시 비밀번호 발급 여부 업데이트
 			int resultRow2 = userRepository.updatePwdStatus(userId);
-			if (resultRow2 != 1) {
-				// 예외처리
-			}
+		} else {
+			throw new CustomRestFullException("비밀번호 변경에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return resultRow;
 	}

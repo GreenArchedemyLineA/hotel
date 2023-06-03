@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.dodam.hotel.dto.FacilitiesDto;
 import com.dodam.hotel.repository.model.Fitness;
 import com.dodam.hotel.repository.model.Pool;
 import com.dodam.hotel.repository.model.Spa;

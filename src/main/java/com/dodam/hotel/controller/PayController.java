@@ -1,31 +1,25 @@
 package com.dodam.hotel.controller;
 
+import java.util.UUID;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
+
 import com.dodam.hotel.dto.api.kakaopay.KakaoPay;
+import com.dodam.hotel.dto.api.kakaopay.KakaoPaymentDto;
 import com.dodam.hotel.dto.api.kakaopay.KakaoRequestDto;
+import com.dodam.hotel.dto.api.kakaopay.KakaoSinglePayment;
 import com.dodam.hotel.dto.api.nicepay.NicePay;
 import com.dodam.hotel.dto.api.nicepay.NicepayDto;
-import com.dodam.hotel.dto.api.kakaopay.KakaoPaymentDto;
-import com.dodam.hotel.dto.api.kakaopay.KakaoSinglePayment;
 import com.dodam.hotel.dto.api.nicepay.NicepayResultDto;
 import com.dodam.hotel.dto.api.tosspay.TossPay;
 import com.dodam.hotel.dto.api.tosspay.TossResponse;
 import com.dodam.hotel.dto.api.tosspay.TosspayRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.*;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.net.URI;
-import java.util.*;
 
 /**
  * @author lhs-devloper

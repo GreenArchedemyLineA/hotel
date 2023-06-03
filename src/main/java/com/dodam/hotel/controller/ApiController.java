@@ -1,8 +1,5 @@
 package com.dodam.hotel.controller;
 
-import java.util.List;
-
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.dto.api.ResponseMsg;
-import com.dodam.hotel.repository.model.Coupon;
-import com.dodam.hotel.repository.model.Reply;
-import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.User;
-import com.dodam.hotel.service.CouponService;
-import com.dodam.hotel.service.QuestionService;
-import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.Define;
 /**
@@ -37,15 +28,6 @@ public class ApiController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private CouponService couponService;
-	
-	@Autowired
-	private ReservationService reservationService;
-	
-	@Autowired
-	private QuestionService questionService;
 	
 	// 회원 정보 수정용
 	@GetMapping("/myInfo")

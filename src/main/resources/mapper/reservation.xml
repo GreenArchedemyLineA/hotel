@@ -2,7 +2,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dodam.hotel.repository.interfaces.ReservationRepository">
 
-
 	<!-- 피트니스 -->
 	<resultMap type="com.dodam.hotel.repository.model.Fitness" id="Fitness">
 		<result column="fitness_id" property="id" />
@@ -49,7 +48,6 @@
 		<collection property="user" resultMap="User"></collection>
 		<collection property="room" resultMap="Room"></collection>
 		<collection property="dining" resultMap="Dining"></collection>
-		<collection property="h_package" resultMap="Package"></collection>
 		<collection property="fitness" resultMap="Fitness"></collection>
 		<collection property="pool" resultMap="Pool"></collection>
 		<collection property="spa" resultMap="Spa"></collection>
@@ -72,19 +70,6 @@
 		<result column="room_type_image2" property="image" />
 		<result column="room_type_image3" property="image" />
 		<result column="room_type_number_of_p" property="numberOfP" />
-	</resultMap>
-	
-	<resultMap type="com.dodam.hotel.repository.model.Package" id="Package">
-		<result column="package_id" property="id" />
-		<result column="package_name" property="name" />
-		<result column="package_price" property="price" />
-		<!-- 
-		<collection property="room" resultMap="Room"></collection>
-		<collection property="dining" resultMap="Dining"></collection>
-		<collection property="fitness" resultMap="Fitness"></collection>
-		<collection property="pool" resultMap="Pool"></collection>
-		<collection property="spa" resultMap="Spa"></collection>
-		 -->
 	</resultMap>
 	
 	<resultMap type="com.dodam.hotel.repository.model.Dining" id="Dining">
@@ -161,10 +146,6 @@
 				rt.price as room_type_price,
 				rt.number_of_p as room_type_number_of_p,
 				
-				p.id as package_id,
-				p.name as package_name,
-				p.price as package_price,
-				
 				d.id as dining_id,
 				d.name as dining_name,
 				
@@ -184,8 +165,6 @@
 			on r.room_id = ro.id
 			left join dining_tb as d
 			on r.dining_id = d.id
-			left join package_tb as p
-			on r.package_id = p.id
 			left join fitness_tb as f
 			on r.fitness_id = f.id
 			left join pool_tb as po
@@ -224,10 +203,6 @@
 			rt.price as room_type_price,
 			rt.number_of_p as room_type_number_of_p,
 			
-			p.id as package_id,
-			p.name as package_name,
-			p.price as package_price,
-			
 			d.id as dining_id,
 			d.name as dining_name,
 			
@@ -247,8 +222,6 @@
 		on r.room_id = ro.id
 		left join dining_tb as d
 		on r.dining_id = d.id
-		left join package_tb as p
-		on r.package_id = p.id
 		left join fitness_tb as f
 		on r.fitness_id = f.id
 		left join pool_tb as po
@@ -284,9 +257,6 @@
             d.hours as dining_hours,
             d.name as dining_name,
 
-            pack.id as package_id,
-            pack.name as package_name,
-
             f.id as fitness_id,
             f.hours as fitness_hours,
             f.availability as fitness_availability,
@@ -311,8 +281,6 @@
                 	on r.room_type_id = rt.id
                 left join dining_tb as d
                     on re.dining_id = d.id
-                left join package_tb as pack
-                    on re.package_id = pack.id
                 left join fitness_tb as f
                     on re.fitness_id = f.id
                 left join pool_tb as p
@@ -348,9 +316,6 @@
             d.hours as dining_hours,
             d.name as dining_name,
 
-            pack.id as package_id,
-            pack.name as package_name,
-
             f.id as fitness_id,
             f.hours as fitness_hours,
             f.availability as fitness_availability,
@@ -375,8 +340,6 @@
             	on r.room_type_id = rt.id
             left join dining_tb as d
                 on re.dining_id = d.id
-            left join package_tb as pack
-                on re.package_id = pack.id
             left join fitness_tb as f
                 on re.fitness_id = f.id
             left join pool_tb as p
@@ -414,8 +377,6 @@
                     on re.room_id = r.id
                 left join dining_tb as d
                     on re.dining_id = d.id
-                left join package_tb as pack
-                    on re.package_id = pack.id
                 left join fitness_tb as f
                     on re.fitness_id = f.id
                 left join pool_tb as p
@@ -434,7 +395,6 @@
             number_of_p = #{numberOfp},
             room_id = #{roomId},
             dining_id = #{diningId},
-            package_id = #{packageId},
             fitness_id = #{fitnessId},
             pool_id = #{poolId},
             spa_id = #{spaId}

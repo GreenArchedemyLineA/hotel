@@ -2,8 +2,6 @@ package com.dodam.hotel.repository.interfaces;
 
 import java.util.List;
 
-
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,7 +10,6 @@ import com.dodam.hotel.dto.QuestionRequestDto.InsertQuestionRequestDto;
 import com.dodam.hotel.repository.model.FAQ;
 import com.dodam.hotel.repository.model.Question;
 import com.dodam.hotel.repository.model.Reply;
-import com.dodam.hotel.repository.model.TestReply;
 import com.dodam.hotel.util.PagingObj;
 @Mapper
 public interface QuestionRepository {
@@ -25,7 +22,7 @@ public interface QuestionRepository {
 	
 	// 모든 faq 조회
 	public List<FAQ> selectAllFaq();
-	public List<TestReply> findAll();
+	public List<Reply> findAll();
 	public int insert(InsertReplyDto insertReplyDto);
 	public int findAllQuestionCount();
 	public List<Question> findAllQuestion(PagingObj obj);

@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
-import com.dodam.hotel.dto.UserResponseDto.LoginResponseDto;
 import com.dodam.hotel.handler.exception.CustomRestFullException;
-import com.dodam.hotel.repository.model.Point;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.util.Define;

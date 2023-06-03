@@ -1,7 +1,6 @@
 package com.dodam.hotel.controller;
 
 import java.net.URI;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,16 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.dodam.hotel.dto.UserRequestDto;
-import com.dodam.hotel.dto.UserRequestDto.LoginFormDto;
 import com.dodam.hotel.dto.UserResponseDto;
-import com.dodam.hotel.dto.UserResponseDto.LoginResponseDto;
 import com.dodam.hotel.dto.kakao.KakaoAccount;
 import com.dodam.hotel.dto.kakao.KakaoResponseToken;
 import com.dodam.hotel.dto.kakao.KakaoUserInfo;
-import com.dodam.hotel.repository.model.MUser;
-import com.dodam.hotel.repository.model.User;
-import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.Define;
 
@@ -42,9 +35,6 @@ public class KakaoController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private ManagerService managerService;
 	
 	@Value("${dodam.key}")
 	private String dodamKey;

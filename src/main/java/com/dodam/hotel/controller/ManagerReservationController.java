@@ -1,27 +1,27 @@
 package com.dodam.hotel.controller;
 
-import com.dodam.hotel.dto.api.ResponseMsg;
-import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
-import com.dodam.hotel.repository.model.Manager;
-import com.dodam.hotel.repository.model.Reservation;
-import com.dodam.hotel.service.ManagerReservationService;
-import com.dodam.hotel.service.ManagerService;
-import com.dodam.hotel.service.ReservationService;
-import com.dodam.hotel.util.DateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import com.dodam.hotel.dto.api.ResponseMsg;
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
+import com.dodam.hotel.repository.model.Manager;
+import com.dodam.hotel.repository.model.Reservation;
+import com.dodam.hotel.service.ManagerReservationService;
 
 /**
  * @author lhs-devloper
@@ -33,8 +33,6 @@ public class ManagerReservationController {
     private HttpSession session;
     @Autowired
     private ManagerReservationService managerReservationService;
-    @Autowired
-    private ManagerService managerService;
 
     @GetMapping("/reservation")
     public String reservationList(String name, Model model){
@@ -79,18 +77,7 @@ public class ManagerReservationController {
 
     @PostMapping("/reservation/update")
     public String reservationUpdate(Reservation reservation){
-//        Manager manager = (Manager) session.getAttribute("principal");
-
-//        if(manager == null){
-//            return null;
-//        }
         int result = managerReservationService.updateReservation(reservation);
-//        if(result == 0){
-//            // Exception Error
-//            return null;
-//        }else{
-//            return "redirect:/manager/reservation";
-//        }
         return "redirect:/manager/reservation";
     }
 

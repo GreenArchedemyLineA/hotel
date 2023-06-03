@@ -1,13 +1,10 @@
 package com.dodam.hotel.service;
 
-import java.util.HashMap;
-
-
 import java.util.List;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.hotel.dto.ManagerSignInFormDto;
 import com.dodam.hotel.dto.StatusParams;
@@ -19,11 +16,6 @@ import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Room;
-import com.dodam.hotel.repository.model.RoomType;
-import com.dodam.hotel.util.PagingObj;
-
-import net.nurigo.java_sdk.api.Message;
-import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 
 
@@ -39,16 +31,19 @@ public class ManagerService {
 	@Autowired
 	private RoomRepository roomRepository;
 	
+	@Transactional
 	public int readAllRoomListCount() {
 		int resultCount = roomRepository.findAllRoomListCount();
 		return resultCount;
 	}
-
+	
+	@Transactional
 	public List<Room> findAllRoomList() {
 		List<Room> rooms = roomRepository.findAllRoomList();
 		return rooms;
 	}
 
+	@Transactional
 	public List<Room> findConditionsRoomList(StatusParams statusParams) {
 		Boolean roomStatus = statusParams.getRoomStatus();
 		if(roomStatus == null) {
@@ -85,12 +80,14 @@ public class ManagerService {
 		return rooms;
 	}
 
+	@Transactional
 	public Room findByRoom(Integer roomId) {
 		Room room = roomRepository.findById(roomId);
 		return room;
 	}
 
 	// 매니저 로그인
+	@Transactional
 	public Manager managerSign(ManagerSignInFormDto managerSignInFormDto) {
 		Manager managerEntity = managerRepository.findByManagernameAndPassword(managerSignInFormDto);
 		
@@ -119,70 +116,84 @@ public class ManagerService {
 	}
 
 	// 회원 전체 리스트 검색
+	@Transactional
 	public List<MUser> managerUserListAll() {
 		List<MUser> userListEntity = mUserRepository.findByAll();
 		return userListEntity;
 	}
 	
-	
 	// 이름으로 회원 검색
+	@Transactional
 	public List<MUser> managerUserList(String name) {
 		List<MUser> userListEntity = mUserRepository.findByname(name);
 		return userListEntity;
 	}
+	
 	//등급별 회원 조회
+	@Transactional
 	public List<GradeInfo> managerUserGradeList(Integer gradeId){
 		List<GradeInfo> userListEntity = mUserRepository.findByGradeAll(gradeId);
 		return userListEntity;
 	}
 	
 	//블랙 리스트로 지정
+	@Transactional
 	public int updateBlackList(Integer id) {
 		int updateBlackList = mUserRepository.updateBlackList(id);
 		return updateBlackList;
 	}
 	
 	//블랙 리스트로 해제
+	@Transactional
 	public int updateWhiteList(Integer id) {
 		int updateBlackList = mUserRepository.updateWhiteList(id);
 		return updateBlackList;
 	}
 	
 	// 블랙리스트 조회
+	@Transactional
 	public List<MUser> managerUserBlackList() {
 		List<MUser> userBlackListEntity = mUserRepository.findByBlackList();
 		return userBlackListEntity;
 	}
 	
 	// 블랙 리스트 탈퇴 상태 값 변경
+	@Transactional
 	public int userUpdateWithdrawal(Integer id) {
 		int userWithdrawalEntity = mUserRepository.updateWithdrawal(id);
 		return userWithdrawalEntity;
 	}
+	
 	// 블랙리스트 탈퇴시 넣어줄 오리진 이메일
+	@Transactional
 	public int userUpdateOriginEmail(String email, Integer id) {
 		int userUpdateOriginEmailEntity = mUserRepository.updateOriginEmail(email, id);
 		return userUpdateOriginEmailEntity;
 	}
+	
 	//블랙리스트 탈퇴 처리시 이메일 수정
+	@Transactional
 	public int withdrawalEmail(String email,Integer id) {
 		int withdrawalUserEmailEntity = mUserRepository.updateWithdrawalEmail(email, id);
 		return withdrawalUserEmailEntity;
 	}
 	
 	// 회원등급 조회
+	@Transactional
 	public GradeInfo selectUserGrade(Integer id) {
 		GradeInfo userGradeEntity = mUserRepository.findByUserId(id);
 		return userGradeEntity;
 	}
 	
 	//맴버쉽 회원 조회
+	@Transactional
 	public List<MembershipInfo> findByMembershipUserList(){
 		List<MembershipInfo> membershipUserListEntity = mUserRepository.findByMembershipAll();
 		return membershipUserListEntity;		
 	}
 	
 	// 회원 등급 수정
+	@Transactional
 	public int changeGradeByUserIdAndGradeId(Integer gradeId, Integer id) {
 		int resultRowCount = mUserRepository.updateGrade(gradeId, id);	
 		return resultRowCount;

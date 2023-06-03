@@ -1,31 +1,32 @@
 package com.dodam.hotel.controller;
 
-import com.dodam.hotel.dto.api.ResponseMsg;
-import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
-import com.dodam.hotel.repository.interfaces.FAQRepository;
-import com.dodam.hotel.repository.interfaces.PackageRepository;
-import com.dodam.hotel.repository.model.FAQ;
-import com.dodam.hotel.repository.model.Manager;
-import com.dodam.hotel.service.ManagerFAQService;
-import lombok.Data;
+import java.util.List;
+
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
-import java.util.List;
+import com.dodam.hotel.dto.api.ResponseMsg;
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
+import com.dodam.hotel.repository.model.FAQ;
+import com.dodam.hotel.repository.model.Manager;
+import com.dodam.hotel.service.ManagerFAQService;
 
 @Controller
 public class FAQController {
     @Autowired
     private ManagerFAQService managerFAQService;
-    @Autowired
-    private PackageRepository packageRepository;
     @Autowired
     private HttpSession session;
     
@@ -97,18 +98,6 @@ public class FAQController {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
         Manager manager = (Manager) session.getAttribute("manager");
-        /*
-        // 성공케이스
-        {
-            success: 200,
-            redirect_uri = "/manager/FAQ"
-        }
-        // 실패 케이스
-        {
-            success: 400,
-
-        }
-         */
         if(manager == null){
 
             ResponseMsg failMsg = ResponseMsg
