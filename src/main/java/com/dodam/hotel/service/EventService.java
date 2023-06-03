@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dodam.hotel.dto.NoticeInsertForm;
+import com.dodam.hotel.dto.EventnsertForm;
 import com.dodam.hotel.repository.interfaces.EventRepository;
 import com.dodam.hotel.repository.model.Event;
 import com.dodam.hotel.util.PagingObj;
@@ -18,7 +18,7 @@ public class EventService {
 	EventRepository eventRepository;
 
 	// 행사 일정 작성
-	public int insertEvent(NoticeInsertForm noticeInsertForm) {
+	public int insertEvent(EventnsertForm noticeInsertForm) {
 		int eventEntity = eventRepository.insert(noticeInsertForm);
 		return eventEntity;
 	}
@@ -52,7 +52,7 @@ public class EventService {
 	}
 
 	// 행사 일정 수정
-	public int updateEvent(NoticeInsertForm noticeInsertForm) {
+	public int updateEvent(EventnsertForm noticeInsertForm) {
 		int eventUpdateEntity = eventRepository.updateEvent(noticeInsertForm);
 		return eventUpdateEntity;
 	}

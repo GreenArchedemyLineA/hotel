@@ -319,9 +319,9 @@
                     on re.pool_id = p.id
                 left join spa_tb as s
 	                  on re.spa_id = s.id
-	            order by start_date desc
-	     <!--   		 where
-                date_format(start_date, "%Y-%m-%d") = curdate() -->
+	        	where
+                date_format(start_date, "%Y-%m-%d") = curdate()
+                order by start_date desc
 
     </select>
 	

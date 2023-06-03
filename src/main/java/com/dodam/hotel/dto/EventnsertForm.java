@@ -5,9 +5,10 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data                                                                                    
-public class NoticeInsertForm {
+public class EventnsertForm {
 	
 	private Integer id;
+	private String category;
 	private Date startDate;
 	private Date endDate;
 	private String title;

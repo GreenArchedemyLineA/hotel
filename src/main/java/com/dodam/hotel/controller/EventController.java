@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.dodam.hotel.dto.NoticeInsertForm;
+import com.dodam.hotel.dto.EventnsertForm;
 import com.dodam.hotel.repository.model.Event;
 import com.dodam.hotel.service.EventService;
 import com.dodam.hotel.util.PagingObj;
@@ -61,7 +61,7 @@ public class EventController {
 	}
 	
 	@PostMapping("/event-insert")
-	public String eventWrite(NoticeInsertForm noticeInsertForm) {
+	public String eventWrite(EventnsertForm noticeInsertForm) {
 		int event = eventService.insertEvent(noticeInsertForm);
 		if (event == 0) {
 			return null;
@@ -78,7 +78,7 @@ public class EventController {
 		return "/board/eventUpdatePage";
 	}
 	@PostMapping("/updateEvent/{id}")
-	public String updateEvent(@PathVariable Integer id, NoticeInsertForm noticeInsertForm) {
+	public String updateEvent(@PathVariable Integer id, EventnsertForm noticeInsertForm) {
 		noticeInsertForm.setId(id);
 		int event = eventService.updateEvent(noticeInsertForm);
 		if (event == 0) {
