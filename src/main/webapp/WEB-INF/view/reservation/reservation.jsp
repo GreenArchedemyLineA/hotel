@@ -542,6 +542,7 @@ input[type="number"]::-webkit-inner-spin-button {
 		totalPriceTag.append(couponPriceTag);
 		totalPriceTag.append(pointPriceTag);
 		totalPriceTag.append(totalPriceDivTag);
+		totalPriceValue = document.getElementById("total--price--input").value;
 	}
 	
 	couponSelectTag.addEventListener("change", ()=>{

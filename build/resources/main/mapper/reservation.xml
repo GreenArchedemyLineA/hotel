@@ -154,6 +154,7 @@
 				r.number_of_p as r_number_of_p,
 				r.created_at as r_created_at,
 				r.total_price as r_total_price,
+				r.pay_tid as r_pay_tid,
 				
 				ro.id as room_id,
 				ro.availability as room_availability,
