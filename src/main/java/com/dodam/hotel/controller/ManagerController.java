@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import com.dodam.hotel.dto.socket.ChatRoom;
 import com.dodam.hotel.handler.SocketHandler;
+import com.dodam.hotel.repository.interfaces.ChatRepository;
 import com.dodam.hotel.util.Define;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,7 +42,9 @@ import com.dodam.hotel.util.PagingObj;
 public class ManagerController {
 
 	// 일단은 수정 필요한 코드
-	private SocketHandler socketHandler = new SocketHandler();
+	@Autowired
+	private ChatRepository chatRepository;
+	private SocketHandler socketHandler = new SocketHandler(chatRepository);
 
 	@Autowired
 	private ManagerService managerService;

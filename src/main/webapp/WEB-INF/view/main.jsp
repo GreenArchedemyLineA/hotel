@@ -674,6 +674,8 @@ function open(){
     // 연결 종료
     function disconnect(){
         ws.close();
+        const socketDivTag = document.getElementById("msg-socket");
+        socketDivTag.textContent = "";
     }
     // 메시지 전달 입맛에 맞게 함수 변경하시길...
     function ssss(){

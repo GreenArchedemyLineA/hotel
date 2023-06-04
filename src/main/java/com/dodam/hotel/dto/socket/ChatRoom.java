@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @Getter
 public class ChatRoom {
+
     private String roomName;
     private WebSocketSession userSession;
     private WebSocketSession managerSession;

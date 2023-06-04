@@ -4,18 +4,27 @@ import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.dto.socket.ChatRoom;
 import com.dodam.hotel.dto.socket.MessageType;
 import com.dodam.hotel.dto.socket.SocketMessageDto;
+import com.dodam.hotel.enums.ChatRole;
+import com.dodam.hotel.repository.interfaces.ChatRepository;
 import com.dodam.hotel.util.Define;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SocketHandler extends TextWebSocketHandler {
+    private ChatRepository chatRepository;
+    @Autowired
+    public SocketHandler(ChatRepository chatRepository){
+        this.chatRepository = chatRepository;
+    }
     // 매니저 세션
     private static Set<WebSocketSession> managerSessions = ConcurrentHashMap.newKeySet();
     // 유저 세션
@@ -44,6 +53,7 @@ public class SocketHandler extends TextWebSocketHandler {
     }
 
     // 메시지 이벤트
+    @Transactional
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
@@ -58,18 +68,25 @@ public class SocketHandler extends TextWebSocketHandler {
 
             WebSocketSession userSession =  room.getUserSession();
             userSession.sendMessage(message);
-            awaitMessageList.get(userSession).stream().forEach(textmsg -> {
+
+            List<TextMessage> queueMessage = awaitMessageList.get(userSession);
+            queueMessage.stream().forEach(textmsg -> {
                 try {
                     session.sendMessage(textmsg);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
+            queueMessage.clear();
         }
 
         if(msg.getType() == MessageType.MANAGER_CHAT){
             WebSocketSession targetSession = userSessionMap.get(msg.getRoomName());
             targetSession.sendMessage(message);
+
+            UserResponseDto.LoginResponseDto userInfo = (UserResponseDto.LoginResponseDto) targetSession.getAttributes().get(Define.PRINCIPAL);
+            Integer targetUserId = userInfo.getId();
+            chatRepository.insertChat(targetUserId, msg.getMsg(), ChatRole.MANAGER);
         }
 
         if(msg.getType() == MessageType.CHAT){
@@ -81,6 +98,9 @@ public class SocketHandler extends TextWebSocketHandler {
             }else{
                 managerSession.sendMessage(message);
             }
+            UserResponseDto.LoginResponseDto userInfo = (UserResponseDto.LoginResponseDto) session.getAttributes().get(Define.PRINCIPAL);
+            Integer targetUserId = userInfo.getId();
+            chatRepository.insertChat(targetUserId, msg.getMsg(), ChatRole.USER);
         }
     }
 
