@@ -78,4 +78,10 @@ public class PayService {
         }
         return true;
     }
+    
+    @Transactional
+    public Pay searchType(String tid) {
+    	
+    	return payRepository.findByTidPay(tid);
+    }
 }

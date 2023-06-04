@@ -19,6 +19,7 @@ import com.dodam.hotel.enums.Grade;
 import com.dodam.hotel.enums.PGType;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.model.GradeInfo;
+import com.dodam.hotel.repository.model.Pay;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.PayService;
 import com.dodam.hotel.util.Define;
@@ -139,8 +140,8 @@ public class PayController {
 //        return "redirect:/pay/success";
     }
 
+    //결제 취소후 에약취소처리까
     @PostMapping("/kakao/refund/{tid}/{totalPrice}/{reservationId}")
-    //@ResponseBody
     public String kakaoPayRefund(@PathVariable("tid") String tid,@PathVariable("totalPrice") String totalPrice
     		,@PathVariable("reservationId") Integer reservationId) {
     	UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
@@ -154,6 +155,22 @@ public class PayController {
         return "redirect:/myReservations";
     }
     
+    @PostMapping("/refund/{tid}/{reservationId}")
+    public String payRefund(@PathVariable("tid") String tid
+            ,@PathVariable("reservationId") Integer reservationId) {
+        UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+        Pay payType = payService.searchType(tid);
+
+        if(payType.getPgType().equals("KAKAO")) {
+            KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid,String.valueOf(payType.getPrice()));
+        }else if(payType.getPgType().equals("TOSS")) {
+
+        }else if (payType.getPgType().equals("NICEPAY")) {
+            nicePay.requestCancel(tid, String.valueOf(payType.getPrice()));
+        }
+        payService.refundPay(reservationId, user.getId());
+        return "redirect:/myReservations";
+    }
     // 토스결제 성공 시
     @GetMapping("/toss/success")
     public String tossSuccessController(TosspayRequest tosspayRequest){
