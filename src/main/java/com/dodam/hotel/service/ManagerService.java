@@ -52,12 +52,8 @@ public class ManagerService {
 		Integer price = statusParams.getPrice();
 		if(roomStatus == null) {
 			statusParams.setRoomStatus(false);
-		}
-		if(numberOfP == null){
-			statusParams.setNumberOfP(0);
-		}
-		if(price == null){
-			statusParams.setPrice(0);
+		}else{
+			statusParams.setRoomStatus(true);
 		}
 
 		List<Room> rooms;
@@ -67,23 +63,29 @@ public class ManagerService {
 		// 3. 가격만 걸려있는경우
 		// where 조건 and 절 무조건 사용해야하는 조건 리스트(2&3개만 서치)
 		// 4. 방 & 수용 인원
-		if (roomStatus == null && numberOfP == null && price == null) {
+		if (roomStatus != null && numberOfP != null && price == null) {
 			rooms = roomRepository.findOptionStatusAndNumberOfpRoomList(statusParams);
+			System.out.println(1);
+
 		}
 		// 5. 방 & 가격
-		else if (roomStatus == null && numberOfP == null && price == null) {
+		else if (roomStatus != null && numberOfP == null && price != null) {
 			rooms = roomRepository.findOptionStatusAndPriceRoomList(statusParams);
+			System.out.println(2);
 		}
 		// 6. 수용인원 & 가격
-		else if (roomStatus == null && numberOfP == null && price == null) {
+		else if (roomStatus == null && numberOfP != null && price != null) {
 			rooms = roomRepository.findOptionNumberOfpAndPriceRoomList(statusParams);
+			System.out.println(3);
 		}
 		// 7. 전부 옵션이 걸려있는 경우
 		else if (roomStatus != null && numberOfP != null && price != null) {
 			rooms = roomRepository.findAllOptionRoomList(statusParams);
+			System.out.println(4);
 		} else {
 			// 1,2,3 조건
 			rooms = roomRepository.findOptionSearchOneRoomList(statusParams);
+			System.out.println(5);
 		}
 		return rooms;
 	}

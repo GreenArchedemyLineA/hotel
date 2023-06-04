@@ -263,10 +263,10 @@ public class ManagerController {
 			// 페이징처리 안했음
 			rooms = managerService.findConditionsRoomList(statusParams);
 		}
+		rooms.stream().forEach(r->{
+			System.out.println(r);
+		});
 		model.addAttribute("roomList", rooms);
-		for (int i = 0; i < 16; i++) {
-			System.out.println(managerReservationService.findTodayAllReservation());
-		}
 		model.addAttribute("reservation", managerReservationService.findTodayAllReservation());
 		return "/manager/status";
 	}
