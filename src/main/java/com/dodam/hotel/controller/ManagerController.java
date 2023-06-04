@@ -66,7 +66,7 @@ public class ManagerController {
 
 	@GetMapping("/managerMain")
 	public String managerMain(Model model) {
-		model.addAttribute("event", eventService.findByIdLimit());
+		model.addAttribute("event", eventService.readByIdLimit());
 		model.addAttribute("question", questionService.readQuestionCountByStatus0());
 		model.addAttribute("availableRoom", roomService.readRoomAvailableCount());
 		model.addAttribute("notAvailableRoom", roomService.readRoomNotAvailableCount());
@@ -112,18 +112,18 @@ public class ManagerController {
 	@GetMapping("/userList")
 	public String mUserListAll(Model model) {
 
-		List<MUser> responseUsers = managerService.managerUserListAll();
+		List<MUser> responseUsers = managerService.readUserListAllForManager();
 		List<User> todayJoinUser = userService.readJoinUserToday();
 		int todayJoinUserCount = todayJoinUser.size();
-		List<MembershipInfo> membershipToday = userService.readJoinMembershipToday();
-		int membershipTodayCount = membershipToday.size();
+		List<MembershipInfo> todayJoinMembership = userService.readJoinMembershipToday();
+		int membershipTodayCount = todayJoinMembership.size();
 		if (responseUsers != null) {
 			model.addAttribute("userList", responseUsers);
 		}
 		if (todayJoinUser != null) {
 			model.addAttribute("userTodayCount", todayJoinUserCount);
 		}
-		if (membershipToday != null) {
+		if (todayJoinMembership != null) {
 			model.addAttribute("membershipTodayCount", membershipTodayCount);
 		}
 		return "/manager/userList";
@@ -133,9 +133,9 @@ public class ManagerController {
 	@GetMapping("/userNameList")
 	public String mUserList(String name, Model model) {
 
-		List<MUser> userList = managerService.managerUserList(name);
-		if (userList != null) {
-			model.addAttribute("userList", userList);
+		List<MUser> responseUsers = managerService.readUserByNameForManager(name);
+		if (responseUsers != null) {
+			model.addAttribute("userList", responseUsers);
 		}
 		return "/manager/userList";
 	}
@@ -143,9 +143,9 @@ public class ManagerController {
 	// 등급으로 유저 조회
 	@GetMapping("/userGradeList")
 	public String mUserGradeList(Integer gradeId, Model model) {
-		List<GradeInfo> userGradeList = managerService.managerUserGradeList(gradeId);
-		if (userGradeList != null) {
-			model.addAttribute("userList", userGradeList);
+		List<GradeInfo> responseUserGrades = managerService.readUserGradeListForManager(gradeId);
+		if (responseUserGrades != null) {
+			model.addAttribute("userList", responseUserGrades);
 		}
 		return "/manager/userGrade";
 	}
@@ -153,7 +153,7 @@ public class ManagerController {
 	// 맴버쉽 회원 조회
 	@GetMapping("/membershipUserList")
 	public String membershipUserList(Model model) {
-		List<MembershipInfo> membershipUserList = managerService.findByMembershipUserList();
+		List<MembershipInfo> membershipUserList = managerService.readByMembershipUserList();
 		if (membershipUserList != null) {
 			model.addAttribute("userList", membershipUserList);
 		}
@@ -163,7 +163,7 @@ public class ManagerController {
 	// 블랙리스트 조회
 	@GetMapping("/blackList")
 	public String mUserBlackList(Model model) {
-		List<MUser> userBlackList = managerService.managerUserBlackList();
+		List<MUser> userBlackList = managerService.readUserBlackListForManager();
 		if (userBlackList != null) {
 			model.addAttribute("userList", userBlackList);
 		}
@@ -180,10 +180,10 @@ public class ManagerController {
 		if(email == null) {
 			throw new ManagerCustomRestFullException("이메일이 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
 		}
-		int userWithdrawal = managerService.userUpdateWithdrawal(id);
-		int userOriginEmail = managerService.userUpdateOriginEmail(email, id);
+		int userWithdrawal = managerService.updateUserWithdrawal(id);
+		int userOriginEmail = managerService.updateUserOriginEmail(email, id);
 		// 현우 쪽이랑 합친뒤 유틸 패키지에 있는 랜덤 문자 매서드 를 불러와서 이메일 뒤에 합쳐준다
-		int WithdrawalEmail = managerService.withdrawalEmail(email + "/", id);
+		int WithdrawalEmail = managerService.updateWithdrawalEmail(email + "/", id);
 		return "redirect:/manager/blackList";
 	}
 
@@ -195,7 +195,7 @@ public class ManagerController {
 				throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
 			});
 		}
-		Manager principal = managerService.managerSign(managerSignInFormDto);
+		Manager principal = managerService.managerSignIn(managerSignInFormDto);
 		if (principal != null) {
 			session.setAttribute("principal", principal);
 		}
@@ -225,27 +225,27 @@ public class ManagerController {
 	@GetMapping("/roomStatus")
 	public String Check(StatusParams statusParams, Integer roomId, Model model) {
 		List<Room> rooms;
-		Room room = managerService.findByRoom(roomId);
+		Room room = managerService.readByRoom(roomId);
 		model.addAttribute("room", room);
 		// 전체 조회
 		int total = managerService.readAllRoomListCount();
 		if (statusParams.getRoomStatus() == null && statusParams.getPrice() == null
 				&& statusParams.getNumberOfP() == null) {
-			rooms = managerService.findAllRoomList();
+			rooms = managerService.readAllRoomList();
 		}
 		// 선택 조회(?? 변경 필요)
 		else {
-			rooms = managerService.findConditionsRoomList(statusParams);
+			rooms = managerService.readConditionsRoomList(statusParams);
 		}
 		model.addAttribute("roomList", rooms);
-		model.addAttribute("reservation", managerReservationService.findTodayAllReservation());
+		model.addAttribute("reservation", managerReservationService.readTodayAllReservation());
 		return "/manager/status";
 	}
 
 	// 객실 정보 상세 조회
 	@GetMapping("/roomStatusDetail")
 	public String RoomStatusDetail(Integer roomId, Model model) {
-		Room room = managerService.findByRoom(roomId);
+		Room room = managerService.readByRoom(roomId);
 		model.addAttribute("room", room);
 		return "/manager/roomDetailStatus";
 	}
@@ -256,7 +256,7 @@ public class ManagerController {
 		if(id == null) {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
-		int roomStatus = roomService.RoomStatusTrueAndFalse(id, availability);
+		int roomStatus = roomService.updateRoomStatusTrueAndFalse(id, availability);
 		return "redirect:/manager/roomStatus";
 	}
 
@@ -266,7 +266,7 @@ public class ManagerController {
 		if(id == null) {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
-		GradeInfo userGradeDetail = managerService.selectUserGrade(id);
+		GradeInfo userGradeDetail = managerService.readUserGrade(id);
 		if (userGradeDetail != null) {
 			model.addAttribute("userDetail", userGradeDetail);
 		}
@@ -299,7 +299,7 @@ public class ManagerController {
 		if(id == null) {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
-		managerService.changeGradeByUserIdAndGradeId(gradeId, id);
+		managerService.updateGradeByUserIdAndGradeId(gradeId, id);
 		return "redirect:/manager/userDetail/" + id;
 	}
 

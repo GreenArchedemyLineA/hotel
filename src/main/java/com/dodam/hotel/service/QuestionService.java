@@ -59,21 +59,22 @@ public class QuestionService {
 	// 모든 자주 묻는 질문 조회
 	@Transactional
 	public List<FAQ> readAllFaq() {
-		List<FAQ> faqEntitys = questionRepository.selectAllFaq();
+		List<FAQ> faqEntitys = questionRepository.findAllFaq();
 		return faqEntitys;
 	}
 	
 	// 특정 유저 질문 조회 기능
 	@Transactional
 	public List<Reply> readQuestionByUserId(Integer userId) {
-		List<Reply> questionEntity = questionRepository.selectQuestionByUserId(userId);
+		List<Reply> questionEntity = questionRepository.findQuestionByUserId(userId);
 		return questionEntity;
 	}
 	//질문 삭제 기능
 	@Transactional
-	public int questionDeleteById(Integer questionId) {
+	public int deleteQuestionById(Integer questionId) {
 		int deleteReplyEntity = replyRepository.deleteReply(questionId);
 		int questionDeleteEntity = questionRepository.deleteQuestion(questionId);
+		// 예외처리
 		return questionDeleteEntity;
 	}
 	
@@ -86,14 +87,14 @@ public class QuestionService {
 	
 	// 문의 전부 보기
 	@Transactional
-	public List<Question> findAllQuestionList(PagingObj obj){
+	public List<Question> readAllQuestionList(PagingObj obj){
 		List<Question> questionListEntity = questionRepository.findAllQuestion(obj); 
 		return questionListEntity;
 	}
 	
 	// 문의 아이디로 검색후 상세보기
 	@Transactional
-	public Question findById(Integer id) {
+	public Question readById(Integer id) {
 		Question questionEntity = questionRepository.findById(id);
 		return questionEntity;
 	}
@@ -102,13 +103,15 @@ public class QuestionService {
 	@Transactional
 	public int updateStatusById(Integer id) {
 		int updateStatusEntity = questionRepository.updateById(id);
+		// 예외처리
 		return updateStatusEntity;
 	}
 	
 	//댓글작성
 	@Transactional
 	public int insertReply(String content,Integer questionId,Integer managerId) {
-		int insertReplyEntity = replyRepository.insert(content, questionId, managerId); 
+		int insertReplyEntity = replyRepository.insert(content, questionId, managerId);
+		// 예외처리
 		return insertReplyEntity; 
 	}
 	

@@ -33,9 +33,9 @@ public class EventController {
 	public String eventNotice(Model model
 			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "5", required=false)String cntPerPage){
-		int total = eventService.countEvent();
+		int total = eventService.readEventCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		List<Event> responseEvents = eventService.findByEventAllPaging(obj);
+		List<Event> responseEvents = eventService.readByEventAllPaging(obj);
 		model.addAttribute("paging", obj);
 		model.addAttribute("viewAll", responseEvents);
 		return "/board/eventNotice"; 
@@ -46,7 +46,7 @@ public class EventController {
 	public String onGoingEventBoard(Model model, 
 			@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "4", required=false)String cntPerPage) {
-		int total = eventService.countOnGoingEvent();
+		int total = eventService.onGoingEventCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		List<Event> responseEvents = eventService.readOnGoingEvent(obj);
 		model.addAttribute("paging", obj);
@@ -59,7 +59,7 @@ public class EventController {
 	public String closedEventBoard(Model model, 
 			@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "4", required=false)String cntPerPage) {
-		int total = eventService.countClosedEvent();
+		int total = eventService.closedEventCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		List<Event> responseEvents = eventService.readClosedEvent(obj);
 		model.addAttribute("paging", obj);
@@ -85,7 +85,7 @@ public class EventController {
 		if(id == null) {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
-		Event responseEvent = eventService.findById(id);
+		Event responseEvent = eventService.readById(id);
 		model.addAttribute("event", responseEvent);
 		return "/board/eventUpdatePage";
 	}
@@ -112,7 +112,7 @@ public class EventController {
 		if(id == null) {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
-		eventService.eventDelete(id);
+		eventService.deleteEvent(id);
 		return "redirect:/event/notice";
 	}
 }

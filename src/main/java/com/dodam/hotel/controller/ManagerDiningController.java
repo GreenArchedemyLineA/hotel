@@ -25,22 +25,22 @@ public class ManagerDiningController {
 
     @GetMapping("/dining")
     public String testPage(Date date, Model model){
-        List<DiningReservation> diningReservationList = null;
+        List<DiningReservation> responseDiningReservations = null;
         if(date == null){
-            diningReservationList = managerReservationService.findDiningReservationAllList(new Date(System.currentTimeMillis()));
+        	responseDiningReservations = managerReservationService.readDiningReservationAllList(new Date(System.currentTimeMillis()));
         }else{
-            diningReservationList = managerReservationService.findDiningReservationAllList(date);
+        	responseDiningReservations = managerReservationService.readDiningReservationAllList(date);
         }
         AtomicInteger reservationNumberOfP = new AtomicInteger();
 
-        diningReservationList.stream().forEach(
+        responseDiningReservations.stream().forEach(
                 (diningReservation) -> {
                     reservationNumberOfP.addAndGet(diningReservation.getNumberOfP());
                 }
         );
 
         model.addAttribute("totalReservationNumOfP", reservationNumberOfP);
-        model.addAttribute("diningList", diningReservationList);
+        model.addAttribute("diningList", responseDiningReservations);
 
         return "/manager/checkDining";
     }

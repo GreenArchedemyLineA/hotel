@@ -40,7 +40,7 @@ public interface ReservationRepository {
 
 	Reservation findReservationById(Integer id);
 
-	List<DiningReservation> reservationFindDining(Date date);
+	List<DiningReservation> findDiningReservation(Date date);
 
 	// 오늘 예약 매출 조회
 	public int findTodayTotalPrice();

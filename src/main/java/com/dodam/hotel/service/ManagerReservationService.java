@@ -36,17 +36,16 @@ public class ManagerReservationService {
 	@Autowired
 	private DiningRepository diningRepository;
 
-	public List<Reservation> findTodayAllReservation() {
-		List<Reservation> reservationList = reservationRepository.findAllReservation();
-		return reservationList;
+	public List<Reservation> readTodayAllReservation() {
+		List<Reservation> reservationEntitys = reservationRepository.findAllReservation();
+		return reservationEntitys;
 	}
 
 	@Transactional
-	public List<Reservation> findUserReservation(String name) {
+	public List<Reservation> readUserReservation(String name) {
 		List<Reservation> reservationList = new ArrayList<>();
-		List<MUser> userList = mUserRepository.findByname(name);
-		System.out.println(userList);
-		userList.stream().forEach((user) -> {
+		List<MUser> userEntitys = mUserRepository.findByname(name);
+		userEntitys.stream().forEach((user) -> {
 			List<Reservation> reservationUserList = reservationRepository.findReservationByUserId(user.getId());
 			reservationUserList.forEach((reservation -> {
 				reservationList.add(reservation);
@@ -57,14 +56,14 @@ public class ManagerReservationService {
 	}
 
 	@Transactional
-	public Map<String, Object> findReservationById(Integer id) {
+	public Map<String, Object> readReservationById(Integer id) {
 		Map<String, Object> mapList = new HashMap<>();
-		Reservation reservation = reservationRepository.findReservationById(id);
-		List<Room> roomList = roomRepository.findAllRoomList();
-		List<Dining> diningList = diningRepository.findAllDining();
-		mapList.put("reservation", reservation);
-		mapList.put("roomList", roomList);
-		mapList.put("diningList", diningList);
+		Reservation reservationEntity = reservationRepository.findReservationById(id);
+		List<Room> roomEntitys = roomRepository.findAllRoomList();
+		List<Dining> diningEntitys = diningRepository.findAllDining();
+		mapList.put("reservation", reservationEntity);
+		mapList.put("roomList", roomEntitys);
+		mapList.put("diningList", diningEntitys);
 
 		return mapList;
 	}
@@ -85,9 +84,9 @@ public class ManagerReservationService {
 		return result;
 	}
 
-	public List<DiningReservation> findDiningReservationAllList(Date date) {
-		List<DiningReservation> diningReservationList = reservationRepository.reservationFindDining(date);
-		return diningReservationList;
+	public List<DiningReservation> readDiningReservationAllList(Date date) {
+		List<DiningReservation> diningReservationEntitys = reservationRepository.findDiningReservation(date);
+		return diningReservationEntitys;
 	}
 
 	// 오늘 예약 매출 조회

@@ -37,12 +37,11 @@ public class ManagerReservationController {
     @GetMapping("/reservation")
     public String reservationList(String name, Model model){
         if(name == null || name.equals("")){
-            List<Reservation> reservationList = managerReservationService.findTodayAllReservation();
-            model.addAttribute("reservationList", reservationList);
+            List<Reservation> responseReservations = managerReservationService.readTodayAllReservation();
+            model.addAttribute("reservationList", responseReservations);
         }else{
-            List<Reservation> reservationList = managerReservationService.findUserReservation(name);
-            System.out.println(reservationList);
-            model.addAttribute("reservationList", reservationList);
+            List<Reservation> responseReservations = managerReservationService.readUserReservation(name);
+            model.addAttribute("reservationList", responseReservations);
         }
         int totalPrice = managerReservationService.readBeforeTodayTotalPrice();
         List<Integer> price = new ArrayList<>();
@@ -52,7 +51,6 @@ public class ManagerReservationController {
         		beforetotalPrice = 0;
         	}
         	price.add(beforetotalPrice);
-        	System.out.println(beforetotalPrice);
         }
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("price", price);
@@ -64,7 +62,7 @@ public class ManagerReservationController {
     	if(id == null) {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
-        Map<String, Object> reservationMap = managerReservationService.findReservationById(id);
+        Map<String, Object> reservationMap = managerReservationService.readReservationById(id);
         model.addAttribute("reservation", reservationMap.get("reservation"));
         model.addAttribute("roomList", reservationMap.get("roomList"));
         model.addAttribute("spaList", reservationMap.get("spaList"));
@@ -77,7 +75,7 @@ public class ManagerReservationController {
 
     @PostMapping("/reservation/update")
     public String reservationUpdate(Reservation reservation){
-        int result = managerReservationService.updateReservation(reservation);
+        managerReservationService.updateReservation(reservation);
         return "redirect:/manager/reservation";
     }
 

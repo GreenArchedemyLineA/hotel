@@ -50,8 +50,8 @@ public class QuestionController {
 	// faq로 이동
 	@GetMapping("/question")
 	public String questionPage(Model model) {
-		List<FAQ> faqList = questionService.readAllFaq();
-		model.addAttribute("faqList", faqList);
+		List<FAQ> responseFaqs = questionService.readAllFaq();
+		model.addAttribute("faqList", responseFaqs);
 		return "/question/question";
 	}
 	
@@ -112,10 +112,10 @@ public class QuestionController {
 		//주소 요청시 작성된 계시물 제목 List 로 다불러오기
 		int total = questionService.readAllQuestionCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		List<Question> questionList = questionService.findAllQuestionList(obj);
-		if(questionList != null) {
+		List<Question> responseQuestions = questionService.readAllQuestionList(obj);
+		if(responseQuestions != null) {
 			model.addAttribute("paging", obj);
-			model.addAttribute("questionList",questionList);
+			model.addAttribute("questionList", responseQuestions);
 		}
 		return "/board/question";
 	}
@@ -126,9 +126,9 @@ public class QuestionController {
 		if(id == null) {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
-		Question question = questionService.findById(id);
-		if(question != null) {
-			model.addAttribute("question",question);
+		Question responseQuestion = questionService.readById(id);
+		if(responseQuestion != null) {
+			model.addAttribute("question", responseQuestion);
 		}
 		return "/board/questionDetail";
 	}
@@ -143,27 +143,27 @@ public class QuestionController {
 		if(managerId == null) {
 			throw new ManagerCustomRestFullException("managerId가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
 		}
-		int questionStatus = questionService.updateStatusById(questionId);
-		int insertReply = questionService.insertReply(content, questionId, managerId);
+		questionService.updateStatusById(questionId);
+		questionService.insertReply(content, questionId, managerId);
 		return "redirect:/question/questionList";
 	}
 	
-	//질문 삭제 - 매니저
+	//질문 삭제
 	@GetMapping("/questionDelete/{questionId}")
 	public String questionDelete(@PathVariable Integer questionId){
 		if(questionId == null) {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
-		int deleteQuestion = questionService.questionDeleteById(questionId);
+		questionService.deleteQuestionById(questionId);
 		return "redirect:/question/questionList";
 	}
 	
 	// 매니저
 	@GetMapping("/category")
 	public String questionCategory(String category,Model model) {
-		List<Question> questionList = questionService.findByCategory(category);
-		if(questionList != null) {
-			model.addAttribute("questionList",questionList);
+		List<Question> responseQuestions = questionService.findByCategory(category);
+		if(responseQuestions != null) {
+			model.addAttribute("questionList", responseQuestions);
 		}
 		return "/board/question";
 	}

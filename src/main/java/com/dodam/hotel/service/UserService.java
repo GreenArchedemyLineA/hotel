@@ -231,7 +231,7 @@ public class UserService {
 		int resultRow = userRepository.updateOnlyPw(password, userId);
 		if (resultRow == 1) {
 			// 임시 비밀번호 발급 여부 업데이트
-			int resultRow2 = userRepository.updatePwdStatus(userId);
+			userRepository.updatePwdStatus(userId);
 		} else {
 			throw new CustomRestFullException("비밀번호 변경에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}

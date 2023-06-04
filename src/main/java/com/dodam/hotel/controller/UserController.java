@@ -78,13 +78,13 @@ public class UserController {
 	public String myPage(Model model) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto) session
 				.getAttribute(Define.PRINCIPAL);
-		List<Coupon> coupons = couponService.readByUserId(principal.getId());
+		List<Coupon> responseCoupons = couponService.readByUserId(principal.getId());
 		// 등급 정보 불러오기
 		GradeInfo responseGrade = gradeService.readGradeByUserId(principal.getId());
 		// 회원 정보 불러오기
 		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
 		model.addAttribute("responseGrade", responseGrade);
-		model.addAttribute("coupons", coupons);
+		model.addAttribute("coupons", responseCoupons);
 		model.addAttribute("responseUser", responseUser);
 		return "/user/myPage";
 	}
@@ -123,10 +123,7 @@ public class UserController {
 		// 앞에서 비밀번호 확인 처리
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto) session
 				.getAttribute(Define.PRINCIPAL);
-		int resultRow = userService.updateOnlyPw(pwdDto.getChangePwd(), principal.getId());
-		if (resultRow != 1) {
-			System.out.println("변경 실패");
-		}
+		userService.updateOnlyPw(pwdDto.getChangePwd(), principal.getId());
 		return "redirect:/logout";
 	}
 
@@ -298,10 +295,9 @@ public class UserController {
 
 		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
-		List<Reply> questions = questionService.readQuestionByUserIdPaging(po, principal.getId());
-		System.out.println(questions);
+		List<Reply> responseQuestions = questionService.readQuestionByUserIdPaging(po, principal.getId());
 		model.addAttribute("paging", po);
-		model.addAttribute("questions", questions);
+		model.addAttribute("questions", responseQuestions);
 		return "/user/replyList";
 	}
 

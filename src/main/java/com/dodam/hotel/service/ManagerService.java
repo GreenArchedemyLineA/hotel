@@ -38,13 +38,13 @@ public class ManagerService {
 	}
 	
 	@Transactional
-	public List<Room> findAllRoomList() {
-		List<Room> rooms = roomRepository.findAllRoomList();
-		return rooms;
+	public List<Room> readAllRoomList() {
+		List<Room> roomEntitys = roomRepository.findAllRoomList();
+		return roomEntitys;
 	}
 
 	@Transactional
-	public List<Room> findConditionsRoomList(StatusParams statusParams) {
+	public List<Room> readConditionsRoomList(StatusParams statusParams) {
 		Boolean roomStatus = statusParams.getRoomStatus();
 		if(roomStatus == null) {
 			statusParams.setRoomStatus(false);
@@ -52,7 +52,7 @@ public class ManagerService {
 		Integer numberOfp = statusParams.getNumberOfP();
 		Integer price = statusParams.getPrice();
 
-		List<Room> rooms;
+		List<Room> roomEntitys;
 		// where 조건 or 절 사용해도 문제 없는 조건 리스트(1개만 서치)
 		// 1. 방 상태만 걸려있는 경우
 		// 2. 수용 인원만 걸려있는 경우
@@ -60,35 +60,35 @@ public class ManagerService {
 		// where 조건 and 절 무조건 사용해야하는 조건 리스트(2&3개만 서치)
 		// 4. 방 & 수용 인원
 		if (roomStatus == null && numberOfp == null && price == null) {
-			rooms = roomRepository.findOptionStatusAndNumberOfpRoomList(statusParams);
+			roomEntitys = roomRepository.findOptionStatusAndNumberOfpRoomList(statusParams);
 		}
 		// 5. 방 & 가격
 		else if (roomStatus == null && numberOfp == null && price == null) {
-			rooms = roomRepository.findOptionStatusAndPriceRoomList(statusParams);
+			roomEntitys = roomRepository.findOptionStatusAndPriceRoomList(statusParams);
 		}
 		// 6. 수용인원 & 가격
 		else if (roomStatus == null && numberOfp == null && price == null) {
-			rooms = roomRepository.findOptionNumberOfpAndPriceRoomList(statusParams);
+			roomEntitys = roomRepository.findOptionNumberOfpAndPriceRoomList(statusParams);
 		}
 		// 7. 전부 옵션이 걸려있는 경우
 		else if (roomStatus != null && numberOfp != null && price != null) {
-			rooms = roomRepository.findAllOptionRoomList(statusParams);
+			roomEntitys = roomRepository.findAllOptionRoomList(statusParams);
 		} else {
 			// 1,2,3 조건
-			rooms = roomRepository.findOptionSearchOneRoomList(statusParams);
+			roomEntitys = roomRepository.findOptionSearchOneRoomList(statusParams);
 		}
-		return rooms;
+		return roomEntitys;
 	}
 
 	@Transactional
-	public Room findByRoom(Integer roomId) {
-		Room room = roomRepository.findById(roomId);
-		return room;
+	public Room readByRoom(Integer roomId) {
+		Room roomEntity = roomRepository.findById(roomId);
+		return roomEntity;
 	}
 
 	// 매니저 로그인
 	@Transactional
-	public Manager managerSign(ManagerSignInFormDto managerSignInFormDto) {
+	public Manager managerSignIn(ManagerSignInFormDto managerSignInFormDto) {
 		Manager managerEntity = managerRepository.findByManagernameAndPassword(managerSignInFormDto);
 		
 		if(managerEntity != null) {
@@ -117,21 +117,21 @@ public class ManagerService {
 
 	// 회원 전체 리스트 검색
 	@Transactional
-	public List<MUser> managerUserListAll() {
+	public List<MUser> readUserListAllForManager() {
 		List<MUser> userListEntity = mUserRepository.findByAll();
 		return userListEntity;
 	}
 	
 	// 이름으로 회원 검색
 	@Transactional
-	public List<MUser> managerUserList(String name) {
+	public List<MUser> readUserByNameForManager(String name) {
 		List<MUser> userListEntity = mUserRepository.findByname(name);
 		return userListEntity;
 	}
 	
 	//등급별 회원 조회
 	@Transactional
-	public List<GradeInfo> managerUserGradeList(Integer gradeId){
+	public List<GradeInfo> readUserGradeListForManager(Integer gradeId){
 		List<GradeInfo> userListEntity = mUserRepository.findByGradeAll(gradeId);
 		return userListEntity;
 	}
@@ -139,62 +139,62 @@ public class ManagerService {
 	//블랙 리스트로 지정
 	@Transactional
 	public int updateBlackList(Integer id) {
-		int updateBlackList = mUserRepository.updateBlackList(id);
-		return updateBlackList;
+		int resultRow = mUserRepository.updateBlackList(id);
+		return resultRow;
 	}
 	
 	//블랙 리스트로 해제
 	@Transactional
 	public int updateWhiteList(Integer id) {
-		int updateBlackList = mUserRepository.updateWhiteList(id);
-		return updateBlackList;
+		int resultRow = mUserRepository.updateWhiteList(id);
+		return resultRow;
 	}
 	
 	// 블랙리스트 조회
 	@Transactional
-	public List<MUser> managerUserBlackList() {
-		List<MUser> userBlackListEntity = mUserRepository.findByBlackList();
-		return userBlackListEntity;
+	public List<MUser> readUserBlackListForManager() {
+		List<MUser> userBlackListEntitys = mUserRepository.findByBlackList();
+		return userBlackListEntitys;
 	}
 	
 	// 블랙 리스트 탈퇴 상태 값 변경
 	@Transactional
-	public int userUpdateWithdrawal(Integer id) {
-		int userWithdrawalEntity = mUserRepository.updateWithdrawal(id);
-		return userWithdrawalEntity;
+	public int updateUserWithdrawal(Integer id) {
+		int resultRow = mUserRepository.updateWithdrawal(id);
+		return resultRow;
 	}
 	
 	// 블랙리스트 탈퇴시 넣어줄 오리진 이메일
 	@Transactional
-	public int userUpdateOriginEmail(String email, Integer id) {
-		int userUpdateOriginEmailEntity = mUserRepository.updateOriginEmail(email, id);
-		return userUpdateOriginEmailEntity;
+	public int updateUserOriginEmail(String email, Integer id) {
+		int resultRow = mUserRepository.updateOriginEmail(email, id);
+		return resultRow;
 	}
 	
 	//블랙리스트 탈퇴 처리시 이메일 수정
 	@Transactional
-	public int withdrawalEmail(String email,Integer id) {
-		int withdrawalUserEmailEntity = mUserRepository.updateWithdrawalEmail(email, id);
-		return withdrawalUserEmailEntity;
+	public int updateWithdrawalEmail(String email,Integer id) {
+		int resultRow = mUserRepository.updateWithdrawalEmail(email, id);
+		return resultRow;
 	}
 	
 	// 회원등급 조회
 	@Transactional
-	public GradeInfo selectUserGrade(Integer id) {
+	public GradeInfo readUserGrade(Integer id) {
 		GradeInfo userGradeEntity = mUserRepository.findByUserId(id);
 		return userGradeEntity;
 	}
 	
 	//맴버쉽 회원 조회
 	@Transactional
-	public List<MembershipInfo> findByMembershipUserList(){
+	public List<MembershipInfo> readByMembershipUserList(){
 		List<MembershipInfo> membershipUserListEntity = mUserRepository.findByMembershipAll();
 		return membershipUserListEntity;		
 	}
 	
 	// 회원 등급 수정
 	@Transactional
-	public int changeGradeByUserIdAndGradeId(Integer gradeId, Integer id) {
+	public int updateGradeByUserIdAndGradeId(Integer gradeId, Integer id) {
 		int resultRowCount = mUserRepository.updateGrade(gradeId, id);	
 		return resultRowCount;
 	}

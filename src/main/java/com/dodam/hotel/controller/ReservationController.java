@@ -41,15 +41,11 @@ public class ReservationController {
 			throw new CustomRestFullException("예약 정보가 제대로 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
 		}
 		String[] array = requestDto.getDate().split(" to ");
-		System.out.println(array[0]);
-		System.out.println(array[1]);
 		Integer countAll = requestDto.getCountPerson() + requestDto.getCountChild() + requestDto.getCountBaby();
 		requestDto.setNumberOfP(countAll);
-		// 출력
-//		for (int i = 0; i < array.length; i++) {
 		requestDto.setStartDate(array[0]);
 		requestDto.setEndDate(array[1]);
-//		}
+		
 		return null;
 	}
 
@@ -84,7 +80,7 @@ public class ReservationController {
 		
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		selectReserveDetail.setUserId(principal.getId());
-		Map<String, Object> selectList = reservationService.useCouponOrPoint(selectReserveDetail);
+		Map<String, Object> selectList = reservationService.readAvailableCouponOrPoint(selectReserveDetail);
 		
 		model.addAttribute("point", selectList.get("point"));
 		model.addAttribute("couponList", selectList.get("couponList"));
@@ -114,12 +110,12 @@ public class ReservationController {
 
 		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
-		List<Reservation> reservations = reservationService.readAllResrevationByUserIdPaging(po, principal.getId());
+		List<Reservation> responseReservations = reservationService.readAllResrevationByUserIdPaging(po, principal.getId());
 		model.addAttribute("paging", po);
-		if(reservations.size() == 0) {
+		if(responseReservations.size() == 0) {
 			model.addAttribute("reservations", null);
 		}else {
-			model.addAttribute("reservations", reservations);
+			model.addAttribute("reservations", responseReservations);
 		}
 		return "/user/reservationList";
 	}

@@ -26,9 +26,9 @@ public class RoomController {
 	// 객실 페이지로 이동
 	@GetMapping("/room")
 	public String roomPage(Model model, @RequestParam(name = "type", defaultValue = "All", required = false) String type) {
-		 List<RoomType> rooms = roomService.readAllRoom(type);
+		 List<RoomType> responseRooms = roomService.readAllRoom(type);
 		 model.addAttribute("type", type);
-		 model.addAttribute("roomList", rooms);
+		 model.addAttribute("roomList", responseRooms);
 		 if(type.equals("AllInOne")) {
 			 return "/room/roomList";
 		 } else {

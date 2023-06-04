@@ -32,28 +32,28 @@ public class EventService {
 
 	// 행사일정 리스트로 띄우기
 	@Transactional
-	public List<Event> findByEventAllPaging(PagingObj obj) {
+	public List<Event> readByEventAllPaging(PagingObj obj) {
 		List<Event> eventListEntitys = eventRepository.findByAllPage(obj);
 		return eventListEntitys;
 	}
 	
 	// 행사 일정 메인 리스트 조회
 	@Transactional
-	public List<Event> findByIdLimit() {
+	public List<Event> readByIdLimit() {
 		List<Event> eventListEntitys = eventRepository.findLimit5();
 		return eventListEntitys;
 	}
 
 	//행사 일정 리스트 숫자
 	@Transactional
-	public Integer countEvent() {
+	public Integer readEventCount() {
 		int resultCount = eventRepository.count();
 		return resultCount;
 	}
 
 	// 행사 일정 아이디 조회
 	@Transactional
-	public Event findById(Integer id) {
+	public Event readById(Integer id) {
 		Event eventEntity = eventRepository.findById(id);
 		if (eventEntity == null) {
 			throw new ManagerCustomRestFullException("행사 일정 조회 실패", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -73,7 +73,7 @@ public class EventService {
 
 	// 행사 일정 삭제
 	@Transactional
-	public int eventDelete(Integer id) {
+	public int deleteEvent(Integer id) {
 		int eventDeleteEntity = eventRepository.deleteById(id);
 		if (eventDeleteEntity == 0) {
 			throw new ManagerCustomRestFullException("이벤트 삭제 실패", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -97,7 +97,7 @@ public class EventService {
 	
 	// 진행중인 리스트 숫자 - 현우
 	@Transactional
-	public int countOnGoingEvent() {
+	public int onGoingEventCount() {
 		int resultCount = eventRepository.findByNowAll();
 		return resultCount;
 	}
@@ -111,7 +111,7 @@ public class EventService {
 	
 	// 종료된 리스트 숫자 - 현우
 	@Transactional
-	public int countClosedEvent() {
+	public int closedEventCount() {
 		int resultCount = eventRepository.findByPrevAll();
 		return resultCount;
 	}

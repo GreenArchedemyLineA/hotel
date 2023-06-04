@@ -37,8 +37,8 @@ public class RoomService {
 	
 	//룸 사용가능 상태 변경 <- 매니저 부분
 	@Transactional
-	public int RoomStatusTrueAndFalse(Integer id,Boolean availability) {
-		int roomEntity = roomRepository.updateManagerRoom(id,availability);
+	public int updateRoomStatusTrueAndFalse(Integer id, Boolean availability) {
+		int roomEntity = roomRepository.updateManagerRoom(id, availability);
 		return roomEntity;
 	}
 	

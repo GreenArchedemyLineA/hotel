@@ -21,7 +21,7 @@ public class ManagerFAQService {
     @Autowired
     private FAQRepository faqRepository;
 
-    public List<FAQ> findAllFAQ(){
+    public List<FAQ> readAllFAQ(){
         List<FAQ> faqEntitys = faqRepository.findAllFAQ();
         if(faqEntitys == null) {
         	throw new ManagerCustomRestFullException("faq 조회 실패", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -29,7 +29,7 @@ public class ManagerFAQService {
         return faqEntitys;
     }
 
-    public FAQ findFAQById(Integer id){
+    public FAQ readFAQById(Integer id){
         FAQ faqEntity = faqRepository.findFAQById(id);
         if(faqEntity == null) {
         	throw new ManagerCustomRestFullException("faq 조회 실패", HttpStatus.INTERNAL_SERVER_ERROR);

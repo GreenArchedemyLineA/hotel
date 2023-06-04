@@ -18,10 +18,10 @@ public interface QuestionRepository {
 	public int insertQuestion(InsertQuestionRequestDto question);
 	
 	// 질문 조회 기능
-	public List<Reply> selectQuestionByUserId(Integer userId);
+	public List<Reply> findQuestionByUserId(Integer userId);
 	
 	// 모든 faq 조회
-	public List<FAQ> selectAllFaq();
+	public List<FAQ> findAllFaq();
 	public List<Reply> findAll();
 	public int insert(InsertReplyDto insertReplyDto);
 	public int findAllQuestionCount();

@@ -77,7 +77,7 @@ public class ReservationService {
 
 	// 객실 할인 체크
 	@Transactional
-	public Map<String, Object> useCouponOrPoint(ReservationRequestDto reservationRequestDto) {
+	public Map<String, Object> readAvailableCouponOrPoint(ReservationRequestDto reservationRequestDto) {
 		// 사용 가능 쿠폰 조회
 		List<Coupon> couponList = couponRepository.findByUserId(reservationRequestDto.getUserId());
 		
@@ -132,13 +132,11 @@ public class ReservationService {
 				// 쿠폰 부여
 				couponRepository.insert(CouponInfo.DIA , userId);
 				couponRepository.insert(CouponInfo.DIA2 , userId);
-				System.out.println("다이아 등급업 !!!");
 			} else if (count >= 2 && userGrade.getGrade().getId() < 2) {
 				// 다이아 등급업 처리
 				gradeRepository.updateUserGrade(userId, Grade.GOLD);
 				// 쿠폰 부여
 				couponRepository.insert(CouponInfo.GOLD , userId);
-				System.out.println("골드 등급업 !!!");
 			}
 		}
 		return resultRowCount;

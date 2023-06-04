@@ -418,7 +418,7 @@
 		<association property="dining" resultMap="Dining" />
 	</resultMap>
 	<!-- writer: 이현서 -->
-	<select id="reservationFindDining" resultMap="DiningReservation">
+	<select id="findDiningReservation" resultMap="DiningReservation">
 		select
 			re.id as r_id,
 			re.start_date as r_start_date,
