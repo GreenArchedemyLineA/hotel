@@ -100,6 +100,7 @@ li:hover {
 				<li id="event--li" onclick="location.href='/event/notice'">호텔 일정</li>
 				<li id="qna--li" onclick="location.href='/question/questionList'">문의 사항</li>
 				<li id="faq--li" onclick="location.href='/manager/faq'">FAQ</li>
+				<li id="faq--li" onclick="location.href='/manager/chatRoomList'">실시간 채팅 문의</li>
 			</ul>
 		</nav>
 	<script type="text/javascript">

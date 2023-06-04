@@ -1,12 +1,13 @@
 package com.dodam.hotel.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.dodam.hotel.dto.socket.ChatRoom;
+import com.dodam.hotel.handler.SocketHandler;
+import com.dodam.hotel.util.Define;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +39,9 @@ import com.dodam.hotel.util.PagingObj;
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {
+
+	// 일단은 수정 필요한 코드
+	private SocketHandler socketHandler = new SocketHandler();
 
 	@Autowired
 	private ManagerService managerService;
@@ -222,7 +226,7 @@ public class ManagerController {
 
 		Manager principal = managerService.managerSign(managerSignInFormDto);
 		if (principal != null) {
-			session.setAttribute("principal", principal);
+			session.setAttribute(Define.MANAGERPRINCIPAL, principal);
 		}
 		return "/manager/managerMain";
 	}
@@ -322,4 +326,16 @@ public class ManagerController {
 		return "redirect:/manager/";
 	}
 
+	@GetMapping("/chatRoomList")
+	public String chatRoomList(Model model){
+		List<ChatRoom> chatRoomList = socketHandler.viewAllRoom();
+		model.addAttribute("chatRoomList", chatRoomList);
+		return "/manager/chatRoomList";
+	}
+
+	@GetMapping("/chatRoom/{roomName}")
+	public String chatRoom(@PathVariable String roomName, Model model){
+		model.addAttribute("roomName", roomName);
+		return "/manager/chatRoom";
+	}
 }
