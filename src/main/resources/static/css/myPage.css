@@ -27,7 +27,7 @@
 
 .title--container {
 	flex: 1;
-	background-color: #64c5f3;
+	background-color: #84C9FF;
 	height: 100%;
 	color: #fff;
 }
@@ -75,6 +75,10 @@
 	border: none;
 	border-bottom: 2px solid black;
 	margin: 10px;
+}
+
+.input--box:focus {
+	outline: none;
 }
 
 .sub--button {

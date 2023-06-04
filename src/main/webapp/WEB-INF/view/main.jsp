@@ -14,7 +14,9 @@
 	padding: 0;
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
+body {
+	background-color: #f9f9f9;
+}
 .navi--bar--1 {
 	color: #fff;
 	font-size: 20px;
@@ -50,7 +52,7 @@
 	display: flex;
 	justify-content: center;
 	font-size: 20px;
-	background-color: rgba(255, 255, 255, 0.7);
+	background-color: #fff;
 	height: 120px;
 	width: 100%;
 }
@@ -90,17 +92,6 @@
 
 .toggle--box--room:hover {
 	cursor: pointer;
-}
-
-.greeting--container {
-	color: #FF9F8D;
-	font-size: 100px;
-	font-weight: bolder;
-	font-family: 'WindSong', cursive;
-	display: flex;
-	align-items: flex-end;
-	height: 330px;
-	justify-content: center;
 }
 
 .navi--bar--2 {
@@ -199,7 +190,9 @@
 .sub--button {
 	margin: 0 20px;
 	width: 120px;
-	background-color: #FFF7D1;
+	background-color: #84C9FF;
+	font-size:18px;
+	color: #fff;
 	border: none;
 	height: 50px;
 }
@@ -301,7 +294,7 @@ main {
 
 .membership--wrap {
 	background-color: #f9f9f9;
-	width: 1200px;
+	width: 100%;
 	height: 300px;
 	display: flex;
 	justify-content: space-evenly;
@@ -356,6 +349,7 @@ main {
 	border: none;
 	width: 284px;
 	height: 70px;
+	cursor: pointer;
 }
 
 /* 추가된거 */
@@ -416,14 +410,54 @@ main {
 		width: 100%;
 		background-color: #f9f9f9;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		height: 500px;
+		flex: 1;
 	}
 	
 	#map {
-		width: 1100px;
+		width: 100%;
 		height: 400px;
+	}
+	
+	.introduce--box {
+		display: flex;
+	}
+	
+	#pool{
+		background-image: url("http://localhost:8080/images/pool.jpg");
+		background-size: cover;
+		display: flex;
+		flex: 1;
+	}
+	
+	#spa {
+		background-image: url("http://localhost:8080/images/spa.jpg");
+		background-size: cover;
+		display: flex;
+		flex: 1;
+	}
+	
+	#fitness {
+		background-image: url("http://localhost:8080/images/fitness.jpg");
+		background-size: cover;
+		display: flex;
+		flex: 1;
+	}
+	
+	#pool > a, #spa > a, #fitness > a {
+		color: #fff;
+		font-size: 50px;
+		text-decoration: none;
+		margin-left: 15px;
+	}
+	
+	.fac--container {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
 	}
 </style>
 
@@ -587,24 +621,33 @@ main {
 	<div class="membership--wrap">
 		<div id="gift--box">
 			<span class="material-symbols-outlined membership--icon">redeem</span>
-			<p class="membership--desc">회원 전용 이벤트를 누려보세요.</p>
+			<p class="membership--desc">회원 전용 이벤트를 누려보세요</p>
 		</div>
 		<div id="discount--box">
 			<span class="material-symbols-outlined membership--icon">calculate</span>
-			<p class="membership--desc">멤버십 회원만을 위해 할인된 가격을 제공합니다.</p>
+			<p class="membership--desc">멤버십 회원만을 위해</p>
+			<p class="membership--desc">할인된 가격을 제공합니다</p>
 		</div>
 		<div id="point--box">
 			<span class="material-symbols-outlined membership--icon">monetization_on</span>
-			<p class="membership--desc">포인트를 적립하고, 현금처럼 실용적으로 사용하세요.</p>
+			<p class="membership--desc">포인트를 적립하고,</p>
+			<p class="membership--desc">현금처럼 실용적으로 사용하세요</p>
 		</div>
 	</div>
 	<button type="button" onclick="location.href='/membership'" id="desc--btn">자세히 보기</button>
 </div>
 
-<div class="map--container">
-	<div id="map"></div>
+<div class="introduce--box">
+	<div class="fac--container">
+		<div id="pool"><a href="/pool">Pool</a></div>
+		<div id="spa"><a href="/spa">Spa</a></div>
+		<div id="fitness"><a href="/fitness">Fitness</a></div>
+	</div>
+	<div class="map--container">
+		<span style="margin-bottom: 20px;"><b>찾아오시는 길</b></span>
+		<div id="map"></div>
+	</div>
 </div>
-
 
 <!-- 예약 달력 -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

@@ -1,22 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<!-- Full Calendar -->
 <link
-	href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.print.min.css"
-	rel="stylesheet" media="print">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<script type="text/javascript"
-	src="https://www.gstatic.com/charts/loader.js"></script>
-<!-- fullcalendar 언어 CDN -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
+	href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css'
+	rel='stylesheet' />
 <style>
 #date {
 	font-size: 40px;
@@ -31,7 +18,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	position: relative; /* 추가 */
+	position: relative;
 }
 
 .content--container {
@@ -122,7 +109,6 @@ a:hover {
 }
 
 .main--container::after {
-	content: "";
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -141,7 +127,7 @@ a:hover {
 		<div class="left--content">
 			<div class="content--box" id="reserve">
 				<b class="title--box">예약</b>
-				<div id="calender"></div>
+				<div id="calendar"></div>
 			</div>
 			<div class="content--box" id="revenue">
 				<b class="title--box">매출</b>
@@ -266,6 +252,16 @@ a:hover {
 	</div>
 </div>
 </main>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
 <script>
 	window.onload = function() {
 		let today = new Date();
@@ -398,4 +394,5 @@ a:hover {
 	}
 
 	// 예약 달력
+	
 </script>

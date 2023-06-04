@@ -11,7 +11,7 @@
 	align-items: center;
 	height: 700px;
 	width: 1200px;
-	border: 2px solid #64c5f3;
+	border: 1px solid #ebebeb;
 }
 .facilities--container {
 	display: flex;
@@ -230,7 +230,9 @@ input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
+.pay {
+	margin: 0 10px;
+}
 </style>
 </head>
 <body>
@@ -395,10 +397,10 @@ input[type="number"]::-webkit-inner-spin-button {
 			</div>
 			<div>
 				<fieldset>
-					<legend>결제 방법 선택</legend>
-					<input type="radio" name="pgType" value="nicepay" id="nicepay" class="pg-type" checked><label for="nicepay">신용카드결제</label>
-					<input type="radio" name="pgType" value="kakaopay" id="kakaopay" class="pg-type"><label for="kakaopay">카카오페이결제</label>
-					<input type="radio" name="pgType" value="tosspay" id="tosspay" class="pg-type"><label for="tosspay">토스간편결제</label>
+					<legend style="font-size: 17px;">결제 방법 선택</legend>
+					<input class="pay" type="radio" name="pgType" value="nicepay" id="nicepay" class="pg-type" checked><label for="nicepay">신용카드결제</label>
+					<input class="pay" type="radio" name="pgType" value="kakaopay" id="kakaopay" class="pg-type"><label for="kakaopay">카카오페이결제</label>
+					<input class="pay" type="radio" name="pgType" value="tosspay" id="tosspay" class="pg-type"><label for="tosspay">토스간편결제</label>
 				</fieldset>
 			</div>
 			<button type="button" class="sub--button" onclick="payEvent()">결제하기</button>

@@ -151,19 +151,6 @@
 			<p class="find--pwd">비밀번호 찾기</p>
 		</div>
 		<form action="/idInquiry" method="post" class="form--container" id="id--container">
-<<<<<<< HEAD
-			<input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box" autocomplete="off"> 
-			<input type="date" name="birth" placeholder="생년월일 입력해 주세요" class="input--box"> 
-			<input type="text" name="tel" placeholder="전화번호 입력해 주세요" class="input--box" autocomplete="off">
-			<button type="submit" class="sub--button">아이디 찾기</button>
-		</form>
-		<form action="/pwInquiry" method="post" class="form--container" id="pwd--container">
-			<input type="email" name="email" placeholder="이메일을 입력해 주세요" class="input--box" autocomplete="off"> 
-			<input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box" autocomplete="off"> 
-			<input type="date" name="birth" placeholder="생년월일 입력해 주세요" class="input--box">
-			<input type="text" name="tel" placeholder="전화번호 입력해 주세요" class="input--box" autocomplete="off">
-			<button type="submit" class="sub--button">비밀번호 찾기</button>
-=======
 			<input type="text" name="name" placeholder="이름을 입력해 주세요" class="input--box">
 			<input type="date" name="birth" placeholder="생년월일 입력해 주세요" class="input--box">
 			<input type="text" name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
@@ -175,7 +162,6 @@
 			<input type="date" name="birth" placeholder="생년월일 입력해 주세요" class="input--box">
 			<input type="text" name="tel" placeholder="전화번호 입력해 주세요" class="input--box">
 			<button type="button" class="sub--button" onclick="pwdFormCheck()">비밀번호 찾기</button>
->>>>>>> b40d1f2d58e20c06c40cc88f9dbd2a1cca013556
 		</form>
 
 	</div>
@@ -245,4 +231,3 @@
 		});
 	</script>
 </main>
-<%@ include file="../layout/footer.jsp"%>

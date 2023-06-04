@@ -38,14 +38,18 @@
 	margin: 0 10px 30px 0;
 }
 
-.title--box {
-	width: 350px;
+.form--title {
+	display: flex;
+}
+.qna--title {
 	height: 40px;
 	border: none;
 	border-bottom: 2px solid black;
-	margin: 10px;
+	width: 300px;
 }
-
+.qna--title:focus {
+	outline: none;
+}
 .form-bottom-container {
 	margin-top: 20px;
 }
@@ -62,13 +66,13 @@
 					<option value="부대시설문의">부대시설문의</option>
 					<option value="회원문의">회원문의</option>
 				</select> 
-				<input type="text" name="title" placeholder="제목을 입력해주세요" class="title--box">
+				<input type="text" name="title" placeholder="제목을 입력해주세요" class="qna--title">
 
 			</div>
 
 			<textarea class="form-control summernote" rows="5" id="content" name="content" id="summernote--box"></textarea>
 			<div class="form-bottom-container">
-				<input type="file" name="file"> 
+				<input type="file" name="file" class="input--box"> 
 				<input type="submit" value="질문등록" class="sub--button">			
 			</div>
 		</form>

@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Login Page</title>
+<title>Membership Page</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -155,7 +156,21 @@
 		align-items: center;
 		cursor: pointer;
 	}
-
+	#grade {
+		width: 800px;
+		height: 400px;
+	}
+	.modal--box {
+		display: flex;
+		flex-direction: column;
+		margin: 10px;
+		justify-content: center;
+		align-items: center;
+	}
+	#grade-desc {
+		border-bottom: 1px solid #ebebeb;
+		margin-bottom: 10px;
+	}
 </style>
 </head>
 <body>
@@ -208,44 +223,35 @@
 		</div>
 	</div>
 		<div class="modal" id="grade">
-		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">호텔 등급별 해택입니다</h4>
+					<h4 class="modal-title">등급별 혜택 바로보기</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-				<div>					
-						<label>브라운</label>
-						<br> 
-						<label>신규 가입 회원, 적립 4%</label>
-						<br> 
-						<label>골드</label> 
-						<br> 
-						<label>2박 숙박 혹은 500 포인트 적립 회원, 적립 5%와 객실 1만 할인 쿠폰 제공</label> 
-						<br> 
-						<label>다이야</label>
-						<br> 
-						<label>10박 숙박 혹은 70000 포인트 적립 회원, 적립 7%와 객실 3만 할인 쿠폰 제공 및 다이닝 식사권 2매 제공</label> 
+				<div class="modal--box">	
+					<c:forEach var="grade" items="${gradeList}">
+						<span><b>${grade.name}</b></span>
+						<span id="grade-desc">${grade.description}</span>
+					</c:forEach>				
 				</div>
-			</div>
 		</div>
 	</div>
 	<div class="modal" id="membership">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">맴버쉽 해택입니다</h4>
+					<h4 class="modal-title">도담 멤버쉽</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-				<div>					
-						<label>누나/현우야</label>
-						<br>
-						<label>디자인 작업 해줘</label>
+				<div class="modal--box">					
+					<span><b>${membership.price}</b></span>
+					<span>${membership.content1}</span>
+					<span>${membership.content2}</span>
+					<span>${membership.content3}</span>
 				</div>
 			</div>
 		</div>
 	</div>
 </main>
 
-<%@ include file="../layout/footer.jsp"%>
 

@@ -23,7 +23,10 @@ import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.dto.api.ResponseMsg;
 import com.dodam.hotel.repository.model.Coupon;
 import com.dodam.hotel.repository.model.Event;
+import com.dodam.hotel.repository.model.Grade;
 import com.dodam.hotel.repository.model.GradeInfo;
+import com.dodam.hotel.repository.model.Membership;
+import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Reply;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.CouponService;
@@ -191,7 +194,11 @@ public class UserController {
 
 	// 멤버쉽 페이지 (성희)
 	@GetMapping("/membership")
-	public String membershipPage() {
+	public String membershipPage(Model model) {
+		List<Grade> gradeList = gradeService.readAllGrade();
+		model.addAttribute("gradeList", gradeList);
+		Membership membership = userService.readMembershipInfo();
+		model.addAttribute("membership", membership);
 		return "/membership/membership";
 	}
 

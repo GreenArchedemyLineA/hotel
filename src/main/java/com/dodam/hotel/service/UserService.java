@@ -18,6 +18,7 @@ import com.dodam.hotel.repository.interfaces.MUserRepository;
 import com.dodam.hotel.repository.interfaces.MembershipRepository;
 import com.dodam.hotel.repository.interfaces.PointRepository;
 import com.dodam.hotel.repository.interfaces.UserRepository;
+import com.dodam.hotel.repository.model.Membership;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.util.CreateRandomStr;
@@ -264,5 +265,12 @@ public class UserService {
 		}
 		return resultRow;
 	}
-
+	
+	// 멤버쉽 정보 조회
+	@Transactional
+	public Membership readMembershipInfo() {
+		Membership membership = membershipRepository.findMembership();
+		return membership;
+	}
+	
 }

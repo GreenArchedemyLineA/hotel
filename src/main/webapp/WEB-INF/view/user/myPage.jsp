@@ -63,7 +63,7 @@
 						</div>
 						<input class="sub--button" type="submit" value="정보 수정">
 					</form>
-						<button class="sub-button" onclick="withdrawUser('${responseUser.email}')">회원 탈퇴</button>
+						<button class="sub-button" onclick="withdrawUser('${responseUser.email}')" style="margin-left: 42px;">회원 탈퇴</button>
 				</div>
 			</div>
 		</div>
@@ -90,4 +90,3 @@
 			}
 		}
 	</script>
-<%@ include file="../layout/footer.jsp"%>

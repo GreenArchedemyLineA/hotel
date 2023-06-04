@@ -40,7 +40,7 @@
  	display: flex;
  	flex-direction: column;
  	justify-content: center;
- 	background-color: #64c5f3;
+ 	background-color: #84C9FF;
  	padding: 10px;
  }
  .person--box {
@@ -204,5 +204,4 @@
 	  });
 	</script>
 
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>
