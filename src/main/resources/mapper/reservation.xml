@@ -47,6 +47,10 @@
 		<result column="r_created_at" property="createdAt" />
 		<result column="r_total_price" property="totalPrice" />
 		<result column="r_pay_tid" property="payTid" />
+		<result column="r_fitness_id" property="fitnessId" />
+		<result column="r_pool_id" property="poolId" />
+		<result column="r_spa_id" property="spaId" />
+		<result column="r_dining_id" property="diningId" />
 		<collection property="user" resultMap="User"></collection>
 		<collection property="room" resultMap="Room"></collection>
 		<collection property="dining" resultMap="Dining"></collection>
@@ -218,6 +222,10 @@
 			r.created_at as r_created_at,
 			r.total_price as r_total_price,
 			r.pay_tid as r_pay_tid,
+			r.fitness_id as r_fitness_id,
+				r.spa_id as r_spa_id,
+				r.pool_id as r_pool_id,
+				r.dining_id as r_dining_id,
 			
 			ro.id as room_id,
 			ro.availability as room_availability,
