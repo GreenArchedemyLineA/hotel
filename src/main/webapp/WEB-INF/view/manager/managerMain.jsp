@@ -3,24 +3,21 @@
 <%@ include file="../layout/managerHeader.jsp"%>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!-- Full Calendar -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.print.min.css" rel="stylesheet" media="print">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.print.min.css"
+	rel="stylesheet" media="print">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
 <!-- fullcalendar 언어 CDN -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
 <style>
-.content {
-	background-image: url("http://localhost:8080/images/mainImage.jpg");
-	background-repeat: no-repeat;
-	background-size: cover;
-	width: 100%;
-	opacity: 0.4;
-}
-
 #date {
 	font-size: 40px;
 	width: 100%;
@@ -34,6 +31,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	position: relative; /* 추가 */
 }
 
 .content--container {
@@ -59,9 +57,10 @@
 }
 
 .content--box {
-	background-color: #ebebeb;
+	background-color: #fff;
 	margin: 10px;
 	padding: 10px;
+	opacity: 0.9;
 }
 
 #question--box {
@@ -117,8 +116,23 @@
 .date--box {
 	height: 500px;
 }
+
 a:hover {
 	text-decoration: none;
+}
+
+.main--container::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url("http://localhost:8080/images/mainImage.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	opacity: 0.4;
+	z-index: -1;
 }
 </style>
 <div class="main--container">
@@ -127,6 +141,7 @@ a:hover {
 		<div class="left--content">
 			<div class="content--box" id="reserve">
 				<b class="title--box">예약</b>
+				<div id="calender"></div>
 			</div>
 			<div class="content--box" id="revenue">
 				<b class="title--box">매출</b>
@@ -138,7 +153,7 @@ a:hover {
 				<b class="title--box">일정</b>
 				<div class="event--box">
 					<c:forEach items="${viewAll}" var="list">
-						<div id="title--box">${list.startDate}${list.title}</div>
+						<div id="title--box">${list.startDate}&nbsp&nbsp&nbsp${list.title}</div>
 					</c:forEach>
 				</div>
 			</div>
@@ -149,7 +164,8 @@ a:hover {
 					<c:when test="${question != 0}">
 						<span style="color: red; font-weight: bold;">new</span>
 						<div class="question--count">
-							<a href="/question/questionList">답변을 기다리는 문의가 ${question} 개 있습니다</a>
+							<a href="/question/questionList">답변을 기다리는 문의가 ${question} 개
+								있습니다</a>
 						</div>
 					</c:when>
 					<c:otherwise>
@@ -264,81 +280,122 @@ a:hover {
 	}
 
 	// 매출 차트
-	google.charts.load('current', { packages: ['corechart', 'bar'] });
+	google.charts.load('current', {
+		packages : [ 'corechart', 'bar' ]
+	});
 	google.charts.setOnLoadCallback(drawingChart);
-	
+
 	function drawingChart() {
-	  $.ajax({
-	    type: 'GET',
-	    url: '/api/totalPrice',
-        dataType: "json"
-	  })
-	  .done(function(response) {
-	    let totalPrice = response; // 매출 데이터를 서버에서 받아옴
-		console.log(totalPrice);
-		console.log(response);
-		let data = new google.visualization.DataTable();
-	    data.addColumn('date', 'Date');
-	    data.addColumn('number', 'Sales');
-	
-	    let chartData = [];
-	
-	    let today = new Date();
-	    today.setHours(0, 0, 0, 0);
-	    
-	    for (let i = 0; i <= 6; i++) {
-	    	let date = new Date(today);
-	      date.setDate(date.getDate() - i);
-	
-	      let revenue = i < totalPrice.length ? totalPrice[totalPrice.length - 1 - i] : 0;
-	
-	      chartData.push([date, revenue]);
-	    }
-	
-	    data.addRows(chartData);
-	
-	    let options = {
-	      title: 'Sales by Date',
-	      hAxis: {
-	        title: 'Date',
-	        format: 'yyyy-MM-dd', 
-	      },
-	      vAxis: {
-	        title: 'Sales',
-	      },
-	    };
-	
-	    let chart = new google.visualization.ColumnChart(document.getElementById('revenue--chart'));
-	
-	    chart.draw(data, options);
-	  })
-	  .fail(function(xhr, status, error) {
-	    console.log('Error:', error);
-	  });
+		$
+				.ajax({
+					type : 'GET',
+					url : '/api/totalPrice',
+					dataType : "json"
+				})
+				.done(
+						function(response) {
+							let totalPrice = response; // 매출 데이터를 서버에서 받아옴
+							console.log(totalPrice);
+							console.log(response);
+							let data = new google.visualization.DataTable();
+							data.addColumn('date', 'Date');
+							data.addColumn('number', 'Sales');
+
+							let chartData = [];
+
+							let today = new Date();
+							today.setHours(0, 0, 0, 0);
+
+							for (let i = 0; i <= 6; i++) {
+								let date = new Date(today);
+								date.setDate(date.getDate() - i);
+
+								let revenue = i < totalPrice.length ? totalPrice[totalPrice.length
+										- 1 - i]
+										: 0;
+
+								chartData.push([ date, revenue ]);
+							}
+
+							data.addRows(chartData);
+
+							let options = {
+								title : 'Sales by Date',
+								hAxis : {
+									title : 'Date',
+									format : 'yyyy-MM-dd',
+								},
+								vAxis : {
+									title : 'Sales',
+								},
+								colors : [ '#FED3A5' ],
+								animation : {
+									duration : 1000,
+									startup : true,
+								},
+								backgroundColor : {
+									fill : '#F6F6F7',
+								}
+							};
+
+							let chart = new google.visualization.ColumnChart(
+									document.getElementById('revenue--chart'));
+
+							chart.draw(data, options);
+						}).fail(function(xhr, status, error) {
+					console.log('Error:', error);
+				});
 	}
 
-
 	// 회원 차트
-	 google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+	google.charts.load('current', {
+		packages : [ 'corechart', 'bar' ]
+	});
+	google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
+	function drawChart() {
+		$.ajax({
+			type : 'GET',
+			url : '/api/joinCount',
+			dataType : "json"
+		}).done(
+				function(response) {
+					let memberCount = response.memberCount;
+					let membershipCount = response.membershipCount;
+					let data = new google.visualization.DataTable();
+					data.addColumn('string', 'Category');
+					data.addColumn('number', 'Count');
+					data.addRows([ [ '회원가입', 0 ], [ '멤버쉽 가입', 0 ] ]);
 
-    	  let data = google.visualization.arrayToDataTable([
-              ['Task', 'Hours per Day'],
-              ['회원 가입', ${userTodayCount}],
-              ['멤버쉽 가입', ${membershipTodayCount}]
-            ]);
+					data.setValue(0, 1, memberCount);
+					data.setValue(1, 1, membershipCount);
 
-    	  let options = {
-          title: '오늘 가입 회원'
-        };
+					let options = {
+						title : '오늘 회원가입 수와 멤버쉽 가입 수',
+						hAxis : {
+							title : 'Category',
+						},
+						vAxis : {
+							title : 'Count',
+						},
+						colors : [ '#FFF4B2', '#D6F8AC' ],
+						animation : {
+							duration : 1000,
+							startup : true,
+						},
+						backgroundColor : {
+							fill : '#F6F6F7',
+						}
+					};
 
-    	  let chart = new google.visualization.PieChart(document.getElementById('join--chart'));
+					let chart = new google.visualization.ColumnChart(document
+							.getElementById('join--chart'));
 
-        chart.draw(data, options);
-      }
-	
+					chart.draw(data, options);
+				}).fail(function(xhr, status, error) {
+			console.log('Error:', error);
+		});
+	}
+
 	// 예약 달력
-
 </script>

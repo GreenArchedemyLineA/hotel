@@ -1,8 +1,10 @@
 package com.dodam.hotel.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
-
+import java.util.ListIterator;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,11 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.dto.api.ResponseMsg;
 import com.dodam.hotel.repository.model.Coupon;
+import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Reply;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.CouponService;
 import com.dodam.hotel.service.ManagerReservationService;
+import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.QuestionService;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.UserService;
@@ -47,6 +51,9 @@ public class ApiController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ManagerService managerService;
 	
 	@Autowired
 	private CouponService couponService;
@@ -89,6 +96,21 @@ public class ApiController {
 	    price.add(totalPrice);
 	    return price;
 }
+	
+	// 회원가입 / 멤버쉽가입 카운트 조회
+	@GetMapping("/joinCount")
+	public List<Integer> joinCount() {
+		List<User> userToday = userService.readJoinUserToday();
+		Integer memberCount = userToday.size();
+		List<MembershipInfo> membershipToday = userService.readJoinMembershipToday();
+		Integer membershipCount = membershipToday.size();
+		
+		List<Integer> countBox = new ArrayList<>();
+		countBox.add(memberCount);
+		countBox.add(membershipCount);
+		
+		return countBox;
+	}
 	
 	// 아이디 중복검사(현우)
 	@GetMapping("/duplicationUser")

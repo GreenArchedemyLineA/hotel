@@ -1,11 +1,14 @@
 package com.dodam.hotel.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.hotel.dto.FacilitiesDto;
 import com.dodam.hotel.repository.interfaces.FacilitiesRepository;
+import com.dodam.hotel.repository.model.AllFacilities;
 import com.dodam.hotel.repository.model.Fitness;
 import com.dodam.hotel.repository.model.Pool;
 import com.dodam.hotel.repository.model.Spa;
@@ -51,18 +54,26 @@ public class FacilitiesService {
 	}
 	
 	// 부대시설 상태 조회
+	@Transactional
 	public int readPoolStatus() {
 		int resultRowCount = facilitiesRepository.findPoolStatus();
 		return resultRowCount;
 	}
-	
+	@Transactional
 	public int readSpaStatus() {
 		int resultRowCount = facilitiesRepository.findSpaStatus();
 		return resultRowCount;
 	}
-	
+	@Transactional
 	public int readFitnessStatus() {
 		int resultRowCount = facilitiesRepository.findFitnessStatus();
 		return resultRowCount;
+	}
+	
+	// 부대시설 전체 조회
+	@Transactional
+	public List<AllFacilities> readAllFacilities() {
+		List<AllFacilities> facilitiesList = facilitiesRepository.findAllFacilities();
+		return facilitiesList;
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.dodam.hotel.dto.FacilitiesDto;
+import com.dodam.hotel.repository.model.AllFacilities;
 import com.dodam.hotel.repository.model.Facilities;
 import com.dodam.hotel.repository.model.Fitness;
 import com.dodam.hotel.repository.model.Pool;
@@ -36,4 +37,6 @@ public interface FacilitiesRepository {
 	public int findSpaStatus();
 	public int findFitnessStatus();
 
+	// 부대시설 전체 조회 (매니저)
+	public List<AllFacilities> findAllFacilities();
 }

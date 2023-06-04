@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.hotel.repository.interfaces.DiningRepository;
+import com.dodam.hotel.repository.model.Dining;
 import com.dodam.hotel.repository.model.DiningDesc;
 
 @Service
@@ -19,6 +20,12 @@ public class DiningService {
 	public List<DiningDesc> readAllDining(String type) {
 		List<DiningDesc> diningDescEntitiys = diningRepository.findByTypeAllDining(type);
 		return diningDescEntitiys;
+	}
+	
+	@Transactional
+	public List<Dining> readAllDining() {
+		List<Dining> diningEntitiys = diningRepository.findAllDining();
+		return diningEntitiys;
 	}
 
 	// 레스토랑 상태 조회

@@ -64,7 +64,7 @@ li:hover {
 	margin-bottom: 10px;
 }
 
-#search--list, #reserve--list {
+#search--list, #reserve--list, #room--list {
 	display: none;
 	font-size: 15px;
 }
@@ -85,8 +85,16 @@ li:hover {
 		<nav>
 			<ul>
 				<li id="logo--li" onclick="location.href='/manager/managerMain'"><img alt="dodam" src="/images/admin_wlogo.png" width="250" height="50"></li>
-				<li id="room--li" onclick="location.href='/manager/roomStatus'">객실</li>
-				<li id="dining--li" onclick="location.href='/manager/dining'">다이닝</li>
+				
+				<li id="room--li">
+					<div>
+						<span id="search--room--wrap">시설</span>
+					</div>
+					<ul id="room--list">
+						<li id="room--li" onclick="location.href='/manager/roomStatus'">객실</li>
+						<li id="dining--li" onclick="location.href='/manager/facilities'">부대시설</li>
+					</ul>	
+				</li>
 				<li id="userList--li">
 					<div>
 						<span id="search--user--wrap">회원</span>
@@ -118,6 +126,10 @@ li:hover {
 		
 		$("#search--reserve--wrap").on("click", function() {
 			$("#reserve--list").slideToggle()
+		});
+		
+		$("#search--room--wrap").on("click", function() {
+			$("#room--list").slideToggle()
 		});
 	</script>
 	
