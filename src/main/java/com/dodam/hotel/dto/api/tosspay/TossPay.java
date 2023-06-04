@@ -61,4 +61,29 @@ public class TossPay implements PayInterface {
     public PayApproveRequest payApprove(String token) {
         return null;
     }
+
+    public TossResponse tossCancel(String tid, String totalPrice) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((TOSS_SECRET_KEY).getBytes()));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, Object> AuthenticationMap = new HashMap<>();
+        AuthenticationMap.put("cancelReason", "고객에 의한 환불");
+
+        HttpEntity<String> request = null;
+        try{
+            request = new HttpEntity<>(objectMapper.writeValueAsString(AuthenticationMap), headers);
+            ResponseEntity<TossResponse> responseEntity = restTemplate.postForEntity(
+                    "https://api.tosspayments.com/v1/payments/ " + tid + "/cancel",
+                    request,
+                    TossResponse.class
+            );
+            TossResponse tossResponse = responseEntity.getBody();
+            return tossResponse;
+        }catch (JsonProcessingException e){
+            throw  new RuntimeException(e);
+        }
+
+    }
+
 }

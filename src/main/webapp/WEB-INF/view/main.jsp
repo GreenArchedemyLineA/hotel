@@ -604,8 +604,11 @@ main {
 <div class="map--container">
 	<div id="map"></div>
 </div>
-
-
+<div>
+<p>소켓라인</p>
+<input type="text" id="message">
+<button onclick="ssss">ㅇㅇ</button>
+</div>
 <!-- 예약 달력 -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
@@ -634,4 +637,31 @@ main {
 		var marker = new naver.maps.Marker({position : new naver.maps.LatLng(35.1595148,129.0602424), map : map});
 </script>
 <script src="js/mainToggle.js"></script>
+<script type="text/javascript" src="/webjars/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script>
+
+// const ws = new SockJS("/chat");
+const ws = new SockJS("http://localhost:8080/chat");
+
+ws.onopen = function () {
+    let text = {
+        "hi": "hi"
+    }
+    ws.send(JSON.stringify(text));
+
+    // onmessage : message를 받았을 때의 callback
+    ws.onmessage = function (e) {
+        console.log(e)
+    }
+}
+
+function ssss(){
+    const message = document.getElementById("message")
+    const messageJSON = {
+        "type": "CHAT",
+        "msg": "message",
+    }
+    ws.send(JSON.stringify(messageJSON));
+}
+</script>
 <%@ include file="layout/footer.jsp"%>

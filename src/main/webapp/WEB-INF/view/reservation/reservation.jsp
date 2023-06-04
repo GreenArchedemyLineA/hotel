@@ -725,6 +725,7 @@ input[type="number"]::-webkit-inner-spin-button {
 		console.log(returnJSON)
 		if(returnJSON.status == "OK"){
 			let tidInputTag = document.createElement("input");
+			tidInputTag.type = "hidden";
 			tidInputTag.value = returnJSON.tid;
 			tidInputTag.name = "tid"
 			form.append(tidInputTag)

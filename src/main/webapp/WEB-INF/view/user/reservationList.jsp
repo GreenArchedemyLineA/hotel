@@ -39,7 +39,7 @@
 						<td>${list.totalPrice}</td>
 						<td>${list.createdAt}</td>
 						<td>
-						<form action="/pay/kakao/refund/${list.payTid}/${list.totalPrice}/${list.id}" method="post">
+						<form action="/pay/refund/${list.payTid}/${list.id}" method="post">
 							<button type="submit">환불/ 예약 취소</button>
 						</form>
 						<%-- <button onclick="deleteReservation(${list.payTid},${list.totalPrice})">환불/예약 취소</button> --%>

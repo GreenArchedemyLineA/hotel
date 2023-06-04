@@ -97,7 +97,7 @@ public class PayController {
                     .build();
 
             payService.createPay(dto);
-            return "redirect:/";
+            return "redirect:/pay/success?tid="+nicepayResultDto.getTid();
         }else{
             // 결제 실패 케이스 작성
             System.out.println(nicepayResultDto);
@@ -139,38 +139,6 @@ public class PayController {
 
 //        return "redirect:/pay/success";
     }
-
-    //결제 취소후 에약취소처리까
-    @PostMapping("/kakao/refund/{tid}/{totalPrice}/{reservationId}")
-    public String kakaoPayRefund(@PathVariable("tid") String tid,@PathVariable("totalPrice") String totalPrice
-    		,@PathVariable("reservationId") Integer reservationId) {
-    	UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-    	KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid,totalPrice);
-    	if(kakaoCancelResponse == null) {
-    		System.out.println("결제실패됨");
-    		return null;
-    	}else if(kakaoCancelResponse != null) {
-    		payService.refundPay(reservationId, user.getId());
-    	}
-        return "redirect:/myReservations";
-    }
-    
-    @PostMapping("/refund/{tid}/{reservationId}")
-    public String payRefund(@PathVariable("tid") String tid
-            ,@PathVariable("reservationId") Integer reservationId) {
-        UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-        Pay payType = payService.searchType(tid);
-
-        if(payType.getPgType().equals("KAKAO")) {
-            KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid,String.valueOf(payType.getPrice()));
-        }else if(payType.getPgType().equals("TOSS")) {
-
-        }else if (payType.getPgType().equals("NICEPAY")) {
-            nicePay.requestCancel(tid, String.valueOf(payType.getPrice()));
-        }
-        payService.refundPay(reservationId, user.getId());
-        return "redirect:/myReservations";
-    }
     // 토스결제 성공 시
     @GetMapping("/toss/success")
     public String tossSuccessController(TosspayRequest tosspayRequest){
@@ -191,8 +159,49 @@ public class PayController {
                 .build();
 
         payService.createPay(dto);
-        return "redirect:/";
+        return "redirect:/pay/success?tid="+tossResponse.getPaymentKey();
+    }
+    /***
+    // ------------------------------------------ 여기서 부터는 결제 취소 ---------------------------------------------------
+     ***/
+    //결제 취소후 에약취소처리까
+    @PostMapping("/kakao/refund/{tid}/{totalPrice}/{reservationId}")
+    public String kakaoPayRefund(@PathVariable("tid") String tid,@PathVariable("totalPrice") String totalPrice
+    		,@PathVariable("reservationId") Integer reservationId) {
+    	UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+    	KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid,totalPrice);
+    	if(kakaoCancelResponse == null) {
+    		System.out.println("결제실패됨");
+    		return null;
+    	}else if(kakaoCancelResponse != null) {
+    		payService.refundPay(reservationId, user.getId());
+    	}
+        return "redirect:/myReservations";
+    }
+    
+    @PostMapping("/refund/{tid}/{reservationId}")
+    public String payRefund(@PathVariable("tid") String tid
+            ,@PathVariable("reservationId") Integer reservationId) {
+
+        UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+        Pay payType = payService.searchType(tid);
+
+        // 총 결제
+        String totalPrice = String.valueOf(payType.getPrice());
+        // KAKAO결제 일 때
+        if(payType.getPgType() == PGType.KAKAO) {
+            KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid, totalPrice);
+        }
+        // TOSS결제 일 때
+        else if(payType.getPgType() == PGType.TOSS) {
+            tossPay.tossCancel(tid, totalPrice);
+        }
+        // NICEPAY 결제
+        else if (payType.getPgType() == PGType.NICEPAY) {
+            nicePay.requestCancel(tid, totalPrice);
+        }
+        payService.refundPay(reservationId, user.getId());
+        return "redirect:/myReservations";
     }
 
-    // 후 코드 잘못짠듯..? 더 리팩토링 필요..
 }
