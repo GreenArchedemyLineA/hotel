@@ -157,16 +157,19 @@ public class PayController {
     
     @PostMapping("/refund/{tid}/{reservationId}")
     public String payRefund(@PathVariable("tid") String tid
-    		,@PathVariable("reservationId") Integer reservationId) {
-    	Pay payType = payService.searchType(tid);
-    	
-    	if(payType.getPgType().equals("KAKAO")) {
-    		KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid,String.valueOf(payType.getPrice()));
-    		if(kakaoCancelResponse == null){
-    			
-    		}
-    	}
-    	return "redirect:/myReservations";
+            ,@PathVariable("reservationId") Integer reservationId) {
+        UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+        Pay payType = payService.searchType(tid);
+
+        if(payType.getPgType().equals("KAKAO")) {
+            KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid,String.valueOf(payType.getPrice()));
+        }else if(payType.getPgType().equals("TOSS")) {
+
+        }else if (payType.getPgType().equals("NICEPAY")) {
+            nicePay.requestCancel(tid, String.valueOf(payType.getPrice()));
+        }
+        payService.refundPay(reservationId, user.getId());
+        return "redirect:/myReservations";
     }
     // 토스결제 성공 시
     @GetMapping("/toss/success")
