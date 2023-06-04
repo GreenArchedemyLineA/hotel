@@ -219,6 +219,11 @@ public class ReservationService {
 		
 		return resultRowCount;
 	}
+	
+	public Reservation findReservationByUserIdSuccessful(Integer userId) {
+		return reservationRepository.findReservationByUserIdSuccessful(userId);
+	}
+	
 	//객실 예약시 띄워줄 부대시설 상태값 서비스들
 	public List<Dining> diningStatus(){
 		return diningRepository.findAllDining();
