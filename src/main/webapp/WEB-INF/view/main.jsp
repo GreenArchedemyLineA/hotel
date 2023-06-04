@@ -1,22 +1,32 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzkxekb89f"></script>
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzkxekb89f"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@300;400&family=WindSong:wght@500&display=swap');
+@import
+	url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@300;400&family=WindSong:wght@500&display=swap')
+	;
 
 * {
 	margin: 0;
 	padding: 0;
 	font-family: 'Noto Sans KR', sans-serif;
 }
+
 body {
 	background-color: #f9f9f9;
 }
+
 .navi--bar--1 {
 	color: #fff;
 	font-size: 20px;
@@ -24,12 +34,14 @@ body {
 	padding-left: 30px;
 }
 
-.navi--bar--1 li a, .navi--bar--2 li a, .navi--bar--3 li a, .navi--bar--4 li a, .navi--bar--5 li a {
+.navi--bar--1 li a, .navi--bar--2 li a, .navi--bar--3 li a,
+	.navi--bar--4 li a, .navi--bar--5 li a {
 	color: #fff;
 	text-decoration: none;
 }
 
-.navi--bar--1 li, .navi--bar--2 li, .navi--bar--3 li, .navi--bar--4 li, .navi--bar--5 li {
+.navi--bar--1 li, .navi--bar--2 li, .navi--bar--3 li, .navi--bar--4 li,
+	.navi--bar--5 li {
 	list-style: none;
 }
 
@@ -191,7 +203,7 @@ body {
 	margin: 0 20px;
 	width: 120px;
 	background-color: #84C9FF;
-	font-size:18px;
+	font-size: 18px;
 	color: #fff;
 	border: none;
 	height: 50px;
@@ -324,6 +336,10 @@ main {
 	width: 300px;
 }
 
+#gift--box, #discount--box, #point--box {
+	opacity: 0;
+}
+
 .membership--container {
 	margin: 10px;
 	padding: 10px;
@@ -353,119 +369,134 @@ main {
 }
 
 /* 추가된거 */
-	.swiper {
-      width: 1450px;
-      height: 500px;
-    }
-    
-    .swiper > h4 {
-    	margin-left: 70px;
-    }
+.swiper {
+	width: 1450px;
+	height: 500px;
+}
 
-    .swiper-slide {
-      text-align: center;
-      font-size: 18px;
-      background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+.swiper>h4 {
+	margin-left: 70px;
+}
 
-    .swiper-slide img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-	
-	.bx-group {
-		display: flex;
-		flex-direction: row;
-	}
-	
-	.bx-group > div {
-		flex: 1;
-		rbga: 0 0 0 .2;
-		margin: 20px;
-	}
-	
-	.swiper-slide img {
-	    display: block;
-	    width: 1000px;
-	    height: 500px;
-	    object-fit: cover;
-	}
-	
-	.swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled {
-	    opacity: 0;
-	    cursor: auto;
-	    pointer-events: none;
-	}
-	
-	:root {
-    	--swiper-theme-color: #000;
-	}
-	
-	.map--container {
-		width: 100%;
-		background-color: #f9f9f9;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		height: 500px;
-		flex: 1;
-	}
-	
-	#map {
-		width: 100%;
-		height: 400px;
-	}
-	
-	.introduce--box {
-		display: flex;
-	}
-	
-	#pool{
-		background-image: url("http://localhost:8080/images/pool.jpg");
-		background-size: cover;
-		display: flex;
-		flex: 1;
-	}
-	
-	#spa {
-		background-image: url("http://localhost:8080/images/spa.jpg");
-		background-size: cover;
-		display: flex;
-		flex: 1;
-	}
-	
-	#fitness {
-		background-image: url("http://localhost:8080/images/fitness.jpg");
-		background-size: cover;
-		display: flex;
-		flex: 1;
-	}
-	
-	#pool > a, #spa > a, #fitness > a {
-		color: #fff;
-		font-size: 50px;
-		text-decoration: none;
-		margin-left: 15px;
-	}
-	
-	.fac--container {
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-	}
+.swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.swiper-slide img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.bx-group {
+	display: flex;
+	flex-direction: row;
+}
+
+.bx-group>div {
+	flex: 1;
+	rbga: 0 0 0 .2;
+	margin: 20px;
+}
+
+.swiper-slide img {
+	display: block;
+	width: 1000px;
+	height: 500px;
+	object-fit: cover;
+}
+
+.swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled
+	{
+	opacity: 0;
+	cursor: auto;
+	pointer-events: none;
+}
+
+:root {
+	--swiper-theme-color: #000;
+}
+
+.map--container {
+	width: 100%;
+	background-color: #f9f9f9;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 500px;
+	flex: 1;
+}
+
+#map {
+	width: 100%;
+	height: 400px;
+}
+
+.introduce--box {
+	display: flex;
+}
+
+#pool {
+	background-image: url("http://localhost:8080/images/pool.jpg");
+	background-size: cover;
+	display: flex;
+	flex: 1;
+}
+
+#spa {
+	background-image: url("http://localhost:8080/images/spa.jpg");
+	background-size: cover;
+	display: flex;
+	flex: 1;
+}
+
+#fitness {
+	background-image: url("http://localhost:8080/images/fitness.jpg");
+	background-size: cover;
+	display: flex;
+	flex: 1;
+	display: flex;
+}
+
+#pool>a, #spa>a, #fitness>a {
+	color: #fff;
+	font-size: 50px;
+	text-decoration: none;
+	margin-left: 15px;
+}
+
+.fac--container {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.greeting {
+	opacity: 0;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	font-weight: bold;
+	font-size: 70px;
+	height: 100%;
+	align-items: flex-end;
+	justify-content: center;
+}
 </style>
 
 
 <main>
 	<div id="header--wrap">
 		<div>
-			<img alt="로고 이미지" src="/images/dodam_wlogo.png" id="logo--image" width="400px" onclick="location.href='/'">
+			<img alt="로고 이미지" src="/images/dodam_wlogo.png" id="logo--image"
+				width="400px" onclick="location.href='/'">
 		</div>
 		<div id="header--nav--wrap">
 			<div id="nav--bar--wrap">
@@ -506,7 +537,8 @@ main {
 					<div id="navi--3--wrap">
 						<ul class="navi--bar--3">
 							<li>
-								<div class="toggle--wrap--reserve" id="reservation--toggle--wrap">
+								<div class="toggle--wrap--reserve"
+									id="reservation--toggle--wrap">
 									<p class="toggle--box--reserve">예약</p>
 									<p class="material-symbols-outlined down--icon">keyboard_arrow_down</p>
 								</div>
@@ -526,7 +558,8 @@ main {
 								</div>
 								<ul class="navi--bar--detail--qna">
 									<li><a href="/question/question">FAQ</a></li>
-									<li style="width: 100px;"><a href="/question/qnaPage">1:1 문의</a></li>
+									<li style="width: 100px;"><a href="/question/qnaPage">1:1
+											문의</a></li>
 									<li><a href="/event/eventBoard/onGoing">이벤트</a></li>
 								</ul>
 							</li>
@@ -537,26 +570,34 @@ main {
 					<ul class="symbol--box">
 						<c:choose>
 							<c:when test="${principal != null}">
-								<li><a href="/logout"><span class="material-symbols-outlined">logout</span></a></li>
+								<li><a href="/logout"><span
+										class="material-symbols-outlined">logout</span></a></li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="/login"><span class="material-symbols-outlined">login</span></a></li>
+								<li><a href="/login"><span
+										class="material-symbols-outlined">login</span></a></li>
 							</c:otherwise>
 						</c:choose>
 						<c:choose>
 							<c:when test="${principal != null}">
-								<li><a href="/myPage"><span class="material-symbols-outlined">person</span></a></li>
+								<li><a href="/myPage"><span
+										class="material-symbols-outlined">person</span></a></li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="/login"><span class="material-symbols-outlined">person</span></a></li>
+								<li><a href="/login"><span
+										class="material-symbols-outlined">person</span></a></li>
 							</c:otherwise>
 						</c:choose>
 
-						<li><a href="/membership"><span class="material-symbols-outlined">card_membership</span></a></li>
+						<li><a href="/membership"><span
+								class="material-symbols-outlined">card_membership</span></a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="greeting">
+		<span>뜨거운 올 여름</span> <span>도담이 함께합니다</span>
 	</div>
 </main>
 <div class="reserve--container">
@@ -569,7 +610,8 @@ main {
 				<td>유아</td>
 			</tr>
 			<tr id="reserve--second--tr">
-				<td><input class="dateSelector" id="input--box" placeholder="날짜를 선택하세요" name="date"></td>
+				<td><input class="dateSelector" id="input--box"
+					placeholder="날짜를 선택하세요" name="date"></td>
 				<td><select name="countPerson" class="select--box">
 						<option value="1">1</option>
 						<option value="2">2</option>
@@ -604,7 +646,8 @@ main {
 							</div>
 							<div class="event--main">
 								<div class="event--title">${list.title}</div>
-								<div class="event--date">${list.startDate} ~ ${list.endDate}</div>
+								<div class="event--date">${list.startDate}~
+									${list.endDate}</div>
 							</div>
 						</div>
 					</div>
@@ -634,14 +677,21 @@ main {
 			<p class="membership--desc">현금처럼 실용적으로 사용하세요</p>
 		</div>
 	</div>
-	<button type="button" onclick="location.href='/membership'" id="desc--btn">자세히 보기</button>
+	<button type="button" onclick="location.href='/membership'"
+		id="desc--btn">자세히 보기</button>
 </div>
 
 <div class="introduce--box">
 	<div class="fac--container">
-		<div id="pool"><a href="/pool">Pool</a></div>
-		<div id="spa"><a href="/spa">Spa</a></div>
-		<div id="fitness"><a href="/fitness">Fitness</a></div>
+		<div id="pool">
+			<a href="/pool">Pool</a>
+		</div>
+		<div id="spa">
+			<a href="/spa">Spa</a>
+		</div>
+		<div id="fitness">
+			<a href="/fitness">Fitness</a>
+		</div>
 	</div>
 	<div class="map--container">
 		<span style="margin-bottom: 20px;"><b>찾아오시는 길</b></span>
@@ -660,21 +710,44 @@ main {
 		minDate : "today",
 	});
 	let swiper = new Swiper(".mySwiper", {
-	      navigation: {
-	      	nextEl: ".swiper-button-next",
-	      	prevEl: ".swiper-button-prev",
-	    },
+		navigation : {
+			nextEl : ".swiper-button-next",
+			prevEl : ".swiper-button-prev",
+		},
+	});
+
+	var mapOptions = {
+		center : new naver.maps.LatLng(35.1595148, 129.0602424),
+		zoom : 17
+	};
+	var map = new naver.maps.Map('map', mapOptions);
+	var map = new naver.maps.Map(document.getElementById('map'), {
+		center : new naver.maps.LatLng(35.1595148, 129.0602424),
+		zoom : 17
+	});
+	var marker = new naver.maps.Marker({
+		position : new naver.maps.LatLng(35.1595148, 129.0602424),
+		map : map
 	});
 	
-		var mapOptions = {
-			center : new naver.maps.LatLng(35.1595148,
-					129.0602424),
-			zoom : 17
-		};
-		var map = new naver.maps.Map('map', mapOptions);
-		var map = new naver.maps.Map(document.getElementById('map'), 
-				{center : new naver.maps.LatLng(35.1595148, 129.0602424), zoom : 17});
-		var marker = new naver.maps.Marker({position : new naver.maps.LatLng(35.1595148,129.0602424), map : map});
+	// 메인 글씨
+	$(document).ready(function() {
+		$('.greeting').animate({
+			opacity : 1
+		}, 2000);
+	
+	// 멤버쉽 아이콘
+		$('#gift--box').animate({
+			opacity : 1
+		}, 1000);
+		$('#discount--box').animate({
+			opacity : 1
+		}, 2000);
+		$('#point--box').animate({
+			opacity : 1
+		}, 2000);
+			
+	});
 </script>
 <script src="js/mainToggle.js"></script>
 <%@ include file="layout/footer.jsp"%>
