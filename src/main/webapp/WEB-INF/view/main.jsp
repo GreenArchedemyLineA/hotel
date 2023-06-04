@@ -637,6 +637,9 @@ main {
 		var marker = new naver.maps.Marker({position : new naver.maps.LatLng(35.1595148,129.0602424), map : map});
 </script>
 <script src="js/mainToggle.js"></script>
+
+
+<!-- writer:이현서, web socket -->
 <script type="text/javascript" src="/webjars/sockjs-client/1.5.1/sockjs.min.js"></script>
 <script>
 
@@ -644,10 +647,11 @@ main {
 const ws = new SockJS("http://localhost:8080/chat");
 
 ws.onopen = function () {
-    let text = {
-        "hi": "hi"
+    const messageJSON = {
+        "type": "CHAT",
+        "msg": "message",
     }
-    ws.send(JSON.stringify(text));
+    ws.send(JSON.stringify(messageJSON));
 
     // onmessage : message를 받았을 때의 callback
     ws.onmessage = function (e) {
@@ -664,4 +668,5 @@ function ssss(){
     ws.send(JSON.stringify(messageJSON));
 }
 </script>
+<!-- ################################## -->
 <%@ include file="layout/footer.jsp"%>

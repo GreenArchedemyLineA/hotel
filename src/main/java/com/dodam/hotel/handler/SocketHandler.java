@@ -1,7 +1,9 @@
 package com.dodam.hotel.handler;
 
 import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.dto.socket.SocketMessageDto;
 import com.dodam.hotel.util.Define;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -24,8 +26,11 @@ public class SocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        String payload = message.getPayload();
+        System.out.println(payload);
+        ObjectMapper objectMapper = new ObjectMapper();
+        SocketMessageDto msg = objectMapper.readValue(payload, SocketMessageDto.class);
 
-        
-        System.out.println(message);
+        System.out.println(msg);
     }
 }
