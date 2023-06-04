@@ -64,7 +64,7 @@ li:hover {
 	margin-bottom: 10px;
 }
 
-#search--list {
+#search--list, #reserve--list {
 	display: none;
 	font-size: 15px;
 }
@@ -97,7 +97,15 @@ li:hover {
 						<li onclick="location.href='/manager/blackList'">블랙리스트 회원 조회</li>
 					</ul>	
 				</li>
-				<li id="reservation--li" onclick="location.href='/manager/reservation'">예약</li>
+				<li id="reservation--li">
+					<div>
+						<span id="search--reserve--wrap">예약</span>
+					</div>
+					<ul id="reserve--list">
+						<li onclick="location.href='/manager/reservation'">객실 예약</li>
+						<li onclick="location.href='/manager/dining'">다이닝 예약</li>
+					</ul>
+				</li>
 				<li id="event--li" onclick="location.href='/event/notice'">이벤트</li>
 				<li id="qna--li" onclick="location.href='/question/questionList'">문의 사항</li>
 				<li id="faq--li" onclick="location.href='/manager/faq'">FAQ</li>
@@ -106,6 +114,10 @@ li:hover {
 	<script type="text/javascript">
 		$("#search--user--wrap").on("click", function() {
 			$("#search--list").slideToggle()
+		});
+		
+		$("#search--reserve--wrap").on("click", function() {
+			$("#reserve--list").slideToggle()
 		});
 	</script>
 	

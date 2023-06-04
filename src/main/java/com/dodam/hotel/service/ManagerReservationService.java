@@ -64,9 +64,14 @@ public class ManagerReservationService {
 		return reservationList;
 	}
 	
-    public List<Reservation> findTodayAllReservation(){
-    	List<Reservation> reservationList = reservationRepository.findAllReservation();
+    public List<Reservation> findTodayReservation(){
+    	List<Reservation> reservationList = reservationRepository.findTodayReservation();
         return reservationList;
+    }
+    
+    public List<Reservation> findAllReservation(){
+    	List<Reservation> reservationList = reservationRepository.findAllReservation();
+    	return reservationList;
     }
 
 
@@ -104,11 +109,27 @@ public class ManagerReservationService {
 		int result = reservationRepository.deleteReservation(id);
 		return result;
 	}
-
-	public List<DiningReservation> findDiningReservationAllList(Date date) {
+	// 다이닝 날짜 조회
+	@Transactional
+	public List<DiningReservation> readDiningReservationAllLisByDate(Date date) {
 		List<DiningReservation> diningReservationList = reservationRepository.reservationFindDining(date);
 		return diningReservationList;
 	}
+	
+	// 다이닝 오늘 조회
+	@Transactional
+	public List<DiningReservation> readTodayDining() {
+		List<DiningReservation> diningReservationList = reservationRepository.findTodayDining();
+		return diningReservationList;
+	}
+	
+	// 다이닝 전체 조회
+	@Transactional
+	public List<DiningReservation> readAllDining() {
+		List<DiningReservation> diningReservationList = reservationRepository.findAllDining();
+		return diningReservationList;
+	}
+	
 
 	// 오늘 예약 매출 조회
 	@Transactional

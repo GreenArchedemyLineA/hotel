@@ -21,14 +21,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ManagerDiningController {
     @Autowired
     private ManagerReservationService managerReservationService;
-
+    
     @GetMapping("/dining")
-    public String testPage(Date date, Model model){
+    public String diningPage(Date date, Model model){
         List<DiningReservation> diningReservationList = null;
         if(date == null){
-            diningReservationList = managerReservationService.findDiningReservationAllList(new Date(System.currentTimeMillis()));
+            diningReservationList = managerReservationService.readDiningReservationAllLisByDate(new Date(System.currentTimeMillis()));
         }else{
-            diningReservationList = managerReservationService.findDiningReservationAllList(date);
+            diningReservationList = managerReservationService.readDiningReservationAllLisByDate(date);
         }
         AtomicInteger reservationNumberOfP = new AtomicInteger();
 
@@ -43,6 +43,17 @@ public class ManagerDiningController {
 
         return "/manager/checkDining";
     }
+    
+    @GetMapping("/allDining")
+    public String allDiningPage(Model model) {
+    	List<DiningReservation> diningReservationList = managerReservationService.readAllDining();
+    	 AtomicInteger reservationNumberOfP = new AtomicInteger();
+         model.addAttribute("totalReservationNumOfP", reservationNumberOfP);
+         model.addAttribute("diningList", diningReservationList);
+         
+         return "/manager/checkDining";
+    }
+    
 
 }
 

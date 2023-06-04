@@ -37,7 +37,7 @@
 	border: none;
 	color: #fff;
 	cursor: pointer;
-	width: 60px;
+	width: 100px;
 	height: 30px;
 }
 .button--box {
@@ -96,13 +96,13 @@
 </style>
 	<div class="content">
 		<div class="title--container">
-			<h2>예약 리스트</h2>
+			<h2>객실 예약 리스트</h2>
 		</div>
 		<div class="main--content">
 				<div class="search--buttons">
 					<div class="all--reserve">
-						<input type="button" name="roomStatus" style="margin-right: 8px;" value="전체 예약 보기">
-						<input type="button" name="roomStatus" style="margin-right: 8px;" value="다이닝 예약 보기">
+						<button onclick="location.href='/manager/reservation'" style="margin-right: 8px;" class="sub--button">오늘 예약 보기</button>
+						<button onclick="location.href='/manager/allReservation'" style="margin-right: 8px;" class="sub--button">전체 예약 보기</button>
 					</div>
 					<form class="form--box">
 						<input type="text" name="name" placeholder="예약자 이름을 입력하세요" class="input--box"/> 

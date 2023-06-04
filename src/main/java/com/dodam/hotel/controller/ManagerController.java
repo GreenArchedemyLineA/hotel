@@ -1,6 +1,5 @@
 package com.dodam.hotel.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -271,10 +270,7 @@ public class ManagerController {
 			rooms = managerService.findConditionsRoomList(statusParams);
 		}
 		model.addAttribute("roomList", rooms);
-		for (int i = 0; i < 16; i++) {
-			System.out.println(managerReservationService.findTodayAllReservation());
-		}
-		model.addAttribute("reservation", managerReservationService.findTodayAllReservation());
+		model.addAttribute("reservation", managerReservationService.findTodayReservation());
 		return "/manager/status";
 	}
 
