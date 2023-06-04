@@ -57,11 +57,13 @@
 
 #revenue {
 	width: 700px;
+	min-width: 700px;
 	margin-top: 40px;
 }
 
 #reserve {
 	width: 700px;
+	min-width: 700px;
 	height: 500px;
 }
 
@@ -253,7 +255,6 @@ a:hover {
 </div>
 </main>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script type="text/javascript"
@@ -290,7 +291,7 @@ a:hover {
 				})
 				.done(
 						function(response) {
-							let totalPrice = response; // 매출 데이터를 서버에서 받아옴
+							let totalPrice = response;
 							console.log(totalPrice);
 							console.log(response);
 							let data = new google.visualization.DataTable();
@@ -394,5 +395,40 @@ a:hover {
 	}
 
 	// 예약 달력
-	
+	 $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                defaultView: 'month',
+                editable: true,
+                eventColor: '#FFE3E5',
+                events: function(start, end, timezone, callback) {
+                    $.ajax({
+                        url: '/api/allReserve', 
+                        type: 'GET', 
+                    }).done(function(response) {
+                    	  let events = [];
+                          for (let i = 0; i < response.length; i++) {
+                              let reservation = response[i];
+                              let event = {
+                            	name: reservation.name, 
+                                  start: reservation.startDate,
+                                  end: reservation.endDate 
+                              };
+                              events.push(event);
+                          }
+                        callback(events); 
+                    }).fail(function(xhr, status, error) {
+                    	console.log('Error:', error);
+                    });
+                },
+                    eventRender: function(event, element) {
+						 element
+						 .find('.fc-title').html(event.name);
+                 }
+            });
+        });
 </script>

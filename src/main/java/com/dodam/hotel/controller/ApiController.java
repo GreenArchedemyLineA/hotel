@@ -97,7 +97,7 @@ public class ApiController {
 	    return price;
 }
 	
-	// 회원가입 / 멤버쉽가입 카운트 조회
+	// 회원가입 / 멤버쉽가입 카운트 조회 (성희)
 	@GetMapping("/joinCount")
 	public List<Integer> joinCount() {
 		List<User> userToday = userService.readJoinUserToday();
@@ -134,11 +134,17 @@ public class ApiController {
 		}
 	}
 	
-	// 예약조회
+	// 예약조회  (성희)
 	@GetMapping("/reserve")
 	public List<Reservation> reserveDetail(Integer id) {		
 			List<Reservation> reservations = reservationService.readAllReservationByUserId(id);
 			return reservations;
 		}
 	
+	// 예약 전체 조회
+	@GetMapping("/allReserve")
+	public List<Reservation> reservation() {
+		List<Reservation> reservations = managerReservationService.findAllReservation();
+		return reservations;
+	}
 } // end of class

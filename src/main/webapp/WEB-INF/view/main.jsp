@@ -597,7 +597,7 @@ main {
 		</div>
 	</div>
 	<div class="greeting">
-		<span>뜨거운 올 여름</span> <span>도담이 함께합니다</span>
+		<span>뜨거운 여름</span> <span>도담이 함께합니다</span>
 	</div>
 </main>
 <div class="reserve--container">

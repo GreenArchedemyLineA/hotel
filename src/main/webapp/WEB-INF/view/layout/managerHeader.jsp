@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzkxekb89f"></script>
 <meta charset="UTF-8">
 <title>Main Page</title>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
