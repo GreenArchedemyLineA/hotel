@@ -25,6 +25,7 @@
 	display: flex;
 	width: 100%;
 	justify-content: center;
+	background-color: #FBFBFC;
 }
 
 .event--box {
@@ -121,6 +122,9 @@ a:hover {
 	background-size: cover;
 	opacity: 0.4;
 	z-index: -1;
+}
+.fc-title{
+	color: #4A4B4B;
 }
 </style>
 <div class="main--container">
@@ -358,8 +362,12 @@ a:hover {
 			dataType : "json"
 		}).done(
 				function(response) {
-					let memberCount = response.memberCount;
-					let membershipCount = response.membershipCount;
+					console.log(response[0])
+					// let memberCount = response.memberCount;
+					// let membershipCount = response.membershipCount;
+					let memberCount = response[0]
+					let membershipCount = response[1]
+					/*
 					let data = new google.visualization.DataTable();
 					data.addColumn('string', 'Category');
 					data.addColumn('number', 'Count');
@@ -367,7 +375,7 @@ a:hover {
 
 					data.setValue(0, 1, memberCount);
 					data.setValue(1, 1, membershipCount);
-
+					*/
 					let options = {
 						title : '오늘 회원가입 수와 멤버쉽 가입 수',
 						hAxis : {
@@ -376,7 +384,7 @@ a:hover {
 						vAxis : {
 							title : 'Count',
 						},
-						colors : [ '#FFF4B2', '#D6F8AC' ],
+						
 						animation : {
 							duration : 1000,
 							startup : true,
@@ -385,7 +393,14 @@ a:hover {
 							fill : '#F6F6F7',
 						}
 					};
-
+					
+					let data = google.visualization.arrayToDataTable([
+				         ['Category', 'Count', { role: 'style' }],
+				         ['회원가입', memberCount, '#FED3A5'],         
+				         ['멤버쉽 가입', membershipCount, '#FF9E8B'],            
+				     ]);
+					
+					
 					let chart = new google.visualization.ColumnChart(document
 							.getElementById('join--chart'));
 
@@ -406,7 +421,7 @@ a:hover {
                 },
                 defaultView: 'month',
                 editable: true,
-                eventColor: '#FFE3E5',
+                eventColor: '#D2F2FC',
                 events: function(start, end, timezone, callback) {
                     $.ajax({
                         url: '/api/allReserve', 
@@ -416,7 +431,7 @@ a:hover {
                           for (let i = 0; i < response.length; i++) {
                               let reservation = response[i];
                               let event = {
-                            	  //title: reservation.user.name,
+                            	  title: reservation.user.name,
                                   start: reservation.startDate,
                                   end: reservation.endDate 
                               };

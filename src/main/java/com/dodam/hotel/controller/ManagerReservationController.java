@@ -43,22 +43,12 @@ public class ManagerReservationController {
     public String reservationList(String name, Model model){
         if(name == null || name.equals("")){
             List<Reservation> responseReservations = managerReservationService.readTodayReservation();
+            System.out.println(responseReservations);
             model.addAttribute("reservationList", responseReservations);
         }else{
             List<Reservation> responseReservations = managerReservationService.readUserReservation(name);
             model.addAttribute("reservationList", responseReservations);
         }
-        int totalPrice = managerReservationService.readBeforeTodayTotalPrice();
-        List<Integer> price = new ArrayList<>();
-        for(int i = 1; i < 7; i ++) {
-        	Integer beforetotalPrice = managerReservationService.readBeforeTotalPrice(i);
-        	if(beforetotalPrice == null) {
-        		beforetotalPrice = 0;
-        	}
-        	price.add(beforetotalPrice);
-        }
-        model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("price", price);
         return "/manager/reservation";
     }
 
