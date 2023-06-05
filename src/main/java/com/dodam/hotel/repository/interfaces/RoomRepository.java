@@ -48,15 +48,7 @@ public interface RoomRepository {
 
     // 모든 옵션 조건
     List<Room> findAllOptionRoomList(StatusParams statusParams);
-    /*
-    private String name;
-    private Integer price;
-    private Boolean availability;
-    private String description;
-    private String image;
-    private String status_desc;
-    private Integer number_of_p;
-     */
+
     int insertRoom(Room room);
     
     Room findById(Integer roomId);

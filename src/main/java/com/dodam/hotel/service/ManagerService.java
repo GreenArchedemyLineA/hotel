@@ -2,7 +2,6 @@ package com.dodam.hotel.service;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +16,6 @@ import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Room;
-import com.dodam.hotel.repository.model.RoomType;
 import com.dodam.hotel.util.PagingObj;
 
 @Service
@@ -51,12 +49,8 @@ public class ManagerService {
 		Integer price = statusParams.getPrice();
 		if(roomStatus == null) {
 			statusParams.setRoomStatus(false);
-		}
-		if(numberOfP == null){
-			statusParams.setNumberOfP(0);
-		}
-		if(price == null){
-			statusParams.setPrice(0);
+		}else{
+			statusParams.setRoomStatus(true);
 		}
 
 		List<Room> roomEntitys;
@@ -66,15 +60,15 @@ public class ManagerService {
 		// 3. 가격만 걸려있는경우
 		// where 조건 and 절 무조건 사용해야하는 조건 리스트(2&3개만 서치)
 		// 4. 방 & 수용 인원
-		if (roomStatus == null && numberOfP == null && price == null) {
+		if (roomStatus != null && numberOfP != null && price == null) {
 			roomEntitys = roomRepository.findOptionStatusAndNumberOfpRoomList(statusParams);
 		}
 		// 5. 방 & 가격
-		else if (roomStatus == null && numberOfP == null && price == null) {
+		else if (roomStatus != null && numberOfP == null && price != null) {
 			roomEntitys = roomRepository.findOptionStatusAndPriceRoomList(statusParams);
 		}
 		// 6. 수용인원 & 가격
-		else if (roomStatus == null && numberOfP == null && price == null) {
+		else if (roomStatus == null && numberOfP != null && price != null) {
 			roomEntitys = roomRepository.findOptionNumberOfpAndPriceRoomList(statusParams);
 		}
 		// 7. 전부 옵션이 걸려있는 경우

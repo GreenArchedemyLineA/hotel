@@ -2,11 +2,11 @@ package com.dodam.hotel.controller;
 
 import java.io.IOException;
 
-
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +29,10 @@ import com.dodam.hotel.dto.api.tosspay.TossPay;
 import com.dodam.hotel.dto.api.tosspay.TossResponse;
 import com.dodam.hotel.dto.api.tosspay.TosspayRequest;
 import com.dodam.hotel.enums.PGType;
+import com.dodam.hotel.handler.exception.CustomRestFullException;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.model.GradeInfo;
+import com.dodam.hotel.repository.model.Pay;
 import com.dodam.hotel.service.PayService;
 import com.dodam.hotel.util.Define;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -86,12 +88,12 @@ public class PayController {
                     .builder()
                     .payTid(nicepayResultDto.getTid())
                     .price(nicepayResultDto.getAmount().intValue())
-                    .pgType(PGType.KAKAO)
+                    .pgType(PGType.NICEPAY)
                     .grade(userGrade.getGrade().getName())
                     .build();
 
             payService.createPay(dto);
-            return "redirect:/";
+            return "redirect:/reservationSuccessful";
         }else{
             // 결제 실패 케이스 작성
             System.out.println(nicepayResultDto);
@@ -133,22 +135,6 @@ public class PayController {
 
 //        return "redirect:/pay/success";
     }
-
-    @PostMapping("/kakao/refund/{tid}/{totalPrice}/{reservationId}")
-    //@ResponseBody
-    public String kakaoPayRefund(@PathVariable("tid") String tid,@PathVariable("totalPrice") String totalPrice
-    		,@PathVariable("reservationId") Integer reservationId) {
-    	UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-    	KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid,totalPrice);
-    	if(kakaoCancelResponse == null) {
-    		System.out.println("결제실패됨");
-    		return null;
-    	}else if(kakaoCancelResponse != null) {
-    		payService.refundPay(reservationId, user.getId());
-    	}
-        return "redirect:/myReservations";
-    }
-    
     // 토스결제 성공 시
     @GetMapping("/toss/success")
     public String tossSuccessController(TosspayRequest tosspayRequest){
@@ -169,8 +155,48 @@ public class PayController {
                 .build();
 
         payService.createPay(dto);
-        return "redirect:/";
+        return "redirect:/pay/success?tid="+tossResponse.getPaymentKey();
+    }
+    /***
+    // ------------------------------------------ 여기서 부터는 결제 취소 ---------------------------------------------------
+     ***/
+    //결제 취소후 예약취소처리까
+    @PostMapping("/kakao/refund/{tid}/{totalPrice}/{reservationId}")
+    public String kakaoPayRefund(@PathVariable("tid") String tid,@PathVariable("totalPrice") String totalPrice
+    		,@PathVariable("reservationId") Integer reservationId) {
+    	UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+    	KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid,totalPrice);
+    	if(kakaoCancelResponse == null) {
+    		throw new CustomRestFullException("결제에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+    	}else if(kakaoCancelResponse != null) {
+    		payService.refundPay(reservationId, user.getId());
+    	}
+        return "redirect:/myReservations";
+    }
+    
+    @PostMapping("/refund/{tid}/{reservationId}")
+    public String payRefund(@PathVariable("tid") String tid
+            ,@PathVariable("reservationId") Integer reservationId) {
+
+        UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+        Pay payType = payService.searchType(tid);
+
+        // 총 결제
+        String totalPrice = String.valueOf(payType.getPrice());
+        // KAKAO결제 일 때
+        if(payType.getPgType() == PGType.KAKAO) {
+            KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid, totalPrice);
+        }
+        // TOSS결제 일 때
+        else if(payType.getPgType() == PGType.TOSS) {
+            tossPay.tossCancel(tid, totalPrice);
+        }
+        // NICEPAY 결제
+        else if (payType.getPgType() == PGType.NICEPAY) {
+            nicePay.requestCancel(tid, totalPrice);
+        }
+        payService.refundPay(reservationId, user.getId());
+        return "redirect:/myReservations";
     }
 
-    // 후 코드 잘못짠듯..? 더 리팩토링 필요..
 }

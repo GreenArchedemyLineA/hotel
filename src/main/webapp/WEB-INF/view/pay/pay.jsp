@@ -19,12 +19,6 @@
     // 2. 결제위젯 SDK 초기화
     const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS);
     const paymentMethods = paymentWidget.renderPaymentMethods('#payment-method', ${totalAmount});
-    // function uuidv4() {
-    //     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-    //         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-    //     );
-    // }
-	// Toss결제시 orderName에 상품이름 추가
     function tossPay(){
         paymentWidget.requestPayment({
             orderId: '${orderId}',
@@ -35,9 +29,6 @@
             window.close();
         })
     }
-<%--    <c:if test="${option eq 'nicepay'}">--%>
-<%--        nicePay();--%>
-<%--    </c:if>--%>
     <c:if test="${option eq 'toss'}">
         tossPay();
     </c:if>

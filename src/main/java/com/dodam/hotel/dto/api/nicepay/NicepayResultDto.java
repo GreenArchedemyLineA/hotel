@@ -34,8 +34,9 @@ public class NicepayResultDto implements PayReadyResponse {
     private String receiptUrl;
     private String mallUserId;
     private Boolean issuedCashReceipt;
-    private NicepayCoupon coupon;
 
+    // 명세 타입
+    private NicepayCoupon coupon;
     private NicepayCard card;
     private NicepayVBank vbank;
     private NicepayBank bank;

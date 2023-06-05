@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class NicePay implements PayInterface {
     private RestTemplate restTemplate = new RestTemplate();
@@ -57,5 +58,41 @@ public class NicePay implements PayInterface {
     @Override
     public PayApproveRequest payApprove(String pgToken) {
         return null;
+    }
+    
+    public  PayReadyResponse requestCancel(String tid,String amount){
+        NicepayResultDto paymentsOrder = findPayments(tid);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((NICE_PAY_CLIENT_ID + ":" + NICE_PAY_SECRET_KEY).getBytes()));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, Object> AuthenticationMap = new HashMap<>();
+        AuthenticationMap.put("reason", "고객에 의한 환불");
+        AuthenticationMap.put("orderId", paymentsOrder.getOrderId());
+
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(AuthenticationMap, headers);
+
+        ResponseEntity<NicepayResultDto> responseEntity = restTemplate.postForEntity(
+            "https://sandbox-api.nicepay.co.kr/v1/payments/"+ tid +"/cancel", request, NicepayResultDto.class);
+
+        NicepayResultDto nicepayResultDto = responseEntity.getBody();
+
+        return nicepayResultDto;
+    }
+
+    private NicepayResultDto findPayments(String tid){
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((NICE_PAY_CLIENT_ID + ":" + NICE_PAY_SECRET_KEY).getBytes()));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+
+        ResponseEntity<NicepayResultDto> responseEntity = restTemplate.getForEntity(
+                "https://sandbox-api.nicepay.co.kr/v1/payments/"+ tid
+                , NicepayResultDto.class
+        );
+        NicepayResultDto nicepayResultDto = responseEntity.getBody();
+
+        return nicepayResultDto;
     }
 }

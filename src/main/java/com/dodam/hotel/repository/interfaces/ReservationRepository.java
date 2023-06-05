@@ -30,6 +30,8 @@ public interface ReservationRepository {
 	// 객실 예약 (성희)
 	public int insertReserveRoom(ReservationRequestDto reservationRequestDto);
 
+	public Reservation findReservationByUserIdSuccessful(Integer userId);
+	
 	List<Reservation> findReservationByUserId(Integer userId);
 
 	List<Reservation> findTodayReservation();

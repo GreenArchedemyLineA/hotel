@@ -46,6 +46,10 @@
 		<result column="r_created_at" property="createdAt" />
 		<result column="r_total_price" property="totalPrice" />
 		<result column="r_pay_tid" property="payTid" />
+		<result column="r_fitness_id" property="fitnessId" />
+		<result column="r_pool_id" property="poolId" />
+		<result column="r_spa_id" property="spaId" />
+		<result column="r_dining_id" property="diningId" />
 		<collection property="user" resultMap="User"></collection>
 		<collection property="room" resultMap="Room"></collection>
 		<collection property="dining" resultMap="Dining"></collection>
@@ -187,7 +191,65 @@
 	<select id="findAllReservationByUserIdCount" resultType="int">
 		select count(*) from reservation_tb where user_id = #{userId}
 	</select>
-
+	<!-- 예약확인 -->
+	<select id="findReservationByUserIdSuccessful" resultMap="Reservation">
+		select
+			r.id as r_id,
+			r.start_date as r_start_date,
+			r.end_date as r_end_date,
+			r.number_of_p as r_number_of_p,
+			r.created_at as r_created_at,
+			r.total_price as r_total_price,
+			r.pay_tid as r_pay_tid,
+			r.fitness_id as r_fitness_id,
+				r.spa_id as r_spa_id,
+				r.pool_id as r_pool_id,
+				r.dining_id as r_dining_id,
+			
+			ro.id as room_id,
+			ro.availability as room_availability,
+			
+			rt.name as room_type_name,
+			rt.price as room_type_price,
+			rt.number_of_p as room_type_number_of_p,
+			
+			p.id as package_id,
+			p.name as package_name,
+			p.price as package_price,
+			
+			d.id as dining_id,
+			d.name as dining_name,
+			
+			s.id as spa_id,
+			s.price as spa_price,
+			
+			po.id as pool_id,
+			po.price as pool_pirce,
+			
+			u.id as user_id,
+			u.name as user_name
+			
+		from reservation_tb as r
+		left join user_tb as u
+		on r.user_id = u.id
+		left join room_tb as ro
+		on r.room_id = ro.id
+		left join dining_tb as d
+		on r.dining_id = d.id
+		left join package_tb as p
+		on r.package_id = p.id
+		left join fitness_tb as f
+		on r.fitness_id = f.id
+		left join pool_tb as po
+		on r.pool_id = po.id
+		left join spa_tb as s
+		on r.spa_id = s.id
+		left join room_type_tb as rt
+		on ro.room_type_id = rt.id
+		where r.user_id = #{userId}
+		order by r.created_at desc limit 1;
+	</select>
+	
 	<!-- 마이페이지 예약 정보 조회 -->
 	<select id="findAllReservationByUserId" resultMap="Reservation">
 		select

@@ -18,8 +18,8 @@
 		<result column="room_type_price" property="price" />
 		<result column="room_type_description" property="description" />
 		<result column="room_type_image" property="image" />
-		<result column="room_type_image2" property="image" />
-		<result column="room_type_image3" property="image" />
+		<result column="room_type_image2" property="image2" />
+		<result column="room_type_image3" property="image3" />
 		<result column="room_type_number_of_p" property="numberOfP" />
 	</resultMap>
 
@@ -176,43 +176,94 @@
         	on r.room_type_id = rt.id
         where 
         	r.availability = #{roomStatus}
-            and rt.number_of_p >= #{numberOfP}
-           	and rt.price >= #{price};
+            or rt.number_of_p >= #{numberOfP}
+           	or rt.price >= #{price};
 	</select>
 
 	<!-- writer: 이현서 hotfix -->
     <select id="findOptionStatusAndNumberOfpRoomList" resultMap="Room">
-        select *
+        select
+			r.id as room_id,
+			r.availability as room_availability,
+			r.status_desc as room_status_desc,
+			r.room_type_id as room_room_type_id,
+			rt.id as room_type_id,
+			rt.name as room_type_name,
+			rt.price as room_type_price,
+			rt.description as room_type_description,
+			rt.image as room_type_image,
+			rt.image2 as room_type_image2,
+			rt.image3 as room_type_image3,
+			rt.number_of_p as room_type_number_of_p
 		from room_tb as r
 			join room_type_tb as rt
 			on r.room_type_id = rt.id
-        where r.availability = #{roomStatus}
-          and rt.number_of_p = #{numberOfP};
+        where
+            r.availability = #{roomStatus}
+          	and rt.number_of_p >= #{numberOfP};
     </select>
     <select id="findOptionStatusAndPriceRoomList" resultMap="Room">
-		select *
+		select
+			r.id as room_id,
+			r.availability as room_availability,
+			r.status_desc as room_status_desc,
+			r.room_type_id as room_room_type_id,
+			rt.id as room_type_id,
+			rt.name as room_type_name,
+			rt.price as room_type_price,
+			rt.description as room_type_description,
+			rt.image as room_type_image,
+			rt.image2 as room_type_image2,
+			rt.image3 as room_type_image3,
+			rt.number_of_p as room_type_number_of_p
 		from room_tb as r
 			join room_type_tb as rt
 			on r.room_type_id = rt.id
-        where r.availability = #{roomStatus}
-          and rt.price = #{price};
+        where
+            r.availability = #{roomStatus}
+          	and rt.price >= #{price};
     </select>
     <select id="findOptionNumberOfpAndPriceRoomList" resultMap="Room">
-		select *
+		select
+			r.id as room_id,
+			r.availability as room_availability,
+			r.status_desc as room_status_desc,
+			r.room_type_id as room_room_type_id,
+			rt.id as room_type_id,
+			rt.name as room_type_name,
+			rt.price as room_type_price,
+			rt.description as room_type_description,
+			rt.image as room_type_image,
+			rt.image2 as room_type_image2,
+			rt.image3 as room_type_image3,
+			rt.number_of_p as room_type_number_of_p
 		from room_tb as r
 			join room_type_tb as rt
 			on r.room_type_id = rt.id
-        where rt.number_of_p = #{numberOfP}
-          and rt.price = #{price};
+        where
+            rt.number_of_p >= #{numberOfP}
+          	and rt.price >= #{price};
     </select>
     <select id="findAllOptionRoomList" resultMap="Room">
-		select *
+		select
+			r.id as room_id,
+			r.availability as room_availability,
+			r.status_desc as room_status_desc,
+			rt.id as room_type_id,
+			rt.name as room_type_name,
+			rt.price as room_type_price,
+			rt.description as room_type_description,
+			rt.image as room_type_image,
+			rt.image2 as room_type_image2,
+			rt.image3 as room_type_image3,
+			rt.number_of_p as room_type_number_of_p
 		from room_tb as r
 			join room_type_tb as rt
 			on r.room_type_id = rt.id
-        where r.availability = #{roomStatus}
-          and rt.number_of_p = #{numberOfP}
-          and rt.price = #{price};
+        where
+            r.availability = #{roomStatus}
+          	and rt.number_of_p >= #{numberOfP}
+          	and rt.price >= #{price};
     </select>
 
 

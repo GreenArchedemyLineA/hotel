@@ -1,7 +1,9 @@
 package com.dodam.hotel.repository.model;
 
 import java.sql.Date;
+
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -40,4 +42,9 @@ public class Reservation {
 		return formatDate;
 	}
     
+    public String formatPrice() {
+		DecimalFormat df = new DecimalFormat("###,###");
+		String formatNumber = df.format(totalPrice);
+		return formatNumber;
+	}
 }

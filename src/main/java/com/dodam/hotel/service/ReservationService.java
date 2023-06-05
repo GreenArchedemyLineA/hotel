@@ -2,6 +2,7 @@ package com.dodam.hotel.service;
 
 import java.util.HashMap;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -120,6 +121,7 @@ public class ReservationService {
 	// 객실 예약
 	@Transactional
 	public int createReserveRoom(ReservationRequestDto reservationRequestDto, Integer userId) {
+		System.out.println(reservationRequestDto);
 		// 부대시설 추가 신청 여부 처리
 		if (reservationRequestDto.getDiningCount() != 0) {
 			reservationRequestDto.setDiningId(1);
@@ -215,10 +217,14 @@ public class ReservationService {
 			}
 		} else {
 			// 예외처리 이메일 전송 실패
-			System.out.println("이메일 전송 실패");
+			throw new CustomRestFullException("이메일 전송 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		return resultRowCount;
+	}
+	
+	public Reservation findReservationByUserIdSuccessful(Integer userId) {
+		return reservationRepository.findReservationByUserIdSuccessful(userId);
 	}
 	
 	//객실 예약시 띄워줄 부대시설 상태값 서비스들

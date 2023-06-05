@@ -1,7 +1,6 @@
 package com.dodam.hotel.controller;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -21,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.ManagerSignInFormDto;
 import com.dodam.hotel.dto.StatusParams;
+import com.dodam.hotel.dto.socket.ChatRoom;
+import com.dodam.hotel.handler.SocketHandler;
 import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
+import com.dodam.hotel.repository.interfaces.ChatRepository;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
@@ -44,6 +45,11 @@ import com.dodam.hotel.util.PagingObj;
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {
+
+	// 일단은 수정 필요한 코드
+	@Autowired
+	private ChatRepository chatRepository;
+	private SocketHandler socketHandler = new SocketHandler(chatRepository);
 
 	@Autowired
 	private ManagerService managerService;
@@ -315,4 +321,16 @@ public class ManagerController {
 		return "redirect:/manager/";
 	}
 
+	@GetMapping("/chatRoomList")
+	public String chatRoomList(Model model){
+		List<ChatRoom> chatRoomList = socketHandler.viewAllRoom();
+		model.addAttribute("chatRoomList", chatRoomList);
+		return "/manager/chatRoomList";
+	}
+
+	@GetMapping("/chatRoom/{roomName}")
+	public String chatRoom(@PathVariable String roomName, Model model){
+		model.addAttribute("roomName", roomName);
+		return "/manager/chatRoom";
+	}
 }

@@ -97,7 +97,7 @@ public class KakaoPay implements PayInterface {
 	}
 
 	//환불
-	public KakaoCancelResponse kakaoCancel(String tid,String totalPrice) {
+	public KakaoCancelResponse kakaoCancel(String tid, String totalPrice) {
 		URI uri = UriComponentsBuilder.fromUriString("https://kapi.kakao.com").path("/v1/payment/cancel").encode()
 				.build().toUri();
 		

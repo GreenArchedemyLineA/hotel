@@ -1,8 +1,6 @@
 package com.dodam.hotel.controller;
 
 import java.util.List;
-
-
 import java.util.Map;
 import java.util.UUID;
 
@@ -19,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.handler.exception.CustomRestFullException;
+import com.dodam.hotel.repository.model.Pay;
 import com.dodam.hotel.repository.model.Reservation;
+import com.dodam.hotel.service.PayService;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.util.Define;
 import com.dodam.hotel.util.PagingObj;
@@ -36,6 +36,9 @@ public class ReservationController {
 	
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	private PayService payService;
 	
 	// 메인페이지 -> 예약버튼 처리 (성희)
 	@GetMapping("/reserve")
@@ -103,7 +106,18 @@ public class ReservationController {
 		}
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		reservationService.createReserveRoom(requestDto, principal.getId());
-		return "redirect:/";
+		return "redirect:/reservationSuccessful";
+	}
+	
+	//예약후 예약 정보 확인 페이지
+	@GetMapping("/reservationSuccessful")
+	public String reservationSuccessful(Model model) {
+		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+		Reservation reservationSuccessful = reservationService.findReservationByUserIdSuccessful(principal.getId());
+		model.addAttribute("successful", reservationSuccessful);
+		Pay payType = payService.searchType(reservationSuccessful.getPayTid());
+		model.addAttribute("payType", payType);
+		return "/reservation/reservationSuccessful";
 	}
 	
 	// 특정 유저 예약 현황 - 현우
