@@ -673,21 +673,6 @@ input[type="number"]::-webkit-inner-spin-button {
 	let orderNameValue = '${orderName}';
 	let totalPriceValue = document.getElementById("total--price--input").value;
 	let form = document.getElementById("reservation");
-	
-	function nicePay() {
-		AUTHNICE.requestPay({
-			clientId: 'S2_e9b9047ecf2a467b86a6c2311d47b9df',
-			method: 'card',
-			orderId: '${orderName}',
-			amount: totalPriceValue,
-			goodsName: '${orderName}',
-			returnUrl: 'http://localhost:8080/pay/payments',
-			fnError: function (result) {
-				alert(result.errorMsg)
-			}
-		});
-	}
-
 
 	
 	let e = window.event;
@@ -704,7 +689,13 @@ input[type="number"]::-webkit-inner-spin-button {
 		let popupOption = "width=800,height=800";
 		let url;
 		if(payType === "nicepay"){
-			nicePay();
+			url = "http://localhost:8080/pay/payReady?paySelect=nicepay&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
+			let returnPay = window.open(
+					url,
+					"popup",
+					popupOption
+			);
+			returnPay.focus();
 		}else if(payType === "kakaopay"){
 			url = "http://localhost:8080/pay/kakaopay?item_name="+ orderNameValue +"&total_amount=" +totalPriceValue
 			let returnPay = window.open(

@@ -7,6 +7,14 @@
 	margin: 0;
 	padding: 0;
 }
+.sub-button {
+	background-color: #ebebeb;
+	border: none;
+	width: 350px;
+	height: 40px;
+	margin: 20px;
+	cursor: pointer;
+}
 
 .main--container {
 	display: flex;
@@ -15,13 +23,6 @@
 #logo--image {
 	width: 180px;
 	cursor: pointer;
-}
-
-.title--container {
-	flex: 1;
-	background-color: #64c5f3;
-	height: 100%;
-	color: #fff;
 }
 
 .content--container {
@@ -69,12 +70,16 @@
 	margin: 10px;
 }
 
+.input--box:focus {
+	outline: none;
+}
+
 .sub--button {
 	background-color: black;
 	color: #fff;
 	width: 350px;
 	height: 40px;
-	margin: 20px;
+	margin: 20px 0 10px 0;
 	cursor: pointer;
 }
 

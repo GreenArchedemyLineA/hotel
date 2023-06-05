@@ -97,7 +97,7 @@ public class PayController {
 
             payService.createPay(dto);
             
-            return "redirect:/reservationSuccessful";
+            return "redirect:/pay/success?tid="+nicepayResultDto.getTid();
         }else{
             // 결제 실패 케이스 작성
             System.out.println(nicepayResultDto);

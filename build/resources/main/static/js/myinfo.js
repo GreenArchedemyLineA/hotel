@@ -15,7 +15,7 @@ class MyInfoJs {
 		this.buttonCoupons.addEventListener("click", this.createCouponListForm.bind(this));
 		this.buttonReservations.addEventListener("click", this.createReservationListForm.bind(this));
 		this.buttonQandA.addEventListener("click", this.createQnAListForm.bind(this));
-		
+
 
 	}
 
@@ -29,12 +29,11 @@ class MyInfoJs {
 		})
 			.then(async (response) => {
 				let data = await response.json(); // 결과 값
-				
 				const formTag = document.createElement("form");
 				formTag.className = "form--container";
 				formTag.action = "/myPageProc";
 				formTag.method = "POST";
-				
+
 				// 이메일
 				const emailSpanTag = document.createElement("span");
 				emailSpanTag.textContent = "이메일";
@@ -42,6 +41,7 @@ class MyInfoJs {
 				const divEmailTag = document.createElement("div");
 				const inputEmailTag = document.createElement("input");
 				inputEmailTag.className = "input--box";
+				inputEmailTag.setAttribute("readonly", "readonly");
 				inputEmailTag.name = "email";
 				inputEmailTag.type = "email";
 				inputEmailTag.readOnly = true;
@@ -55,11 +55,14 @@ class MyInfoJs {
 
 				const divPasswordTag = document.createElement("div");
 				const inputPasswordTag = document.createElement("input");
+				const keyCheckTag = document.createElement("div");
+				keyCheckTag.id = "key--check";
 				inputPasswordTag.className = "input--box";
 				inputPasswordTag.name = "password";
 				inputPasswordTag.type = "password";
 				divPasswordTag.append(passwordSpanTag);
 				divPasswordTag.append(inputPasswordTag);
+				divPasswordTag.append(keyCheckTag);
 				inputPasswordTag.value = data.password;
 
 				// 이름
@@ -84,6 +87,7 @@ class MyInfoJs {
 				inputGenderTag.className = "input--box";
 				inputGenderTag.name = "gender";
 				inputGenderTag.type = "text";
+				inputGenderTag.setAttribute("readonly", "readonly");
 				divGenderTag.append(genderSpanTag);
 				divGenderTag.append(inputGenderTag);
 				inputGenderTag.value = data.gender;
@@ -95,6 +99,7 @@ class MyInfoJs {
 				const divBirthTag = document.createElement("div");
 				const inputBirthTag = document.createElement("input");
 				inputBirthTag.className = "input--box";
+				inputBirthTag.setAttribute("readonly", "readonly");
 				inputBirthTag.name = "birth";
 				inputBirthTag.type = "text";
 				inputBirthTag.id = "text";
@@ -115,11 +120,11 @@ class MyInfoJs {
 				divTelTag.append(telSpanTag);
 				divTelTag.append(inputTelTag);
 				inputTelTag.value = data.tel;
-				
+
 				// 주소
 				const addressSpanTag = document.createElement("span");
 				addressSpanTag.textContent = "주소";
-				
+
 				const divAddressTag = document.createElement("div");
 				const inputAddressTag = document.createElement("input");
 				inputAddressTag.className = "input--box";
@@ -128,89 +133,52 @@ class MyInfoJs {
 				divAddressTag.append(addressSpanTag);
 				divAddressTag.append(inputAddressTag);
 				inputAddressTag.value = data.address;
-				
-				// input submit
-				const inputBtnTag = document.createElement("input");
-				inputBtnTag.className = "sub--button";
-				inputBtnTag.type = "submit";
-				inputBtnTag.value = "정보 수정";
 
+				// input submit
+				const updateBtnTag = document.createElement("input");
+				updateBtnTag.className = "sub--button";
+				updateBtnTag.id = "update--btn";
+				updateBtnTag.type = "button";
+				updateBtnTag.value = "정보 수정";
+
+				inputPasswordTag.addEventListener("keyup", function() {
+					let passwordBoxValue = inputPasswordTag.value;
+					if (passwordBoxValue.length < 6) {
+						keyCheckTag.textContent = "* 비밀번호는 6자리 이상이어야 합니다.";
+						keyCheckTag.style.color = "red";
+						keyCheckTag.style.fontSize = "14px";
+						updateBtnTag.type = "submit";
+					}
+				});
+				
+				const withdrawBtnTag = document.createElement("input");
+				withdrawBtnTag.className = "sub--button";
+				withdrawBtnTag.type = "button";
+				withdrawBtnTag.value = "회원 탈퇴";
+				withdrawBtnTag.setAttribute("onclick", `withdrawUser('${data.email}')`);
+				
 
 				const childNodeArray = [
-					divEmailTag, divPasswordTag, divNameTag, divGenderTag, divBirthTag, divAddressTag, divTelTag, inputBtnTag
+					divEmailTag, divPasswordTag, divNameTag, divGenderTag, divBirthTag, divAddressTag, divTelTag, updateBtnTag, withdrawBtnTag 
 				];
 
 				childNodeArray.forEach((node) => {
 					formTag.append(node);
 				});
-					this.userInfoDiv.append(formTag);
+				this.userInfoDiv.append(formTag);
 			});
 	};
 	createCouponListForm() {
 		while (this.userInfoDiv.firstChild) {
 			this.userInfoDiv.removeChild(this.userInfoDiv.firstChild);
 		};
-
-		fetch("/api/myCoupon", {
-			method: "GET"
-		}).then(async (response) => {
-			let data = await response.json();
-
-			// 세션 값 넘어감
-			/*const iframeTag = document.createElement("iframe");
-			iframeTag.setAttribute("src", "/myPage");
-			this.userInfoDiv.append(iframeTag);*/
-			/*this.buttonCoupons.textContent = `쿠폰함(${data.length})`;
-			this.buttonCoupons.textContent = `쿠폰함 (${data.length})`;
-			for (let i = 0; i < data.length; i++) {
-				const couponDivTag = document.createElement("div");
-				couponDivTag.className = "coupon--container";
-				
-				const colorDivTag = document.createElement("div");
-				colorDivTag.className = "color--container";
-				const imgTag = document.createElement("img");
-				imgTag.src = "/images/white_logo.png";
-				imgTag.width = "180";
-				imgTag.height = "50";
-				colorDivTag.append(imgTag);
-				
-				const couponInfoDivTag = document.createElement("div");
-				couponInfoDivTag.className = "coupon--info--container";
-				const nameDivTag = document.createElement("div");
-				nameDivTag.className = "coupon--name--container";
-				const contentDivTag = document.createElement("div");
-				contentDivTag.className = "coupon--content--container";
-				const dateDivTag = document.createElement("div");
-				dateDivTag.className = "coupon--date--container";
-				const startDateDivTag = document.createElement("div");
-				const endDateDivTag = document.createElement("div");
-
-				nameDivTag.textContent = data[i].couponInfo.name;
-				contentDivTag.textContent = data[i].couponInfo.content;
-				startDateDivTag.textContent = data[i].startDate;
-				nameDivTag.textContent = data[i].couponType.name;
-				contentDivTag.textContent = data[i].couponType.content;
-				startDateDivTag.textContent = "유효기간: " + data[i].startDate+" - ";
-				endDateDivTag.textContent = data[i].endDate;
-				
-
-				const childNodeArray = [colorDivTag, couponInfoDivTag];
-				childNodeArray.forEach((node) => {
-					couponDivTag.append(node);
-				});
-			};*/
-			
-			
-			const couponListPage = document.createElement("iframe");
-			couponListPage.src = "/couponList";
-			couponListPage.scrolling = "no";
-			couponListPage.width = "700px";
-			couponListPage.height = "500px";
-			couponListPage.frameBorder = "0";
-			this.userInfoDiv.append(couponListPage);
-				
-			}
-		);
+		const couponListPage = document.createElement("iframe");
+		couponListPage.src = "/couponList";
+		couponListPage.scrolling = "no";
+		couponListPage.width = "700px";
+		couponListPage.height = "500px";
+		couponListPage.frameBorder = "0";
+		this.userInfoDiv.append(couponListPage);
 	};
 
 	createReservationListForm() {
@@ -218,171 +186,28 @@ class MyInfoJs {
 			this.userInfoDiv.removeChild(this.userInfoDiv.firstChild);
 		};
 
-		fetch("/api/myReservation", {
-			method: "GET"
-		}).then(async (response) => {
-			let data = await response.json();
-			
-			const reservationListPage = document.createElement("iframe");
-			reservationListPage.src = "/myReservations";
-			reservationListPage.scrolling = "no";
-			reservationListPage.width = "1200px";
-			reservationListPage.height = "500px";
-			reservationListPage.frameBorder = "0";
-			this.userInfoDiv.append(reservationListPage);
-			/*const tableTag = document.createElement("table");
+		const reservationListPage = document.createElement("iframe");
+		reservationListPage.src = "/myReservations";
+		reservationListPage.scrolling = "no";
+		reservationListPage.width = "1200px";
+		reservationListPage.height = "500px";
+		reservationListPage.frameBorder = "0";
+		this.userInfoDiv.append(reservationListPage);
 
-			const tableTag = document.createElement("table");
-			tableTag.className = "table--container";
-			const reservationTrTag = document.createElement("tr");
-			reservationTrTag.id = "title--tr--container";
-			const titleStartDateTdTag = document.createElement("td");
-			const titleEndDateTdTag = document.createElement("td");
-			const titleRoomNameTdTag = document.createElement("td");
-			const titleNumberOfPTdTag = document.createElement("td");
-			const titleTotalPriceTdTag = document.createElement("td");
-			const titleCreatedAtTdTag = document.createElement("td");
-			titleStartDateTdTag.textContent = "체크인";
-			titleEndDateTdTag.textContent = "체크아웃";
-			titleRoomNameTdTag.textContent = "룸 / 패키지명";
-			titleNumberOfPTdTag.textContent = "인원";
-			titleTotalPriceTdTag.textContent = "금액";
-			titleCreatedAtTdTag.textContent = "결제일";
-			
-			
-			const childNodeArray2 = [titleStartDateTdTag, titleEndDateTdTag, titleRoomNameTdTag,
-				titleNumberOfPTdTag, titleTotalPriceTdTag, titleCreatedAtTdTag];
-
-			childNodeArray2.forEach((node) => {
-				reservationTrTag.append(node);
-			});
-			
-			tableTag.append(reservationTrTag);
-			
-			this.userInfoDiv.append(tableTag);
-			
-			for (let i = 0; i < data.length; i++) {
-				// 예약한 날짜 format
-				let createdAt = data[i].createdAt.split("T");
-				
-				const reservationTrTag = document.createElement("tr");
-				reservationTrTag.className = "table--tr--container";
-				const startDateTdTag = document.createElement("td");
-				const endDateTdTag = document.createElement("td");
-				const roomNameTdTag = document.createElement("td");
-				const numberOfPTdTag = document.createElement("td");
-				const totalPriceTdTag = document.createElement("td");
-				const createdAtTdTag = document.createElement("td");
-				if (data[i].room != null) {
-					startDateTdTag.textContent = data[i].startDate;
-					endDateTdTag.textContent = data[i].endDate;
-					roomNameTdTag.textContent = data[i].room.roomType.name;
-					numberOfPTdTag.textContent = data[i].numberOfP;
-					totalPriceTdTag.textContent = data[i].totalPrice;
-					createdAtTdTag.textContent = createdAt[0];
-				} else {
-					startDateTdTag.textContent = data[i].startDate;
-					endDateTdTag.textContent = data[i].endDate;
-					roomNameTdTag.textContent = data[i].h_package.name;
-					numberOfPTdTag.textContent = data[i].numberOfP;
-					totalPriceTdTag.textContent = data[i].totalPrice;
-					createdAtTdTag.textContent = createdAt[0];
-				}
-				
-				const childNodeArry = [startDateTdTag, endDateTdTag, roomNameTdTag,
-				numberOfPTdTag, totalPriceTdTag, createdAtTdTag];
-				
-				childNodeArry.forEach((node) => {
-					reservationTrTag.append(node);
-				});
-				
-				tableTag.append(reservationTrTag);
-				
-			};*/
-		});
 	};
-	
-		createQnAListForm() {
+
+	createQnAListForm() {
 		while (this.userInfoDiv.firstChild) {
 			this.userInfoDiv.removeChild(this.userInfoDiv.firstChild);
 		};
 
-		fetch("/api/myReply", {
-			method: "GET"
-		}).then(async (response) => {
-			let data = await response.json();
-			/*console.log(data);
-				const totalDivTag = document.createElement("div");
-				totalDivTag.className = "total--container";	
-			for(let i = 0; i < data.length; i++) {
-				let createdAt = data[i].question.createdAt.split("T");
-				const questionDivTag = document.createElement("div");
-				questionDivTag.className = "question--container";				
-				const titleContainerDivTag = document.createElement("div");
-				titleContainerDivTag.className = "titleToggle--container";
-				const titleDivTag = document.createElement("div");
-				titleDivTag.id = "qna--title--box";
-				const contentContainerDivTag = document.createElement("div");
-				contentContainerDivTag.className = "contentToggle--container";
-				const contentDivTag = document.createElement("div");
-				contentDivTag.id = "qna--content--box";
-				const replyContentDivTag = document.createElement("div");
-				replyContentDivTag.id = "qna--reply--box";
-				const createdAtDivTag = document.createElement("div");
-				const toggleButtonTag = document.createElement("span");
-				
-				titleDivTag.textContent = data[i].question.title;
-				contentDivTag.innerHTML = data[i].question.content;
-				contentDivTag.className = "hidden";
-				replyContentDivTag.textContent = "답변: " +data[i].content;	
-				replyContentDivTag.className = "hidden";
-				createdAtDivTag.textContent = createdAt[0];
-				toggleButtonTag.textContent = "expand_more";
-				toggleButtonTag.className = "material-symbols-outlined";
-				toggleButtonTag.id="toggle-button"
-				toggleButtonTag.setAttribute("id", "toggleBtn" + i);
-				
-				const childNodeArray = [questionDivTag];
-
-				childNodeArray.forEach((node) => {
-					totalDivTag.append(node);
-				});
-				
-				const childNodeArray1 = [titleContainerDivTag , contentContainerDivTag];
-
-				childNodeArray1.forEach((node) => {
-					questionDivTag.append(node);
-				});
-				
-				const childNodeArray2 = [createdAtDivTag, titleDivTag, toggleButtonTag];
-
-				childNodeArray2.forEach((node) => {
-					titleContainerDivTag.append(node);
-				});
-				
-				const childNodeArray3 = [contentDivTag, replyContentDivTag];
-
-				childNodeArray3.forEach((node) => {
-					contentContainerDivTag.append(node);
-				});
-				this.userInfoDiv.append(totalDivTag);
-				
-				
-				let el = document.getElementById("toggleBtn" + i);
-				
-				el.addEventListener('click', function() {
-					replyContentDivTag.classList.toggle('hidden');
-					contentDivTag.classList.toggle('hidden');
-				});
-			};*/
-			const replyListPage = document.createElement("iframe");
-			replyListPage.src = "/myReplys";
-			replyListPage.scrolling = "no";
-			replyListPage.width = "700px";
-			replyListPage.height = "500px";
-			replyListPage.frameBorder = "0";
-			this.userInfoDiv.append(replyListPage);
-		});
+		const replyListPage = document.createElement("iframe");
+		replyListPage.src = "/myReplys";
+		replyListPage.scrolling = "no";
+		replyListPage.width = "700px";
+		replyListPage.height = "500px";
+		replyListPage.frameBorder = "0";
+		this.userInfoDiv.append(replyListPage);
 	};
 }
 
@@ -473,5 +298,22 @@ class ReplyDto {
 		return JSON.stringify(object);
 	}
 }
+
+let passwordBox = document.getElementById("password--box");
+let checkKey = document.getElementById("key--check");
+let updateBtn = document.getElementById("update--btn");
+passwordBox.addEventListener("keyup", function() {
+	let passwordBoxValue = passwordBox.value;
+	if (passwordBoxValue.length < 6) {
+		checkKey.textContent = "* 비밀번호는 6자리 이상이어야 합니다.";
+		checkKey.style.color = "red";
+		checkKey.style.fontSize = "14px";
+	} else {
+		checkKey.textContent = "* OK!!";
+		checkKey.style.color = "blue";
+		checkKey.style.fontSize = "14px";
+		updateBtn.type = "submit";
+	}
+});
 
 new MyInfoJs();
