@@ -156,13 +156,13 @@ public class ReservationService {
 		// 다이아 일때 처리
 		Integer totalPrice = reservationRequestDto.getTotalPrice();
 		if(userGrade.getGrade().getId() == Grade.DIA.getGrade()){
-			pointRepository.insertPoint(Integer.valueOf((int) Math.round(totalPrice * 0.04)), userId);
+			pointRepository.insertPoint(Integer.valueOf((int) Math.round(totalPrice * 0.07)), userId);
 		}
 		if(userGrade.getGrade().getId() == Grade.GOLD.getGrade()){
 			pointRepository.insertPoint(Integer.valueOf((int) Math.round(totalPrice * 0.05)), userId);
 		}
 		if(userGrade.getGrade().getId() == Grade.BROWN.getGrade()){
-			pointRepository.insertPoint(Integer.valueOf((int) Math.round(totalPrice * 0.07)), userId);
+			pointRepository.insertPoint(Integer.valueOf((int) Math.round(totalPrice * 0.04)), userId);
 		}
 
 		Integer nowReservationCount = reservationRequestDto.getDay();
