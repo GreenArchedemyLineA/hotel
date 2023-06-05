@@ -137,9 +137,9 @@
 										<td>${reservation.numberOfP}</td>
 										<td>${reservation.room.id != null ? reservation.room.id : ""}${reservation.room != null ? "-" : ""}${reservation.room.roomType.name != null ?  reservation.room.roomType.name : "❌"}</td>
 										<td>${reservation.dining.name != null ? reservation.dining.name : "❌"}</td>
-										<td>${reservation.fitness.id != null ? "🔵" : "❌"}</td>
-										<td>${reservation.pool.id != null ? "🔵" : "❌"}</td>
-										<td>${reservation.spa.id != null ? "🔵" : "❌"}</td>
+										<td>${reservation.fitness.id != null ? "⚪": "❌"}</td>
+										<td>${reservation.pool.id != null ? "⚪" : "❌"}</td>
+										<td>${reservation.spa.id != null ? "⚪" : "❌"}</td>
 										<td><button onclick="deleteReservation(${reservation.id})" class="sub--button">취소</button></td>
 									</tr>
 								</c:forEach>

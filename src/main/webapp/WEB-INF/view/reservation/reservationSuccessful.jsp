@@ -5,23 +5,23 @@
 <link rel="stylesheet" href="/css/calender.css" />
 <link rel="stylesheet" href="/css/myPage.css" />
 <style type="text/css">
-.form--box {
+/* .form--box {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 700px;
-	width: 1200px;
+	width: 800px;
 	border: 2px solid #64c5f3;
 }
 .facilities--container {
 	display: flex;
 	flex: 1;
+	width: 800px;
 	flex-direction: column;
 	height: 100%;
 	justify-content: center;
 	padding: 10px;
-	border-right: 1px solid #ccc;
-	justify-content: space-around;
+	border: 1px solid #ccc;
 }
 .info--container {
 	display: flex;
@@ -236,13 +236,28 @@ header{
 	align-items: center;
 	font-size: 3em;
 }
+.reserve--box {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 20px;
+} */
+#logo {
+	width: 300px;
+	height: 50px;
+	opacity: 0.8;
+}
 </style>
 </head>
-<body>
+<body></body>
 	<div class="main--container">
 		<div class="facilities--container">
 			<div class="select--info">
-				<header>예약 내역</header>
+				<div class="reserve--box">
+					<img alt="" src="/images/dodam_logo.png" id="logo">
+					<h5>고객님의 예약이 완료되었습니다</h5>
+				</div>
 				<div class="facilities--info--box">
 					<div class="info--title">객실</div> 
 					<div class="info--content">${successful.room.roomType.name}</div>
@@ -257,12 +272,11 @@ header{
 						<div class="info--title">체크아웃</div>
 						<div class="info--content">${successful.endDate} 11:00</div>
 					</div>
-					<div id="day--count"></div>
 				</div>
 				
 				<div class="facilities--info--box">
 					<div class="info--title">투숙인원</div>
-					<div class="info--content">${successful.numberOfP} : 명</div>
+					<div class="info--content">${successful.numberOfP}명</div>
 				</div>
 			</div>
 		<div>
@@ -273,7 +287,7 @@ header{
 				<div class="facilities--detail--option">
 					<c:choose>
 						<c:when test="${successful.diningId != null}">
-							${successful.diningId} : 명
+							${successful.diningId} 명
 						</c:when>
 						<c:otherwise>
 						사용 안함
@@ -293,7 +307,7 @@ header{
 					 <div class="facilities--detail--option">
 					<c:choose>
 						<c:when test="${successful.spaId != null}">
-							${successful.spaId} : 명
+							${successful.spaId} 명
 						</c:when>
 						<c:otherwise>
 						사용 안함
@@ -313,7 +327,7 @@ header{
 				<div class="facilities--detail--option">
 					<c:choose>
 						<c:when test="${successful.fitnessId != null}">
-							${successful.fitnessId} : 명
+							${successful.fitnessId} 명
 						</c:when>
 						<c:otherwise>
 							사용 안함
@@ -328,7 +342,7 @@ header{
 				<div class="facilities--detail--option">
 					<c:choose>
 						<c:when test="${successful.spaId != null}">
-							${successful.spaId} : 명
+							${successful.spaId} 명
 						</c:when>
 						<c:otherwise>
 						사용 안함
@@ -337,9 +351,6 @@ header{
 				</div>
 				</div>
 			
-		</div>
-		</div>
-		
 		<div class="info--container">			
 			<div>
 				<fieldset>
@@ -351,6 +362,9 @@ header{
 			</div>
 			<button type="button" class="sub--button" onclick="main()">메인 으로</button>
 		</div>
+		</div>
+		</div>
+		
 	</div>
 
 <script type="text/javascript">
@@ -358,6 +372,5 @@ header{
 		location.href = "/"
 	}
 </script>
-<!-- <script src="/js/price.js"></script> -->
 <%@ include file="../layout/footer.jsp"%>
 

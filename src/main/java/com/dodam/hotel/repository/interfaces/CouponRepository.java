@@ -29,6 +29,6 @@ public interface CouponRepository {
 	// 특정 회원 쿠폰 조회(페이징)
 	public List<Coupon> findByUserIdPaging(@Param("obj") PagingObj obj, @Param("userId") Integer userId);
 
-	int deleteByUserIdandCouponInfoId(Integer userId, Integer couponId);
+	int deleteByUserIdandCouponInfoId(@Param("userId")Integer userId, @Param("couponId")Integer couponId);
 	
 }

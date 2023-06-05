@@ -1,6 +1,5 @@
 package com.dodam.hotel.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +42,6 @@ public class ManagerReservationController {
     public String reservationList(String name, Model model){
         if(name == null || name.equals("")){
             List<Reservation> responseReservations = managerReservationService.readTodayReservation();
-            System.out.println(responseReservations);
             model.addAttribute("reservationList", responseReservations);
         }else{
             List<Reservation> responseReservations = managerReservationService.readUserReservation(name);
