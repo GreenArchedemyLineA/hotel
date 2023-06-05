@@ -675,7 +675,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	let form = document.getElementById("reservation");
 	
 	function nicePay() {
-		let t = AUTHNICE.requestPay({
+		AUTHNICE.requestPay({
 			clientId: 'S2_e9b9047ecf2a467b86a6c2311d47b9df',
 			method: 'card',
 			orderId: '${orderName}',
@@ -686,7 +686,6 @@ input[type="number"]::-webkit-inner-spin-button {
 				alert(result.errorMsg)
 			}
 		});
-		console.log(t)
 	}
 
 
