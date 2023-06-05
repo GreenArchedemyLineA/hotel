@@ -56,4 +56,7 @@
 		where user_id = #{userId}
 	</update>
 	
+	<select id="findAllGrade" resultType="com.dodam.hotel.repository.model.Grade">
+		select * from grade_tb
+	</select>
 </mapper>

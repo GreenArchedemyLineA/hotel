@@ -14,6 +14,5 @@
 		from
 		    pay_tb
 		where pay_tid = #{tid};
-
 	</select>
 </mapper>
