@@ -2,34 +2,39 @@ package com.dodam.hotel.controller;
 
 import java.util.List;
 
-
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dodam.hotel.dto.InquiryRequestDto;
-import com.dodam.hotel.dto.TestDto;
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.dto.api.ResponseMsg;
+import com.dodam.hotel.handler.exception.CustomRestFullException;
 import com.dodam.hotel.repository.model.Coupon;
 import com.dodam.hotel.repository.model.Event;
+import com.dodam.hotel.repository.model.Grade;
 import com.dodam.hotel.repository.model.GradeInfo;
+import com.dodam.hotel.repository.model.Membership;
 import com.dodam.hotel.repository.model.Reply;
-import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.CouponService;
 import com.dodam.hotel.service.EventService;
 import com.dodam.hotel.service.GradeService;
 import com.dodam.hotel.service.QuestionService;
-import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.CreateRandomStr;
 import com.dodam.hotel.util.Define;
@@ -49,9 +54,6 @@ public class UserController {
 
 	@Autowired
 	private CouponService couponService;
-
-	@Autowired
-	private ReservationService reservationService;
 
 	@Autowired
 	private QuestionService questionService;
@@ -81,19 +83,24 @@ public class UserController {
 	public String myPage(Model model) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto) session
 				.getAttribute(Define.PRINCIPAL);
-		List<Coupon> coupons = couponService.readByUserId(principal.getId());
+		List<Coupon> responseCoupons = couponService.readByUserId(principal.getId());
 		// 등급 정보 불러오기
 		GradeInfo responseGrade = gradeService.readGradeByUserId(principal.getId());
 		// 회원 정보 불러오기
 		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
 		model.addAttribute("responseGrade", responseGrade);
-		model.addAttribute("coupons", coupons);
+		model.addAttribute("coupons", responseCoupons);
 		model.addAttribute("responseUser", responseUser);
 		return "/user/myPage";
 	}
 	// 로그인 기능 구현 (현우)
 	@PostMapping("/loginProc")
-	public String loginProc(UserRequestDto.LoginFormDto loginDto) {
+	public String loginProc(@Validated UserRequestDto.LoginFormDto loginDto, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new CustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
 		UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(loginDto);
 		session.setAttribute(Define.PRINCIPAL, principal);
 		session.setAttribute("tel", principal.getTel());
@@ -104,17 +111,24 @@ public class UserController {
 
 		return "redirect:/";
 	}
+	
+	@GetMapping("/changePw")
+	public String changePw() {
+		return "/user/changePw";
+	}
 
 	// 비밀번호 변경 페이지
 	@PostMapping("/changePwProc")
-	public String changePwProc(UserRequestDto.UpdatePwdDto pwdDto) {
+	public String changePwProc(@Validated UserRequestDto.UpdatePwdDto pwdDto, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new CustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
 		// 앞에서 비밀번호 확인 처리
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto) session
 				.getAttribute(Define.PRINCIPAL);
-		int resultRow = userService.updateOnlyPw(pwdDto.getChangePwd(), principal.getId());
-		if (resultRow != 1) {
-			System.out.println("변경 실패");
-		}
+		userService.updateOnlyPw(pwdDto.getChangePwd(), principal.getId());
 		return "redirect:/logout";
 	}
 
@@ -122,21 +136,25 @@ public class UserController {
 	@GetMapping("/logout")
 	public String logout() {
 		session.invalidate();
-		return "redirect:/login";
+		return "redirect:/";
 	}
 
 	// 회원정보 수정 처리 (김현우)
 	@PostMapping("/myPageProc")
-	public String myPageProc(UserRequestDto.MyPageFormDto myPageDto) {
+	public String myPageProc(@Validated UserRequestDto.MyPageFormDto myPageDto, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new CustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto) session
 				.getAttribute(Define.PRINCIPAL);
-		String address = myPageDto.getAddress() + " " + myPageDto.getDetailAddress();
-		myPageDto.setAddress(address);
-		User responseUser = userService.updateUser(myPageDto);
+		UserResponseDto.LoginResponseDto responseUser = userService.updateUser(myPageDto);
 
 		// 비밀번호 수정 시, DB 비밀번호랑 맞는지 확인 (암호화 처리 예정) - 다를경우 바뀐 비밀번호로 세팅
 		if (principal.getPassword() != responseUser.getPassword()) {
 			principal.setPassword(myPageDto.getPassword());
+			session.setAttribute(Define.PRINCIPAL, responseUser);
 		}
 
 		return "redirect:/myPage";
@@ -150,16 +168,54 @@ public class UserController {
 
 	// 회원가입 처리 (성희)
 	@PostMapping("/join")
-	public String join(UserRequestDto.InsertDto insertDto) {
+	public String join(@Validated UserRequestDto.InsertDto insertDto, BindingResult bindingResult) {
+		if(insertDto.getBirth() == null) {
+			throw new CustomRestFullException("생일을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new CustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
 		String address = insertDto.getAddress() + " " + insertDto.getDetailAddress();
 		insertDto.setAddress(address);
 		userService.createUser(insertDto);
 		return "redirect:/";
 	}
-
+	
+	// 회원 탈퇴 처리 (성희)
+	@DeleteMapping("/delete")
+	@ResponseBody
+	public ResponseMsg withdraw(String email) {
+		int result = userService.deleteUser(email);
+		if(result != 1) {
+			ResponseMsg failMsg = ResponseMsg.builder()
+					.status_code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+					.msg("다시 시도해주세요")
+					.redirect_uri("/myPage")
+					.build();
+			return failMsg;
+		} else {
+			ResponseMsg successMsg = ResponseMsg.builder()
+					.status_code(HttpStatus.OK.value())
+					.msg("탈퇴 처리 하였습니다. 감사합니다")
+					.redirect_uri("/logout")
+					.build();
+			return successMsg;
+		}
+	}
+	
 	// 카카오 회원가입 처리 (성희)
 	@PostMapping("/kakaoJoin")
-	public String kakaoJoin(UserRequestDto.InsertDto insertDto) {
+	public String kakaoJoin(@Validated UserRequestDto.InsertDto insertDto, BindingResult bindingResult) {
+		if(insertDto.getBirth() == null) {
+			throw new CustomRestFullException("생일을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new CustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
 		insertDto.setSocialLogin(true);
 		userService.createUserKakao(insertDto);
 		return "redirect:/";
@@ -167,7 +223,11 @@ public class UserController {
 
 	// 멤버쉽 페이지 (성희)
 	@GetMapping("/membership")
-	public String membershipPage() {
+	public String membershipPage(Model model) {
+		List<Grade> gradeList = gradeService.readAllGrade();
+		model.addAttribute("gradeList", gradeList);
+		Membership membership = userService.readMembershipInfo();
+		model.addAttribute("membership", membership);
 		return "/membership/membership";
 	}
 
@@ -187,22 +247,17 @@ public class UserController {
 		return "/user/inquiry";
 	}
 
-	@PostMapping("/test")
-	public String test(TestDto dto) {
-		System.out.println(dto.getUsername());
-		System.out.println(dto.getPassword());
-		System.out.println();
-		return "/";
-
-	}
-
-	public String managerLogin() {
-		return "";
-	}
-
 	// id 찾기 기능
 	@PostMapping("/idInquiry")
-	public String idInquiry(InquiryRequestDto.IdInquiryRequestDto idInquiryRequestDto, Model model) {
+	public String idInquiry(@Validated InquiryRequestDto.IdInquiryRequestDto idInquiryRequestDto, BindingResult bindingResult, Model model) {
+		if(idInquiryRequestDto.getBirth() == null) {
+			throw new CustomRestFullException("생일을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new CustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
 		User responseUser = userService.readUserForIdInquiry(idInquiryRequestDto);
 		model.addAttribute("responseUser", responseUser);
 		return "/user/idInquiryPage";
@@ -216,7 +271,16 @@ public class UserController {
 
 	// pw 찾기 기능
 	@PostMapping("/pwInquiry")
-	public String pwInquiry(InquiryRequestDto.PwInquiryRequestDto pwInquiryRequestDto) {
+	public String pwInquiry(@Validated InquiryRequestDto.PwInquiryRequestDto pwInquiryRequestDto, BindingResult bindingResult) {
+		if(pwInquiryRequestDto.getBirth() == null) {
+			throw new CustomRestFullException("생일을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new CustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
 		// 랜덤 비밀번호 생성
 		String randomStr = CreateRandomStr.createRandomString();
 
@@ -262,10 +326,9 @@ public class UserController {
 
 		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
-		List<Reply> questions = questionService.readQuestionByUserIdPaging(po, principal.getId());
-		System.out.println(questions);
+		List<Reply> responseQuestions = questionService.readQuestionByUserIdPaging(po, principal.getId());
 		model.addAttribute("paging", po);
-		model.addAttribute("questions", questions);
+		model.addAttribute("questions", responseQuestions);
 		return "/user/replyList";
 	}
 

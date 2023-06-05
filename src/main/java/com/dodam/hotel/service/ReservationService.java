@@ -1,6 +1,8 @@
 package com.dodam.hotel.service;
 
 import java.util.HashMap;
+
+
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.enums.CouponInfo;
 import com.dodam.hotel.enums.Grade;
+import com.dodam.hotel.handler.exception.CustomRestFullException;
 import com.dodam.hotel.repository.interfaces.CouponRepository;
 import com.dodam.hotel.repository.interfaces.DiningRepository;
 import com.dodam.hotel.repository.interfaces.FacilitiesRepository;
@@ -79,6 +83,7 @@ public class ReservationService {
 	}
 
 	// 특정 유저 모든 예약 정보 페이징
+	@Transactional
 	public List<Reservation> readAllResrevationByUserIdPaging(PagingObj obj, Integer userId) {
 		List<Reservation> reservationEntitys = reservationRepository.findAllReservationByUserIdPaging(obj, userId);
 		return reservationEntitys;
@@ -100,7 +105,7 @@ public class ReservationService {
 
 	// 객실 할인 체크
 	@Transactional
-	public Map<String, Object> useCouponOrPoint(ReservationRequestDto reservationRequestDto) {
+	public Map<String, Object> readAvailableCouponOrPoint(ReservationRequestDto reservationRequestDto) {
 		// 사용 가능 쿠폰 조회
 		List<Coupon> couponList = couponRepository.findByUserId(reservationRequestDto.getUserId());
 
@@ -116,6 +121,7 @@ public class ReservationService {
 	// 객실 예약
 	@Transactional
 	public int createReserveRoom(ReservationRequestDto reservationRequestDto, Integer userId) {
+		System.out.println(reservationRequestDto);
 		// 부대시설 추가 신청 여부 처리
 		if (reservationRequestDto.getDiningCount() != 0) {
 			reservationRequestDto.setDiningId(1);
@@ -161,23 +167,20 @@ public class ReservationService {
 
 		Integer nowReservationCount = reservationRequestDto.getDay();
 		count += nowReservationCount;
-		if (resultRowCount != 1) {
-			// 예외 처리
+		if(resultRowCount != 1) {
+			throw new CustomRestFullException("예약에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		} else {
 			if (count >= 5 && userGrade.getGrade().getId() < 3) {
 				// 골드 등급업 처리
 				gradeRepository.updateUserGrade(userId, Grade.DIA);
 				// 쿠폰 부여
-				couponRepository.insert(CouponInfo.DIA, userId);
-				couponRepository.insert(CouponInfo.DIA2, userId);
-				System.out.println("다이아 등급업 !!!");
+				couponRepository.insert(CouponInfo.DIA , userId);
+				couponRepository.insert(CouponInfo.DIA2 , userId);
 			} else if (count >= 2 && userGrade.getGrade().getId() < 2) {
 				// 다이아 등급업 처리
 				gradeRepository.updateUserGrade(userId, Grade.GOLD);
 				// 쿠폰 부여
-				couponRepository.insert(CouponInfo.GOLD, userId);
-				System.out.println("골드 등급업 !!!");
-
+				couponRepository.insert(CouponInfo.GOLD , userId);
 			}
 		}
 
@@ -214,7 +217,7 @@ public class ReservationService {
 			}
 		} else {
 			// 예외처리 이메일 전송 실패
-			System.out.println("이메일 전송 실패");
+			throw new CustomRestFullException("이메일 전송 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		return resultRowCount;
@@ -228,12 +231,15 @@ public class ReservationService {
 	public List<Dining> diningStatus(){
 		return diningRepository.findAllDining();
 	}
+	
 	public List<Spa> spaStatus(){
 		return facilitiesRepository.findByAllSpa();
 	}
+	
 	public List<Fitness> fitnessStatus(){
 		return facilitiesRepository.findByAllFitness();
 	}
+	
 	public List<Pool> poolStatus(){
 		return facilitiesRepository.findByAllPool();
 	}

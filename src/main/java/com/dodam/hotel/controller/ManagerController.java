@@ -5,14 +5,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import com.dodam.hotel.dto.socket.ChatRoom;
-import com.dodam.hotel.handler.SocketHandler;
-import com.dodam.hotel.repository.interfaces.ChatRepository;
-import com.dodam.hotel.util.Define;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,10 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.ManagerSignInFormDto;
 import com.dodam.hotel.dto.StatusParams;
+import com.dodam.hotel.dto.socket.ChatRoom;
+import com.dodam.hotel.handler.SocketHandler;
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
+import com.dodam.hotel.repository.interfaces.ChatRepository;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.MUser;
 import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.repository.model.MembershipInfo;
+import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.DiningService;
@@ -33,8 +36,10 @@ import com.dodam.hotel.service.FacilitiesService;
 import com.dodam.hotel.service.ManagerReservationService;
 import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.QuestionService;
+import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.RoomService;
 import com.dodam.hotel.service.UserService;
+import com.dodam.hotel.util.Define;
 import com.dodam.hotel.util.PagingObj;
 
 @Controller
@@ -64,6 +69,8 @@ public class ManagerController {
 	private FacilitiesService facilitiesService;
 	@Autowired
 	private ManagerReservationService managerReservationService;
+	@Autowired
+	private ReservationService reservationService;
 
 	@GetMapping("/managerPage")
 	public String managerPage() {
@@ -78,7 +85,7 @@ public class ManagerController {
 	
 	@GetMapping("/managerMain")
 	public String managerMain(Model model) {
-		model.addAttribute("viewAll", eventService.findByIdLimit());
+		model.addAttribute("event", eventService.readByIdLimit());
 		model.addAttribute("question", questionService.readQuestionCountByStatus0());
 		model.addAttribute("availableRoom", roomService.readRoomAvailableCount());
 		model.addAttribute("notAvailableRoom", roomService.readRoomNotAvailableCount());
@@ -88,15 +95,15 @@ public class ManagerController {
 		model.addAttribute("spa", facilitiesService.readSpaStatus());
 		model.addAttribute("fitness", facilitiesService.readFitnessStatus());
 
-		List<User> userToday = userService.readJoinUserToday();
-		int userTodayCount = userToday.size();
-		List<MembershipInfo> membershipToday = userService.readJoinMembershipToday();
-		int membershipTodayCount = membershipToday.size();
-		if (userToday != null) {
-			model.addAttribute("userTodayCount", userTodayCount);
+		List<User> todayJoinUser = userService.readJoinUserToday();
+		int todayJoinUserCount = todayJoinUser.size();
+		List<MembershipInfo> todayJoinMembership = userService.readJoinMembershipToday();
+		int todayJoinMembershipCount = todayJoinMembership.size();
+		if (todayJoinUser != null) {
+			model.addAttribute("userTodayCount", todayJoinUserCount);
 		}
-		if (membershipToday != null) {
-			model.addAttribute("membershipTodayCount", membershipTodayCount);
+		if (todayJoinMembership != null) {
+			model.addAttribute("membershipTodayCount", todayJoinMembershipCount);
 		}
 
 		int totalPrice = managerReservationService.readBeforeTodayTotalPrice();
@@ -107,7 +114,6 @@ public class ManagerController {
 				beforetotalPrice = 0;
 			}
 			price.add(beforetotalPrice);
-			System.out.println(beforetotalPrice);
 		}
 		model.addAttribute("totalPrice", totalPrice);
 		model.addAttribute("price", price);
@@ -123,23 +129,22 @@ public class ManagerController {
 
 	// 유저 리스트
 	@GetMapping("/userList")
-
 	public String mUserListAll(Model model
 			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
-			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage){
-		List<MUser> userList = managerService.managerUserListAll();
-		List<User> userToday = userService.readJoinUserToday();
-		int userTodayCount = userToday.size();
-		List<MembershipInfo> membershipToday = userService.readJoinMembershipToday();
-		int membershipTodayCount = membershipToday.size();
-		if (userList != null) {
-			model.addAttribute("userList", userList);
+			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage) {
+		List<MUser> responseUsers = managerService.readUserListAllForManager();
+		List<User> todayJoinUser = userService.readJoinUserToday();
+		int todayJoinUserCount = todayJoinUser.size();
+		List<MembershipInfo> todayJoinMembership = userService.readJoinMembershipToday();
+		int todayJoinMembershipCount = todayJoinMembership.size();
+		if (responseUsers != null) {
+			model.addAttribute("userList", responseUsers);
 		}
-		if (userToday != null) {
-			model.addAttribute("userTodayCount", userTodayCount);
+		if (todayJoinUser != null) {
+			model.addAttribute("userTodayCount", todayJoinUserCount);
 		}
-		if (membershipToday != null) {
-			model.addAttribute("membershipTodayCount", membershipTodayCount);
+		if (todayJoinMembership != null) {
+			model.addAttribute("membershipTodayCount", todayJoinMembershipCount);
 		}
 		int total = managerService.findByAllCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
@@ -150,35 +155,53 @@ public class ManagerController {
 
 	// 이름으로 유저 조회;
 	@GetMapping("/userNameList")
-	public String mUserList(String name,Model model
+	public String mUserList(String name, Model model
 			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage){
 		int total = managerService.findByNameCount(name);
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		List<MUser> userList = managerService.managerUserList(obj,name);
+		List<MUser> responseUsers = managerService.readUserByNameForManager(obj,name);
 		model.addAttribute("paging", obj);
-		model.addAttribute("viewAll", userList);
+		model.addAttribute("viewAll", responseUsers);
 		return "/manager/userList";
 	}
 
 	// 등급으로 유저 조회
 	@GetMapping("/userGradeList")
-
 	public String mUserGradeList(Integer gradeId, Model model
 			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage) {
 		int total = managerService.findByGradeAllCount(gradeId);
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		List<GradeInfo> userGradeList = managerService.managerUserGradeList(obj, gradeId);
-		if (userGradeList != null) {
-			model.addAttribute("userList", userGradeList);
+		List<GradeInfo> responseUserGrades = managerService.readUserGradeListForManager(obj, gradeId);
+		if (responseUserGrades != null) {
+			model.addAttribute("userList", responseUserGrades);
 		}
-		System.out.println("total: " + total);
 		model.addAttribute("paging", obj);
-		model.addAttribute("viewAll", userGradeList);
+		model.addAttribute("viewAll", responseUserGrades);
 		return "/manager/userGrade";
 	}
-
+	
+	// 회원 정보 상세 조회 or
+	@GetMapping("/userDetail/{id}")
+	public String userDetail(@PathVariable Integer id, Model model
+			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
+			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage) {
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
+		int total = reservationService.readAllReservationByUserIdCount(id);
+		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		List<Reservation> reservations = reservationService.readAllResrevationByUserIdPaging(obj, id);
+		GradeInfo userGradeDetail = managerService.readUserGrade(id);
+		if (userGradeDetail != null) {
+			model.addAttribute("userDetail", userGradeDetail);
+			model.addAttribute("paging", obj);
+			model.addAttribute("reservations", reservations);
+		}
+		return "/manager/userDetail";
+	}
+	
 	// 맴버쉽 회원 조회
 	@GetMapping("/membershipUserList")
 	public String membershipUserList(Model model
@@ -186,12 +209,12 @@ public class ManagerController {
 			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage) {
 		int total = managerService.findByMembershipAllCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		List<MembershipInfo> membershipUserList = managerService.findByMembershipUserList(obj);
-		if (membershipUserList != null) {
-			model.addAttribute("userList", membershipUserList);
+		List<MembershipInfo> responseMembershipUsers = managerService.readByMembershipUserList(obj);
+		if (responseMembershipUsers != null) {
+			model.addAttribute("userList", responseMembershipUsers);
 		}
 		model.addAttribute("paging", obj);
-		model.addAttribute("viewAll", membershipUserList);
+		model.addAttribute("viewAll", responseMembershipUsers);
 		return "/manager/membershipUserList";
 	}
 
@@ -202,7 +225,7 @@ public class ManagerController {
 			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage){
 		int total = managerService.findByBlackListCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		List<MUser> userBlackList =  managerService.managerUserBlackList(obj);
+		List<MUser> userBlackList =  managerService.readUserBlackListForManager(obj);
 		if (userBlackList != null) {
 			model.addAttribute("userList", userBlackList);
 		}
@@ -211,77 +234,44 @@ public class ManagerController {
 		return "/manager/userBlackList";
 	}
 
-	// 블랙리스트 탈퇴처리
-	@GetMapping("/userWithdrawal/{id}/{email}")
-	@Transactional
-	public String userWithdrawal(@PathVariable Integer id, @PathVariable String email) {
-
-		int userWithdrawal = managerService.userUpdateWithdrawal(id);
-		int userOriginEmail = managerService.userUpdateOriginEmail(email, id);
-		// 현우 쪽이랑 합친뒤 유틸 패키지에 있는 랜덤 문자 매서드 를 불러와서 이메일 뒤에 합쳐준다
-		int WithdrawalEmail = managerService.withdrawalEmail(email + "/", id);
-		return "redirect:/manager/blackList";
-	}
-
 	// 매니저 로그인
 	@PostMapping("/managerSignInProc")
-	public String managersign(ManagerSignInFormDto managerSignInFormDto) {
-
-		Manager principal = managerService.managerSign(managerSignInFormDto);
+	public String managersign(@Validated ManagerSignInFormDto managerSignInFormDto, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
+		Manager principal = managerService.managerSignIn(managerSignInFormDto);
 		if (principal != null) {
 			session.setAttribute(Define.MANAGERPRINCIPAL, principal);
 		}
-		return "/manager/managerMain";
+		return "redirect:/manager/managerMain";
 	}
-
-	/*
-	 * @GetMapping("/roomStatus") public String Check(StatusParams statusParams,
-	 * Model model,
-	 * 
-	 * @RequestParam(name = "nowPage", defaultValue = "1" , required = false) String
-	 * nowPage,
-	 * 
-	 * @RequestParam(name = "cntPerPage", defaultValue = "5" , required = false)
-	 * String cntPerPage) { List<Room> rooms; // 전체 조회 int total =
-	 * managerService.readAllRoomListCount(); PagingObj obj = new PagingObj(total,
-	 * Integer.parseInt(nowPage), Integer.parseInt(cntPerPage)); if
-	 * (statusParams.getRoomStatus() == null && statusParams.getPrice() == null &&
-	 * statusParams.getNumberOfP() == null) { rooms =
-	 * managerService.findAllRoomList(obj); } // 선택 조회(?? 변경 필요) else { // 페이징처리 안했음
-	 * rooms = managerService.findConditionsRoomList(statusParams); }
-	 * 
-	 * model.addAttribute("paging", obj); model.addAttribute("roomList", rooms);
-	 * return "/manager/status"; }
-	 */
 
 	@GetMapping("/roomStatus")
 	public String Check(StatusParams statusParams, Integer roomId, Model model) {
 		List<Room> rooms;
-		Room room = managerService.findByRoom(roomId);
+		Room room = managerService.readByRoom(roomId);
 		model.addAttribute("room", room);
 		// 전체 조회
-		int total = managerService.readAllRoomListCount();
 		if (statusParams.getRoomStatus() == null && statusParams.getPrice() == null
 				&& statusParams.getNumberOfP() == null) {
-			rooms = managerService.findAllRoomList();
+			rooms = managerService.readAllRoomList();
 		}
 		// 선택 조회(?? 변경 필요)
 		else {
-			// 페이징처리 안했음
-			rooms = managerService.findConditionsRoomList(statusParams);
+			rooms = managerService.readConditionsRoomList(statusParams);
 		}
-		rooms.stream().forEach(r->{
-			System.out.println(r);
-		});
 		model.addAttribute("roomList", rooms);
-		model.addAttribute("reservation", managerReservationService.findTodayAllReservation());
+		model.addAttribute("reservation", managerReservationService.readTodayReservation());
 		return "/manager/status";
 	}
 
 	// 객실 정보 상세 조회
 	@GetMapping("/roomStatusDetail")
 	public String RoomStatusDetail(Integer roomId, Model model) {
-		Room room = managerService.findByRoom(roomId);
+		Room room = managerService.readByRoom(roomId);
 		model.addAttribute("room", room);
 		return "/manager/roomDetailStatus";
 	}
@@ -289,38 +279,40 @@ public class ManagerController {
 	// 객실 사용가능 상태값 변경
 	@PostMapping("/roomStatus/{id}")
 	public String roomStatus(@PathVariable Integer id, Boolean availability) {
-		int roomStatus = roomService.RoomStatusTrueAndFalse(id, availability);
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
+		roomService.updateRoomStatusTrueAndFalse(id, availability);
 		return "redirect:/manager/roomStatus";
-	}
-
-	// 회원 정보 상세 조회 or
-	@GetMapping("/userDetail/{id}")
-	public String userDetail(@PathVariable Integer id, Model model) {
-		GradeInfo userGradeDetail = managerService.selectUserGrade(id);
-		if (userGradeDetail != null) {
-			model.addAttribute("userDetail", userGradeDetail);
-		}
-		return "/manager/userDetail";
 	}
 
 	// 블랙 리스트 지정
 	@GetMapping("/updateBlack/{id}")
 	public String updateBlackList(@PathVariable Integer id) {
-		int blackList = managerService.updateBlackList(id);
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
+		managerService.updateBlackList(id);
 		return "redirect:/manager/userDetail/{id}";
 	}
 
 	// 블랙 리스트 해제
 	@GetMapping("/updateWhite/{id}")
 	public String updateWhiteList(@PathVariable Integer id) {
-		int blackList = managerService.updateWhiteList(id);
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
+		managerService.updateWhiteList(id);
 		return "redirect:/manager/userDetail/{id}";
 	}
 
 	// 등급 수정
 	@PostMapping("/updateGrade/{id}")
 	public String updateGradeProc(@PathVariable Integer id, Integer gradeId) {
-		managerService.changeGradeByUserIdAndGradeId(gradeId, id);
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
+		managerService.updateGradeByUserIdAndGradeId(gradeId, id);
 		return "redirect:/manager/userDetail/" + id;
 	}
 

@@ -2,19 +2,20 @@ package com.dodam.hotel.repository.interfaces;
 
 import java.util.List;
 
+
 import org.apache.ibatis.annotations.Mapper;
 
-import com.dodam.hotel.dto.NoticeInsertForm;
+import com.dodam.hotel.dto.EventInsertForm;
 import com.dodam.hotel.repository.model.Event;
 import com.dodam.hotel.util.PagingObj;
 
 @Mapper
 public interface EventRepository {
 	
-	public int insert(NoticeInsertForm noticeInsertForm);
+	public int insert(EventInsertForm eventInsertForm);
 	public List<Event> findByAll();
 	public Event findById(Integer id);
-	public int updateEvent(NoticeInsertForm noticeInsertForm);
+	public int updateEvent(EventInsertForm eventInsertForm);
 	public int deleteById(Integer id);
 	
 	//공지사항 리스트 조회 페이징

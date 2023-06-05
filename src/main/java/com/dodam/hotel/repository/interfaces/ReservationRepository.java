@@ -34,6 +34,7 @@ public interface ReservationRepository {
 	
 	List<Reservation> findReservationByUserId(Integer userId);
 
+	List<Reservation> findTodayReservation();
 	List<Reservation> findAllReservation();
 
 	int updateReservation(Reservation reservation);
@@ -42,7 +43,9 @@ public interface ReservationRepository {
 
 	Reservation findReservationById(Integer id);
 
-	List<DiningReservation> reservationFindDining(Date date);
+	List<DiningReservation> findDiningReservation(Date date);
+	List<DiningReservation> findAllDining();
+	List<DiningReservation> findTodayDining();
 	
 	//예약시 부대시설 사용가능 조회 - 민우
 

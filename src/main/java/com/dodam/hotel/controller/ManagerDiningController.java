@@ -1,17 +1,23 @@
 package com.dodam.hotel.controller;
 
-import com.dodam.hotel.repository.model.DiningReservation;
+import java.sql.Date;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import com.dodam.hotel.service.ManagerReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.sql.Date;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.dodam.hotel.repository.model.Dining;
+import com.dodam.hotel.repository.model.DiningReservation;
+import com.dodam.hotel.repository.model.Fitness;
+import com.dodam.hotel.repository.model.Pool;
+import com.dodam.hotel.repository.model.Spa;
+import com.dodam.hotel.service.DiningService;
+import com.dodam.hotel.service.FacilitiesService;
+import com.dodam.hotel.service.ManagerReservationService;
 
 /**
  * @author lhs-devloper
@@ -21,29 +27,58 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ManagerDiningController {
     @Autowired
     private ManagerReservationService managerReservationService;
-
+    @Autowired
+    private FacilitiesService facilitiesService;
+    @Autowired
+    private DiningService diningService;
+    
     @GetMapping("/dining")
-    public String testPage(Date date, Model model){
-        List<DiningReservation> diningReservationList = null;
+    public String diningPage(Date date, Model model){
+        List<DiningReservation> responseDiningReservations = null;
         if(date == null){
-            diningReservationList = managerReservationService.findDiningReservationAllList(new Date(System.currentTimeMillis()));
+        	responseDiningReservations = managerReservationService.readDiningReservationAllLisByDate(new Date(System.currentTimeMillis()));
         }else{
-            diningReservationList = managerReservationService.findDiningReservationAllList(date);
+        	responseDiningReservations = managerReservationService.readDiningReservationAllLisByDate(date);
         }
         AtomicInteger reservationNumberOfP = new AtomicInteger();
 
-        diningReservationList.stream().forEach(
+        responseDiningReservations.stream().forEach(
                 (diningReservation) -> {
                     reservationNumberOfP.addAndGet(diningReservation.getNumberOfP());
                 }
         );
 
         model.addAttribute("totalReservationNumOfP", reservationNumberOfP);
-        model.addAttribute("diningList", diningReservationList);
+        model.addAttribute("diningList", responseDiningReservations);
 
         return "/manager/checkDining";
     }
-
+    
+    @GetMapping("/allDining")
+    public String allDiningPage(Model model) {
+    	List<DiningReservation> responseDiningReservations = managerReservationService.readAllDining();
+    	 AtomicInteger reservationNumberOfP = new AtomicInteger();
+         model.addAttribute("totalReservationNumOfP", reservationNumberOfP);
+         model.addAttribute("diningList", responseDiningReservations);
+         
+         return "/manager/checkDining";
+    }
+    
+    
+    // 부대시설 페이지
+    @GetMapping("/facilities")
+    public String facPage(Model model) {
+    	List<Dining> responseDinings = diningService.readAllDining();
+    	model.addAttribute("diningList", responseDinings);
+    	
+    	Pool responsePool = facilitiesService.readPoolAll();
+    	Spa responseSpa = facilitiesService.readSpaAll();
+    	Fitness responseFitness = facilitiesService.readFitnessAll();
+    	model.addAttribute("pool", responsePool);
+    	model.addAttribute("spa", responseSpa);
+    	model.addAttribute("fitness", responseFitness);
+    	return "/manager/facilities";
+    }
 }
 
 // 오전만 이용가능 조식(패키지예약) 조식관련된거 띄워야될거같음

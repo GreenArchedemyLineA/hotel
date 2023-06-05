@@ -68,7 +68,7 @@
 <body>
 	<div class="body--container">
 		<div class="navi--bar">
-			<span class="title--box"><a href="/dining">다이닝</a></span>
+			<span class="title--box"><a href="/dining">부대시설</a></span>
 				<div class="detail--container">
 					<c:choose>
 						<c:when test="${type eq '레스토랑'}">

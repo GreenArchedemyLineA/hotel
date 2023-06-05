@@ -65,7 +65,7 @@ a:hover {
 	position: absolute;
 	left: -20px;
 	z-index: 10000;
-	background-color: #ebebeb;
+	background-color: #F6F6F7;
 	width: 150px;
 }
 
@@ -91,7 +91,7 @@ a:hover {
 	display: none;
 	position: absolute;
 	left: -25px;
-	background-color: #ebebeb;
+	background-color: #F6F6F7;
 	z-index: 100000;
 	width: 150px;
 }
@@ -110,7 +110,7 @@ a:hover {
 	display: none;
 	position: absolute;
 	left: -27px;
-	background-color: #ebebeb;
+	background-color: #F6F6F7;
 	z-index: 100000;
 	width: 150px;
 }
@@ -129,7 +129,7 @@ a:hover {
 	display: none;
 	position: absolute;
 	right: 33px;
-	background-color: #ebebeb;
+	background-color:#F6F6F7;
 	z-index: 100000;
 	width: 150px;
 }

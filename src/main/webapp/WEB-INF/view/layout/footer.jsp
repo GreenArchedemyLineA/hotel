@@ -1,28 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <style>
-	footer {
-		width: 100%;
-		background-color: #f9f9f9;
-		margin-top: 180px;
-		padding: 30px;
-	}
+footer {
+	width: 100%;
+	background-color: #f9f9f9;
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100px;
+}
 </style>
-	
-	<footer>
-		<div>
-			<div>
-				(주) 도담호텔
-			</div>
-			<div>
-				04533, 서울특별시 중구 을지로 30 / +82-2-771-1000
-			</div>
-		</div>
-		<div>
-			대표이사 홍길동 /사업자 등록 번호 051-85-41201/
-		</div>
-		<div>
-			통신판매신고번호 중구02802호
-		</div>
-	</footer>
+
+<footer>
+	<div>
+		<b>(주) 도담호텔</b>
+	</div>
+	<div>47254, 부산 부산진구 중앙대로 749 +82-051-715-6224</div>
+	<div>+82-051-715-6224</div>
+</footer>
 </body>
 </html>

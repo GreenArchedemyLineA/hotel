@@ -1,33 +1,27 @@
 package com.dodam.hotel.service;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
 import com.dodam.hotel.repository.interfaces.DiningRepository;
-import com.dodam.hotel.repository.interfaces.FitnessRepository;
 import com.dodam.hotel.repository.interfaces.MUserRepository;
-import com.dodam.hotel.repository.interfaces.PackageRepository;
-import com.dodam.hotel.repository.interfaces.PoolRepository;
 import com.dodam.hotel.repository.interfaces.ReservationRepository;
 import com.dodam.hotel.repository.interfaces.RoomRepository;
-import com.dodam.hotel.repository.interfaces.SpaRepository;
 import com.dodam.hotel.repository.model.Dining;
 import com.dodam.hotel.repository.model.DiningReservation;
-import com.dodam.hotel.repository.model.Fitness;
 import com.dodam.hotel.repository.model.MUser;
-import com.dodam.hotel.repository.model.Pool;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.Room;
-import com.dodam.hotel.repository.model.Spa;
 
 /**
  * @author lhs-devloper
@@ -42,20 +36,12 @@ public class ManagerReservationService {
 	private MUserRepository mUserRepository;
 	@Autowired
 	private DiningRepository diningRepository;
-	@Autowired
-	private FitnessRepository fitnessRepository;
-	@Autowired
-	private PoolRepository poolRepository;
-	@Autowired
-	private SpaRepository spaRepository;
-	@Autowired
-	private PackageRepository packageRepository;
 
-	public List<Reservation> findUserReservation(String name) {
+	@Transactional
+	public List<Reservation> readUserReservation(String name) {
 		List<Reservation> reservationList = new ArrayList<>();
-		List<MUser> userList = mUserRepository.findByName(name);
-		System.out.println(userList);
-		userList.stream().forEach((user) -> {
+		List<MUser> userEntitys = mUserRepository.findByName(name);
+		userEntitys.stream().forEach((user) -> {
 			List<Reservation> reservationUserList = reservationRepository.findReservationByUserId(user.getId());
 			reservationUserList.forEach((reservation -> {
 				reservationList.add(reservation);
@@ -65,31 +51,27 @@ public class ManagerReservationService {
 		return reservationList;
 	}
 	
-    public List<Reservation> findTodayAllReservation(){
-    	List<Reservation> reservationList = reservationRepository.findAllReservation();
-        return reservationList;
+	@Transactional
+    public List<Reservation> readTodayReservation(){
+    	List<Reservation> reservationEntitys = reservationRepository.findTodayReservation();
+        return reservationEntitys;
     }
-
-
-	public Map<String, Object> findReservationById(Integer id) {
+	
+	@Transactional
+    public List<Reservation> readAllReservation(){
+    	List<Reservation> reservationEntitys = reservationRepository.findAllReservation();
+    	return reservationEntitys;
+    }
+    
+	@Transactional
+	public Map<String, Object> readReservationById(Integer id) {
 		Map<String, Object> mapList = new HashMap<>();
-		Reservation reservation = reservationRepository.findReservationById(id);
-		List<Room> roomList = roomRepository.findAllRoomList();
-		List<Dining> diningList = diningRepository.findAllDining();
-//        List<Fitness> fitnessList = fitnessRepository.findAllFitness();
-//        List<Spa> spaList = spaRepository.findAllSpa();
-//        List<Pool> poolList = poolRepository.findAllPool();
-//        
-		// Package에 관련된 테이블이 날라간 관계로 해당
-		// 고쳐주세요 메서드 날아간듯 ㄷㄷ
-		// List<PackageTB> packageTBList = packageRepository.findPackageList();
-		// mapList.put("packageList", packageTBList);
-		mapList.put("reservation", reservation);
-		mapList.put("roomList", roomList);
-		mapList.put("diningList", diningList);
-//        mapList.put("fitnessList", fitnessList);
-//        mapList.put("spaList", spaList);
-//        mapList.put("poolList", poolList);
+		Reservation reservationEntity = reservationRepository.findReservationById(id);
+		List<Room> roomEntitys = roomRepository.findAllRoomList();
+		List<Dining> diningEntitys = diningRepository.findAllDining();
+		mapList.put("reservation", reservationEntity);
+		mapList.put("roomList", roomEntitys);
+		mapList.put("diningList", diningEntitys);
 
 		return mapList;
 	}
@@ -97,6 +79,10 @@ public class ManagerReservationService {
 	@Transactional
 	public int updateReservation(Reservation reservation) {
 		int result = reservationRepository.updateReservation(reservation);
+		if(result == 0){
+            // Exception Error
+            throw new ManagerCustomRestFullException("예약 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 		return result;
 	}
 
@@ -105,11 +91,28 @@ public class ManagerReservationService {
 		int result = reservationRepository.deleteReservation(id);
 		return result;
 	}
-
-	public List<DiningReservation> findDiningReservationAllList(Date date) {
-		List<DiningReservation> diningReservationList = reservationRepository.reservationFindDining(date);
+	
+	// 다이닝 날짜 조회
+	@Transactional
+	public List<DiningReservation> readDiningReservationAllLisByDate(Date date) {
+		List<DiningReservation> diningReservationEntitys = reservationRepository.findDiningReservation(date);
+		return diningReservationEntitys;
+	}
+	
+	// 다이닝 오늘 조회
+	@Transactional
+	public List<DiningReservation> readTodayDining() {
+		List<DiningReservation> diningReservationList = reservationRepository.findTodayDining();
 		return diningReservationList;
 	}
+	
+	// 다이닝 전체 조회
+	@Transactional
+	public List<DiningReservation> readAllDining() {
+		List<DiningReservation> diningReservationList = reservationRepository.findAllDining();
+		return diningReservationList;
+	}
+	
 
 	// 오늘 예약 매출 조회
 	@Transactional
@@ -122,6 +125,9 @@ public class ManagerReservationService {
 	@Transactional
 	public Integer readBeforeTotalPrice(Integer count) {
 		Integer resultRowCount = reservationRepository.findBeforeTotalPrice(count);
+		if(resultRowCount == null) {
+			resultRowCount = 0;
+		}
 		return resultRowCount;
 	}
 

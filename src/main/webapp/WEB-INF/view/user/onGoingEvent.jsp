@@ -2,12 +2,17 @@
 <%@ include file="../layout/header.jsp"%>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <style>
+	body {
+  display: flex;
+  flex-direction: column;
+}
 	main {
 		width: 1200px;
 		margin: 0 auto;
     	display: flex;
     	flex-direction: column;
     	align-items: center;
+    	height: 740px;
 	}
 	
 	.all--event--wrap {
@@ -53,7 +58,7 @@
 	
 	#onGoing--btn {
 		background-color: #fff;
-		border-top: 3px solid blue;
+		border-top: 3px solid #84C9FF;
 	}
 	
 </style>

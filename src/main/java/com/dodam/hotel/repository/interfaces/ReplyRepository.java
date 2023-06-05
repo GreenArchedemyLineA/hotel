@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Param;
 public interface ReplyRepository {
 
 	public int insert(@Param("content") String content,
-			@Param("questionId") Integer questionId,@Param("managerId") Integer managerId);	
+			@Param("questionId") Integer questionId, @Param("managerId") Integer managerId);	
 	public int deleteReply(Integer questionId);
 }
