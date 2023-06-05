@@ -25,6 +25,7 @@
 	border-bottom: 2px solid black;
 	margin: 0 10px 30px 0;
 }
+
 </style>
 </head>
 <body>
