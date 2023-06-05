@@ -109,6 +109,7 @@ public class PayController {
     public String kakaopayController(KakaoRequestDto kakaoRequestDto){
         if(kakaoRequestDto.getItem_name() == null || kakaoRequestDto.getTotal_amount() == null){
             //인터셉터 처리
+        	throw new CustomRestFullException("잘못된 입력입니다.", HttpStatus.BAD_REQUEST);
         }
 
 

@@ -686,17 +686,8 @@ main {
 </div>
 
 <!-- Socket writer:이현서 -->
-<button onclick="connectSocket()">소켓연결</button>
-<div id="socket" style="display:none">
-    <div>
-        <p>소켓라인</p>
-        <input type="text" id="message">
-        <button onclick="ssss()">ㅇㅇ</button>
-    </div>
-    <div id="msg-socket">
+<button onclick="openChat()">채팅방</button>
 
-    </div>
-</div>
 <!-- ##################소켓 끝#################### -->
 
 <!-- 예약 달력 -->
@@ -755,52 +746,19 @@ main {
 <!-- writer:이현서, web socket -->
 <script type="text/javascript" src="/webjars/sockjs-client/1.5.1/sockjs.min.js"></script>
 <script>
-let ws = null;
-function open(){
-    ws = new SockJS("/chat");
-    ws.onopen = function () {
-        // onmessage : message를 받았을 때의 callback
-        ws.onmessage = function (e) {
-            const socketDivTag = document.getElementById("msg-socket");
-            const data = JSON.parse(e.data)
-            console.log(data.msg);
-            const createDivTag = document.createElement("div")
-            if(data.type === "ENTER"){
-                createDivTag.append(data.msg + "\n")
-            }else{
-                createDivTag.append("매니저님의 답변: " + data.msg + "\n")
-            }
-            socketDivTag.append(createDivTag);
-        }
-    }
-}
-    // 연결 종료
-    function disconnect(){
-        ws.close();
-        const socketDivTag = document.getElementById("msg-socket");
-        socketDivTag.textContent = "";
-    }
-    // 메시지 전달 입맛에 맞게 함수 변경하시길...
-    function ssss(){
-        let message = document.getElementById("message")
-        const messageJSON = {
-            "type": "CHAT",
-            "msg": message.value,
-        }
-        ws.send(JSON.stringify(messageJSON));
-        message.value = null;
-    }
+let popupX = (document.body.offsetWidth / 2) - (400 / 2);
 
-function connectSocket(){
-    const socketDivTag = document.getElementById("socket");
-    if(socketDivTag.style.display === "none"){
-        socketDivTag.style.display = "block";
-        open();
-    }else{
-        socketDivTag.style.display = "none";
-        disconnect();
-    }
-}
+let popupY= (window.screen.height / 2) - (600 / 2);
+let popupOption = "width=400,height=600,left=" + popupX + ",top=" + popupY + ",scrollbars = yes";
+let url;
+function openChat() {
+	url  = "http://192.168.0.75:8080/question/chatRoom"
+	let returnChatRoom = window.open(
+			url,
+			"popup",
+			popupOption
+	);
+};
 </script>
 <!-- ################################## -->
 <%@ include file="layout/footer.jsp"%>

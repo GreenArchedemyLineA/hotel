@@ -88,7 +88,8 @@ public class SocketHandler extends TextWebSocketHandler {
             Integer targetUserId = userInfo.getId();
             System.out.println(targetUserId);
             ChatRole role = ChatRole.MANAGER;
-            chatRepository.insertChat(targetUserId, msg.getMsg(), role);
+            chatRepository.insertManagerChat(targetUserId, msg.getMsg(), role);
+            chatRepository.updateUserMessageStatus(targetUserId);
         }
 
         if(msg.getType() == MessageType.CHAT){
