@@ -407,7 +407,6 @@ a:hover {
                 defaultView: 'month',
                 editable: true,
                 eventColor: '#FFE3E5',
-                locale: 'ko',
                 events: function(start, end, timezone, callback) {
                     $.ajax({
                         url: '/api/allReserve', 
@@ -417,7 +416,7 @@ a:hover {
                           for (let i = 0; i < response.length; i++) {
                               let reservation = response[i];
                               let event = {
-                            	  title: reservation.user.name,
+                            	  //title: reservation.user.name,
                                   start: reservation.startDate,
                                   end: reservation.endDate 
                               };

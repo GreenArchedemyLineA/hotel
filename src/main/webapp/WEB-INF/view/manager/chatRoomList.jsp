@@ -11,4 +11,3 @@
         location.href= "/manager/chatRoom/"+roomName
     }
 </script>
-<%@ include file="../layout/footer.jsp"%>

@@ -44,4 +44,3 @@ function ssss(){
     message.value = null;
 }
 </script>
-<%@ include file="../layout/footer.jsp"%>
