@@ -38,6 +38,7 @@ import com.dodam.hotel.service.QuestionService;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.RoomService;
 import com.dodam.hotel.service.UserService;
+import com.dodam.hotel.util.Define;
 import com.dodam.hotel.util.PagingObj;
 
 @Controller
@@ -237,7 +238,7 @@ public class ManagerController {
 		}
 		Manager principal = managerService.managerSignIn(managerSignInFormDto);
 		if (principal != null) {
-			session.setAttribute("principal", principal);
+			session.setAttribute(Define.MANAGERPRINCIPAL, principal);
 		}
 		return "redirect:/manager/managerMain";
 	}

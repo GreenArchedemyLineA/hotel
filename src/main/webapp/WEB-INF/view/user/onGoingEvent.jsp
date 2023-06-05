@@ -12,6 +12,7 @@
     	display: flex;
     	flex-direction: column;
     	align-items: center;
+    	height: 740px;
 	}
 	
 	.all--event--wrap {

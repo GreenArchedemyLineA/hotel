@@ -115,7 +115,7 @@
 						</div>
 					</div>
 					<div class="room--box" data-toggle="modal" data-target="#facModal" style="${spa.availability == true ? "border: 4px solid #9ACBF1" : "border: 4px solid #FF8D6B"}">	
-						<div class="room--title">
+						<div class="room-title">
 							<span style="color: gray;">${spa.facilities.name}</span>
 							<span id="room-name">${spa.facilities.location}</span>
 						</div>
@@ -124,7 +124,7 @@
 						</div>
 					</div>
 					<div class="room--box" data-toggle="modal" data-target="#facModal" style="${fitness.availability == true ? "border: 4px solid #9ACBF1" : "border: 4px solid #FF8D6B"}">
-						<div class="room--title">
+						<div class="room-title">
 							<span style="color: gray;">${fitness.facilities.name}</span>
 							<span id="room-name">${fitness.facilities.location}</span>
 						</div>

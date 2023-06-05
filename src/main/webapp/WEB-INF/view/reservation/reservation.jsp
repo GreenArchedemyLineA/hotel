@@ -398,9 +398,9 @@ input[type="number"]::-webkit-inner-spin-button {
 			<div>
 				<fieldset>
 					<legend style="font-size: 17px;">결제 방법 선택</legend>
-					<input class="pay" type="radio" name="pgType" value="nicepay" id="nicepay" class="pg-type" checked><label for="nicepay">신용카드결제</label>
-					<input class="pay" type="radio" name="pgType" value="kakaopay" id="kakaopay" class="pg-type"><label for="kakaopay">카카오페이결제</label>
-					<input class="pay" type="radio" name="pgType" value="tosspay" id="tosspay" class="pg-type"><label for="tosspay">토스간편결제</label>
+					<input type="radio" name="pgType" value="nicepay" id="nicepay" class="pg-type pay" checked><label for="nicepay">신용카드결제</label>
+					<input type="radio" name="pgType" value="kakaopay" id="kakaopay" class="pg-type pay"><label for="kakaopay">카카오페이결제</label>
+					<input type="radio" name="pgType" value="tosspay" id="tosspay" class="pg-type pay"><label for="tosspay">토스간편결제</label>
 				</fieldset>
 			</div>
 			<button type="button" class="sub--button" onclick="payEvent()">결제하기</button>
@@ -736,4 +736,3 @@ input[type="number"]::-webkit-inner-spin-button {
 
 </script>
 <%@ include file="../layout/footer.jsp"%>
-

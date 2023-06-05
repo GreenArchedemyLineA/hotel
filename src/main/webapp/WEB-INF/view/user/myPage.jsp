@@ -10,6 +10,11 @@
 	#update--btn[type=submit] {
 		background-color: #000;
 	}
+	#withdraw--btn {
+		background-color: #000;
+		color: #fff;
+		margin-left: 42px;
+	}
 </style>
 	<main class="main--container">
 		<div class="title--container">
@@ -70,7 +75,7 @@
 						</div>
 						<input class="sub--button" id="update--btn" type="button" value="정보 수정">
 					</form>
-						<button class="sub-button" onclick="withdrawUser('${responseUser.email}')" style="margin-left: 42px;">회원 탈퇴</button>
+						<button class="sub-button" id="withdraw--btn" onclick="withdrawUser('${responseUser.email}')">회원 탈퇴</button>
 				</div>
 			</div>
 		</div>
@@ -79,7 +84,7 @@
 	<script>
 		function withdrawUser(email) {
 			if(confirm("정말 탈퇴하시겠어요?")) {
-				fetch("/delete?email="+email, ({
+				fetch("/delete?email=" + email, ({
 					method: "delete"
 				})).then(async (response) => {
 					let result = await response.json();

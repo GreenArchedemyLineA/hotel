@@ -180,7 +180,6 @@ body {
 
 .recommend--container {
 	margin: 10px;
-	padding: 10px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -342,12 +341,10 @@ main {
 
 .membership--container {
 	margin: 10px;
-	padding: 10px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	background-color: #f9f9f9;
-	width: 100%;
 	height: 300px;
 }
 
@@ -578,24 +575,8 @@ main {
 										class="material-symbols-outlined">login</span></a></li>
 							</c:otherwise>
 						</c:choose>
-<<<<<<< HEAD
 						<li><a href="/myPage"><span class="material-symbols-outlined">person</span></a></li>
 						<li><a href="/membership"><span class="material-symbols-outlined">card_membership</span></a></li>
-=======
-						<c:choose>
-							<c:when test="${principal != null}">
-								<li><a href="/myPage"><span
-										class="material-symbols-outlined">person</span></a></li>
-							</c:when>
-							<c:otherwise>
-								<li><a href="/login"><span
-										class="material-symbols-outlined">person</span></a></li>
-							</c:otherwise>
-						</c:choose>
-
-						<li><a href="/membership"><span
-								class="material-symbols-outlined">card_membership</span></a></li>
->>>>>>> m/navi
 					</ul>
 				</div>
 			</div>

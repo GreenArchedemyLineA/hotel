@@ -53,8 +53,11 @@ public class QuestionController {
 	@GetMapping("/question")
 	public String questionPage(Model model) {
 		List<FAQ> responseFaqs = questionService.readAllFaq();
+		responseFaqs.stream().forEach(e -> {
+			e.setContent(e.getContent().replace("\r\n", "<br>"));
+		});
 		model.addAttribute("faqList", responseFaqs);
-		return "/question/question";
+		return "/user/question";
 	}
 	
 	// qna 페이지 이동 (현우)

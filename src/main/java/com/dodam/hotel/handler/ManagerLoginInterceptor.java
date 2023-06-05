@@ -19,7 +19,7 @@ public class ManagerLoginInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
-		Manager principal = (Manager) session.getAttribute(Define.PRINCIPAL);
+		Manager principal = (Manager) session.getAttribute(Define.MANAGERPRINCIPAL);
 		if(principal == null) {
 			throw new ManagerLoginException("로그인 후 이용 가능한 서비스 입니다.", HttpStatus.FORBIDDEN);
 		}

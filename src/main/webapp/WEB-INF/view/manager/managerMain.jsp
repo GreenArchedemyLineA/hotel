@@ -140,7 +140,7 @@ a:hover {
 			<div class="content--box" id="event--box">
 				<b class="title--box">일정</b>
 				<div class="event--box">
-					<c:forEach items="${viewAll}" var="list">
+					<c:forEach items="${event}" var="list">
 						<div id="title--box">${list.startDate}&nbsp;&nbsp;&nbsp;${list.title}</div>
 					</c:forEach>
 				</div>
@@ -259,6 +259,7 @@ a:hover {
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script type="text/javascript"
 	src="https://www.gstatic.com/charts/loader.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
 <script
@@ -393,7 +394,8 @@ a:hover {
 			console.log('Error:', error);
 		});
 	}
-
+	
+	let intialLocaleCode = 'ko';
 	// 예약 달력
 	 $(document).ready(function() {
             $('#calendar').fullCalendar({
@@ -405,6 +407,7 @@ a:hover {
                 defaultView: 'month',
                 editable: true,
                 eventColor: '#FFE3E5',
+                locale: 'ko',
                 events: function(start, end, timezone, callback) {
                     $.ajax({
                         url: '/api/allReserve', 
@@ -414,7 +417,7 @@ a:hover {
                           for (let i = 0; i < response.length; i++) {
                               let reservation = response[i];
                               let event = {
-                            	name: reservation.name, 
+                            	  title: reservation.user.name,
                                   start: reservation.startDate,
                                   end: reservation.endDate 
                               };

@@ -29,7 +29,6 @@ class MyInfoJs {
 		})
 			.then(async (response) => {
 				let data = await response.json(); // 결과 값
-
 				const formTag = document.createElement("form");
 				formTag.className = "form--container";
 				formTag.action = "/myPageProc";
@@ -136,11 +135,11 @@ class MyInfoJs {
 				inputAddressTag.value = data.address;
 
 				// input submit
-				const inputBtnTag = document.createElement("input");
-				inputBtnTag.className = "sub--button";
-				inputBtnTag.id = "update--btn";
-				inputBtnTag.type = "button";
-				inputBtnTag.value = "정보 수정";
+				const updateBtnTag = document.createElement("input");
+				updateBtnTag.className = "sub--button";
+				updateBtnTag.id = "update--btn";
+				updateBtnTag.type = "button";
+				updateBtnTag.value = "정보 수정";
 
 				inputPasswordTag.addEventListener("keyup", function() {
 					let passwordBoxValue = inputPasswordTag.value;
@@ -148,12 +147,19 @@ class MyInfoJs {
 						keyCheckTag.textContent = "* 비밀번호는 6자리 이상이어야 합니다.";
 						keyCheckTag.style.color = "red";
 						keyCheckTag.style.fontSize = "14px";
-						inputBtnTag.type = "submit";
+						updateBtnTag.type = "submit";
 					}
 				});
+				
+				const withdrawBtnTag = document.createElement("input");
+				withdrawBtnTag.className = "sub--button";
+				withdrawBtnTag.type = "button";
+				withdrawBtnTag.value = "회원 탈퇴";
+				withdrawBtnTag.setAttribute("onclick", `withdrawUser('${data.email}')`);
+				
 
 				const childNodeArray = [
-					divEmailTag, divPasswordTag, divNameTag, divGenderTag, divBirthTag, divAddressTag, divTelTag, updateBtnTag, withdrawBtnTag
+					divEmailTag, divPasswordTag, divNameTag, divGenderTag, divBirthTag, divAddressTag, divTelTag, updateBtnTag, withdrawBtnTag 
 				];
 
 				childNodeArray.forEach((node) => {

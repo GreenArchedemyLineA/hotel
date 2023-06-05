@@ -5,7 +5,6 @@ footer {
 	width: 100%;
 	background-color: #f9f9f9;
 	margin-top: 20px;
-	padding: 30px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
