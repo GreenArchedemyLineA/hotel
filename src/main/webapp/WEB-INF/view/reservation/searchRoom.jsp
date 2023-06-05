@@ -40,7 +40,7 @@
  	display: flex;
  	flex-direction: column;
  	justify-content: center;
- 	background-color: #64c5f3;
+ 	background-color: #84C9FF;
  	padding: 10px;
  }
  .person--box {
@@ -159,7 +159,7 @@
 												${room.roomType.name} 
 											</div>
 											<div style="text-align: start; font-size: 20px">
-												<span>${room.roomType.price}원 ~ </span> 
+												<span>${room.roomType.formatPrice()}원 ~ </span> 
 											</div>
 										</div>
 										<div>
@@ -204,5 +204,4 @@
 	  });
 	</script>
 
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

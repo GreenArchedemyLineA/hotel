@@ -2,15 +2,20 @@ package com.dodam.hotel.controller;
 
 import java.io.File;
 
+
+
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dodam.hotel.dto.QuestionRequestDto.InsertQuestionRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.handler.exception.CustomRestFullException;
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
 import com.dodam.hotel.repository.model.FAQ;
 import com.dodam.hotel.repository.model.Question;
 import com.dodam.hotel.service.QuestionService;
@@ -45,9 +52,12 @@ public class QuestionController {
 	// faq로 이동
 	@GetMapping("/question")
 	public String questionPage(Model model) {
-		List<FAQ> faqList = questionService.readAllFaq();
-		model.addAttribute("faqList", faqList);
-		return "/question/question";
+		List<FAQ> responseFaqs = questionService.readAllFaq();
+		responseFaqs.stream().forEach(e -> {
+			e.setContent(e.getContent().replace("\r\n", "<br>"));
+		});
+		model.addAttribute("faqList", responseFaqs);
+		return "/user/question";
 	}
 	
 	// qna 페이지 이동 (현우)
@@ -56,10 +66,14 @@ public class QuestionController {
 		return "/user/qna";
 	}
 	
-	// qna 등록 처리
+	// qna 등록 처리 - 유저
 	@PostMapping("/qnaProc")
-	public String qnaProc(InsertQuestionRequestDto question) {
-		
+	public String qnaProc(@Validated InsertQuestionRequestDto question, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new CustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		
 		question.setUserId(principal.getId());
@@ -95,51 +109,66 @@ public class QuestionController {
 		return "redirect:/";
 	}
 	
-	//문의사항 게시판
+	//문의사항 게시판 - 매니저
 	@GetMapping("/questionList")
-	public String questionList(Model model, @RequestParam(name = "nowPage", defaultValue = "1" , required = false) String nowPage, @RequestParam(name = "cntPerPage", defaultValue = "5" , required = false) String cntPerPage) {
+	public String questionList(Model model, 
+			@RequestParam(name = "nowPage", defaultValue = "1" , required = false) String nowPage, 
+			@RequestParam(name = "cntPerPage", defaultValue = "5" , required = false) String cntPerPage) {
 		//주소 요청시 작성된 계시물 제목 List 로 다불러오기
 		int total = questionService.readAllQuestionCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		List<Question> questionList = questionService.findAllQuestionList(obj);
-		if(questionList != null) {
+		List<Question> responseQuestions = questionService.readAllQuestionList(obj);
+		if(responseQuestions != null) {
 			model.addAttribute("paging", obj);
-			model.addAttribute("questionList",questionList);
+			model.addAttribute("questionList", responseQuestions);
 		}
 		return "/board/question";
 	}
 	
-	//문의 사항 상세보기
+	//문의 사항 상세보기 - 매니저
 	@GetMapping("/questionDetail/{id}")
 	public String questionDetail(@PathVariable Integer id,Model model) {
-		Question question = questionService.findById(id);
-		if(question != null) {
-			model.addAttribute("question",question);
+		if(id == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
+		Question responseQuestion = questionService.readById(id);
+		if(responseQuestion != null) {
+			model.addAttribute("question", responseQuestion);
 		}
 		return "/board/questionDetail";
 	}
 	
-	//댓글 달아 보내기
+	//댓글 달아 보내기 - 매니저
 	@PostMapping("/reply/{questionId}/{managerId}")
 	@Transactional
 	public String insertReply(String content,@PathVariable Integer questionId,@PathVariable Integer managerId) {
-		int questionStatus = questionService.updateStatusById(questionId);
-		int insertReply = questionService.insertReply(content, questionId, managerId);
+		if(questionId == null) {
+    		throw new ManagerCustomRestFullException("questionId가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
+		if(managerId == null) {
+			throw new ManagerCustomRestFullException("managerId가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+		}
+		questionService.updateStatusById(questionId);
+		questionService.insertReply(content, questionId, managerId);
 		return "redirect:/question/questionList";
 	}
 	
 	//질문 삭제
 	@GetMapping("/questionDelete/{questionId}")
 	public String questionDelete(@PathVariable Integer questionId){
-		int deleteQuestion = questionService.questionDeleteById(questionId);
+		if(questionId == null) {
+    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+    	}
+		questionService.deleteQuestionById(questionId);
 		return "redirect:/question/questionList";
 	}
 	
+	// 매니저
 	@GetMapping("/category")
 	public String questionCategory(String category,Model model) {
-		List<Question> questionList = questionService.findByCategory(category);
-		if(questionList != null) {
-			model.addAttribute("questionList",questionList);
+		List<Question> responseQuestions = questionService.findByCategory(category);
+		if(responseQuestions != null) {
+			model.addAttribute("questionList", responseQuestions);
 		}
 		return "/board/question";
 	}

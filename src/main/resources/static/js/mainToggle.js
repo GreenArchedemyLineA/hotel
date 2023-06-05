@@ -15,7 +15,7 @@
 					clearTimeout(timer)
 				}
 				timer = setTimeout(function(){
-					$(".navi--bar--detail--room").slideToggle("slow");
+					$(".navi--bar--detail--room").slideToggle();
 				}, 200)
 			});
 		});
@@ -34,7 +34,7 @@
 					clearTimeout(timer)
 				}
 				timer = setTimeout(function(){
-					$(".navi--bar--detail--fac").slideToggle("slow");
+					$(".navi--bar--detail--fac").slideToggle();
 				}, 200)
 				
 			});
@@ -52,7 +52,7 @@
 					clearTimeout(timer)
 				}
 				timer = setTimeout(function(){
-					$(".navi--bar--detail--reserve").slideToggle("slow");
+					$(".navi--bar--detail--reserve").slideToggle();
 				}, 200)
 			});
 		});
@@ -69,7 +69,7 @@
 					clearTimeout(timer)
 				}
 				timer = setTimeout(function(){
-					$(".navi--bar--detail--qna").slideToggle("slow");
+					$(".navi--bar--detail--qna").slideToggle();
 				}, 200)
 			});
 		});

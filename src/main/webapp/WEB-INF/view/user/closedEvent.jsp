@@ -8,6 +8,7 @@
     	display: flex;
     	flex-direction: column;
     	align-items: center;
+    	height: 740px;
 	}
 	
 	.all--event--wrap {
@@ -53,7 +54,7 @@
 	
 	#closed--btn {
 		background-color: #fff;
-		border-top: 3px solid blue;
+		border-top: 3px solid #84C9FF;
 	}
 	
 </style>

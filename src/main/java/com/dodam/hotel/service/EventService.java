@@ -3,10 +3,14 @@ package com.dodam.hotel.service;
 import java.util.List;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import com.dodam.hotel.dto.NoticeInsertForm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
+import com.dodam.hotel.dto.EventInsertForm;
 import com.dodam.hotel.repository.interfaces.EventRepository;
 import com.dodam.hotel.repository.model.Event;
 import com.dodam.hotel.util.PagingObj;
@@ -15,80 +19,102 @@ import com.dodam.hotel.util.PagingObj;
 public class EventService {
 
 	@Autowired
-	EventRepository eventRepository;
+	private EventRepository eventRepository;
 
 	// 행사 일정 작성
-	public int insertEvent(NoticeInsertForm noticeInsertForm) {
+	@Transactional
+	public int insertEvent(EventInsertForm noticeInsertForm) {
 		int eventEntity = eventRepository.insert(noticeInsertForm);
+		if (eventEntity == 0) {
+			throw new ManagerCustomRestFullException("이벤트 등록 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		return eventEntity;
 	}
 
-	// 행사일정 리스트로 띠우기
-//	 public List<Event> findByEventAll(){
-//		 List<Event> eventListEntity = eventRepository.findByAll();
-//		 return eventListEntity;
-//	 }
-	// 행사일정 리스트로 띠우기
-	public List<Event> findByEventAllPaging(PagingObj obj) {
-		List<Event> eventListEntity = eventRepository.findByAllPage(obj);
-		return eventListEntity;
+	// 행사일정 리스트로 띄우기
+	@Transactional
+	public List<Event> readByEventAllPaging(PagingObj obj) {
+		List<Event> eventListEntitys = eventRepository.findByAllPage(obj);
+		return eventListEntitys;
 	}
 	
 	// 행사 일정 메인 리스트 조회
-	public List<Event> findByIdLimit() {
-		List<Event> eventListEntity = eventRepository.findLimit5();
-		return eventListEntity;
+	@Transactional
+	public List<Event> readByIdLimit() {
+		List<Event> eventListEntitys = eventRepository.findLimit5();
+		return eventListEntitys;
 	}
 
 	//행사 일정 리스트 숫자
-	public Integer countEvent() {
-		return eventRepository.count();
+	@Transactional
+	public Integer readEventCount() {
+		int resultCount = eventRepository.count();
+		return resultCount;
 	}
 
 	// 행사 일정 아이디 조회
-	public Event findById(Integer id) {
+	@Transactional
+	public Event readById(Integer id) {
 		Event eventEntity = eventRepository.findById(id);
+		if (eventEntity == null) {
+			throw new ManagerCustomRestFullException("행사 일정 조회 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		return eventEntity;
 	}
 
 	// 행사 일정 수정
-	public int updateEvent(NoticeInsertForm noticeInsertForm) {
+	@Transactional
+	public int updateEvent(EventInsertForm noticeInsertForm) {
 		int eventUpdateEntity = eventRepository.updateEvent(noticeInsertForm);
+		if (eventUpdateEntity == 0) {
+			throw new ManagerCustomRestFullException("이벤트 수정 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		return eventUpdateEntity;
 	}
 
 	// 행사 일정 삭제
-	public int eventDelete(Integer id) {
+	@Transactional
+	public int deleteEvent(Integer id) {
 		int eventDeleteEntity = eventRepository.deleteById(id);
+		if (eventDeleteEntity == 0) {
+			throw new ManagerCustomRestFullException("이벤트 삭제 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		return eventDeleteEntity;
 	}
 	
 	// 진행중인 이벤트 조회 - 현우
+	@Transactional
 	public List<Event> readOnGoingEvent(PagingObj obj) {
-		List<Event> events = eventRepository.findNowEventByPage(obj);
-		return events;
+		List<Event> eventEntitys = eventRepository.findNowEventByPage(obj);
+		return eventEntitys;
 	}
 	
 	// 진행중인 이벤트 조회 - 현우
+	@Transactional
 	public List<Event> readAllOnGoingEvent() {
-		List<Event> events = eventRepository.findNowEvent();
-		return events;
+		List<Event> eventEntitys = eventRepository.findNowEvent();
+		return eventEntitys;
 	}
 	
 	// 진행중인 리스트 숫자 - 현우
-	public Integer countOnGoingEvent() {
-		return eventRepository.findByNowAll();
+	@Transactional
+	public int onGoingEventCount() {
+		int resultCount = eventRepository.findByNowAll();
+		return resultCount;
 	}
 	
 	// 종료된 이벤트 조회 - 현우
+	@Transactional
 	public List<Event> readClosedEvent(PagingObj obj) {
-		List<Event> events = eventRepository.findByPrevEventPage(obj);
-		return events;
+		List<Event> eventEntitys = eventRepository.findByPrevEventPage(obj);
+		return eventEntitys;
 	}
 	
 	// 종료된 리스트 숫자 - 현우
-	public Integer countClosedEvent() {
-		return eventRepository.findByPrevAll();
+	@Transactional
+	public int closedEventCount() {
+		int resultCount = eventRepository.findByPrevAll();
+		return resultCount;
 	}
 	
 }

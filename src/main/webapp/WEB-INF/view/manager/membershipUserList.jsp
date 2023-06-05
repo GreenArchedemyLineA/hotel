@@ -8,18 +8,18 @@
 }
 .main--content {
 	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
-.table--tr {
-	background-color: #ebebeb;
-	height: 20px;
-	text-align: center;
+.form--container {
+	display: flex;
+	align-items: center;
+	border: 4px solid #9ACBF1;
+	border-radius: 20px;
+	width: 700px;
+	height: 300px;
 }
-
-.table-tr {
-	text-align: center;
-	font-size: 20px;
-}
-
 #title--box {
 	width: 600px;
 }
@@ -30,33 +30,51 @@
 	height: 30px;
 }
 
+.paging--box > a {
+	text-decoration: none;
+	color: #9ACBF1;
+}
+.table--container {
+	width: 1000px;
+	text-align: center;
+	
+}
+.tr--box {
+	background-color: #ebebeb;
+	font-weight: bold;
+	height: 30px;
+}
+.content--box {
+	height: 50px;
+	border-bottom: 1px solid #ebebeb;
+}
 </style>
 		<div class="content">
 		<h2>멤버쉽 고객리스트</h2>
 			<div class="main--content">
-				<table class="table">
+				<table class="table--container">
 					<thead>
-						<tr class="table--tr">
-							<th scope="col">회원이름</th>
+						<tr class="tr--box">
+							<th scope="col">이름</th>
 							<th scope="col">이메일</th>
 							<th scope="col">전화번호</th>
-							<th scope="col">맴버쉽 가입일</th>
+							<th scope="col">가입일</th>
 							<th scope="col">정보</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="user" items="${viewAll}">
-							<tr>
+							<tr class="content--box">
 								<td>${user.user.name}</td>
 								<td>${user.user.email}</td>
 								<td>${user.user.tel}</td>
-								<td>${user.updatedAt}</td>
+								<td>${user.dateFormat()}</td>
 								<td><button onclick="userDetail(${user.userId})" class="sub-button">상세</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
-				<div style="display: block; text-align: center;">
+				<div style="display: block; text-align: center;" class="paging--box">
 					<c:if test="${paging.startPage != 1}">
 						<a href="/manager/membershipUserList?nowPage=${paging.startPage - 1}&cntPerPage=${paging.cntPerPage}">&lt;</a>
 					</c:if>
@@ -83,4 +101,3 @@
 		location.href = "/manager/userDetail/"+id; 
 	}
 </script>
-<%@ include file="../layout/footer.jsp"%>

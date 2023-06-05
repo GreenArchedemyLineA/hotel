@@ -231,4 +231,3 @@
 		});
 	</script>
 </main>
-<%@ include file="../layout/footer.jsp"%>

@@ -1,4 +1,4 @@
-package com.dodam.hotel.controller;
+package com.dodam.hotel.dto.api.pay;
 
 import lombok.Data;
 

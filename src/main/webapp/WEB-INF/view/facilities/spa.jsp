@@ -63,7 +63,7 @@
 <body>
 	<div class="body--container">
 		<div class="navi--bar">
-			<span class="title--box"><a href="/dining">다이닝</a></span>
+			<span class="title--box"><a href="/dining">부대시설</a></span>
 			<div>
 				<span class="detail--box"><a href="/dining?type=레스토랑">레스토랑</a></span>
 				<span class="detail--box"><a href="/dining?type=라운지">라운지 & 바</a></span> 

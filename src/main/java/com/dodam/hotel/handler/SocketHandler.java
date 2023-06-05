@@ -86,7 +86,9 @@ public class SocketHandler extends TextWebSocketHandler {
 
             UserResponseDto.LoginResponseDto userInfo = (UserResponseDto.LoginResponseDto) targetSession.getAttributes().get(Define.PRINCIPAL);
             Integer targetUserId = userInfo.getId();
-            chatRepository.insertChat(targetUserId, msg.getMsg(), ChatRole.MANAGER);
+            System.out.println(targetUserId);
+            ChatRole role = ChatRole.MANAGER;
+            chatRepository.insertChat(targetUserId, msg.getMsg(), role);
         }
 
         if(msg.getType() == MessageType.CHAT){
@@ -100,7 +102,8 @@ public class SocketHandler extends TextWebSocketHandler {
             }
             UserResponseDto.LoginResponseDto userInfo = (UserResponseDto.LoginResponseDto) session.getAttributes().get(Define.PRINCIPAL);
             Integer targetUserId = userInfo.getId();
-            chatRepository.insertChat(targetUserId, msg.getMsg(), ChatRole.USER);
+            ChatRole role = ChatRole.USER;
+            chatRepository.insertChat(targetUserId, msg.getMsg(), role);
         }
     }
 

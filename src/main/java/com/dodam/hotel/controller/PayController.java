@@ -1,45 +1,42 @@
 package com.dodam.hotel.controller;
 
-import com.dodam.hotel.dto.PayDto;
-import com.dodam.hotel.dto.UserResponseDto;
-import com.dodam.hotel.dto.api.ResponseMsg;
-import com.dodam.hotel.dto.api.kakaopay.KakaoCancelResponse;
-import com.dodam.hotel.dto.api.kakaopay.KakaoPay;
-import com.dodam.hotel.dto.api.kakaopay.KakaoRequestDto;
-import com.dodam.hotel.dto.api.nicepay.NicePay;
-import com.dodam.hotel.dto.api.nicepay.NicepayDto;
-import com.dodam.hotel.dto.api.kakaopay.KakaoPaymentDto;
-import com.dodam.hotel.dto.api.kakaopay.KakaoSinglePayment;
-import com.dodam.hotel.dto.api.nicepay.NicepayResultDto;
-import com.dodam.hotel.dto.api.pay.PayApproveRequest;
-import com.dodam.hotel.dto.api.tosspay.TossPay;
-import com.dodam.hotel.dto.api.tosspay.TossResponse;
-import com.dodam.hotel.dto.api.tosspay.TosspayRequest;
-import com.dodam.hotel.enums.Grade;
-import com.dodam.hotel.enums.PGType;
-import com.dodam.hotel.repository.interfaces.GradeRepository;
-import com.dodam.hotel.repository.model.GradeInfo;
-import com.dodam.hotel.repository.model.Pay;
-import com.dodam.hotel.repository.model.User;
-import com.dodam.hotel.service.PayService;
-import com.dodam.hotel.util.Define;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import com.dodam.hotel.dto.PayDto;
+import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.dto.api.kakaopay.KakaoCancelResponse;
+import com.dodam.hotel.dto.api.kakaopay.KakaoPay;
+import com.dodam.hotel.dto.api.kakaopay.KakaoPaymentDto;
+import com.dodam.hotel.dto.api.kakaopay.KakaoRequestDto;
+import com.dodam.hotel.dto.api.kakaopay.KakaoSinglePayment;
+import com.dodam.hotel.dto.api.nicepay.NicePay;
+import com.dodam.hotel.dto.api.nicepay.NicepayDto;
+import com.dodam.hotel.dto.api.nicepay.NicepayResultDto;
+import com.dodam.hotel.dto.api.pay.PayOption;
+import com.dodam.hotel.dto.api.tosspay.TossPay;
+import com.dodam.hotel.dto.api.tosspay.TossResponse;
+import com.dodam.hotel.dto.api.tosspay.TosspayRequest;
+import com.dodam.hotel.enums.PGType;
+import com.dodam.hotel.handler.exception.CustomRestFullException;
+import com.dodam.hotel.repository.interfaces.GradeRepository;
+import com.dodam.hotel.repository.interfaces.ReservationRepository;
+import com.dodam.hotel.repository.model.GradeInfo;
+import com.dodam.hotel.repository.model.Pay;
+import com.dodam.hotel.service.PayService;
+import com.dodam.hotel.util.Define;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * @author lhs-devloper
@@ -57,6 +54,8 @@ public class PayController {
     private PayService payService;
     @Autowired
     private GradeRepository gradeRepository;
+    @Autowired
+    private ReservationRepository reservationRepository;
     
     
     @GetMapping("/payReady")
@@ -92,12 +91,13 @@ public class PayController {
                     .builder()
                     .payTid(nicepayResultDto.getTid())
                     .price(nicepayResultDto.getAmount().intValue())
-                    .pgType(PGType.KAKAO)
+                    .pgType(PGType.NICEPAY)
                     .grade(userGrade.getGrade().getName())
                     .build();
 
             payService.createPay(dto);
-            return "redirect:/pay/success?tid="+nicepayResultDto.getTid();
+            
+            return "redirect:/reservationSuccessful";
         }else{
             // 결제 실패 케이스 작성
             System.out.println(nicepayResultDto);
@@ -164,15 +164,14 @@ public class PayController {
     /***
     // ------------------------------------------ 여기서 부터는 결제 취소 ---------------------------------------------------
      ***/
-    //결제 취소후 에약취소처리까
+    //결제 취소후 예약취소처리까
     @PostMapping("/kakao/refund/{tid}/{totalPrice}/{reservationId}")
     public String kakaoPayRefund(@PathVariable("tid") String tid,@PathVariable("totalPrice") String totalPrice
     		,@PathVariable("reservationId") Integer reservationId) {
     	UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
     	KakaoCancelResponse kakaoCancelResponse = kakaoPay.kakaoCancel(tid,totalPrice);
     	if(kakaoCancelResponse == null) {
-    		System.out.println("결제실패됨");
-    		return null;
+    		throw new CustomRestFullException("결제에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
     	}else if(kakaoCancelResponse != null) {
     		payService.refundPay(reservationId, user.getId());
     	}

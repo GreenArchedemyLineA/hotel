@@ -40,6 +40,12 @@
 .content--box {
 	height: 500px;
 }
+textarea {
+	border: 3px solid #ebebeb;
+}
+.input--title--box:focus ,textarea:focus{
+	outline: none;
+}
 </style>
 <div class="content">
 	<h2>FAQ</h2>
@@ -47,11 +53,10 @@
 		<form method="post" action="/manager/faq/update-proc" class="form--container">
 		    <input type="hidden" name="id" value="${faq.id}">
 		    <input type="text" name="title" value="${faq.title}" class="input--title--box">
-		    <input type="text" name="content" value="${faq.content}" class="input--box content--box">
+		    <textarea rows="20" cols="90" value="${faq.content}" name="content" ></textarea>
 		    <div class="button--box">
 			    <button class="sub-button">수정</button>		    
 		    </div>
 		</form>
 		</div>
 	</div>
-<%@ include file="../layout/footer.jsp"%>	

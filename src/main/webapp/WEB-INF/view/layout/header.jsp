@@ -31,7 +31,7 @@
 								</div>
 								<ul class="navi--bar--detail--room">
 									<li><a href="/room?type=디럭스">디럭스</a></li>
-									<li><a href="/room?type=프리미엄">프리미어</a></li>
+									<li><a href="/room?type=프리미엄">프리미엄</a></li>
 									<li><a href="/room?type=스위트">스위트</a></li>
 									<li><a href="/room">전체객실</a></li>
 								</ul></li>

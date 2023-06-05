@@ -36,7 +36,7 @@
 						<td>${list.endDate}</td>
 						<td>${list.room.roomType.name}</td>
 						<td>${list.numberOfP}</td>
-						<td>${list.totalPrice}</td>
+						<td>${list.formatPrice()}</td>
 						<td>${list.createdAt}</td>
 						<td>
 						<form action="/pay/refund/${list.payTid}/${list.id}" method="post">

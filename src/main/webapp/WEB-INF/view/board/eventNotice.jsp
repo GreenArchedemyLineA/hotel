@@ -6,15 +6,12 @@
 	justify-content: center;
 	align-items: center;
 }
-.table--tr {
-	background-color: #ebebeb;
-	height: 20px;
+.main--content {
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
-
-.table--tr, .table-tr {
-	text-align: center;
-}
-
 #title--box {
 	width: 600px;
 }
@@ -41,28 +38,50 @@
 	width: 200px;
 	height: 40px;
 }
-.form--container {
+.form-container {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	margin: 20px;
 }
 .input--box {
 	border: none;
 	border-bottom: 2px solid #ebebeb;
 	margin: 10px;
 }
+.input--box:focus {
+	outline: none;
+}
 .modal-content {
 	width: 700px;
-	height: 300px;
+	height: 500px;
+}
+.paging--box > a {
+	text-decoration: none;
+	color: #9ACBF1;
+}
+.table--container {
+	width: 1000px;
+	text-align: center;
+	
+}
+.tr--box {
+	background-color: #ebebeb;
+	font-weight: bold;
+	height: 30px;
+}
+.content--box {
+	height: 50px;
+	border-bottom: 1px solid #ebebeb;
 }
 </style>
 	<div class="content">
-	<h2>일정</h2>
+	<h2>공지사항 및 이벤트</h2>
 			<div class="main--content">
-				<table class="table">
+				<table class="table--container">
 					<thead>
-						<tr class="table--tr">
+						<tr class="tr--box">
 							<th scope="col">일정</th>
 							<th scope="col">시작일</th>
 							<th scope="col">종료일</th>
@@ -72,7 +91,7 @@
 					</thead>
 					<tbody>
 						<c:forEach items="${viewAll}" var="list">
-							<tr class="table-tr">
+							<tr class="content--box">
 								<td id="title--box">${list.title}</td>
 								<td>${list.startDate}</td>
 								<td>${list.endDate}</td>
@@ -102,7 +121,7 @@
 					</c:if>
 				</div>
 				<div class="button--box">
-					<button type="button" class="sub-button" data-toggle="modal" data-target="#myModal">공지사항 작성</button>
+					<button type="button" class="sub-button" data-toggle="modal" data-target="#myModal">이벤트 작성</button>
 				</div>
 			</div>
 		</div>
@@ -112,29 +131,27 @@
 			<div class="modal-content">
 	
 				<div class="modal-header">
-					<h4 class="modal-title">호텔 행사 일정 작성</h4>
+					<h4 class="modal-title">이벤트 등록</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 	
 				<div>
-					<form action="/event/event-insert" method="post" class="form--container">
+					<form action="/event/event-insert" method="post" class="form-container">
+						<div>
+							<label>시작일</label> 
+							<input type="date" name="startDate" value="2015-10-13" class="input--box"> 
+							<label>종료일</label> 
+							<input type="date" name="endDate" value="2015-10-13" class="input--box">
+						</div>
 						<div>
 							<label>제목</label>
-							<input type="text" name="title" value="asdsadasd" class="input--box"> 
+							<input type="text" name="title" value="asdsadasd" class="input--box" style="width: 320px;"> 
 						</div>
 						<div>
 							<label>내용</label> 
-							<input type="text" name="content" value="asdasdasdasd" class="input--box">
+							<input type="text" name="content" value="asdasdasdasd" class="input--box" style="width: 320px; height: 200px;">
 						</div>
-						<div>
-							<label>시작일</label> 
-							<input type="text" name="startDate" value="2015-10-13" class="input--box"> 
-						</div>
-						<div>
-							<label>종료일</label> 
-							<input type="text" name="endDate" value="2015-10-13" class="input--box">
-						</div>
-						<button type="submit" class="sub--button">작성</button>
+						<button type="submit" class="sub--button">등록</button>
 					</form>
 				</div>
 			</div>
@@ -150,5 +167,4 @@
 	}
 </script>
 
-<%@ include file="../layout/footer.jsp"%>
 

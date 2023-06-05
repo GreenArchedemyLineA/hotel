@@ -52,7 +52,9 @@
 }
 </style>
 <div class="content">
-	<h2>FAQ</h2>
+	<div>
+		<h2>FAQ</h2>
+	</div>
 	<div class="main--content">
 		<div id="faq--wrap">
 			<c:forEach var="faq" items="${faqList}">
@@ -109,9 +111,8 @@
 	                    case 403:
 	                        alert("재 로그인 해주세요!")
 	                }
-	                location.href = response.redirect_uri;
+	                location.href = "/manager/faq";
 	            });
 	        }
 	    };
 </script>
-<%@ include file="../layout/footer.jsp"%>

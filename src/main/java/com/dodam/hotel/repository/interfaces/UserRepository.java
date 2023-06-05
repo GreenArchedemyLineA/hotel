@@ -20,6 +20,9 @@ public interface UserRepository {
 	// update용
 	public int updateUserByEmail(UserRequestDto.MyPageFormDto user);
 	
+	// 회원 탈퇴
+	public int deleteUser(User user);
+	
 	// 카카오 로그인 유저 찾기
 	public UserResponseDto.LoginResponseDto findUserKakao(String email);
 	
@@ -49,5 +52,11 @@ public interface UserRepository {
 	
 	// 임시 비밀번호 발급 상태 변경
 	public int updatePwdStatus(Integer userId);
+	
+	// 재가입 유저 조회용
+	public User findUserByOriginEmail(String email);
+	
+	// 재가입 유저 회원가입용
+	public int updateUserByOriginEmail(UserRequestDto.InsertDto insertDto);
 	
 }

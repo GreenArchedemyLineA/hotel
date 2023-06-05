@@ -1,5 +1,6 @@
 package com.dodam.hotel.dto.socket;
 
+
 import lombok.Data;
 
 /**

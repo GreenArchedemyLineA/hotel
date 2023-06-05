@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dodam.hotel.dto.ReservationRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
-import com.dodam.hotel.dto.UserResponseDto.LoginResponseDto;
-import com.dodam.hotel.repository.model.Point;
+import com.dodam.hotel.handler.exception.CustomRestFullException;
+import com.dodam.hotel.repository.model.Pay;
 import com.dodam.hotel.repository.model.Reservation;
+import com.dodam.hotel.service.PayService;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.util.Define;
 import com.dodam.hotel.util.PagingObj;
@@ -35,19 +37,21 @@ public class ReservationController {
 	@Autowired
 	private HttpSession session;
 	
+	@Autowired
+	private PayService payService;
+	
 	// 메인페이지 -> 예약버튼 처리 (성희)
 	@GetMapping("/reserve")
 	public String reserveMain(ReservationRequestDto requestDto, Model model) {
+		if(requestDto == null) {
+			throw new CustomRestFullException("예약 정보가 제대로 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+		}
 		String[] array = requestDto.getDate().split(" to ");
-		System.out.println(array[0]);
-		System.out.println(array[1]);
 		Integer countAll = requestDto.getCountPerson() + requestDto.getCountChild() + requestDto.getCountBaby();
 		requestDto.setNumberOfP(countAll);
-		// 출력
-//		for (int i = 0; i < array.length; i++) {
 		requestDto.setStartDate(array[0]);
 		requestDto.setEndDate(array[1]);
-//		}
+		
 		return null;
 	}
 
@@ -60,6 +64,9 @@ public class ReservationController {
 	// 다이닝 예약 처리
 	@PostMapping("/dining")
 	public String reserveDining(ReservationRequestDto requestDto) {
+		if(requestDto == null) {
+			throw new CustomRestFullException("예약 정보가 제대로 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+		}
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		reservationService.createReserveDining(requestDto, principal.getId());
 		return "redirect:/";
@@ -68,6 +75,9 @@ public class ReservationController {
 	// 객실 예약 상세 페이지
 	@GetMapping("/reserveRoom")
 	public String reservation(ReservationRequestDto selectReserveDetail, Model model) {
+		if(selectReserveDetail == null) {
+			throw new CustomRestFullException("예약 정보가 제대로 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+		}
 		model.addAttribute("selectDetail", selectReserveDetail);
 		model.addAttribute("diningPrice", reservationOptionPrice.getDiningPrice());
 		model.addAttribute("spaPrice", reservationOptionPrice.getSpaPrice());
@@ -80,7 +90,7 @@ public class ReservationController {
 		model.addAttribute("spaStatus", reservationService.spaStatus().get(0));
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		selectReserveDetail.setUserId(principal.getId());
-		Map<String, Object> selectList = reservationService.useCouponOrPoint(selectReserveDetail);
+		Map<String, Object> selectList = reservationService.readAvailableCouponOrPoint(selectReserveDetail);
 		
 		model.addAttribute("point", selectList.get("point"));
 		model.addAttribute("couponList", selectList.get("couponList"));
@@ -91,10 +101,23 @@ public class ReservationController {
 	// 객실 예약 처리
 	@PostMapping("/reserveRoom")
 	public String reserveRoom(ReservationRequestDto requestDto) {
-		System.out.println(requestDto);
+		if(requestDto == null) {
+			throw new CustomRestFullException("예약 정보가 제대로 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+		}
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-		int resultRowCount = reservationService.createReserveRoom(requestDto, principal.getId());
-		return "redirect:/";
+		reservationService.createReserveRoom(requestDto, principal.getId());
+		return "redirect:/reservationSuccessful";
+	}
+	
+	//예약후 예약 정보 확인 페이지
+	@GetMapping("/reservationSuccessful")
+	public String reservationSuccessful(Model model) {
+		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
+		Reservation reservationSuccessful = reservationService.findReservationByUserIdSuccessful(principal.getId());
+		model.addAttribute("successful", reservationSuccessful);
+		Pay payType = payService.searchType(reservationSuccessful.getPayTid());
+		model.addAttribute("payType", payType);
+		return "/reservation/reservationSuccessful";
 	}
 	
 	// 특정 유저 예약 현황 - 현우
@@ -109,13 +132,12 @@ public class ReservationController {
 
 		PagingObj po = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
-		List<Reservation> reservations = reservationService.readAllResrevationByUserIdPaging(po, principal.getId());
-		System.out.println(reservations.get(0).getPayTid());
+		List<Reservation> responseReservations = reservationService.readAllResrevationByUserIdPaging(po, principal.getId());
 		model.addAttribute("paging", po);
-		if(reservations.size() == 0) {
+		if(responseReservations.size() == 0) {
 			model.addAttribute("reservations", null);
 		}else {
-			model.addAttribute("reservations", reservations);
+			model.addAttribute("reservations", responseReservations);
 		}
 		return "/user/reservationList";
 	}
