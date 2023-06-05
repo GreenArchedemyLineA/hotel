@@ -94,7 +94,7 @@
 		<div class="content">
 			<div class="title--container">
 				<h2>회원 리스트</h2>
-				<button class="sub--button title--button" data-toggle="modal" data-target="#myModal">차트</button>
+			<!-- 	<button class="sub--button title--button" data-toggle="modal" data-target="#myModal">차트</button> -->
 			</div>
 			<div class="main--content">
 				<div class="search--container">
@@ -157,7 +157,7 @@
 			</div>
 		</div>
 	</main>
-		<div class="modal" id="myModal">
+		<%-- <div class="modal" id="myModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 	
@@ -192,7 +192,7 @@
 			
 			</div>
 		</div>
-	</div>
+	</div> --%>
 <script>
 	
 	function userDetail(id){

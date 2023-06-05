@@ -25,13 +25,6 @@
 	cursor: pointer;
 }
 
-.title--container {
-	flex: 1;
-	background-color: #84C9FF;
-	height: 100%;
-	color: #fff;
-}
-
 .content--container {
 	flex: 3;
 	display: flex;

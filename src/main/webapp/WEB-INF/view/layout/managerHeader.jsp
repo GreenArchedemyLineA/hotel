@@ -28,7 +28,7 @@ main {
 
 nav {
 	width: 300px;  /* 로그 크기에 따라 수정할 예정 */	
-	background-color: #84C9FF;
+	background-color: #64c5f3;
 	height: 100vh;
 	display: flex;
 }
