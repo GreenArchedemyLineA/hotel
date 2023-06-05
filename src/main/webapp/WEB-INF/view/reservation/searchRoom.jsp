@@ -159,7 +159,7 @@
 												${room.roomType.name} 
 											</div>
 											<div style="text-align: start; font-size: 20px">
-												<span>${room.roomType.price}원 ~ </span> 
+												<span>${room.roomType.formatPrice()}원 ~ </span> 
 											</div>
 										</div>
 										<div>

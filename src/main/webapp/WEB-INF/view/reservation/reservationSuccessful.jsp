@@ -230,14 +230,19 @@ input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
+header{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 3em;
+}
 </style>
 </head>
 <body>
 	<div class="main--container">
 		<div class="facilities--container">
 			<div class="select--info">
-
+				<header>예약 내역</header>
 				<div class="facilities--info--box">
 					<div class="info--title">객실</div> 
 					<div class="info--content">${successful.room.roomType.name}</div>
@@ -341,7 +346,7 @@ input[type="number"]::-webkit-inner-spin-button {
 					<legend>결제 방법 : ${payType.pgType}</legend>
 				</fieldset>
 				<fieldset>
-					<legend>결제 금액 : ${payType.price}</legend>
+					<legend>결제 금액 : ${payType.formatPrice()}</legend>
 				</fieldset>
 			</div>
 			<button type="button" class="sub--button" onclick="main()">메인 으로</button>
@@ -350,7 +355,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 <script type="text/javascript">
 	function main(){
-		location
+		location.href = "/"
 	}
 </script>
 <!-- <script src="/js/price.js"></script> -->

@@ -2,6 +2,7 @@ package com.dodam.hotel.repository.model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 
 import lombok.Data;
 
@@ -32,5 +33,9 @@ public class Reservation {
     private Pool pool;
     private Spa spa;
     
-    
+    public String formatPrice() {
+		DecimalFormat df = new DecimalFormat("###,###");
+		String formatNumber = df.format(totalPrice);
+		return formatNumber;
+	}
 }

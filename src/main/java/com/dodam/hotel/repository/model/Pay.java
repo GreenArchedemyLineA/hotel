@@ -5,6 +5,7 @@ import com.dodam.hotel.enums.PGType;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 
 @Data
 public class Pay {
@@ -14,4 +15,10 @@ public class Pay {
     private Timestamp createdAt;
     private PGType pgType;
     private String gradeName;
+    
+    public String formatPrice() {
+  		DecimalFormat df = new DecimalFormat("###,###");
+  		String formatNumber = df.format(price);
+  		return formatNumber;
+  	}
 }
