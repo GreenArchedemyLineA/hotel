@@ -7,6 +7,7 @@ import lombok.Data;
  */
 @Data
 public class SocketMessageDto {
-    private String type;
+    private MessageType type;
     private String msg;
+    private String roomName;
 }
