@@ -31,6 +31,7 @@ import com.dodam.hotel.dto.api.tosspay.TosspayRequest;
 import com.dodam.hotel.enums.PGType;
 import com.dodam.hotel.handler.exception.CustomRestFullException;
 import com.dodam.hotel.repository.interfaces.GradeRepository;
+import com.dodam.hotel.repository.interfaces.ReservationRepository;
 import com.dodam.hotel.repository.model.GradeInfo;
 import com.dodam.hotel.repository.model.Pay;
 import com.dodam.hotel.service.PayService;
@@ -53,6 +54,8 @@ public class PayController {
     private PayService payService;
     @Autowired
     private GradeRepository gradeRepository;
+    @Autowired
+    private ReservationRepository reservationRepository;
     
     
     @GetMapping("/payReady")
@@ -93,6 +96,7 @@ public class PayController {
                     .build();
 
             payService.createPay(dto);
+            
             return "redirect:/reservationSuccessful";
         }else{
             // 결제 실패 케이스 작성
