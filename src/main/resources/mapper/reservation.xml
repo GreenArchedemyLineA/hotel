@@ -226,7 +226,7 @@
 				r.spa_id as r_spa_id,
 				r.pool_id as r_pool_id,
 				r.dining_id as r_dining_id,
-			
+			t
 			ro.id as room_id,
 			ro.availability as room_availability,
 			
