@@ -153,7 +153,7 @@
 			<div class="info--box">
 				<span>로그인 여부</span>
 				<c:choose>
-					<c:when test="${userDetail.user.socialLogin == false}">
+					<c:when test="${userDetail.user.socialLogin == 0}">
 						<span>일반 회원</span>
 					</c:when>
 					<c:otherwise>카카오 회원</c:otherwise>

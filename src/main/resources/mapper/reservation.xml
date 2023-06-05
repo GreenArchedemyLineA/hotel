@@ -117,6 +117,7 @@
 		<result column="user_tel" property="tel"/>
 		<result column="user_blacklist" property="blacklist"/>
 		<result column="user_withdrawal" property="withdrawal"/>
+		<result column="social_login" property="socialLogin"/>
 		<result column="created_at" property="createdAt"/>
 	</resultMap>
 
@@ -158,7 +159,7 @@
 				po.price as pool_pirce,
 				
 				u.id as user_id,
-				u.name as user_name
+				u.name as user_name,
 			
 			from reservation_tb as r
 			left join user_tb as u
