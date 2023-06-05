@@ -8,7 +8,6 @@ import lombok.Data;
 public class Event {
 	
 	private Integer id;
-	private String category;
 	private Date startDate;
 	private Date endDate;
 	private String title;
