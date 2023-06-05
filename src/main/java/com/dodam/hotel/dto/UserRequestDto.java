@@ -2,6 +2,7 @@ package com.dodam.hotel.dto;
 
 import java.sql.Date;
 
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
@@ -42,10 +43,10 @@ public class UserRequestDto {
 		private String tel;
 		@NotBlank(message = "주소를 입력해주세요.")
 		private String address;
+		private String detailAddress;
+		private String originEmail;
 	}
 	
-	// todo
-	// 클래스 이름 수정 
 	@Data
 	public static class InsertDto {
 		private Integer id;
@@ -67,6 +68,7 @@ public class UserRequestDto {
 		@NotBlank(message = "상세 주소를 입력해주세요.")
 		private String detailAddress;
 		private Boolean socialLogin;
+		
 	}
 	
 	// 비밀번호 변경

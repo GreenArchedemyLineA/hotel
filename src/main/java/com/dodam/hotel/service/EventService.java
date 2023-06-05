@@ -3,13 +3,14 @@ package com.dodam.hotel.service;
 import java.util.List;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dodam.hotel.dto.NoticeInsertForm;
 import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
+import com.dodam.hotel.dto.EventInsertForm;
 import com.dodam.hotel.repository.interfaces.EventRepository;
 import com.dodam.hotel.repository.model.Event;
 import com.dodam.hotel.util.PagingObj;
@@ -22,7 +23,7 @@ public class EventService {
 
 	// 행사 일정 작성
 	@Transactional
-	public int insertEvent(NoticeInsertForm noticeInsertForm) {
+	public int insertEvent(EventInsertForm noticeInsertForm) {
 		int eventEntity = eventRepository.insert(noticeInsertForm);
 		if (eventEntity == 0) {
 			throw new ManagerCustomRestFullException("이벤트 등록 실패", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -63,7 +64,7 @@ public class EventService {
 
 	// 행사 일정 수정
 	@Transactional
-	public int updateEvent(NoticeInsertForm noticeInsertForm) {
+	public int updateEvent(EventInsertForm noticeInsertForm) {
 		int eventUpdateEntity = eventRepository.updateEvent(noticeInsertForm);
 		if (eventUpdateEntity == 0) {
 			throw new ManagerCustomRestFullException("이벤트 수정 실패", HttpStatus.INTERNAL_SERVER_ERROR);

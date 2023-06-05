@@ -327,6 +327,4 @@
 					checkBirth, checkAddress, checkDetailAddress, checkTel)
     	}
     });
-</script>
-<%@ include file="../layout/footer.jsp"%>
-	
+</script>	

@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzkxekb89f"></script>
 <meta charset="UTF-8">
 <title>Main Page</title>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
@@ -52,18 +51,19 @@ li {
 	margin-bottom: 15px;
 	padding-left: 20px;
 	cursor: pointer;
-	font-size: 20px;
+	font-size: 25px;
+	font-weight: 400;
 	color: #fff;
 }
 li:hover {
-	color: pink;
+	color: #103B93;
 }
 
 .main--headers {
 	margin-bottom: 10px;
 }
 
-#search--list {
+#search--list, #reserve--list, #room--list {
 	display: none;
 	font-size: 15px;
 }
@@ -84,8 +84,16 @@ li:hover {
 		<nav>
 			<ul>
 				<li id="logo--li" onclick="location.href='/manager/managerMain'"><img alt="dodam" src="/images/admin_wlogo.png" width="250" height="50"></li>
-				<li id="room--li" onclick="location.href='/manager/roomStatus'">객실</li>
-				<li id="dining--li" onclick="location.href='/manager/dining'">다이닝</li>
+				
+				<li id="room--li">
+					<div>
+						<span id="search--room--wrap">시설</span>
+					</div>
+					<ul id="room--list">
+						<li id="room--li" onclick="location.href='/manager/roomStatus'">객실</li>
+						<li id="dining--li" onclick="location.href='/manager/facilities'">부대시설</li>
+					</ul>	
+				</li>
 				<li id="userList--li">
 					<div>
 						<span id="search--user--wrap">회원</span>
@@ -96,8 +104,16 @@ li:hover {
 						<li onclick="location.href='/manager/blackList'">블랙리스트 회원 조회</li>
 					</ul>	
 				</li>
-				<li id="reservation--li" onclick="location.href='/manager/reservation'">예약</li>
-				<li id="event--li" onclick="location.href='/event/notice'">호텔 일정</li>
+				<li id="reservation--li">
+					<div>
+						<span id="search--reserve--wrap">예약</span>
+					</div>
+					<ul id="reserve--list">
+						<li onclick="location.href='/manager/reservation'">객실 예약</li>
+						<li onclick="location.href='/manager/dining'">다이닝 예약</li>
+					</ul>
+				</li>
+				<li id="event--li" onclick="location.href='/event/notice'">이벤트</li>
 				<li id="qna--li" onclick="location.href='/question/questionList'">문의 사항</li>
 				<li id="faq--li" onclick="location.href='/manager/faq'">FAQ</li>
 			</ul>
@@ -105,6 +121,14 @@ li:hover {
 	<script type="text/javascript">
 		$("#search--user--wrap").on("click", function() {
 			$("#search--list").slideToggle()
+		});
+		
+		$("#search--reserve--wrap").on("click", function() {
+			$("#reserve--list").slideToggle()
+		});
+		
+		$("#search--room--wrap").on("click", function() {
+			$("#room--list").slideToggle()
 		});
 	</script>
 	

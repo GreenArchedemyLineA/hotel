@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Login Page</title>
+<title>Membership Page</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@300;400&display=swap');
 	* {
@@ -152,7 +156,21 @@
 		align-items: center;
 		cursor: pointer;
 	}
-
+	#grade {
+		width: 800px;
+		height: 400px;
+	}
+	.modal--box {
+		display: flex;
+		flex-direction: column;
+		margin: 10px;
+		justify-content: center;
+		align-items: center;
+	}
+	#grade-desc {
+		border-bottom: 1px solid #ebebeb;
+		margin-bottom: 10px;
+	}
 </style>
 </head>
 <body>
@@ -181,7 +199,7 @@
 					<p style="margin-bottom: 10px;">포인트 적립</p>
 					<p>멤버쉽 기간 동안 7% 적립</p>
 				</div>
-					<button type="button" class="button--container">도담 등급 보러가기</button>
+					<button type="button" class="button--container" data-toggle="modal" data-target="#grade" >도담 등급 보러가기</button>
 			</div>	
 		</div>
 		
@@ -196,7 +214,7 @@
 					<p style="margin-bottom: 10px;">1박 무료 숙박 쿠폰</p>
 					<p>바로 사용 가능한 숙박 쿠폰 제공</p>
 				</div>
-					<button type="button" onclick="#" class="button--container">멤버쉽 혜택 보러가기</button>
+					<button type="button" class="button--container" data-toggle="modal" data-target="#membership">멤버쉽 혜택 보러가기</button>
 			</div>	
 			<img alt="" src="/images/membership2.jpg" class="membership--image">
 		</div>
@@ -204,5 +222,36 @@
 			<button onclick="location.href='/joinMembership'" class="sub--button">멤버쉽 가입하기</button>
 		</div>
 	</div>
+		<div class="modal" id="grade">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">등급별 혜택 바로보기</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal--box">	
+					<c:forEach var="grade" items="${gradeList}">
+						<span><b>${grade.name}</b></span>
+						<span id="grade-desc">${grade.description}</span>
+					</c:forEach>				
+				</div>
+		</div>
+	</div>
+	<div class="modal" id="membership">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">도담 멤버쉽</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal--box">					
+					<span><b>${membership.price}</b></span>
+					<span>${membership.content1}</span>
+					<span>${membership.content2}</span>
+					<span>${membership.content3}</span>
+				</div>
+			</div>
+		</div>
+	</div>
 </main>
-<%@ include file="../layout/footer.jsp"%>
+
+

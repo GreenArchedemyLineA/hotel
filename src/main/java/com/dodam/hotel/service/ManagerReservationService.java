@@ -1,6 +1,7 @@
 package com.dodam.hotel.service;
 
 import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,15 +37,10 @@ public class ManagerReservationService {
 	@Autowired
 	private DiningRepository diningRepository;
 
-	public List<Reservation> readTodayAllReservation() {
-		List<Reservation> reservationEntitys = reservationRepository.findAllReservation();
-		return reservationEntitys;
-	}
-
 	@Transactional
 	public List<Reservation> readUserReservation(String name) {
 		List<Reservation> reservationList = new ArrayList<>();
-		List<MUser> userEntitys = mUserRepository.findByname(name);
+		List<MUser> userEntitys = mUserRepository.findByName(name);
 		userEntitys.stream().forEach((user) -> {
 			List<Reservation> reservationUserList = reservationRepository.findReservationByUserId(user.getId());
 			reservationUserList.forEach((reservation -> {
@@ -54,7 +50,19 @@ public class ManagerReservationService {
 
 		return reservationList;
 	}
-
+	
+	@Transactional
+    public List<Reservation> readTodayReservation(){
+    	List<Reservation> reservationEntitys = reservationRepository.findTodayReservation();
+        return reservationEntitys;
+    }
+	
+	@Transactional
+    public List<Reservation> readAllReservation(){
+    	List<Reservation> reservationEntitys = reservationRepository.findAllReservation();
+    	return reservationEntitys;
+    }
+    
 	@Transactional
 	public Map<String, Object> readReservationById(Integer id) {
 		Map<String, Object> mapList = new HashMap<>();
@@ -83,16 +91,33 @@ public class ManagerReservationService {
 		int result = reservationRepository.deleteReservation(id);
 		return result;
 	}
-
-	public List<DiningReservation> readDiningReservationAllList(Date date) {
+	
+	// 다이닝 날짜 조회
+	@Transactional
+	public List<DiningReservation> readDiningReservationAllLisByDate(Date date) {
 		List<DiningReservation> diningReservationEntitys = reservationRepository.findDiningReservation(date);
 		return diningReservationEntitys;
 	}
+	
+	// 다이닝 오늘 조회
+	@Transactional
+	public List<DiningReservation> readTodayDining() {
+		List<DiningReservation> diningReservationList = reservationRepository.findTodayDining();
+		return diningReservationList;
+	}
+	
+	// 다이닝 전체 조회
+	@Transactional
+	public List<DiningReservation> readAllDining() {
+		List<DiningReservation> diningReservationList = reservationRepository.findAllDining();
+		return diningReservationList;
+	}
+	
 
 	// 오늘 예약 매출 조회
 	@Transactional
 	public int readBeforeTodayTotalPrice() {
-		int resultRowCount = reservationRepository.findTodayTotalPrice();
+		int resultRowCount = reservationRepository.findTodayTotalPrice() == null ? 0 : reservationRepository.findTodayTotalPrice();
 		return resultRowCount;
 	}
 
@@ -100,6 +125,9 @@ public class ManagerReservationService {
 	@Transactional
 	public Integer readBeforeTotalPrice(Integer count) {
 		Integer resultRowCount = reservationRepository.findBeforeTotalPrice(count);
+		if(resultRowCount == null) {
+			resultRowCount = 0;
+		}
 		return resultRowCount;
 	}
 

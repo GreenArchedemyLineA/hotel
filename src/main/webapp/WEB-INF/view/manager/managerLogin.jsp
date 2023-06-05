@@ -28,7 +28,7 @@ body {
 }
 
 main {
-	background-color: #64c5f3;
+	background-color: #84C9FF;
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -71,7 +71,7 @@ main {
 	height: 50px; margin-bottom : 15px;
 	border: none;
 	border-bottom: 2px solid black;
-	background-color: #64c5f3;
+	background-color: #84C9FF;
 	margin-bottom: 15px;
 }
 
@@ -81,7 +81,7 @@ main {
 	margin-bottom: 15px;
 	border: none;
 	border-bottom: 2px solid black;
-	background-color: #64c5f3;
+	background-color: #84C9FF;
 }
 </style>
 </head>
@@ -106,4 +106,3 @@ main {
 			</div>
 		</div>
 	</main>
-<%@ include file="../layout/footer.jsp"%>

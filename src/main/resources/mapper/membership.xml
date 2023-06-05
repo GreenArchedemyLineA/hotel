@@ -33,5 +33,9 @@
 		DELETE FROM membership_tb where user_id = #{userId}
 	</delete>
 	
+	<!-- 멤버쉽 정보 조회 -->
+	<select id="findMembership" resultType="com.dodam.hotel.repository.model.Membership">
+		select * from membership_tb
+	</select>
 	
 </mapper>

@@ -1,7 +1,10 @@
 package com.dodam.hotel.controller;
 
 import java.util.List;
+
+
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -78,12 +81,17 @@ public class ReservationController {
 		model.addAttribute("poolPrice", reservationOptionPrice.getPoolPrice());
 		model.addAttribute("fitnessPrice", reservationOptionPrice.getFitnessPrice());
 		
+		model.addAttribute("diningStatus", reservationService.diningStatus().get(0));
+		model.addAttribute("fitnessStatus", reservationService.fitnessStatus().get(0));
+		model.addAttribute("poolStatus", reservationService.poolStatus().get(0));
+		model.addAttribute("spaStatus", reservationService.spaStatus().get(0));
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		selectReserveDetail.setUserId(principal.getId());
 		Map<String, Object> selectList = reservationService.readAvailableCouponOrPoint(selectReserveDetail);
 		
 		model.addAttribute("point", selectList.get("point"));
 		model.addAttribute("couponList", selectList.get("couponList"));
+		model.addAttribute("orderName", UUID.randomUUID().toString() + System.currentTimeMillis());
 		return "/reservation/reservation";
 	}
 	
@@ -120,5 +128,6 @@ public class ReservationController {
 		return "/user/reservationList";
 	}
 	
+
 }
 

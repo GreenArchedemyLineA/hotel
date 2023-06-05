@@ -99,8 +99,33 @@
     <select id="findAllPool" resultType="com.dodam.hotel.repository.model.Pool">
         select * from pool_tb;
     </select>
+    
 	<select id="findAllSpa" resultType="com.dodam.hotel.repository.model.Spa">
         select * from spa_tb;
     </select>
 	
+
+	<select id="findByAllFitness" resultType="com.dodam.hotel.repository.model.Fitness">
+        select * from fitness_tb;
+    </select>
+    
+    <select id="findByAllPool" resultType="com.dodam.hotel.repository.model.Pool">
+        select * from pool_tb;
+    </select>
+    
+	<select id="findByAllSpa" resultType="com.dodam.hotel.repository.model.Spa">
+        select * from spa_tb;
+    </select>
+	
+
+	<!-- 부대시설 상태 조회 -->
+	<select id="findPoolStatus" resultType="int">
+        select availability from pool_tb;
+    </select>
+    <select id="findSpaStatus" resultType="int">
+        select availability from spa_tb;
+    </select>
+    <select id="findFitnessStatus" resultType="int">
+        select availability from fitness_tb;
+    </select>
 </mapper>

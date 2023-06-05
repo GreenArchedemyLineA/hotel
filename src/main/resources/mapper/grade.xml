@@ -36,7 +36,12 @@
 	
 	<!-- myPage 회원 등급 조회하는 용도 -->
 	<select id="findGradeByUserId" resultMap="GradeInfo">
-		select g.name as grade_name, g.description as description, u.name as user_name, u.tel as tel, g.id as grade_id
+		select
+		    g.name as grade_name,
+		    g.description as description,
+		    u.name as user_name,
+		    u.tel as tel,
+		    g.id as grade_id
 		from grade_info_tb as gi
 		inner join user_tb as u
 		on gi.user_id = u.id
@@ -51,4 +56,7 @@
 		where user_id = #{userId}
 	</update>
 	
+	<select id="findAllGrade" resultType="com.dodam.hotel.repository.model.Grade">
+		select * from grade_tb
+	</select>
 </mapper>

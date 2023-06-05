@@ -1,7 +1,9 @@
 package com.dodam.hotel.controller;
 
-import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.dto.api.ResponseMsg;
+import com.dodam.hotel.repository.model.MembershipInfo;
+import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.User;
+import com.dodam.hotel.service.ManagerReservationService;
+import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.Define;
 /**
@@ -30,6 +36,12 @@ public class ApiController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private ReservationService reservationService;
+	
+	@Autowired
+	private ManagerReservationService managerReservationService;
+	
 	// 회원 정보 수정
 	@GetMapping("/myInfo")
 	public UserResponseDto.MyPageResponseDto updateUserInfo() {
@@ -38,6 +50,41 @@ public class ApiController {
 		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
 		
 		return responseUser;
+	}
+	
+	/**
+	 *  성희
+	 *  구글 차트 ajax 작업
+	 */
+	// 매출 조회
+	@GetMapping("/totalPrice")
+	public List<Integer> totalPrice() {
+	    Integer totalPrice = managerReservationService.readBeforeTodayTotalPrice();
+	    List<Integer> price = new ArrayList<>();
+	    for (int i = 6; i > 0; i--) {
+	        Integer beforeTotalPrice = managerReservationService.readBeforeTotalPrice(i);
+	        if (beforeTotalPrice == null) {
+	            beforeTotalPrice = 0;
+	        }
+	        price.add(beforeTotalPrice);
+	    }
+	    price.add(totalPrice);
+	    return price;
+}
+	
+	// 회원가입 / 멤버쉽가입 카운트 조회 (성희)
+	@GetMapping("/joinCount")
+	public List<Integer> joinCount() {
+		List<User> userToday = userService.readJoinUserToday();
+		Integer memberCount = userToday.size();
+		List<MembershipInfo> membershipToday = userService.readJoinMembershipToday();
+		Integer membershipCount = membershipToday.size();
+		
+		List<Integer> countBox = new ArrayList<>();
+		countBox.add(memberCount);
+		countBox.add(membershipCount);
+		
+		return countBox;
 	}
 	
 	// 아이디 중복검사(현우)
@@ -62,4 +109,17 @@ public class ApiController {
 		}
 	}
 	
-}
+	// 예약조회  (성희)
+	@GetMapping("/reserve")
+	public List<Reservation> reserveDetail(Integer id) {		
+			List<Reservation> reservations = reservationService.readAllReservationByUserId(id);
+			return reservations;
+		}
+	
+	// 예약 전체 조회
+	@GetMapping("/allReserve")
+	public List<Reservation> reservation() {
+		List<Reservation> reservations = managerReservationService.readAllReservation();
+		return reservations;
+	}
+} // end of class

@@ -15,7 +15,7 @@
 	border: none;
 	color: #fff;
 	cursor: pointer;
-	width: 60px;
+	width: 100px;
 	height: 30px;
 }
 
@@ -82,6 +82,13 @@
 	width: 600px;
 	height: 500px;
 }
+.modal--box {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 50px;
+}
 </style>
 		<div class="content">
 			<h2 >객실</h2>
@@ -129,29 +136,38 @@
 			<div class="modal-content">
 	
 				<div class="modal-header">
-					<h4 class="modal-title">호텔 행사 일정 작성</h4>
+					<h4 class="modal-title">객실 상태 변경</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 	
 				<div>
-					<form action="/manager/roomStatus/${room.id}" method="post">
-				<label for="roomname">이름</label> 
-				<input type="text" name="name" id="name" value="${room.roomType.name}"> 
-				<br>
-				<label for="roomnumber_of_p">인원</label> 
-				<input type="text" name="number_of_p" id="number_of_p" value="${room.roomType.numberOfP}">
-				<br>
-				<label for="roomprice">가격</label> 
-				<input type="text" name="price" id="price" value="${room.roomType.price}">
-				<br>
-				<label for="roomavailability">사용여부</label>
-				<input type="text" name="availability" id="availability" value="${room.availability}">
-				<br>
-				<label for="description">상태</label>
-				<input type="text" name="description" id="description" value="${room.roomType.description}"> 
-				<br>
-				<button type="submit">수정</button>
-			</form>
+				<form action="/manager/roomStatus/${room.id}" method="post" class="modal--box">
+					<div>
+						<label for="roomname">이름</label> 
+						<input type="text" name="name" id="name" value="${room.roomType.name}" class="input--box"> 
+					</div>
+					
+					<div>
+						<label for="roomnumber_of_p">인원</label> 
+						<input type="text" name="number_of_p" id="number_of_p" value="${room.roomType.numberOfP}" class="input--box">
+					</div>
+					
+					<div>
+						<label for="roomprice">가격</label> 
+						<input type="text" name="price" id="price" value="${room.roomType.price}" class="input--box">
+					</div>
+					
+					<div>
+						<label for="roomavailability">사용여부</label>
+						<input type="text" name="availability" id="availability" value="${room.availability}" class="input--box">
+					</div>
+					
+					<div>
+						<label for="description">상태</label>
+						<input type="text" name="description" id="description" value="${room.roomType.description}" class="input--box"> 
+					</div>
+					<button type="submit" class="sub--button">객실 변경</button>
+				</form>
 				</div>
 	
 			</div>
@@ -164,4 +180,3 @@
 
 checkStatus();
 </script>
-<%@ include file="../layout/footer.jsp"%>

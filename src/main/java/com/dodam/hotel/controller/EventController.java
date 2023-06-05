@@ -2,6 +2,7 @@ package com.dodam.hotel.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.dodam.hotel.dto.NoticeInsertForm;
 import com.dodam.hotel.handler.exception.CustomRestFullException;
 import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
+import com.dodam.hotel.dto.EventInsertForm;
 import com.dodam.hotel.repository.model.Event;
 import com.dodam.hotel.service.EventService;
 import com.dodam.hotel.util.PagingObj;
@@ -69,13 +70,13 @@ public class EventController {
 	
 	// 매니저 insert
 	@PostMapping("/event-insert")
-	public String eventWrite(@Validated NoticeInsertForm noticeInsertForm, BindingResult bindingResult) {
-		if(bindingResult.hasErrors()) {
-			bindingResult.getAllErrors().forEach(e -> {
-				throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
-			});
-		}
-		eventService.insertEvent(noticeInsertForm);
+	public String eventWrite(@Validated EventInsertForm eventInsertForm, BindingResult bindingResult) {
+	if(bindingResult.hasErrors()) {
+		bindingResult.getAllErrors().forEach(e -> {
+			throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+		});
+	}
+		eventService.insertEvent(eventInsertForm);
 		return "redirect:/event/notice";
 	}
 	
@@ -92,17 +93,17 @@ public class EventController {
 	
 	// 매니저 이벤트 수정
 	@PostMapping("/updateEvent/{id}")
-	public String updateEvent(@PathVariable Integer id, @Validated NoticeInsertForm noticeInsertForm, BindingResult bindingResult) {
+	public String updateEvent(@PathVariable Integer id, @Validated EventInsertForm eventInsertForm, BindingResult bindingResult) {
 		if(id == null) {
-    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
-    	}
+			throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+		}
 		if(bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach(e -> {
 				throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
 			});
 		}
-		noticeInsertForm.setId(id);
-		eventService.updateEvent(noticeInsertForm);
+		eventInsertForm.setId(id);
+		eventService.updateEvent(eventInsertForm);
 		return "redirect:/event/notice";
 	}
 	

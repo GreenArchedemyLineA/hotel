@@ -13,17 +13,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dodam.hotel.dto.InquiryRequestDto;
 import com.dodam.hotel.dto.UserRequestDto;
 import com.dodam.hotel.dto.UserResponseDto;
+import com.dodam.hotel.dto.api.ResponseMsg;
 import com.dodam.hotel.handler.exception.CustomRestFullException;
 import com.dodam.hotel.repository.model.Coupon;
 import com.dodam.hotel.repository.model.Event;
+import com.dodam.hotel.repository.model.Grade;
 import com.dodam.hotel.repository.model.GradeInfo;
+import com.dodam.hotel.repository.model.Membership;
 import com.dodam.hotel.repository.model.Reply;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.CouponService;
@@ -88,7 +93,6 @@ public class UserController {
 		model.addAttribute("responseUser", responseUser);
 		return "/user/myPage";
 	}
-
 	// 로그인 기능 구현 (현우)
 	@PostMapping("/loginProc")
 	public String loginProc(@Validated UserRequestDto.LoginFormDto loginDto, BindingResult bindingResult) {
@@ -99,7 +103,8 @@ public class UserController {
 		}
 		UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(loginDto);
 		session.setAttribute(Define.PRINCIPAL, principal);
-
+		session.setAttribute("tel", principal.getTel());
+		System.out.println(session.getAttribute("tel"));
 		if (principal.getRandomPwdStatus()) {
 			return "/user/changePw";
 		}
@@ -131,7 +136,7 @@ public class UserController {
 	@GetMapping("/logout")
 	public String logout() {
 		session.invalidate();
-		return "redirect:/login";
+		return "redirect:/";
 	}
 
 	// 회원정보 수정 처리 (김현우)
@@ -177,7 +182,29 @@ public class UserController {
 		userService.createUser(insertDto);
 		return "redirect:/";
 	}
-
+	
+	// 회원 탈퇴 처리 (성희)
+	@DeleteMapping("/delete")
+	@ResponseBody
+	public ResponseMsg withdraw(String email) {
+		int result = userService.deleteUser(email);
+		if(result != 1) {
+			ResponseMsg failMsg = ResponseMsg.builder()
+					.status_code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+					.msg("다시 시도해주세요")
+					.redirect_uri("/myPage")
+					.build();
+			return failMsg;
+		} else {
+			ResponseMsg successMsg = ResponseMsg.builder()
+					.status_code(HttpStatus.OK.value())
+					.msg("탈퇴 처리 하였습니다. 감사합니다")
+					.redirect_uri("/logout")
+					.build();
+			return successMsg;
+		}
+	}
+	
 	// 카카오 회원가입 처리 (성희)
 	@PostMapping("/kakaoJoin")
 	public String kakaoJoin(@Validated UserRequestDto.InsertDto insertDto, BindingResult bindingResult) {
@@ -196,7 +223,11 @@ public class UserController {
 
 	// 멤버쉽 페이지 (성희)
 	@GetMapping("/membership")
-	public String membershipPage() {
+	public String membershipPage(Model model) {
+		List<Grade> gradeList = gradeService.readAllGrade();
+		model.addAttribute("gradeList", gradeList);
+		Membership membership = userService.readMembershipInfo();
+		model.addAttribute("membership", membership);
 		return "/membership/membership";
 	}
 

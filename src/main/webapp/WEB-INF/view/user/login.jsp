@@ -24,11 +24,8 @@
 		<form action="/loginProc" method="post" class="form--container">
 			<input type="email" name="email" placeholder="이메일을 입력해 주세요" class="input--box" autocomplete="off"> 
 			<input type="password" name="password" placeholder="비밀번호를 입력해 주세요" class="input--box" autocomplete="off"> 
-			<div class="check--box">
-				<input type="checkbox"> ID 저장 
-			</div>
 			<button type="submit" class="sub--button">로그인</button>
-			<a href="https://kauth.kakao.com/oauth/authorize?client_id=9b1b097488dc5873535e6b706d20920d&redirect_uri=http://localhost:8080/auth/kakaoLogin&response_type=code" id="kakao--button"><img alt="" src="/images/kakao_login_medium_wide.png"></a>
+			<a href="https://kauth.kakao.com/oauth/authorize?client_id=9b1b097488dc5873535e6b706d20920d&redirect_uri=http://localhost:8080/auth/kakaoLogin&response_type=code" id="kakao--button"><img alt="" src="/images/kakao_login_medium_wide.png" width="350px;"></a>
 			<p> 아직 도담 회원이 아니세요? </p>
 			<p> 회원가입하고 도담의 다양한 혜택을 누려보세요 </p>
 			<button type="button" class="join--button" onclick="location.href='/join'">회원가입</button>
@@ -36,4 +33,4 @@
 		</form>
 	</div>
 </main>
-<%@ include file="../layout/footer.jsp"%>
+</html>

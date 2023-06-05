@@ -70,9 +70,29 @@
 						</div>
 						<input class="sub--button" id="update--btn" type="button" value="정보 수정">
 					</form>
+						<button class="sub-button" onclick="withdrawUser('${responseUser.email}')" style="margin-left: 42px;">회원 탈퇴</button>
 				</div>
 			</div>
 		</div>
 	</main>
 	<script src="/js/myinfo.js"></script>
-<%@ include file="../layout/footer.jsp"%>
+	<script>
+		function withdrawUser(email) {
+			if(confirm("정말 탈퇴하시겠어요?")) {
+				fetch("/delete?email="+email, ({
+					method: "delete"
+				})).then(async (response) => {
+					let result = await response.json();
+					if(result.status_code == 200) {
+						alert(result.msg);
+						location.href=result.redirect_uri;
+					} else {
+						alert(result.msg);
+						location.href=result.redirect_uri;
+					}
+				});
+			} else {
+				history.back()
+			}
+		}
+	</script>

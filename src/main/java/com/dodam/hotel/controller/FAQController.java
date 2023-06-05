@@ -3,6 +3,7 @@ package com.dodam.hotel.controller;
 import java.util.List;
 
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class FAQController {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
         FAQ responseFaq = managerFAQService.readFAQById(id);
+        responseFaq.setContent(responseFaq.getContent().replace("\r\n", "<br>"));
         model.addAttribute("faq", responseFaq);
         return "/manager/FAQDetail";
     }
@@ -52,7 +54,7 @@ public class FAQController {
     //매니저용 
     @GetMapping("/manager/faq/write")
     public String faqWritePage(){
-        return "/manager/FAQWrtie";
+        return "/manager/FAQWrite";
     }
     
     //매니저용 

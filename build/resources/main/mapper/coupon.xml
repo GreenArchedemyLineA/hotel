@@ -6,19 +6,24 @@
 
 	<!-- 쿠폰 등록 -->
 	<insert id="insert">
-		INSERT INTO coupon_tb (name, content, user_id,
+		INSERT INTO coupon_tb (coupon_info_id, user_id,
 		start_date, end_date)
-		VALUES ('1박 무료 숙박 쿠폰', '멤버쉽 회원이 되신걸 환영합니다! ', #{userId}, date_format(now(),
+		VALUES (#{couponInfoId.coupon}, #{userId}, date_format(now(),
 		'%Y-%m-%d'), date_add(start_date, INTERVAL 1 YEAR));
 	</insert>
 	
 	<resultMap type="com.dodam.hotel.repository.model.Coupon" id="Coupon">
 		<result column="id" property="id"/>
-		<result column="name" property="name"/>
-		<result column="content" property="content"/>
 		<result column="start_date" property="startDate"/>
 		<result column="end_date" property="endDate"/>
 		<collection property="user" resultMap="User"></collection>
+		<collection property="couponInfo" resultMap="CouponInfo"></collection>
+	</resultMap>
+	
+	<resultMap type="com.dodam.hotel.repository.model.CouponInfo" id="CouponInfo">
+		<result column="coupon_info_id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="content" property="content"/>
 	</resultMap>
 	
 	<resultMap type="com.dodam.hotel.repository.model.User" id="User">
@@ -29,6 +34,7 @@
 		<result column="gender" property="gender"/>
 		<result column="birth" property="birth"/>
 		<result column="tel" property="tel"/>
+		<result column="address" property="address"/>
 		<result column="blacklist" property="blacklist"/>
 		<result column="withdrawal" property="withdrawal"/>
 		<result column="created_at" property="createdAt"/>
@@ -36,11 +42,41 @@
 	
 	<!-- 특정 회원 쿠폰 조회 -->
 	<select id="findByUserId" resultMap="Coupon">
-		select *
+		select c.id as id, c.start_date as start_date, c.end_date as end_date, ci.id as coupon_info_id, ci.name as name, ci.content as content
 		from coupon_tb as c
-		inner join user_tb as u
-		on c.user_id = u.id
-		where c.user_id = #{userId}
+		left join coupon_info_tb as ci
+		on c.coupon_info_id = ci.id
+		where user_id = #{userId}
 	</select>
 	
+	<select id="findCouponCountByUserId" resultType="int">
+		select count(*)
+		from coupon_tb
+		where user_id = #{userId}
+	</select>
+	
+	<select id="findByUserIdPaging" resultMap="Coupon">
+		SELECT * 
+		from (
+ 			SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* 
+        	FROM (
+				SELECT c.id as id, c.start_date as start_date, c.end_date as end_date, ci.id as coupon_info_id, ci.name as name, ci.content as content
+				from coupon_tb as c
+				left join coupon_info_tb as ci
+				on c.coupon_info_id = ci.id
+            	WHERE c.user_id = #{userId}
+        	    ORDER BY id DESC
+     	       ) A, 
+        		(SELECT @ROWNUM := 0 ) B
+        	) as C
+		WHERE C.ROWNUM BETWEEN #{obj.start} AND #{obj.end}
+	</select>
+
+	<delete id="deleteByUserIdandCouponInfoId">
+		delete
+			from coupon_tb
+		where
+		    user_id = #{userId}
+			and coupon_info_id = #{couponId}
+	</delete>
 </mapper>

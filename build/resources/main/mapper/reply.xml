@@ -10,5 +10,9 @@
 		values(#{content},#{questionId},#{managerId});
 	</insert>
 
-
+	<delete id="deleteReply">
+		delete from reply_tb
+    	where question_id = #{questionId};
+	</delete>
+	
 </mapper>

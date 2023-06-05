@@ -2,6 +2,7 @@ package com.dodam.hotel.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,10 @@ import com.dodam.hotel.repository.interfaces.GradeRepository;
 import com.dodam.hotel.repository.interfaces.MembershipRepository;
 import com.dodam.hotel.repository.interfaces.PointRepository;
 import com.dodam.hotel.repository.interfaces.UserRepository;
+import com.dodam.hotel.repository.model.Membership;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.User;
+import com.dodam.hotel.util.CreateRandomStr;
 
 @Service
 public class UserService {
@@ -40,7 +43,7 @@ public class UserService {
 
 	@Autowired
 	private PointRepository pointRepository;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -96,7 +99,7 @@ public class UserService {
 		responseDto.setAddress(userEntity.getAddress());
 		return responseDto;
 	}
-	
+
 	// 아이디 중복검사
 	@Transactional
 	public User readUserForDuplicationCheck(String email) {
@@ -128,25 +131,23 @@ public class UserService {
 	 */
 	@Transactional
 	public UserRequestDto.InsertDto createUser(UserRequestDto.InsertDto insertDto) {
-		// 중복 회원가입 검사 (todo)
-		
 		// 탈퇴한 유저인지 조회
 		User userEntity = userRepository.findUserByOriginEmail(insertDto.getEmail());
-		if(userEntity == null) {
+		if (userEntity == null) {
 			// 조회 돌리기
 			// 비밀번호 암호화
 			String hashPwd = passwordEncoder.encode(insertDto.getPassword());
 			insertDto.setPassword(hashPwd);
 			int resultRowCount = userRepository.insert(insertDto);
 			if (resultRowCount != 1) {
-				System.out.println("회원가입 서비스 오류");
+				throw new CustomRestFullException("회원가입에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			// 회원가입 id 검색
 			int userId = userRepository.findIdOrderById(insertDto);
-	
+
 			// 등급 부여
 			int result = gradeRepository.insertGrade(userId);
-	
+
 			// 포인트 세팅
 			int pointResult = pointRepository.insertZeroPoint(userId);
 		} else {
@@ -154,7 +155,7 @@ public class UserService {
 			String hashPwd = passwordEncoder.encode(insertDto.getPassword());
 			insertDto.setPassword(hashPwd);
 			int result = userRepository.updateUserByOriginEmail(insertDto);
-			if(result != 1) {
+			if (result != 1) {
 				// 오류
 			}
 		}
@@ -168,21 +169,53 @@ public class UserService {
 	public UserRequestDto.InsertDto createUserKakao(UserRequestDto.InsertDto insertDto) {
 		// 중복 회원가입 검사 (todo)
 
-		insertDto.setPassword(dodamKey);
-		int resultRowCount = userRepository.insertKakao(insertDto);
-		if (resultRowCount != 1) {
-			System.out.println("회원가입 서비스 오류");
+		// 탈퇴 유저 조회
+		User userEntity = userRepository.findUserByOriginEmail(insertDto.getEmail());
+		if (userEntity == null) {
+			// 카카오 임시 비밀번호 세팅
+			insertDto.setPassword(dodamKey);
+
+			int resultRowCount = userRepository.insertKakao(insertDto);
+			if (resultRowCount != 1) {
+				System.out.println("회원가입 서비스 오류");
+			}
+			// 회원가입 id 검색
+			int userId = userRepository.findIdOrderById(insertDto);
+
+			// 등급 부여
+			int result = gradeRepository.insertGrade(userId);
+
+			// 포인트 세팅
+			int pointResult = pointRepository.insertZeroPoint(userId);
+
+		} else {
+			int result = userRepository.updateUserByOriginEmail(insertDto);
+			if (result != 1) {
+				// 오류
+			}
 		}
-		// 회원가입 id 검색
-		int userId = userRepository.findIdOrderById(insertDto);
-
-		// 등급 부여
-		int result = gradeRepository.insertGrade(userId);
-
-		// 포인트 세팅
-		int pointResult = pointRepository.insertZeroPoint(userId);
-
 		return insertDto;
+	}
+
+	// 회원 탈퇴 서비스 (성희)
+	@Transactional
+	public int deleteUser(String email) {
+		int resultRowCount = 0;
+		// 1. email로 user 조회
+		User user = userRepository.findUserByEmail(email);
+		if (user.getWithdrawal() == false) {
+			// origin email 저장
+			user.setOriginEmail(user.getEmail());
+			// 랜덤 문자열 생성
+			String randomStr = CreateRandomStr.createRandomString();
+			// 원래 이메일 -> 랜덤문자열 이메일로 변경
+			user.setEmail(randomStr + "-" + user.getEmail());
+			resultRowCount = userRepository.deleteUser(user);
+
+		} else {
+			// 예외처리
+		}
+		return resultRowCount;
 	}
 
 	// 오늘 회원가입 회원 조회
@@ -237,5 +270,12 @@ public class UserService {
 		}
 		return resultRow;
 	}
-
+	
+	// 멤버쉽 정보 조회
+	@Transactional
+	public Membership readMembershipInfo() {
+		Membership membership = membershipRepository.findMembership();
+		return membership;
+	}
+	
 }

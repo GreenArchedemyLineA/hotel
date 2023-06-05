@@ -3,9 +3,9 @@ package com.dodam.hotel.repository.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-import javax.validation.constraints.Min;
-
 import org.hibernate.validator.constraints.Range;
+
+import com.dodam.hotel.util.DateFormat;
 
 import lombok.Data;
 
@@ -25,6 +25,7 @@ public class Reservation {
     private Integer fitnessId;
     private Integer poolId;
     private Integer spaId;
+    private String payTid;
 
     // ========= Mapping ===========
     private User user;
@@ -34,5 +35,9 @@ public class Reservation {
     private Pool pool;
     private Spa spa;
     
+    public String dateFormat() {
+		String formatDate = DateFormat.dateFormat(this.createdAt);
+		return formatDate;
+	}
     
 }
