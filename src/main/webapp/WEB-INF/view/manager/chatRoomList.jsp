@@ -27,6 +27,7 @@
 }
 </style>
 	<div class="content">
+		<h2>1:1 실시간 문의</h2>
 		<div class="room--total">
 			<c:forEach var="room" items="${chatRoomList}">
 			    <button class="room--box" onclick="chat('${room.roomName}')">${room.roomName}</button>

@@ -42,7 +42,7 @@ footer {
 <footer>
 	<div class="chat--div">
 		<div class="chat--inner--div">
-			<a id="open--chat" onclick="openChat()">
+			<a id="open--chat" onclick="openChat('${principal}')">
 				<i class="xi-message-o"></i>
 			</a>
 		</div>
@@ -59,15 +59,20 @@ footer {
 let popupX = (document.body.offsetWidth / 2) - (400 / 2);
 
 let popupY= (window.screen.height / 2) - (600 / 2);
-let popupOption = "width=400,height=600,left=" + popupX + ",top=" + popupY + ",scrollbars = yes";
+let popupOption = "width=400,height=600,left=" + popupX + ",top=" + popupY + ",scrollbars = yes,resizeable";
 let url;
-function openChat() {
-	url  = "http://localhost:8080/question/chatRoom"
-	let returnChatRoom = window.open(
-			url,
-			"popup",
-			popupOption
-	);
+function openChat(user) {
+	if(user === "") {
+		alert("로그인 후 이용가능합니다.");
+		location.href="/login";
+	} else {
+		url  = "http://localhost:8080/question/chatRoom";
+		let returnChatRoom = window.open(
+				url,
+				"popup",
+				popupOption
+		);
+	}
 };
 </script>
 </body>
