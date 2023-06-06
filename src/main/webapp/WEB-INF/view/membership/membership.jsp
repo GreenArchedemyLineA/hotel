@@ -171,6 +171,10 @@
 		border-bottom: 1px solid #ebebeb;
 		margin-bottom: 10px;
 	}
+	.modal--content {
+		width: 1000px;
+		height: 500px;
+	}
 </style>
 </head>
 <body>

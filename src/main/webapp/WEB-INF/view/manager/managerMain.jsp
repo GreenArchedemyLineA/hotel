@@ -1,9 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
-<link
-	href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css'
-	rel='stylesheet' />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
 <style>
 #date {
 	font-size: 40px;
@@ -125,6 +132,9 @@ a:hover {
 }
 .fc-title{
 	color: #4A4B4B;
+}
+.event-3 {
+	background-color: gray;
 }
 </style>
 <div class="main--container">
@@ -259,15 +269,7 @@ a:hover {
 </div>
 </main>
 
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<script type="text/javascript"
-	src="https://www.gstatic.com/charts/loader.js"></script>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
-<script
-	src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
-<script
-	src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+
 <script>
 	window.onload = function() {
 		let today = new Date();
@@ -427,15 +429,20 @@ a:hover {
                         url: '/api/allReserve', 
                         type: 'GET', 
                     }).done(function(response) {
+                    	  console.log(response)
                     	  let events = [];
                           for (let i = 0; i < response.length; i++) {
                               let reservation = response[i];
+                              if (reservation && reservation.room) {
                               let event = {
                             	  title: reservation.user.name,
                                   start: reservation.startDate,
-                                  end: reservation.endDate 
+                                  end: reservation.endDate,
+                                  className: reservation.room.id ? 'event-' + reservation.room.id : 'event-dining-id'
                               };
+                            	  
                               events.push(event);
+                              }
                           }
                         callback(events); 
                     }).fail(function(xhr, status, error) {
@@ -443,8 +450,8 @@ a:hover {
                     });
                 },
                     eventRender: function(event, element) {
-						 element
-						 .find('.fc-title').html(event.name);
+						 element.find('.fc-title').html(event.name);
+						 element.addClass(event.className);
                  }
             });
         });

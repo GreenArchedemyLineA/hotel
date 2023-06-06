@@ -139,7 +139,8 @@
 				<form action="/manager/roomStatus/${room.id}" method="post" class="modal--box" id="modal--form">
 					<div>
 						<label for="roomname">이름</label> 
-						<input type="text" name="name" id="name" value="${room.id}" class="input--box"> 
+						<input type="text" name="name" id="name" value="${room.roomType.name}" class="input--box"> 
+						<input type="text" name="id" id="name" value="${room.id}" class="input--box"> 
 					</div>
 					
 					<div>

@@ -6,6 +6,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/myPage.css" />
+<style type="text/css">
+	.sub--button {
+		width: 70px;
+	}
+</style>
 </head>
 <body>
 	<table class="table--container">
@@ -34,13 +39,22 @@
 					<tr class="table--tr--container">
 						<td>${list.startDate}</td>
 						<td>${list.endDate}</td>
-						<td>${list.room.roomType.name}</td>
-						<td>${list.numberOfP}</td>
-						<td>${list.formatPrice()}</td>
-						<td>${list.createdAt}</td>
+						<c:choose>
+							<c:when test="${list.startDate == list.endDate}">
+								<td>다이닝</td>
+								<td>${list.numberOfP}</td>
+								<td>${list.payTid}</td>
+							</c:when>
+							<c:otherwise>
+								<td>${list.room.roomType.name}</td>
+								<td>${list.numberOfP}</td>
+								<td>${list.formatPrice()}</td>
+							</c:otherwise>
+						</c:choose>
+						<td>${list.dateFormat()}</td>
 						<td>
 						<form action="/pay/refund/${list.payTid}/${list.id}" method="post">
-							<button type="submit">환불/ 예약 취소</button>
+							<button type="submit" class="sub--button"> 예약 취소 </button>
 						</form>
 						<%-- <button onclick="deleteReservation(${list.payTid},${list.totalPrice})">환불/예약 취소</button> --%>
 						</td>

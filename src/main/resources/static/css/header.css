@@ -66,6 +66,7 @@ a:hover {
 	left: -20px;
 	z-index: 10000;
 	background-color: #F6F6F7;
+	opacity : 0.7;
 	width: 150px;
 }
 
@@ -92,6 +93,7 @@ a:hover {
 	position: absolute;
 	left: -25px;
 	background-color: #F6F6F7;
+	opacity : 0.7;
 	z-index: 100000;
 	width: 150px;
 }
@@ -111,6 +113,7 @@ a:hover {
 	position: absolute;
 	left: -27px;
 	background-color: #F6F6F7;
+	opacity : 0.7;
 	z-index: 100000;
 	width: 150px;
 }
@@ -130,6 +133,7 @@ a:hover {
 	position: absolute;
 	right: 33px;
 	background-color:#F6F6F7;
+	opacity : 0.7;
 	z-index: 100000;
 	width: 150px;
 }

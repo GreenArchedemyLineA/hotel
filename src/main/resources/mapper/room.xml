@@ -268,7 +268,8 @@
 
 
 	<update id="updateManagerRoom">
-		update room_tb set availability = #{availability}
+		update room_tb set 
+		availability = #{availability}
 		where id = #{id};
 	</update>
 	
