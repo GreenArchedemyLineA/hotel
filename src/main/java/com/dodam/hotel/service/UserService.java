@@ -278,4 +278,10 @@ public class UserService {
 		return membership;
 	}
 	
+	// 포인트 조회
+	@Transactional
+	public Integer readPointInfo(Integer userId) {
+		Integer resultRow = pointRepository.findByUserId(userId);
+		return resultRow;
+	}
 }

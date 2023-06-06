@@ -167,7 +167,8 @@
 .myinfo--detail {
 	display: flex;
 	width: 285px;
-	justify-content: space-between;
+	flex-direction: column;
+	justify-content: center;
 	text-align: center;
 	margin-top: 10px;
 }

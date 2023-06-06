@@ -35,6 +35,7 @@
 					<p>${responseGrade.grade.name}</p>					
 					<p>${responseGrade.grade.description}</p>
 				</div>
+				<span style="font-size: 20px;"><b>보유 포인트 : ${point} point</b></span>
 			</div>
 			<div class="myinfo--box">
 				<span id="userUpdate" class="myinfo--box--span">회원 정보 수정</span>
