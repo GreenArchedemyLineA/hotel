@@ -173,5 +173,9 @@ public class QuestionController {
 		return "/board/question";
 	}
 	
+	@GetMapping("/chatRoom")
+	public String chatPage() {
+		return "/webSocket/chat";
+	}
 	
 }

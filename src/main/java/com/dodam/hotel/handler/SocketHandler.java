@@ -20,11 +20,14 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SocketHandler extends TextWebSocketHandler {
+	
     private ChatRepository chatRepository;
+    
     @Autowired
     public SocketHandler(ChatRepository chatRepository){
         this.chatRepository = chatRepository;
     }
+    
     // 매니저 세션
     private static Set<WebSocketSession> managerSessions = ConcurrentHashMap.newKeySet();
     // 유저 세션
@@ -37,7 +40,6 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         // 유저인 경우
-        System.out.println(session.getAttributes().get(Define.PRINCIPAL));
         if(session.getAttributes().get(Define.PRINCIPAL) != null){
             userSessions.add(session);
             userSessionMap.put(((UserResponseDto.LoginResponseDto) session.getAttributes().get(Define.PRINCIPAL)).getName(), session);
@@ -86,9 +88,9 @@ public class SocketHandler extends TextWebSocketHandler {
 
             UserResponseDto.LoginResponseDto userInfo = (UserResponseDto.LoginResponseDto) targetSession.getAttributes().get(Define.PRINCIPAL);
             Integer targetUserId = userInfo.getId();
-            System.out.println(targetUserId);
             ChatRole role = ChatRole.MANAGER;
-            chatRepository.insertChat(targetUserId, msg.getMsg(), role);
+            chatRepository.insertManagerChat(targetUserId, msg.getMsg(), role);
+            chatRepository.updateUserMessageStatus(targetUserId);
         }
 
         if(msg.getType() == MessageType.CHAT){

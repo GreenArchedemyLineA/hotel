@@ -1,9 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
+<style>
+.content {
+	width: 100%; 
+	display : flex;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+}
+.room--total {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 1300px;
+	height: 700px;
+}
+.room--box {
+	border-radius: 10px;
+	width: 300px;
+	height: 120px;
+	margin: 10px 20px;
+	display: flex;
+	flex-direction: column;
+	padding: 15px;
+	border: 4px solid #9ACBF1;
+}
+</style>
 	<div class="content">
-		<c:forEach var="room" items="${chatRoomList}">
-		    <button onclick="chat('${room.roomName}')">${room.roomName}</button>
-		</c:forEach>
+		<div class="room--total">
+			<c:forEach var="room" items="${chatRoomList}">
+			    <button class="room--box" onclick="chat('${room.roomName}')">${room.roomName}</button>
+			</c:forEach>
+		</div>
 	</div>
 </main>
 <script>
@@ -11,4 +39,5 @@
         location.href= "/manager/chatRoom/"+roomName
     }
 </script>
-<%@ include file="../layout/footer.jsp"%>
+</body>
+</html>

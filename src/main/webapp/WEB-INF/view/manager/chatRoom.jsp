@@ -42,6 +42,9 @@ function ssss(){
     }
     ws.send(JSON.stringify(messageJSON));
     message.value = null;
+    message.focus();
 }
 </script>
-<%@ include file="../layout/footer.jsp"%>
+</body>
+</html>
+

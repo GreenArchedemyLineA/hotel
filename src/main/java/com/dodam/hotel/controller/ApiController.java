@@ -17,6 +17,7 @@ import com.dodam.hotel.dto.api.ResponseMsg;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.User;
+import com.dodam.hotel.service.ChatService;
 import com.dodam.hotel.service.ManagerReservationService;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.service.UserService;
@@ -41,6 +42,9 @@ public class ApiController {
 	
 	@Autowired
 	private ManagerReservationService managerReservationService;
+	
+	@Autowired
+	private ChatService chatService;
 	
 	// 회원 정보 수정
 	@GetMapping("/myInfo")
@@ -121,5 +125,23 @@ public class ApiController {
 	public List<Reservation> reservation() {
 		List<Reservation> reservations = managerReservationService.readAllReservation();
 		return reservations;
+	}
+	
+	@GetMapping("/checkNewMessage")
+	public ResponseMsg checkNewMessage() {
+		Integer responseCount = chatService.readNewMessageCount();
+		if(responseCount == 0) {
+			ResponseMsg noMessage = ResponseMsg
+					.builder()
+					.status_code(HttpStatus.BAD_REQUEST.value())
+					.build();
+			return noMessage;
+		} else {
+		 ResponseMsg createNew = ResponseMsg
+				 .builder()
+				 .status_code(HttpStatus.OK.value())
+				 .build();
+		 return createNew;
+		}
 	}
 } // end of class
