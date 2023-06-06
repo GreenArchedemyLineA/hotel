@@ -70,4 +70,3 @@
 			inline : true
 		});
 	</script>
-<%@ include file="../layout/footer.jsp"%>
