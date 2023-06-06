@@ -685,10 +685,6 @@ main {
 	</div>
 </div>
 
-<!-- Socket writer:이현서 -->
-<button onclick="openChat()">채팅방</button>
-
-<!-- ##################소켓 끝#################### -->
 
 <!-- 예약 달력 -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -741,24 +737,4 @@ main {
 	});
 </script>
 <script src="js/mainToggle.js"></script>
-
-
-<!-- writer:이현서, web socket -->
-<script type="text/javascript" src="/webjars/sockjs-client/1.5.1/sockjs.min.js"></script>
-<script>
-let popupX = (document.body.offsetWidth / 2) - (400 / 2);
-
-let popupY= (window.screen.height / 2) - (600 / 2);
-let popupOption = "width=400,height=600,left=" + popupX + ",top=" + popupY + ",scrollbars = yes";
-let url;
-function openChat() {
-	url  = "http://192.168.0.75:8080/question/chatRoom"
-	let returnChatRoom = window.open(
-			url,
-			"popup",
-			popupOption
-	);
-};
-</script>
-<!-- ################################## -->
 <%@ include file="layout/footer.jsp"%>

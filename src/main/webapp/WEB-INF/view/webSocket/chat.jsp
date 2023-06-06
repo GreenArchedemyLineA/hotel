@@ -6,6 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	#msg-socket {
+		height: 470px;
+		overflow-x: hidden;
+		display: flex;
+		flex-direction: column;
+	}
+	.recieve--msg {
+		padding-left: 60px;
+	}
+	.send--msg {
+		padding-right: 25px;
+	}
+</style>
 </head>
 <body>
 <div>
@@ -13,13 +27,12 @@
 	<button onclick="closePopUp()">닫기</button>
 </div>
 <div id="socket">
+    <div id="msg-socket">
+    </div>
     <div>
         <p>소켓라인</p>
-        <input type="text" id="message">
-        <button onclick="ssss()">ㅇㅇ</button>
-    </div>
-    <div id="msg-socket">
-
+        <input type="text" id="message" onkeypress="enter(window.event)">
+        <button onclick="sendMsg()">전송</button>
     </div>
 </div>
 <script type="text/javascript" src="/webjars/sockjs-client/1.5.1/sockjs.min.js"></script>
@@ -31,15 +44,37 @@ function open(){
         // onmessage : message를 받았을 때의 callback
         ws.onmessage = function (e) {
             const socketDivTag = document.getElementById("msg-socket");
-            const data = JSON.parse(e.data)
-            console.log(data.msg);
-            const createDivTag = document.createElement("div")
+            const data = JSON.parse(e.data);
+            const createDivTag = document.createElement("div");
+            createDivTag.className = "sender--div";
+            const createDivTag2 = document.createElement("div");
+            createDivTag2.className = "recieve--msg";
+            const createDivTag3 = document.createElement("div");
+            createDivTag3.style.width = "100px";
+            console.log(data.type);
             if(data.type === "ENTER"){
+            	const eh = socketDivTag.clientHeight + socketDivTag.scrollTop;
+            	
+            	const isScroll = socketDivTag.scrollHeight <= eh;
+            	
                 createDivTag.append(data.msg + "\n")
+            	if(!isScroll) {
+            		socketDivTag.scrollTop = socketDivTag.scrollHeight;
+            	}
             }else{
-                createDivTag.append("매니저님의 답변: " + data.msg + "\n")
+            	const eh = socketDivTag.clientHeight + socketDivTag.scrollTop;
+            	
+            	const isScroll = socketDivTag.scrollHeight <= eh;
+            	
+            	createDivTag.append("매니저:");
+            	createDivTag3.append(data.msg + "\n");
+            	createDivTag2.append(createDivTag3);
+            	if(!isScroll) {
+            		socketDivTag.scrollTop = socketDivTag.scrollHeight;
+            	}
             }
             socketDivTag.append(createDivTag);
+            socketDivTag.append(createDivTag2);
         }
     }
 }
@@ -49,9 +84,31 @@ function open(){
         const socketDivTag = document.getElementById("msg-socket");
         socketDivTag.textContent = "";
     }
-    // 메시지 전달 입맛에 맞게 함수 변경하시길...
-    function ssss(){
-        let message = document.getElementById("message")
+    
+    function sendMsg(){
+    	
+    	const socketDivTag = document.getElementById("msg-socket");
+    	const eh = socketDivTag.clientHeight + socketDivTag.scrollTop;
+    	
+    	const isScroll = socketDivTag.scrollHeight <= eh;
+        let message = document.getElementById("message");
+        const createDivTag = document.createElement("div");
+        createDivTag.style.display = "flex";
+        createDivTag.style.justifyContent = "flex-end";
+        const createDivTag2 = document.createElement("div");
+        const createDivTag3 = document.createElement("div");
+        createDivTag2.style.display = "flex";
+        createDivTag2.className = "send--msg";
+        createDivTag2.style.justifyContent = "flex-end";
+        createDivTag3.style.width = "100px";
+        createDivTag.textContent = ":나";
+        createDivTag3.textContent = message.value;
+        createDivTag2.append(createDivTag3);
+        socketDivTag.append(createDivTag);
+        socketDivTag.append(createDivTag2);
+    	if(!isScroll) {
+    		socketDivTag.scrollTop = socketDivTag.scrollHeight;
+    	}
         const messageJSON = {
             "type": "CHAT",
             "msg": message.value,
@@ -68,7 +125,13 @@ function open(){
 	function connectSocket(){
         open();
 	}
-
+	
+	function enter(e) {
+		if(e.keyCode == 13) {
+			sendMsg();
+		}
+	}
+	
 connectSocket();
 </script>
 </body>

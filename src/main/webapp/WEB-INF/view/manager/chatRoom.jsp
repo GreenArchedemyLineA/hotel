@@ -13,7 +13,7 @@
 </main>
 <script type="text/javascript" src="/webjars/sockjs-client/1.5.1/sockjs.min.js"></script>
 <script>
-const ws = new SockJS("http://192.168.0.75:8080/chat");
+const ws = new SockJS("http://localhost:8080/chat");
 
 ws.onopen = function () {
     const messageJSON = {
@@ -45,4 +45,6 @@ function ssss(){
     message.focus();
 }
 </script>
-<%@ include file="../layout/footer.jsp"%>
+</body>
+</html>
+
