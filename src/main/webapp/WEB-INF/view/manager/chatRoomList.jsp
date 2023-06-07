@@ -12,14 +12,14 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	width: 1300px;
+	width: 1000px;
 	height: 700px;
 }
 .room--box {
 	border-radius: 10px;
 	width: 300px;
-	height: 120px;
-	margin: 10px 20px;
+	height: 165px;
+	margin: 10px 10px;
 	display: flex;
 	flex-direction: column;
 	padding: 15px;

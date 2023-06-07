@@ -42,7 +42,7 @@ public class SocketHandler extends TextWebSocketHandler {
         // 유저인 경우
         if(session.getAttributes().get(Define.PRINCIPAL) != null){
             userSessions.add(session);
-            userSessionMap.put(((UserResponseDto.LoginResponseDto) session.getAttributes().get(Define.PRINCIPAL)).getName(), session);
+            userSessionMap.put(((UserResponseDto.LoginResponseDto) session.getAttributes().get(Define.PRINCIPAL)).getEmail() + "(" + ((UserResponseDto.LoginResponseDto) session.getAttributes().get(Define.PRINCIPAL)).getName() + ")", session);
             awaitMessageList.put(session, new ArrayList<>());
             // 유저 전용 방 만들기
             ChatRoom chatRoom = new ChatRoom(session);
