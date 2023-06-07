@@ -50,6 +50,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		patterns.add("/myReservations");
 		patterns.add("/search");
 		patterns.add("/api/myInfo");
+		patterns.add("/question/chatRoom");
 		registry.addInterceptor(loginInterceptor).addPathPatterns(patterns);
 		
 		// 매니저 로그인 인터셉터

@@ -78,6 +78,18 @@ li:hover {
 	justify-content: flex-end;
 }
 
+#chat--li {
+	display: flex;
+}
+
+#li--icon--span {
+	color: red;
+	font-size: 30px;
+	margin-left: 10px;
+	display: flex;
+	align-items: center;
+}
+
 </style>
 <body>
 	<main>
@@ -116,7 +128,7 @@ li:hover {
 				<li id="event--li" onclick="location.href='/event/notice'">이벤트</li>
 				<li id="qna--li" onclick="location.href='/question/questionList'">문의 사항</li>
 				<li id="faq--li" onclick="location.href='/manager/faq'">FAQ</li>
-				<li id="faq--li" onclick="location.href='/manager/chatRoomList'">실시간 채팅 문의</li>
+				<li id="chat--li" onclick="location.href='/manager/chatRoomList'">실시간 채팅 문의<span id="li--icon--span"></span></li>
 			</ul>
 		</nav>
 	<script type="text/javascript">
@@ -131,5 +143,29 @@ li:hover {
 		$("#search--room--wrap").on("click", function() {
 			$("#room--list").slideToggle()
 		});
+		
+		
+		let checkNewMessage = (30 * 1000);
+		const checkMsg = function(){
+		    // 통신
+		    fetch("/api/checkNewMessage", ({
+		    	method: "get"
+		    })).then(async(response) => {
+		    	let result = await response.json();
+		    	if(result.status_code == 200) {
+		    		console.log("메세지 왔다")
+		    		let checkMsg = document.getElementById("chat--li");
+		    		let iconTag = document.getElementById("li--icon--span");
+		    		iconTag.className = "material-symbols-outlined";
+		    		iconTag.textContent = "fiber_new";
+		    		checkMsg.append(iconTag);
+		    	} else {
+		    		console.log("메세지 안왔다")
+		    		let iconTag = document.getElementById("li--icon--span");
+		    		iconTag.textContent = "";
+		    	}
+		    });
+		}
+		setInterval(checkMsg, checkNewMessage);
 	</script>
 	

@@ -17,7 +17,7 @@ public class ChatRoom {
     private WebSocketSession managerSession;
 
     public ChatRoom(WebSocketSession webSocketSession){
-        this.roomName = ((UserResponseDto.LoginResponseDto) webSocketSession.getAttributes().get(Define.PRINCIPAL)).getName();
+        this.roomName = ((UserResponseDto.LoginResponseDto) webSocketSession.getAttributes().get(Define.PRINCIPAL)).getEmail()  + "(" + ((UserResponseDto.LoginResponseDto) webSocketSession.getAttributes().get(Define.PRINCIPAL)).getName() + ")";
         this.userSession = webSocketSession;
     }
 

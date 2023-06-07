@@ -105,9 +105,11 @@ public class UserController {
 			});
 		}
 		UserResponseDto.LoginResponseDto principal = userService.readUserByIdAndPassword(loginDto);
+		if(principal == null) {
+			throw new CustomRestFullException("아이디/비밀번호가 틀렸습니다.", HttpStatus.BAD_REQUEST);
+		}
 		session.setAttribute(Define.PRINCIPAL, principal);
 		session.setAttribute("tel", principal.getTel());
-		System.out.println(session.getAttribute("tel"));
 		if (principal.getRandomPwdStatus()) {
 			return "/user/changePw";
 		}
