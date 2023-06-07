@@ -149,7 +149,7 @@
 	background-color: #FFF7D1;
 	justify-content: center;
 	height: 40px;
-	margin-top: 40px;
+	margin-top: 60px;
 }
 
 .myinfo--box--span {
@@ -167,7 +167,8 @@
 .myinfo--detail {
 	display: flex;
 	width: 285px;
-	justify-content: space-between;
+	flex-direction: column;
+	justify-content: center;
 	text-align: center;
 	margin-top: 10px;
 }

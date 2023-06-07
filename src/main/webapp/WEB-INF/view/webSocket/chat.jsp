@@ -66,29 +66,54 @@ body {
 }
 
 #input--box {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 	background-color: #fff;
 	padding: 5px;
 }
 
 .exit--wrap {
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
 	margin-bottom: 5px;
+	background-color: #CCE1FF;
+	padding: 4px 6px;
 }
 
 #exit--btn {
 	border: none;
 	cursor: pointer;
+	background-color: #CCE1FF;
 }
-
+.notice--wrap{
+	text-align: center;
+	margin-bottom: 5px;
+	color: #a6a7a8;
+}
 </style>
 </head>
 <body>
 	<div class="exit--wrap">
-		<button id="exit--btn" onclick="closePopUp()"><span class="material-symbols-outlined">logout</span></button>
+		<h2>DODAM</h2>
+		<button id="exit--btn" onclick="closePopUp()">❌</span></button>
 	</div>
 	<div id="socket">
-		<div id="msg-socket"></div>
+		<div id="msg-socket">
+			<div class="notice--wrap">
+				<div>
+					<p>호텔 도담</p>
+					<p>1:1 상담원이 시작됩니다!</p>
+				</div>
+			</div>
+			<div class="notice--wrap center">
+				<div>
+					<p>대화양이 많은 경우</p>
+					<p>상담이 지연될 수 있으니</p>
+					<p>양해 부탁드립니다</p>
+				</div>
+			</div>
+		</div>
 		<div id="input--box">
 			<input type="text" id="message" onkeypress="enter(window.event)">
 			<button id="send--btn" onclick="sendMsg()">전달</button>
@@ -123,7 +148,7 @@ body {
 						}
 					} else if(data.type === "MANAGER_CHAT"){
 
-						createDivTag.append("dodam:");
+						createDivTag.append("👩🏻‍💻dodam:");
 						createDivTag3.append(data.msg + "\n");
 						createDivTag2.append(createDivTag3);
 						socketDivTag.append(createDivTag);
@@ -168,7 +193,7 @@ body {
 			createDivTag.style.display = "flex";
 			createDivTag.style.justifyContent = "flex-end";
 			createDivTag.style.paddingLeft = "15px";
-			createDivTag.textContent = ":나";
+			createDivTag.textContent = "👤나:";
 			
 			const createDivTag2 = document.createElement("div");
 			createDivTag2.className = "send--msg";
