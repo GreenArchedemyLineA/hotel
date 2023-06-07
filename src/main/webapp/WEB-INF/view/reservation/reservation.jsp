@@ -706,7 +706,7 @@ input[type="number"]::-webkit-inner-spin-button {
 		let popupOption = "width=800,height=800";
 		let url;
 		if(payType === "nicepay"){
-			url = "http://192.168.0.84:8080/pay/payReady?paySelect=nicepay&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
+			url = "http://localhost:8080/pay/payReady?paySelect=nicepay&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
 			let returnPay = window.open(
 					url,
 					"popup",
@@ -714,7 +714,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			);
 			returnPay.focus();
 		}else if(payType === "kakaopay"){
-			url = "http://192.168.0.84:8080/pay/kakaopay?item_name="+ orderNameValue +"&total_amount=" +totalPriceValue
+			url = "http://localhost:8080/pay/kakaopay?item_name="+ orderNameValue +"&total_amount=" +totalPriceValue
 			let returnPay = window.open(
 					url,
 					"popup",
@@ -722,7 +722,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			);
 			returnPay.focus();
 		}else if(payType === "tosspay"){
-			url = "http://192.168.0.84:8080/pay/payReady?paySelect=toss&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
+			url = "http://localhost:8080/pay/payReady?paySelect=toss&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
 			let returnPay = window.open(
 					url,
 					"popup",
