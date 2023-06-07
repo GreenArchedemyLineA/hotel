@@ -2,10 +2,13 @@ package com.dodam.hotel.service;
 
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +28,7 @@ import com.dodam.hotel.repository.model.Membership;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.util.CreateRandomStr;
+import com.dodam.hotel.util.Define;
 
 @Service
 public class UserService {
@@ -49,6 +53,9 @@ public class UserService {
 
 	@Value("${dodam.key}")
 	private String dodamKey;
+	
+	@Autowired
+	private JavaMailSenderImpl mailSender;
 
 	// 로그인용
 	@Transactional
@@ -246,13 +253,44 @@ public class UserService {
 	@Transactional
 	public User readUserForIdInquiry(InquiryRequestDto.IdInquiryRequestDto idInquiryRequestDto) {
 		User userEntity = userRepository.findUserForIdInquiry(idInquiryRequestDto);
+		if(userEntity == null) {
+			throw new CustomRestFullException("가입 정보가 없습니다", HttpStatus.BAD_REQUEST);
+		}
 		return userEntity;
 	}
 
 	// 임시 pw update 처리
 	@Transactional
 	public int updatePwByUserInfo(InquiryRequestDto.PwInquiryRequestDto pwInquiryRequestDto) {
+		// 랜덤 비밀번호 생성
+		String randomStr = CreateRandomStr.createRandomString();
+		
+		String hashRandomStr = passwordEncoder.encode(randomStr);
+		pwInquiryRequestDto.setPassword(hashRandomStr);
 		int resultRow = userRepository.updatePwByUserInfo(pwInquiryRequestDto);
+		if (resultRow == 1) {
+			String subject = pwInquiryRequestDto.getName() + "님의 임시 비밀번호 입니다.";
+			String content = "<p>로그인 후 비밀번호를 변경해주시길 바랍니다.</p> <br> <h2>임시 비밀번호</h2> <br> <p>" + randomStr + "</p>";
+			String from = Define.ADMIN_EMAIL;
+			String to = pwInquiryRequestDto.getEmail();
+			try {
+				MimeMessage mail = mailSender.createMimeMessage();
+				MimeMessageHelper mailHelper = new MimeMessageHelper(mail, "UTF-8");
+
+				mailHelper.setFrom(from);
+				mailHelper.setTo(to);
+				mailHelper.setSubject(subject);
+				mailHelper.setText(content, true);
+
+				mailSender.send(mail);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			// 예외처리 이메일 전송 실패
+			System.out.println("이메일 전송 실패");
+		}
 		return resultRow;
 	}
 

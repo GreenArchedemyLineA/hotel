@@ -335,10 +335,6 @@ main {
 	width: 300px;
 }
 
-#gift--box, #discount--box, #point--box {
-	opacity: 0;
-}
-
 .membership--container {
 	margin: 10px;
 	display: flex;
@@ -702,25 +698,6 @@ main {
 	var marker = new naver.maps.Marker({
 		position : new naver.maps.LatLng(35.1595148, 129.0602424),
 		map : map
-	});
-	
-	// 메인 글씨
-	$(document).ready(function() {
-		$('.greeting').animate({
-			opacity : 1
-		}, 2000);
-	
-	// 멤버쉽 아이콘
-		$('#gift--box').animate({
-			opacity : 1
-		}, 1000);
-		$('#discount--box').animate({
-			opacity : 1
-		}, 2000);
-		$('#point--box').animate({
-			opacity : 1
-		}, 2000);
-			
 	});
 </script>
 <script src="js/mainToggle.js"></script>
