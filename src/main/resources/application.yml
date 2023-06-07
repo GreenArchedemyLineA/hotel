@@ -11,10 +11,14 @@ spring:
     view:
       prefix: /WEB-INF/view
       suffix: .jsp
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/dodam?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://192.168.0.84:3306/dodam?serverTimezone=Asia/Seoul
     username: dodam
     password: dodam1234
 

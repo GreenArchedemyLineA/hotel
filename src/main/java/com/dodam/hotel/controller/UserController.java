@@ -286,7 +286,6 @@ public class UserController {
 
 		int resultRow = userService.updatePwByUserInfo(pwInquiryRequestDto);
 
-		
 		return "redirect:/pwInquiryPage";
 	}
 

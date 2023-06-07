@@ -21,7 +21,12 @@
 		select * from membership_info_tb
 		where date_format(updated_at, "%Y-%m-%d") = curdate();
 	</select>
-	
+
+	<!-- 멤버쉽 유저 검색 중복 방지 -->
+	<select id="findMembershipByuserId" resultType="com.dodam.hotel.repository.model.MembershipInfo">
+		select * from membership_info_tb
+		where user_id = #{userId}
+	</select>
 	<!-- 멤버쉽 등록 -->
 	<insert id="insert">
 		INSERT INTO membership_info_tb (user_id)

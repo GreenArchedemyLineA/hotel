@@ -3,6 +3,8 @@ package com.dodam.hotel.repository.interfaces;
 import java.sql.Date;
 import java.util.List;
 
+import javax.validation.constraints.Past;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,6 +31,9 @@ public interface ReservationRepository {
 	// 특정 유저 전체 예약 조회(페이징, findAll---과 따로 쓰임)
 	public List<Reservation> findAllReservationByUserIdPaging(@Param("obj") PagingObj obj,
 			@Param("userId") Integer userId);
+	
+	// 다이닝 예약취소
+	public Integer deleteDiningByReservationId(Integer reservationId);
 
 	// 객실 예약 (성희)
 	public int insertReserveRoom(ReservationRequestDto reservationRequestDto);

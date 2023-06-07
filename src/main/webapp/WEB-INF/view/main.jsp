@@ -374,7 +374,7 @@ main {
 .swiper-slide {
 	text-align: center;
 	font-size: 18px;
-	background: #fff;
+	background: none;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -400,7 +400,7 @@ main {
 
 .swiper-slide img {
 	display: block;
-	width: 1000px;
+	width: 800px;
 	height: 500px;
 	object-fit: cover;
 }
@@ -472,6 +472,21 @@ main {
 	flex: 1;
 }
 
+.event--list {
+	display: flex;
+}
+
+.event--main {
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 300px;
+    margin-left: 10px;
+}
+.event--title {
+	font-weight: bold;
+	font-size: 30px;
+}
 </style>
 
 
@@ -541,8 +556,7 @@ main {
 								</div>
 								<ul class="navi--bar--detail--qna">
 									<li><a href="/question/question">FAQ</a></li>
-									<li style="width: 100px;"><a href="/question/qnaPage">1:1
-											문의</a></li>
+									<li style="width: 100px;"><a href="/question/qnaPage">1:1 문의</a></li>
 									<li><a href="/event/eventBoard/onGoing">이벤트</a></li>
 								</ul>
 							</li>
@@ -610,11 +624,12 @@ main {
 				<div class="swiper-slide">
 					<div class="bx-group">
 						<div class="event--list">
-							<div class="event--icon">
-								<span class="material-symbols-outlined" style="font-size: 40px">celebration</span>
+							<div class="event--img">
+								<img alt="" src="/images/uploads/${list.uploadFile}">
 							</div>
 							<div class="event--main">
 								<div class="event--title">${list.title}</div>
+								<div class="event--content">${list.content}</div>
 								<div class="event--date">${list.startDate}~
 									${list.endDate}</div>
 							</div>
@@ -679,6 +694,7 @@ main {
 		mode : "range",
 		minDate : "today",
 	});
+	
 	let swiper = new Swiper(".mySwiper", {
 		navigation : {
 			nextEl : ".swiper-button-next",

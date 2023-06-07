@@ -49,8 +49,15 @@ public class SocketHandler extends TextWebSocketHandler {
             roomMap.put(session, chatRoom);
         }
         // 매니저인 경우
-        else{
+        else if(session.getAttributes().get(Define.MANAGERPRINCIPAL) != null){
             managerSessions.add(session);
+        }else{
+            String message = "로그인 후 이용해 주세요!";
+            ObjectMapper objectMapper = new ObjectMapper();
+            SocketMessageDto msg = new SocketMessageDto();
+            msg.setMsg(message);
+            msg.setType(MessageType.ERROR);
+            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(msg)));
         }
     }
 
@@ -61,8 +68,7 @@ public class SocketHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
         ObjectMapper objectMapper = new ObjectMapper();
         SocketMessageDto msg = objectMapper.readValue(payload, SocketMessageDto.class);
-        System.out.println(message.getPayload());
-
+        System.out.println(session);
         if(msg.getType() == MessageType.ENTER){
             WebSocketSession targetSession = userSessionMap.get(msg.getRoomName());
             ChatRoom room = roomMap.get(targetSession);
@@ -84,6 +90,7 @@ public class SocketHandler extends TextWebSocketHandler {
 
         if(msg.getType() == MessageType.MANAGER_CHAT){
             WebSocketSession targetSession = userSessionMap.get(msg.getRoomName());
+            System.out.println(targetSession);
             targetSession.sendMessage(message);
 
             UserResponseDto.LoginResponseDto userInfo = (UserResponseDto.LoginResponseDto) targetSession.getAttributes().get(Define.PRINCIPAL);
@@ -122,6 +129,10 @@ public class SocketHandler extends TextWebSocketHandler {
 //            message = new TextMessage("");
 //        }
 //        managerSession.sendMessage(message);
+    	UserResponseDto.LoginResponseDto userSession = (UserResponseDto.LoginResponseDto) session.getAttributes().get(Define.PRINCIPAL);
+    	if(userSession != null) {
+    		chatRepository.updateUserMessageStatus(userSession.getId());
+    	}
         roomMap.remove(session);
         userSessions.remove(session);
         awaitMessageList.remove(session);

@@ -110,7 +110,7 @@ body {
 					createDivTag2.className = "recieve--msg";
 					const createDivTag3 = document.createElement("div");
 					createDivTag3.className = "recieve--msg--div";
-					
+					console.log(data)
 					if (data.type === "ENTER") {
 						const eh = socketDivTag.clientHeight
 								+ socketDivTag.scrollTop;
@@ -121,7 +121,7 @@ body {
 						if (!isScroll) {
 							socketDivTag.scrollTop = socketDivTag.scrollHeight;
 						}
-					} else {
+					} else if(data.type === "MANAGER_CHAT"){
 
 						createDivTag.append("dodam:");
 						createDivTag3.append(data.msg + "\n");
@@ -132,6 +132,16 @@ body {
 						const eh = socketDivTag.clientHeight
 								+ socketDivTag.scrollTop;
 						const isScroll = socketDivTag.scrollHeight <= eh;
+						if (!isScroll) {
+							socketDivTag.scrollTop = socketDivTag.scrollHeight;
+						}
+					} else{
+						const eh = socketDivTag.clientHeight
+								+ socketDivTag.scrollTop;
+
+						const isScroll = socketDivTag.scrollHeight <= eh;
+
+						createDivTag.append(data.msg + "\n");
 						if (!isScroll) {
 							socketDivTag.scrollTop = socketDivTag.scrollHeight;
 						}

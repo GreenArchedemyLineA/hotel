@@ -175,6 +175,10 @@
 		width: 1000px;
 		height: 500px;
 	}
+		
+	.pay {
+		margin-top: 50px;
+	}
 </style>
 </head>
 <body>
@@ -222,8 +226,13 @@
 			</div>	
 			<img alt="" src="/images/membership2.jpg" class="membership--image">
 		</div>
-		<div >
-			<button onclick="location.href='/joinMembership'" class="sub--button">멤버쉽 가입하기</button>
+		<div class="pay">
+			<div class="payType">
+				<input type="radio" name="pgType" value="nicepay" id="nicepay" class="pg-type pay" checked><label for="nicepay">신용카드결제</label>
+				<input type="radio" name="pgType" value="kakaopay" id="kakaopay" class="pg-type pay"><label for="kakaopay">카카오페이결제</label>
+				<input type="radio" name="pgType" value="tosspay" id="tosspay" class="pg-type pay"><label for="tosspay">토스간편결제</label>
+			</div>
+			<button onclick="membershipJoin()" class="sub--button">멤버쉽 가입하기</button>
 		</div>
 	</div>
 		<div class="modal" id="grade">
@@ -257,5 +266,71 @@
 		</div>
 	</div>
 </main>
+<script>
+	const totalPriceValue = 500000;
+	const orderName = "DODAM_MemberShip" +"_"+"-"+"_" + Date.now();
+	const pgArray = [...document.getElementsByClassName("pg-type")];
+	let payType;
+	function membershipJoin(){
 
+
+		fetch('/api/checkMemberShip')
+				.then(async (response)=>{
+					const data = await response.json();
+					console.log(data)
+					if(data.status_code !== 200){
+						alert(data.msg)
+						if(data.redirect_uri !== null){
+							location.href = data.redirect_uri;
+						}
+					}else{
+						joinMemberShip()
+					}
+				})
+	}
+
+	function joinMemberShip() {
+		pgArray.some((pgInput) => {
+			if(pgInput.checked){
+				payType = pgInput.value
+				return
+			}
+		})
+
+		let popupOption = "width=800,height=800";
+		let url;
+		if(payType === "nicepay"){
+			url = "http://localhost:8080/pay/payReady?paySelect=nicepay&total_amount="+totalPriceValue+"&orderName="+orderName;
+			let returnPay = window.open(
+					url,
+					"popup",
+					popupOption
+			);
+			returnPay.focus();
+		}else if(payType === "kakaopay"){
+			url = "http://localhost:8080/pay/kakaopay?item_name="+ orderName +"&total_amount=" +totalPriceValue
+			let returnPay = window.open(
+					url,
+					"popup",
+					popupOption
+			);
+			returnPay.focus();
+		}else if(payType === "tosspay"){
+			url = "http://localhost:8080/pay/payReady?paySelect=toss&total_amount="+totalPriceValue+"&orderName="+orderName;
+			let returnPay = window.open(
+					url,
+					"popup",
+					popupOption
+			);
+			returnPay.focus();
+		}
+
+	}
+	function getReturnValue(returnValue){
+		const returnJSON = JSON.parse(returnValue);
+		if(returnJSON.status == "OK"){
+			location.href='/joinMembership';
+		}
+	}
+</script>
 

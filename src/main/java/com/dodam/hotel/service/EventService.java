@@ -98,7 +98,7 @@ public class EventService {
 	
 	// 진행중인 리스트 숫자 - 현우
 	@Transactional
-	public int onGoingEventCount() {
+	public int readOnGoingEventCount() {
 		int resultCount = eventRepository.findByNowAll();
 		return resultCount;
 	}
@@ -112,7 +112,7 @@ public class EventService {
 	
 	// 종료된 리스트 숫자 - 현우
 	@Transactional
-	public int closedEventCount() {
+	public int readClosedEventCount() {
 		int resultCount = eventRepository.findByPrevAll();
 		return resultCount;
 	}
