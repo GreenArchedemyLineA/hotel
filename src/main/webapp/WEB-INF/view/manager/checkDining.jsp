@@ -103,7 +103,6 @@
 		<div class="title--container">
 			<h2>다이닝 예약 리스트</h2>
 		</div>
-			오늘 이용자 ${totalReservationNumOfP}명
 		
 	<div class="main--content">
 			<div class="search--buttons">

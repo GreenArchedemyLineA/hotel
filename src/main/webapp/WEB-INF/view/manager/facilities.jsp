@@ -95,7 +95,7 @@
 			<h2>부대시설</h2>
 				<div class="room--total">
 					<c:forEach  var="diningList" items="${diningList}">
-						<div class="room--box" data-toggle="modal" data-target="#myModal" style="${diningList.availability == true ? "border: 4px solid #9ACBF1" : "border: 4px solid #FF8D6B"}">		
+						<div class="room--box" data-toggle="modal" data-target="#myModal" style="${diningList.availability == true ? "border: 4px solid #9ACBF1" : "border: 4px solid #FF8D6B"}" id="${diningList.id}">
 							<div class="room-title">
 								<span style="color: gray;">${diningList.name}</span>
 								<span id="room-name">${diningList.location}</span> 
@@ -186,17 +186,17 @@
 				<div>
 				<form action="#" method="post" class="modal--box">
 					<div>
-						<label for="roomname">이름</label> 
+						<label for="name">이름</label>
 						<input type="text" name="name" id="name" value="" class="input--box"> 
 					</div>
 					
 					<div>
-						<label for="roomnumber_of_p">위치</label> 
+						<label for="number_of_p">위치</label>
 						<input type="text" name="number_of_p" id="number_of_p" value="" class="input--box">
 					</div>
 					
 					<div>
-						<label for="roomavailability">사용여부</label>
+						<label for="availability">사용여부</label>
 						<input type="text" name="availability" id="availability" value="" class="input--box">
 					</div>
 					
@@ -212,9 +212,37 @@
 		</div>
 	</div>
 <script>
-    function statusDetail(id){
-        location.href = "/manager/roomStatusDetail?roomId="+id;
-    }
-
-checkStatus();
+    
+	
+	let allDivTag = document.querySelectorAll(".room--box");
+	allDivTag.forEach(tag => {
+		tag.addEventListener("click", ()=>{
+			console.log(tag)
+			fetch("/api/findRoomInfo/"+tag.id)
+			.then(async(response)=>{
+				let data = await response.json();
+				let modalFormTag = document.getElementById("modal--form");
+				// modalFormTag.action = "/manager/facilitiesStatus/" + data.id;
+				console.log(data)
+				document.getElementById("name").value = data.roomType.name;
+				document.getElementById("number_of_p").value = data.roomType.numberOfP;
+				if(data.availability == true) {
+					document.getElementById("availability").value = '사용가능';
+				} else {
+					document.getElementById("availability").value = '사용불가';
+				}
+				document.getElementById("statusDesc").value = data.statusDesc;
+			})
+		})
+	})
+	
+	let roomStatus = document.getElementById("availability");
+	roomStatus.addEventListener("keyup", function() {
+		console.log(roomStatus.value)
+		if(roomStatus.value == '사용가능') {
+			roomStatus.value = true;
+		} else if(roomStatus.value == '사용불가') {
+			roomStatus.value = false;
+		}
+	});
 </script>

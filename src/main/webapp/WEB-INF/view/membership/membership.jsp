@@ -81,7 +81,7 @@
 	.content--description {
 		display: flex;
 		flex-direction: column;
-		text-align: flex-end;
+		text-align: end;
 		margin-left: 50px;
 	}
 	
@@ -173,6 +173,10 @@
 	}
 	.pay{
 		margin-top: 50px;
+	}
+	.modal--content {
+		width: 1000px;
+		height: 500px;
 	}
 </style>
 </head>

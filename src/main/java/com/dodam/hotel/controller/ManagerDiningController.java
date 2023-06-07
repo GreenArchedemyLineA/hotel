@@ -36,9 +36,9 @@ public class ManagerDiningController {
     public String diningPage(Date date, Model model){
         List<DiningReservation> responseDiningReservations = null;
         if(date == null){
-        	responseDiningReservations = managerReservationService.readDiningReservationAllLisByDate(new Date(System.currentTimeMillis()));
+        	responseDiningReservations = managerReservationService.readTodayDining();
         }else{
-        	responseDiningReservations = managerReservationService.readDiningReservationAllLisByDate(date);
+        	responseDiningReservations = managerReservationService.readDiningReservationAllListByDate(date);
         }
         AtomicInteger reservationNumberOfP = new AtomicInteger();
 
@@ -55,9 +55,20 @@ public class ManagerDiningController {
     }
     
     @GetMapping("/allDining")
-    public String allDiningPage(Model model) {
-    	List<DiningReservation> responseDiningReservations = managerReservationService.readAllDining();
+    public String allDiningPage(Date date, Model model) {
+    	List<DiningReservation> responseDiningReservations = null;
     	 AtomicInteger reservationNumberOfP = new AtomicInteger();
+    	 if(date == null){
+         	responseDiningReservations = managerReservationService.readAllDining();
+         }else{
+         	responseDiningReservations = managerReservationService.readDiningReservationAllListByDate(date);
+         }
+
+         responseDiningReservations.stream().forEach(
+                 (diningReservation) -> {
+                     reservationNumberOfP.addAndGet(diningReservation.getNumberOfP());
+                 }
+         );
          model.addAttribute("totalReservationNumOfP", reservationNumberOfP);
          model.addAttribute("diningList", responseDiningReservations);
          

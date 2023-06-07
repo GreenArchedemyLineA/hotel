@@ -9,6 +9,7 @@ import com.dodam.hotel.handler.exception.CustomRestFullException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,10 +18,13 @@ import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.dto.api.ResponseMsg;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Reservation;
+import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.ChatService;
 import com.dodam.hotel.service.ManagerReservationService;
+import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.ReservationService;
+import com.dodam.hotel.service.RoomService;
 import com.dodam.hotel.service.UserService;
 import com.dodam.hotel.util.Define;
 /**
@@ -43,6 +47,9 @@ public class ApiController {
 	
 	@Autowired
 	private ManagerReservationService managerReservationService;
+	
+	@Autowired
+	private ManagerService managerService;
 	
 	@Autowired
 	private ChatService chatService;
@@ -126,6 +133,12 @@ public class ApiController {
 	public List<Reservation> reservation() {
 		List<Reservation> reservations = managerReservationService.readAllReservation();
 		return reservations;
+	}
+	
+	@GetMapping("/findRoomInfo/{id}")
+	public Room findRoomInfo(@PathVariable Integer id) {
+		Room room = managerService.readByRoom(id);
+		return room;
 	}
 	
 	@GetMapping("/checkNewMessage")

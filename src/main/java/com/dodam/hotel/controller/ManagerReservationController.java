@@ -1,7 +1,5 @@
 package com.dodam.hotel.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +21,7 @@ import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
 import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.service.ManagerReservationService;
+import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.ReservationService;
 import com.dodam.hotel.util.PagingObj;
 
@@ -32,78 +31,74 @@ import com.dodam.hotel.util.PagingObj;
 @Controller
 @RequestMapping("/manager")
 public class ManagerReservationController {
-    @Autowired
-    private HttpSession session;
-    @Autowired
-    private ManagerReservationService managerReservationService;
+	@Autowired
+	private HttpSession session;
+	@Autowired
+	private ManagerReservationService managerReservationService;
 	@Autowired
 	private ReservationService reservationService;
+	@Autowired
+	private ManagerService managerService;
 
-    @GetMapping("/reservation")
-    public String reservationList(String name, Model model){
-        if(name == null || name.equals("")){
-            List<Reservation> responseReservations = managerReservationService.readTodayReservation();
-            model.addAttribute("reservationList", responseReservations);
-        }else{
-            List<Reservation> responseReservations = managerReservationService.readUserReservation(name);
-            model.addAttribute("reservationList", responseReservations);
-        }
-        int totalPrice = managerReservationService.readBeforeTodayTotalPrice();
-        List<Integer> price = new ArrayList<>();
-        for(int i = 1; i < 7; i ++) {
-        	Integer beforetotalPrice = managerReservationService.readBeforeTotalPrice(i);
-        	if(beforetotalPrice == null) {
-        		beforetotalPrice = 0;
-        	}
-        	price.add(beforetotalPrice);
-        }
-        model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("price", price);
-        return "/manager/reservation";
-    }
+	// 매니저 예약 페이지 이동
+	@GetMapping("/reservation")
+	public String reservationList(String name, Model model,
+			@RequestParam(name = "nowPage", defaultValue = "1", required = false) String nowPage,
+			@RequestParam(name = "cntPerPage", defaultValue = "5", required = false) String cntPerPage) {
+		if (name == null || name.equals("")) {
+			int total = managerReservationService.readTodayReservationCount();
+			PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			model.addAttribute("paging", obj);
+			model.addAttribute("reservationList", managerReservationService.readTodayReservationPaging(obj));
+		} else {
+			int total = managerService.findByNameCount(name);
+			PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			model.addAttribute("paging", obj);
+			model.addAttribute("reservationList", managerReservationService.readUserReservation(name));
+		}
+		return "/manager/reservation";
+	}
 
-    @GetMapping("/reservation/{id}")
-    public String reservationDetail(@PathVariable Integer id, Model model){
-    	if(id == null) {
-    		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
-    	}
-        Map<String, Object> reservationMap = managerReservationService.readReservationById(id);
-        model.addAttribute("reservation", reservationMap.get("reservation"));
-        model.addAttribute("roomList", reservationMap.get("roomList"));
-        model.addAttribute("spaList", reservationMap.get("spaList"));
-        model.addAttribute("poolList", reservationMap.get("poolList"));
-        model.addAttribute("fitnessList", reservationMap.get("fitnessList"));
-        model.addAttribute("diningList", reservationMap.get("diningList"));
-        model.addAttribute("packageList", reservationMap.get("packageList"));
-        return "/manager/reservationDetail";
-    }
-    
-    @PostMapping("/reservation/update")
-    public String reservationUpdate(Reservation reservation){
-        managerReservationService.updateReservation(reservation);
-        return "redirect:/manager/reservation";
-    }
-    
+	@GetMapping("/reservation/{id}")
+	public String reservationDetail(@PathVariable Integer id, Model model) {
+		if (id == null) {
+			throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
+		}
+		Map<String, Object> reservationMap = managerReservationService.readReservationById(id);
+		model.addAttribute("reservation", reservationMap.get("reservation"));
+		model.addAttribute("roomList", reservationMap.get("roomList"));
+		model.addAttribute("spaList", reservationMap.get("spaList"));
+		model.addAttribute("poolList", reservationMap.get("poolList"));
+		model.addAttribute("fitnessList", reservationMap.get("fitnessList"));
+		model.addAttribute("diningList", reservationMap.get("diningList"));
+		model.addAttribute("packageList", reservationMap.get("packageList"));
+		return "/manager/reservationDetail";
+	}
+
+	@PostMapping("/reservation/update")
+	public String reservationUpdate(Reservation reservation) {
+		managerReservationService.updateReservation(reservation);
+		return "redirect:/manager/reservation";
+	}
+
 	// 전체 예약 리스트 조회
 	@GetMapping("/allReservation")
 	public String allReservationList(String name, Model model,
 			@RequestParam(name = "nowPage", defaultValue = "1", required = false) String nowPage,
 			@RequestParam(name = "cntPerPage", defaultValue = "5", required = false) String cntPerPage) {
 
-		int total = 0;
-		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		model.addAttribute("paging", obj);
 		if (name == null || name.equals("")) {
-			List<Reservation> reservationList = managerReservationService.readAllReservation();
-			model.addAttribute("reservationList", reservationList);
+			int total = managerReservationService.readAllReservationCount();
+			PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			model.addAttribute("paging", obj);
+			model.addAttribute("reservationList", managerReservationService.readAllReservationPaging(obj));
 		} else {
-			List<Reservation> reservationList = managerReservationService.readUserReservation(name);
-			model.addAttribute("reservationList", reservationList);
-			total = reservationService.readAllReservationByUserIdCount(reservationList.get(1).getUserId());
-			model.addAttribute("viewAll",
-					reservationService.readAllResrevationByUserIdPaging(obj, reservationList.get(1).getUserId()));
+			int total = managerService.findByNameCount(name);
+			PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			model.addAttribute("paging", obj);
+			model.addAttribute("reservationList", managerService.readUserByNameForManager(obj, name));
 		}
-		return "/manager/reservation";
+		return "/manager/allReservation";
 	}
 
 	@ResponseBody

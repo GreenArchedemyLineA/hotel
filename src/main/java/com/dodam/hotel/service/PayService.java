@@ -43,9 +43,9 @@ public class PayService {
         Pay payInfo = payRepository.findByTidPay(tid);
         Integer point = payInfo.getPrice();
         String beforeUserGrade = payInfo.getGradeName();
-        if(Grade.DIA.equals(beforeUserGrade)){
+        if(Grade.DIA == Grade.valueOf(Grade.class, beforeUserGrade)){
             point = Integer.valueOf((int) Math.round(point * 0.07));
-        }else if(Grade.GOLD.equals(beforeUserGrade)){
+        }else if(Grade.GOLD == Grade.valueOf(Grade.class, beforeUserGrade)){
             point = Integer.valueOf((int) Math.round(point * 0.05));
         }else{
             point = Integer.valueOf((int) Math.round(point * 0.04));

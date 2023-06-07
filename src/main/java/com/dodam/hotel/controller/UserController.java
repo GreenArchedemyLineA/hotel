@@ -86,10 +86,13 @@ public class UserController {
 		List<Coupon> responseCoupons = couponService.readByUserId(principal.getId());
 		// 등급 정보 불러오기
 		GradeInfo responseGrade = gradeService.readGradeByUserId(principal.getId());
+		// 포인트 정보 불러오기
+		Integer point = userService.readPointInfo(principal.getId());
 		// 회원 정보 불러오기
 		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
 		model.addAttribute("responseGrade", responseGrade);
 		model.addAttribute("coupons", responseCoupons);
+		model.addAttribute("point", point);
 		model.addAttribute("responseUser", responseUser);
 		return "/user/myPage";
 	}

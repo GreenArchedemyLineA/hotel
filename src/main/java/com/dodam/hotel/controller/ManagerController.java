@@ -253,6 +253,7 @@ public class ManagerController {
 	public String Check(StatusParams statusParams, Integer roomId, Model model) {
 		List<Room> rooms;
 		Room room = managerService.readByRoom(roomId);
+		System.out.println(room);
 		model.addAttribute("room", room);
 		// 전체 조회
 		if (statusParams.getRoomStatus() == null && statusParams.getPrice() == null
@@ -278,11 +279,11 @@ public class ManagerController {
 
 	// 객실 사용가능 상태값 변경
 	@PostMapping("/roomStatus/{id}")
-	public String roomStatus(@PathVariable Integer id, Boolean availability) {
+	public String roomStatus(@PathVariable Integer id, Boolean availability, String statusDesc) {
 		if(id == null) {
     		throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
     	}
-		roomService.updateRoomStatusTrueAndFalse(id, availability);
+		roomService.updateRoomStatusTrueAndFalse(id, availability, statusDesc);
 		return "redirect:/manager/roomStatus";
 	}
 

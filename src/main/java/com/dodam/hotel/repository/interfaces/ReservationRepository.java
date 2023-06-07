@@ -19,6 +19,9 @@ public interface ReservationRepository {
 
 	// 특정 유저의 전체 예약 조회
 	public List<Reservation> findAllReservationByUserId(@Param("userId") Integer userId);
+	
+	// 특정 유저의 전체 예약 조회
+	public List<Reservation> findAllReservationByUserName(@Param("name") String name);
 
 	// 특정 유저의 전체 예약 수 조회
 	public int findAllReservationByUserIdCount(Integer UserId);
@@ -31,11 +34,24 @@ public interface ReservationRepository {
 	public int insertReserveRoom(ReservationRequestDto reservationRequestDto);
 
 	public Reservation findReservationByUserIdSuccessful(Integer userId);
-	
+
 	List<Reservation> findReservationByUserId(Integer userId);
 
 	List<Reservation> findTodayReservation();
+
 	List<Reservation> findAllReservation();
+
+	// 전체 예약 수 조회
+	public int findAllReservationCount();
+
+	// 전체 예약 조회(페이징, findAll---과 따로 쓰임)
+	public List<Reservation> findAllReservationPaging(PagingObj obj);
+
+	// 오늘 예약 수 조회
+	public int findTodayReservationCount();
+
+	// 오늘 예약 조회 페이징
+	public List<Reservation> findTodayReservationPaging(PagingObj obj);
 
 	int updateReservation(Reservation reservation);
 
@@ -44,10 +60,12 @@ public interface ReservationRepository {
 	Reservation findReservationById(Integer id);
 
 	List<DiningReservation> findDiningReservation(Date date);
+
 	List<DiningReservation> findAllDining();
+
 	List<DiningReservation> findTodayDining();
-	
-	//예약시 부대시설 사용가능 조회 - 민우
+
+	// 예약시 부대시설 사용가능 조회 - 민우
 
 	// 오늘 예약 매출 조회
 	public Integer findTodayTotalPrice();

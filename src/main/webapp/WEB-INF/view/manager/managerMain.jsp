@@ -1,9 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../layout/managerHeader.jsp"%>
-<link
-	href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css'
-	rel='stylesheet' />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
 <style>
 #date {
 	font-size: 40px;
@@ -25,6 +32,7 @@
 	display: flex;
 	width: 100%;
 	justify-content: center;
+	background-color: #FBFBFC;
 }
 
 .event--box {
@@ -122,6 +130,12 @@ a:hover {
 	opacity: 0.4;
 	z-index: -1;
 }
+.fc-title{
+	color: #4A4B4B;
+}
+.event-3 {
+	background-color: gray;
+}
 </style>
 <div class="main--container">
 	<div id="date"></div>
@@ -138,7 +152,7 @@ a:hover {
 		</div>
 		<div class="center--content">
 			<div class="content--box" id="event--box">
-				<b class="title--box">일정</b>
+				<b class="title--box">이벤트</b>
 				<div class="event--box">
 					<c:forEach items="${event}" var="list">
 						<div id="title--box">${list.startDate}&nbsp;&nbsp;&nbsp;${list.title}</div>
@@ -255,15 +269,7 @@ a:hover {
 </div>
 </main>
 
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<script type="text/javascript"
-	src="https://www.gstatic.com/charts/loader.js"></script>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
-<script
-	src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
-<script
-	src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+
 <script>
 	window.onload = function() {
 		let today = new Date();
@@ -326,7 +332,6 @@ a:hover {
 								vAxis : {
 									title : 'Sales',
 								},
-								colors : [ '#FED3A5' ],
 								animation : {
 									duration : 1000,
 									startup : true,
@@ -358,8 +363,12 @@ a:hover {
 			dataType : "json"
 		}).done(
 				function(response) {
-					let memberCount = response.memberCount;
-					let membershipCount = response.membershipCount;
+					console.log(response[0])
+					// let memberCount = response.memberCount;
+					// let membershipCount = response.membershipCount;
+					let memberCount = response[0]
+					let membershipCount = response[1]
+					/*
 					let data = new google.visualization.DataTable();
 					data.addColumn('string', 'Category');
 					data.addColumn('number', 'Count');
@@ -367,7 +376,7 @@ a:hover {
 
 					data.setValue(0, 1, memberCount);
 					data.setValue(1, 1, membershipCount);
-
+					*/
 					let options = {
 						title : '오늘 회원가입 수와 멤버쉽 가입 수',
 						hAxis : {
@@ -376,7 +385,7 @@ a:hover {
 						vAxis : {
 							title : 'Count',
 						},
-						colors : [ '#FFF4B2', '#D6F8AC' ],
+						
 						animation : {
 							duration : 1000,
 							startup : true,
@@ -385,7 +394,14 @@ a:hover {
 							fill : '#F6F6F7',
 						}
 					};
-
+					
+					let data = google.visualization.arrayToDataTable([
+				         ['Category', 'Count'],
+ 				         ['회원가입', memberCount],         
+				         ['멤버쉽 가입', membershipCount],  
+				     ]);
+					
+					
 					let chart = new google.visualization.ColumnChart(document
 							.getElementById('join--chart'));
 
@@ -406,22 +422,26 @@ a:hover {
                 },
                 defaultView: 'month',
                 editable: true,
-                eventColor: '#FFE3E5',
-                locale: 'ko',
+                eventColor: '#D2F2FC',
                 events: function(start, end, timezone, callback) {
                     $.ajax({
                         url: '/api/allReserve', 
                         type: 'GET', 
                     }).done(function(response) {
+                    	  console.log(response)
                     	  let events = [];
                           for (let i = 0; i < response.length; i++) {
                               let reservation = response[i];
+                              if (reservation && reservation.room) {
                               let event = {
                             	  title: reservation.user.name,
                                   start: reservation.startDate,
-                                  end: reservation.endDate 
+                                  end: reservation.endDate,
+                                  className: reservation.room.id ? 'event-' + reservation.room.id : 'event-dining-id'
                               };
+                            	  
                               events.push(event);
+                              }
                           }
                         callback(events); 
                     }).fail(function(xhr, status, error) {
@@ -429,8 +449,8 @@ a:hover {
                     });
                 },
                     eventRender: function(event, element) {
-						 element
-						 .find('.fc-title').html(event.name);
+						 element.find('.fc-title').html(event.name);
+						 element.addClass(event.className);
                  }
             });
         });

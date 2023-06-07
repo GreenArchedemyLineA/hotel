@@ -209,7 +209,7 @@ body {
 }
 
 main {
-	background-image: url("http://localhost:8080/images/mainImage.jpg");
+	background-image: url("http://192.168.0.84:8080/images/mainImage.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 800px;
@@ -438,6 +438,7 @@ main {
 
 .introduce--box {
 	display: flex;
+	cursor: pointer;
 }
 
 #pool {
@@ -475,17 +476,6 @@ main {
 	flex: 1;
 }
 
-.greeting {
-	opacity: 0;
-	color: #fff;
-	display: flex;
-	flex-direction: column;
-	font-weight: bold;
-	font-size: 70px;
-	height: 100%;
-	align-items: flex-end;
-	justify-content: center;
-}
 </style>
 
 
@@ -582,9 +572,6 @@ main {
 			</div>
 		</div>
 	</div>
-	<div class="greeting">
-		<span>뜨거운 여름</span> <span>도담이 함께합니다</span>
-	</div>
 </main>
 <div class="reserve--container">
 	<form action="/search" method="get" class="form--container">
@@ -669,13 +656,13 @@ main {
 
 <div class="introduce--box">
 	<div class="fac--container">
-		<div id="pool">
+		<div id="pool" onclick="location.href='/pool'">
 			<a href="/pool">Pool</a>
 		</div>
-		<div id="spa">
+		<div id="spa" onclick="location.href='/spa'">
 			<a href="/spa">Spa</a>
 		</div>
-		<div id="fitness">
+		<div id="fitness" onclick="location.href='/fitness'">
 			<a href="/fitness">Fitness</a>
 		</div>
 	</div>

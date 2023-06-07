@@ -88,7 +88,6 @@
 		<div class="content">
 			<div class="title--container">
 				<h2>회원 리스트</h2>
-				<button onclick="#" class="sub--button title--button">차트</button>
 			</div>
 			<div class="main--content">
 				<div class="search--container">

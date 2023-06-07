@@ -37,7 +37,7 @@
 		</div>
 	</div>
 	<div class="calender--container">
-		<form action="/dining" method="post" id="calender--form">
+		<form action="/dining" method="post" id="calender--form" onsubmit="alert('예약이 완료되었습니다.')">
 			<div class="calender--wrap">
 				<input type="text" class="dateSelector" id="calender" name="date">
 			</div>
