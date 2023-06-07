@@ -42,7 +42,7 @@
 	margin: 10px 20px;
 	display: flex;
 	flex-direction: column;
-	padding: 15px;
+	padding: 5px;
 }
 
 .room--box:hover {
@@ -116,7 +116,7 @@
 								<span>${room.roomType.numberOfP}인</span>
 							</div>
 							<div class="room-content">
-								<div>${room.roomType.price}</div>
+								<div>${room.roomType.formatPrice()}</div>
 								<div id="room--status">${room.availability == true ? "사용가능" : "사용불가"}</div>
 								<div>${room.statusDesc}</div>
 							</div>	
@@ -139,18 +139,18 @@
 				<form action="/manager/roomStatus/${room.id}" method="post" class="modal--box" id="modal--form">
 					<div>
 						<label for="roomname">이름</label> 
-						<input type="text" name="name" id="name" value="${room.roomType.name}" class="input--box"> 
-						<input type="text" name="id" id="name" value="${room.id}" class="input--box"> 
+						<input type="text" name="name" id="name" value="${room.roomType.name}" class="input--box" readonly="readonly"> 
+						<input type="hidden" name="id" id="name" value="${room.id}" class="input--box"> 
 					</div>
 					
 					<div>
 						<label for="roomnumber_of_p">인원</label> 
-						<input type="text" name="number_of_p" id="number_of_p" value="${room.roomType.numberOfP}" class="input--box">
+						<input type="text" name="number_of_p" id="number_of_p" value="${room.roomType.numberOfP}" class="input--box"  readonly="readonly">
 					</div>
 					
 					<div>
 						<label for="roomprice">가격</label> 
-						<input type="text" name="price" id="price" value="${room.roomType.price}" class="input--box">
+						<input type="text" name="price" id="price" value="${room.roomType.price}" class="input--box"  readonly="readonly">
 					</div>
 					
 					<div>
@@ -159,8 +159,8 @@
 					</div>
 					
 					<div>
-						<label for="description">상태</label>
-						<input type="text" name="description" id="description" value="${room.roomType.description}" class="input--box"> 
+						<label for="statusDesc">상태</label>
+						<input type="text" name="statusDesc" id="statusDesc" value="${room.roomType.description}" class="input--box"> 
 					</div>
 					<button type="submit" class="sub--button">객실 변경</button>
 				</form>
@@ -175,8 +175,7 @@
         location.href = "/manager/roomStatusDetail?roomId="+id;
     }
 */
-	let modalFormTag = document.getElementById("modal--form");
-	modalFormTag.action = "/manager/roomStatus/${room.id}";
+	
 	
 	let allDivTag = document.querySelectorAll(".room--box");
 	allDivTag.forEach(tag => {
@@ -184,6 +183,8 @@
 			fetch("/api/findRoomInfo/"+tag.id)
 			.then(async(response)=>{
 				let data = await response.json();
+				let modalFormTag = document.getElementById("modal--form");
+				modalFormTag.action = "/manager/roomStatus/" + data.id;
 				console.log(data)
 				document.getElementById("name").value = data.roomType.name;
 				document.getElementById("number_of_p").value = data.roomType.numberOfP;
@@ -193,9 +194,19 @@
 				} else {
 					document.getElementById("availability").value = '사용불가';
 				}
-				document.getElementById("description").value = data.statusDesc;
+				document.getElementById("statusDesc").value = data.statusDesc;
 			})
 		})
 	})
+	
+	let roomStatus = document.getElementById("availability");
+	roomStatus.addEventListener("keyup", function() {
+		console.log(roomStatus.value)
+		if(roomStatus.value == '사용가능') {
+			roomStatus.value = true;
+		} else if(roomStatus.value == '사용불가') {
+			roomStatus.value = false;
+		}
+	});
 	
 </script>

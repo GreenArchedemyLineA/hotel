@@ -56,7 +56,6 @@
 						<form action="/pay/refund/${list.payTid}/${list.id}" method="post">
 							<button type="submit" class="sub--button"> 예약 취소 </button>
 						</form>
-						<%-- <button onclick="deleteReservation(${list.payTid},${list.totalPrice})">환불/예약 취소</button> --%>
 						</td>
 					</tr>
 				</c:forEach>

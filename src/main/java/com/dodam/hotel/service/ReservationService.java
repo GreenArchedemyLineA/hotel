@@ -88,6 +88,7 @@ public class ReservationService {
 		List<Reservation> reservationEntitys = reservationRepository.findAllReservationByUserIdPaging(obj, userId);
 		return reservationEntitys;
 	}
+	
 
 	// 다이닝 예약
 	@Transactional

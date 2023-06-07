@@ -212,12 +212,7 @@
 		</div>
 	</div>
 <script>
-/*     function statusDetail(id){
-        location.href = "/manager/roomStatusDetail?roomId="+id;
-    } */
     
-	let modalFormTag = document.getElementById("modal--form");
-	modalFormTag.action = "/manager/facilitiesStatus/${facilities.id}";
 	
 	let allDivTag = document.querySelectorAll(".room--box");
 	allDivTag.forEach(tag => {
@@ -225,6 +220,8 @@
 			fetch("/api/findRoomInfo/"+tag.id)
 			.then(async(response)=>{
 				let data = await response.json();
+				let modalFormTag = document.getElementById("modal--form");
+				modalFormTag.action = "/manager/facilitiesStatus/" + data.id;
 				console.log(data)
 				document.getElementById("name").value = data.roomType.name;
 				document.getElementById("number_of_p").value = data.roomType.numberOfP;
@@ -234,8 +231,18 @@
 				} else {
 					document.getElementById("availability").value = '사용불가';
 				}
-				document.getElementById("description").value = data.statusDesc;
+				document.getElementById("statusDesc").value = data.statusDesc;
 			})
 		})
 	})
+	
+	let roomStatus = document.getElementById("availability");
+	roomStatus.addEventListener("keyup", function() {
+		console.log(roomStatus.value)
+		if(roomStatus.value == '사용가능') {
+			roomStatus.value = true;
+		} else if(roomStatus.value == '사용불가') {
+			roomStatus.value = false;
+		}
+	});
 </script>

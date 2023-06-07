@@ -206,7 +206,7 @@
 								<td>${list.endDate}</td>
 								<td style="width: 200px;">${list.room.roomType.name}</td>
 								<td>${list.numberOfP}</td>
-								<td>${list.totalPrice}</td>
+								<td>${list.formatPrice()}</td>
 								<td>${list.dateFormat()}</td>
 							</tr>
 						</c:forEach>

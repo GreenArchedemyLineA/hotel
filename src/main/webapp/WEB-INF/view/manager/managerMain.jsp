@@ -152,7 +152,7 @@ a:hover {
 		</div>
 		<div class="center--content">
 			<div class="content--box" id="event--box">
-				<b class="title--box">일정</b>
+				<b class="title--box">이벤트</b>
 				<div class="event--box">
 					<c:forEach items="${event}" var="list">
 						<div id="title--box">${list.startDate}&nbsp;&nbsp;&nbsp;${list.title}</div>
@@ -332,7 +332,6 @@ a:hover {
 								vAxis : {
 									title : 'Sales',
 								},
-								colors : [ '#FED3A5' ],
 								animation : {
 									duration : 1000,
 									startup : true,
@@ -397,9 +396,9 @@ a:hover {
 					};
 					
 					let data = google.visualization.arrayToDataTable([
-				         ['Category', 'Count', { role: 'style' }],
-				         ['회원가입', memberCount, '#FED3A5'],         
-				         ['멤버쉽 가입', membershipCount, '#FF9E8B'],            
+				         ['Category', 'Count'],
+ 				         ['회원가입', memberCount],         
+				         ['멤버쉽 가입', membershipCount],  
 				     ]);
 					
 					

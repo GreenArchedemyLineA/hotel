@@ -392,7 +392,7 @@ input[type="number"]::-webkit-inner-spin-button {
 							</select>
 						</c:otherwise>
 					</c:choose>
-					<input type="text" name="point" placeholder="사용 가능 포인트 : ${point}" id="point--result" autocomplete="off">
+					<input type="number" name="point" placeholder="사용 가능 포인트 : ${point}" id="point--result" autocomplete="off" onkeyup="checkMaxNum(${point})">
 				</div>
 			</div>
 			<div>
@@ -518,7 +518,7 @@ input[type="number"]::-webkit-inner-spin-button {
 		pointPriceTag.append(pointSelectTag);
 		pointPriceTag.append(pointPriceInfoTag);
 		
-		let totalPrice = roomPrice + optionPrice - couponPrice - pointPrice;			
+		let totalPrice = roomPrice + optionPrice + couponPrice - pointPrice;			
 
 		const totalPriceDivTag = document.createElement("div");
 		totalPriceDivTag.className = "total--price";
@@ -547,17 +547,21 @@ input[type="number"]::-webkit-inner-spin-button {
 	}
 	
 	couponSelectTag.addEventListener("change", ()=>{
+		const startDate = ${selectDetail.startDate};
+		const endDate = ${selectDetail.endDate};
+		let nights = endDate - startDate;
 		if(couponSelectTag.value === '1박 무료 숙박 쿠폰') {
 			couponPrice = ${selectDetail.price}
-			console.log("couponPrice: " + couponPrice)
 		}
 		else if(couponSelectTag.value === "객실 10% 할인 쿠폰"){
-			couponPrice = ${(selectDetail.price * 0.1)}
+			couponPrice = ${(selectDetail.price * 0.1)} * nights;
 		}
 		else if(couponSelectTag.value === "객실 30% 할인 쿠폰"){
-			couponPrice = ${(selectDetail.price * 0.3)}
+			couponPrice = ${(selectDetail.price * 0.3)} * nights;
 		}
-		else if(couponSelectTag.value === "0"){
+		else if(couponSelectTag.value === "다이닝 식사권 2매 쿠폰"){
+			couponPrice = -60000;
+		} else {
 			couponPrice = 0;
 		}
 		
@@ -661,6 +665,19 @@ input[type="number"]::-webkit-inner-spin-button {
 		totalPrice();
 	}
 	
+	function checkMaxNum(point) {
+		let numberBox = document.getElementById("point--result");
+		let setMaxNum = parseInt(numberBox.value);
+		
+		if(setMaxNum < 0) {
+			alert("0보다 작은 수는 입력할 수 없습니다.");
+			numberBox.value = 0;
+		} else if(setMaxNum > point) {
+			alert("보유한 포인트보다 많은 포인트를 입력할 수 없습니다.")
+			numberBox.value = 0;
+		}
+	}
+	
 	totalPrice();
 </script>
 <!-- writer: 이현서 -->
@@ -689,7 +706,7 @@ input[type="number"]::-webkit-inner-spin-button {
 		let popupOption = "width=800,height=800";
 		let url;
 		if(payType === "nicepay"){
-			url = "http://localhost:8080/pay/payReady?paySelect=nicepay&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
+			url = "http://192.168.0.84:8080/pay/payReady?paySelect=nicepay&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
 			let returnPay = window.open(
 					url,
 					"popup",
@@ -697,7 +714,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			);
 			returnPay.focus();
 		}else if(payType === "kakaopay"){
-			url = "http://localhost:8080/pay/kakaopay?item_name="+ orderNameValue +"&total_amount=" +totalPriceValue
+			url = "http://192.168.0.84:8080/pay/kakaopay?item_name="+ orderNameValue +"&total_amount=" +totalPriceValue
 			let returnPay = window.open(
 					url,
 					"popup",
@@ -705,7 +722,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			);
 			returnPay.focus();
 		}else if(payType === "tosspay"){
-			url = "http://localhost:8080/pay/payReady?paySelect=toss&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
+			url = "http://192.168.0.84:8080/pay/payReady?paySelect=toss&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
 			let returnPay = window.open(
 					url,
 					"popup",

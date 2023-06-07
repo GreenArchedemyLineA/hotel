@@ -24,7 +24,7 @@ public interface RoomRepository {
 	public List<Room> findRoombyDate(ReservationRequestDto reservationRequestDto); 
 	
 	//룸 사용가능 상태변경
-	public int updateManagerRoom(@Param("id") Integer id, @Param("availability") Boolean availability);
+	public int updateManagerRoom(@Param("id") Integer id, @Param("availability") Boolean availability, @Param("statusDesc") String statusDesc);
 	
 	// 모든 룸 개수 조회
 	public int findAllRoomListCount();
