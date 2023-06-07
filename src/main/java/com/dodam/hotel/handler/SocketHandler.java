@@ -141,4 +141,13 @@ public class SocketHandler extends TextWebSocketHandler {
         });
         return chatRoomList;
     }
+
+    public ChatRoom findRoom(String roomName){
+        for(WebSocketSession session : roomMap.keySet()){
+            if(roomMap.get(session).getRoomName().equals(roomName)){
+                return roomMap.get(session);
+            }
+        }
+        return null;
+    }
 }

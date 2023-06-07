@@ -66,14 +66,14 @@
 }
 
 #input--box {
-	background-color: #fff;
+	background-color: #ebebeb;
 	padding: 5px;
 }
 
 </style>
 <div class="content">
 	<div class="title--container">
-			<h2>이거도 팝업창으로 할까? 고민중</h2>
+		<h2>${userName}님의 상담</h2>
 	</div>
 	<div class="main--content">
 		<div id="socket">
@@ -109,7 +109,7 @@ ws.onmessage = (e) => {
 	createDivTag2.className = "recieve--msg";
 	const createDivTag3 = document.createElement("div");
 	createDivTag3.className = "recieve--msg--div";
-    createDivTag.append("${roomName}:");
+    createDivTag.append("👤${roomName}:");
 	createDivTag3.append(data.msg + "\n");
 	createDivTag2.append(createDivTag3);
 	socketDivTag.append(createDivTag);
@@ -134,7 +134,7 @@ function sendMsg(){
 	createDivTag.style.display = "flex";
 	createDivTag.style.justifyContent = "flex-end";
 	createDivTag.style.paddingLeft = "15px";
-	createDivTag.textContent = ":dodam";
+	createDivTag.textContent = "👩🏻dodam:";
 			
 	const createDivTag2 = document.createElement("div");
 	createDivTag2.className = "send--msg";

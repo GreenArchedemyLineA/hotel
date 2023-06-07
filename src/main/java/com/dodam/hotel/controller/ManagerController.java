@@ -330,7 +330,9 @@ public class ManagerController {
 
 	@GetMapping("/chatRoom/{roomName}")
 	public String chatRoom(@PathVariable String roomName, Model model){
+		ChatRoom chatRoom = socketHandler.viewAllRoom().get(0);
 		model.addAttribute("roomName", roomName);
+		model.addAttribute("userName", chatRoom.getUserName());
 		return "/manager/chatRoom";
 	}
 }
