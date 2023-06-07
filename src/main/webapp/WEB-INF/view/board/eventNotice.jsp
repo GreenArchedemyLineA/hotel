@@ -136,7 +136,7 @@
 				</div>
 	
 				<div>
-					<form action="/event/event-insert" method="post" class="form-container">
+					<form action="/event/event-insert" method="post" class="form-container" enctype="Multipart/form-data">
 						<div>
 							<label>시작일</label> 
 							<input type="date" name="startDate" value="2015-10-13" class="input--box"> 
@@ -151,6 +151,7 @@
 							<label>내용</label> 
 							<input type="text" name="content" value="asdasdasdasd" class="input--box" style="width: 320px; height: 200px;">
 						</div>
+						<input type="file" name="file" class="input--box">
 						<button type="submit" class="sub--button">등록</button>
 					</form>
 				</div>

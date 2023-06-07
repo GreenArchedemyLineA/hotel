@@ -223,6 +223,12 @@ public class ReservationService {
 		return resultRowCount;
 	}
 	
+	public Integer deleteDiningReservation(Integer reservationId) {
+		Integer resultRow = reservationRepository.deleteDiningByReservationId(reservationId);
+		return resultRow;
+	}
+	
+	
 	public Reservation findReservationByUserIdSuccessful(Integer userId) {
 		return reservationRepository.findReservationByUserIdSuccessful(userId);
 	}

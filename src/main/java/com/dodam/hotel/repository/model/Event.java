@@ -12,5 +12,7 @@ public class Event {
 	private Date endDate;
 	private String title;
 	private String content;
+	private String uploadFile;
+	private String originFile;
 	
 }

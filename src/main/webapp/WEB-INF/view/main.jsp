@@ -335,10 +335,6 @@ main {
 	width: 300px;
 }
 
-#gift--box, #discount--box, #point--box {
-	opacity: 0;
-}
-
 .membership--container {
 	margin: 10px;
 	display: flex;
@@ -378,7 +374,7 @@ main {
 .swiper-slide {
 	text-align: center;
 	font-size: 18px;
-	background: #fff;
+	background: none;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -404,7 +400,7 @@ main {
 
 .swiper-slide img {
 	display: block;
-	width: 1000px;
+	width: 800px;
 	height: 500px;
 	object-fit: cover;
 }
@@ -486,6 +482,19 @@ main {
 	align-items: flex-end;
 	justify-content: center;
 }
+
+.event--list {
+	display: flex;
+}
+
+.event--main {
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 300px;
+    margin-left: 10px;
+}
+
 </style>
 
 
@@ -582,9 +591,6 @@ main {
 			</div>
 		</div>
 	</div>
-	<div class="greeting">
-		<span>뜨거운 여름</span> <span>도담이 함께합니다</span>
-	</div>
 </main>
 <div class="reserve--container">
 	<form action="/search" method="get" class="form--container">
@@ -627,11 +633,12 @@ main {
 				<div class="swiper-slide">
 					<div class="bx-group">
 						<div class="event--list">
-							<div class="event--icon">
-								<span class="material-symbols-outlined" style="font-size: 40px">celebration</span>
+							<div class="event--img">
+								<img alt="" src="/images/uploads/${list.uploadFile}">
 							</div>
 							<div class="event--main">
 								<div class="event--title">${list.title}</div>
+								<div class="event--content">${list.content}</div>
 								<div class="event--date">${list.startDate}~
 									${list.endDate}</div>
 							</div>
@@ -696,6 +703,7 @@ main {
 		mode : "range",
 		minDate : "today",
 	});
+	
 	let swiper = new Swiper(".mySwiper", {
 		navigation : {
 			nextEl : ".swiper-button-next",
@@ -715,25 +723,6 @@ main {
 	var marker = new naver.maps.Marker({
 		position : new naver.maps.LatLng(35.1595148, 129.0602424),
 		map : map
-	});
-	
-	// 메인 글씨
-	$(document).ready(function() {
-		$('.greeting').animate({
-			opacity : 1
-		}, 2000);
-	
-	// 멤버쉽 아이콘
-		$('#gift--box').animate({
-			opacity : 1
-		}, 1000);
-		$('#discount--box').animate({
-			opacity : 1
-		}, 2000);
-		$('#point--box').animate({
-			opacity : 1
-		}, 2000);
-			
 	});
 </script>
 <script src="js/mainToggle.js"></script>

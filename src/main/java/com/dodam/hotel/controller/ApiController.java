@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import com.dodam.hotel.handler.exception.CustomRestFullException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -172,6 +173,27 @@ public class ApiController {
 				.msg(returnMsg)
 				.redirect_uri(redirectURL)
 				.build();
+	}
+	
+	@DeleteMapping("deleteDining")
+	public ResponseMsg deleteDining(@RequestParam Integer reservationId) {
+		Integer responseDining = reservationService.deleteDiningReservation(reservationId);
+		if(responseDining == 1) {
+			ResponseMsg successMsg = ResponseMsg
+					.builder()
+					.status_code(HttpStatus.OK.value())
+					.msg("예약 취소에 성공했습니다.")
+					.build();
+			return successMsg;
+		} else {
+		 ResponseMsg failMsg = ResponseMsg
+				 .builder()
+				 // 대상 리소스의 현재 상태와 충돌하여 요청을 완료할 수 없음을 뜻한다.
+				 .status_code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+				 .msg("예약 취소에 실패했습니다.")
+				 .build();
+		 return failMsg;
+		}
 	}
 
 } // end of class

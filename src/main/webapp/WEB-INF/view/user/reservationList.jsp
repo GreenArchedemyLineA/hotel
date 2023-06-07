@@ -34,15 +34,35 @@
 					<tr class="table--tr--container">
 						<td>${list.startDate}</td>
 						<td>${list.endDate}</td>
-						<td>${list.room.roomType.name}</td>
+						<c:choose>
+							<c:when test="${list.room.roomType.name ne null}">
+								<td>${list.room.roomType.name}</td>
+							</c:when>
+							<c:otherwise>
+								<td>${list.dining.name}</td>
+							</c:otherwise>
+						</c:choose>
 						<td>${list.numberOfP}</td>
-						<td>${list.formatPrice()}</td>
+						<c:choose>
+							<c:when test="${list.formatPrice() ne null}">
+								<td>${list.formatPrice()}</td>
+							</c:when>
+							<c:otherwise>
+								<td>현장결제</td>
+							</c:otherwise>
+						</c:choose>
 						<td>${list.createdAt}</td>
 						<td>
-						<form action="/pay/refund/${list.payTid}/${list.id}" method="post">
-							<button type="submit">환불/ 예약 취소</button>
-						</form>
-						<%-- <button onclick="deleteReservation(${list.payTid},${list.totalPrice})">환불/예약 취소</button> --%>
+							<c:choose>
+								<c:when test="">
+									<form action="/pay/refund/${list.payTid}/${list.id}" method="post">
+										<button type="submit">환불/ 예약 취소</button>
+									</form>
+								</c:when>
+								<c:otherwise>
+									<button type="button" id="dining--cancel" onclick="diningCancel(${list.id})">예약 취소</button>
+								</c:otherwise>
+							</c:choose>
 						</td>
 					</tr>
 				</c:forEach>
@@ -70,6 +90,20 @@
 	<script type="text/javascript">
 	    function deleteReservation(tid,totalPrice){
 		    	location.href = "/pay/kakao/refund/"+tid+"/"+totalPrice; 
+	    }
+	    
+	    function diningCancel(id) {
+	    	fetch("/api/deleteDining?reservationId=" + id, ({
+	    		method: "delete"
+	    	})).then(async response => {
+	    		let result = await response.json();
+               	if(result.status_code == 200) {
+                    alert(result.msg);
+                } else {
+                    alert(result.msg);
+                }
+                location.reload();
+	    	});
 	    }
 	</script>
 </body>
