@@ -79,7 +79,6 @@ body {
 					createDivTag2.className = "recieve--msg";
 					const createDivTag3 = document.createElement("div");
 					createDivTag3.style.width = "100px";
-					console.log(data.type);
 					if (data.type === "ENTER") {
 						const eh = socketDivTag.clientHeight
 								+ socketDivTag.scrollTop;
@@ -90,7 +89,7 @@ body {
 						if (!isScroll) {
 							socketDivTag.scrollTop = socketDivTag.scrollHeight;
 						}
-					} else {
+					} else if(data.type === "MANAGER"){
 						const eh = socketDivTag.clientHeight
 								+ socketDivTag.scrollTop;
 
@@ -99,6 +98,16 @@ body {
 						createDivTag.append("매니저:");
 						createDivTag3.append(data.msg + "\n");
 						createDivTag2.append(createDivTag3);
+						if (!isScroll) {
+							socketDivTag.scrollTop = socketDivTag.scrollHeight;
+						}
+					} else{
+						const eh = socketDivTag.clientHeight
+								+ socketDivTag.scrollTop;
+
+						const isScroll = socketDivTag.scrollHeight <= eh;
+
+						createDivTag.append(data.msg + "\n");
 						if (!isScroll) {
 							socketDivTag.scrollTop = socketDivTag.scrollHeight;
 						}
