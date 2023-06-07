@@ -212,9 +212,30 @@
 		</div>
 	</div>
 <script>
-    function statusDetail(id){
+/*     function statusDetail(id){
         location.href = "/manager/roomStatusDetail?roomId="+id;
-    }
-
-checkStatus();
+    } */
+    
+	let modalFormTag = document.getElementById("modal--form");
+	modalFormTag.action = "/manager/facilitiesStatus/${facilities.id}";
+	
+	let allDivTag = document.querySelectorAll(".room--box");
+	allDivTag.forEach(tag => {
+		tag.addEventListener("click", ()=>{
+			fetch("/api/findRoomInfo/"+tag.id)
+			.then(async(response)=>{
+				let data = await response.json();
+				console.log(data)
+				document.getElementById("name").value = data.roomType.name;
+				document.getElementById("number_of_p").value = data.roomType.numberOfP;
+				document.getElementById("price").value = data.roomType.price;
+				if(data.availability == true) {
+					document.getElementById("availability").value = '사용가능';
+				} else {
+					document.getElementById("availability").value = '사용불가';
+				}
+				document.getElementById("description").value = data.statusDesc;
+			})
+		})
+	})
 </script>
