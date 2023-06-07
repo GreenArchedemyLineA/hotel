@@ -59,10 +59,10 @@
 	
 	
 	<select id="findLimit5" resultType="com.dodam.hotel.repository.model.Event">
-	select title, start_date
-	from event_tb
-	order by id desc
-	limit 5;
+		select title, start_date
+		from event_tb
+		order by id desc
+		limit 5;
 	</select>
 	
 	<select id="findByAllPage" resultType="com.dodam.hotel.repository.model.Event">

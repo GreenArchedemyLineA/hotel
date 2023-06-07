@@ -230,6 +230,10 @@ public class UserService {
 	 */
 	@Transactional
 	public void createMembership(Integer id) {
+		MembershipInfo membershipInfo = membershipRepository.findMembershipByuserId(id);
+		if(membershipInfo != null){
+			throw new CustomRestFullException("이미 멤버쉽에 등록되어있습니다", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		int resultRowCount = membershipRepository.insert(id);
 		// 숙박 쿠폰 자동 등록 처리
 		int couponCount = couponRepository.insert(CouponInfo.MEMBERSHIP, id);
@@ -276,6 +280,12 @@ public class UserService {
 	public Membership readMembershipInfo() {
 		Membership membership = membershipRepository.findMembership();
 		return membership;
+	}
+
+	@Transactional
+	public MembershipInfo readMemberShipInfoById(Integer id){
+		MembershipInfo membershipInfo = membershipRepository.findMembershipByuserId(id);
+		return membershipInfo;
 	}
 	
 }

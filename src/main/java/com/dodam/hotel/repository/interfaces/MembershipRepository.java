@@ -18,4 +18,7 @@ public interface MembershipRepository {
 	
 	// 멤버쉽 정보 조회
 	public Membership findMembership();
+
+	// 멤버쉽 확인
+	MembershipInfo findMembershipByuserId(Integer userId);
 }

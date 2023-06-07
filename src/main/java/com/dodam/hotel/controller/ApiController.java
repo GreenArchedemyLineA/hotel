@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.dodam.hotel.handler.exception.CustomRestFullException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -144,4 +145,33 @@ public class ApiController {
 		 return createNew;
 		}
 	}
+
+	@GetMapping("/checkMemberShip")
+	public ResponseMsg checkMemberShip(){
+		HttpStatus httpStatus;
+		String returnMsg = null;
+		UserResponseDto.LoginResponseDto user = (UserResponseDto.LoginResponseDto) session.getAttribute(Define.PRINCIPAL);
+		Integer userId = user != null ? user.getId() : null;
+		MembershipInfo membershipInfo = userService.readMemberShipInfoById(userId);
+		String redirectURL = null;
+		if(userId == null){
+			httpStatus = HttpStatus.UNAUTHORIZED;
+			returnMsg = "로그인 후 이용해주세요";
+			redirectURL = "/login";
+		}
+		else if(membershipInfo != null){
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+			returnMsg = "이미 멤버쉽이 등록된 회원입니다";
+		}else{
+			httpStatus = HttpStatus.OK;
+		}
+
+		return ResponseMsg
+				.builder()
+				.status_code(httpStatus.value())
+				.msg(returnMsg)
+				.redirect_uri(redirectURL)
+				.build();
+	}
+
 } // end of class
