@@ -57,9 +57,6 @@ public class UserController {
 
 	@Autowired
 	private QuestionService questionService;
-
-	@Autowired
-	private JavaMailSenderImpl mailSender;
 	
 	@Autowired
 	private EventService eventService;
@@ -283,37 +280,10 @@ public class UserController {
 				throw new CustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
 			});
 		}
-		// 랜덤 비밀번호 생성
-		String randomStr = CreateRandomStr.createRandomString();
-
-		pwInquiryRequestDto.setPassword(randomStr);
 
 		int resultRow = userService.updatePwByUserInfo(pwInquiryRequestDto);
 
-		if (resultRow == 1) {
-			String subject = pwInquiryRequestDto.getName() + "님의 임시 비밀번호 입니다.";
-			String content = "<p>로그인 후 비밀번호를 변경해주시길 바랍니다.</p> <br> <h2>임시 비밀번호</h2> <br> <p>" + randomStr + "</p>";
-			String from = Define.ADMIN_EMAIL;
-			String to = pwInquiryRequestDto.getEmail();
-			try {
-				MimeMessage mail = mailSender.createMimeMessage();
-				MimeMessageHelper mailHelper = new MimeMessageHelper(mail, "UTF-8");
-
-				mailHelper.setFrom(from);
-				mailHelper.setTo(to);
-				mailHelper.setSubject(subject);
-				mailHelper.setText(content, true);
-
-				mailSender.send(mail);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			// 예외처리 이메일 전송 실패
-			System.out.println("이메일 전송 실패");
-		}
-		return "redirect:/pwInquiryPage";
+		return "redirect:/login";
 	}
 
 	// 유저가 쓴 reply 확인 - 현우
