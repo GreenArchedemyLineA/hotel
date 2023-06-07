@@ -50,7 +50,7 @@ public class EventController {
 	public String onGoingEventBoard(Model model, 
 			@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "4", required=false)String cntPerPage) {
-		int total = eventService.onGoingEventCount();
+		int total = eventService.readOnGoingEventCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		List<Event> responseEvents = eventService.readOnGoingEvent(obj);
 		model.addAttribute("paging", obj);
@@ -63,7 +63,7 @@ public class EventController {
 	public String closedEventBoard(Model model, 
 			@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "4", required=false)String cntPerPage) {
-		int total = eventService.closedEventCount();
+		int total = eventService.readClosedEventCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		List<Event> responseEvents = eventService.readClosedEvent(obj);
 		model.addAttribute("paging", obj);

@@ -170,7 +170,7 @@ public class QuestionController {
 	// 매니저
 	@GetMapping("/category")
 	public String questionCategory(String category,Model model) {
-		List<Question> responseQuestions = questionService.findByCategory(category);
+		List<Question> responseQuestions = questionService.readByCategory(category);
 		if(responseQuestions != null) {
 			model.addAttribute("questionList", responseQuestions);
 		}

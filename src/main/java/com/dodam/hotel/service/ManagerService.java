@@ -103,13 +103,13 @@ public class ManagerService {
 	
 	//페이징
 	@Transactional
-	public List<MUser> managerUserListAllPaging(PagingObj obj) {
+	public List<MUser> readManagerUserListAllPaging(PagingObj obj) {
 		List<MUser> userListEntity = mUserRepository.findByAllPaging(obj);
 		return userListEntity;
 	}
 	
 	@Transactional
-	public Integer findByAllCount() {
+	public Integer readByAllCount() {
 		return mUserRepository.findByAllCount(); 
 	}
 	
@@ -121,7 +121,7 @@ public class ManagerService {
 	}
 	
 	@Transactional
-	public Integer findByNameCount(String name) {
+	public Integer readByNameCount(String name) {
 		return mUserRepository.findByNameCount(name); 
 	}
 	
@@ -133,7 +133,7 @@ public class ManagerService {
 	}
 	
 	@Transactional
-	public Integer findByGradeAllCount(Integer gradeId) {
+	public Integer readByGradeAllCount(Integer gradeId) {
 		return mUserRepository.findByGradeAllCount(gradeId); 
 	}
 	
@@ -159,7 +159,7 @@ public class ManagerService {
 		return userBlackListEntity;
 	}
 	
-	public int findByBlackListCount() {
+	public int readByBlackListCount() {
 		return mUserRepository.findByBlackListCount();
 	}
 	
@@ -175,7 +175,7 @@ public class ManagerService {
 		List<MembershipInfo> membershipUserListEntity = mUserRepository.findByMembershipAll(obj);
 		return membershipUserListEntity;		
 	}
-	public Integer findByMembershipAllCount() {
+	public Integer readByMembershipAllCount() {
 		return mUserRepository.findByMembershipAllCount(); 
 	}
 	// 회원 등급 수정

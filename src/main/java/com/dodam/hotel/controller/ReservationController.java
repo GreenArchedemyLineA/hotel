@@ -84,10 +84,10 @@ public class ReservationController {
 		model.addAttribute("poolPrice", reservationOptionPrice.getPoolPrice());
 		model.addAttribute("fitnessPrice", reservationOptionPrice.getFitnessPrice());
 		
-		model.addAttribute("diningStatus", reservationService.diningStatus().get(0));
-		model.addAttribute("fitnessStatus", reservationService.fitnessStatus().get(0));
-		model.addAttribute("poolStatus", reservationService.poolStatus().get(0));
-		model.addAttribute("spaStatus", reservationService.spaStatus().get(0));
+		model.addAttribute("diningStatus", reservationService.readDiningStatus().get(0));
+		model.addAttribute("fitnessStatus", reservationService.readFitnessStatus().get(0));
+		model.addAttribute("poolStatus", reservationService.readPoolStatus().get(0));
+		model.addAttribute("spaStatus", reservationService.readSpaStatus().get(0));
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		selectReserveDetail.setUserId(principal.getId());
 		Map<String, Object> selectList = reservationService.readAvailableCouponOrPoint(selectReserveDetail);
@@ -113,7 +113,7 @@ public class ReservationController {
 	@GetMapping("/reservationSuccessful")
 	public String reservationSuccessful(Model model) {
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
-		Reservation reservationSuccessful = reservationService.findReservationByUserIdSuccessful(principal.getId());
+		Reservation reservationSuccessful = reservationService.readReservationByUserIdSuccessful(principal.getId());
 		model.addAttribute("successful", reservationSuccessful);
 		Pay payType = payService.searchType(reservationSuccessful.getPayTid());
 		model.addAttribute("payType", payType);

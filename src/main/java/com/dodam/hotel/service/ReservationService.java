@@ -121,7 +121,6 @@ public class ReservationService {
 	// 객실 예약
 	@Transactional
 	public int createReserveRoom(ReservationRequestDto reservationRequestDto, Integer userId) {
-		System.out.println(reservationRequestDto);
 		// 부대시설 추가 신청 여부 처리
 		if (reservationRequestDto.getDiningCount() != 0) {
 			reservationRequestDto.setDiningId(1);
@@ -229,24 +228,24 @@ public class ReservationService {
 	}
 	
 	
-	public Reservation findReservationByUserIdSuccessful(Integer userId) {
+	public Reservation readReservationByUserIdSuccessful(Integer userId) {
 		return reservationRepository.findReservationByUserIdSuccessful(userId);
 	}
 	
 	//객실 예약시 띄워줄 부대시설 상태값 서비스들
-	public List<Dining> diningStatus(){
+	public List<Dining> readDiningStatus(){
 		return diningRepository.findAllDining();
 	}
 	
-	public List<Spa> spaStatus(){
+	public List<Spa> readSpaStatus(){
 		return facilitiesRepository.findByAllSpa();
 	}
 	
-	public List<Fitness> fitnessStatus(){
+	public List<Fitness> readFitnessStatus(){
 		return facilitiesRepository.findByAllFitness();
 	}
 	
-	public List<Pool> poolStatus(){
+	public List<Pool> readPoolStatus(){
 		return facilitiesRepository.findByAllPool();
 	}
 }
