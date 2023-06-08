@@ -38,6 +38,6 @@ public interface QuestionRepository {
 	
 	// 특정 유저 질문 조회(페이징)
 	public List<Reply> findByUserIdPaging(@Param("obj") PagingObj obj, @Param("userId") Integer userId);
-	public int deleteQuestion(Integer userId);
+	public int deleteQuestion(Integer questionId);
 	
 } // end of class

@@ -118,6 +118,7 @@
 		location.href = "/question/questionDetail/"+id; 
 	}
 	function questionDelete(id){
+		console.log(id);
 		location.href = "/question/questionDelete/"+id; 
 	}
 </script>

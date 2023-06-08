@@ -554,10 +554,10 @@ input[type="number"]::-webkit-inner-spin-button {
 			couponPrice = ${selectDetail.price}
 		}
 		else if(couponSelectTag.value === "객실 10% 할인 쿠폰"){
-			couponPrice = ${(selectDetail.price * 0.1)} * nights;
+			couponPrice = ${(selectDetail.price * nights)} * 0.1;
 		}
 		else if(couponSelectTag.value === "객실 30% 할인 쿠폰"){
-			couponPrice = ${(selectDetail.price * 0.3)} * nights;
+			couponPrice = ${(selectDetail.price * nights)} * 0.3;
 		}
 		else if(couponSelectTag.value === "다이닝 식사권 2매 쿠폰"){
 			couponPrice = -60000;
