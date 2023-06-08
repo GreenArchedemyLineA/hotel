@@ -163,4 +163,6 @@
 		left join fitness_tb as f
 		on fac.id = f.facilities_id;
 	</select>
+	
+	
 </mapper>
