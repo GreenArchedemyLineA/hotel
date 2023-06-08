@@ -215,26 +215,63 @@
     
 	
 	let allDivTag = document.querySelectorAll(".room--box");
-	allDivTag.forEach(tag => {
-		tag.addEventListener("click", ()=>{
-			console.log(tag)
-			fetch("/api/findRoomInfo/"+tag.id)
-			.then(async(response)=>{
-				let data = await response.json();
-				let modalFormTag = document.getElementById("modal--form");
-				// modalFormTag.action = "/manager/facilitiesStatus/" + data.id;
-				console.log(data)
-				document.getElementById("name").value = data.roomType.name;
-				document.getElementById("number_of_p").value = data.roomType.numberOfP;
-				if(data.availability == true) {
+	const divTagNum = allDivTag.length;
+
+	for(let i = 0; i < divTagNum; i++){
+		if(i === 0 || i === 1){
+			allDivTag[i].addEventListener('click', ()=>{
+				fetch("/api/findRoomInfo/"+allDivTag[i].id)
+						.then(async(response)=>{
+							let data = await response.json();
+							let modalFormTag = document.getElementById("modal--form");
+							// modalFormTag.action = "/manager/facilitiesStatus/" + data.id;
+							console.log(data)
+							document.getElementById("name").value = data.roomType.name;
+							document.getElementById("number_of_p").value = data.roomType.numberOfP;
+							if(data.availability == true) {
+								document.getElementById("availability").value = '사용가능';
+							} else {
+								document.getElementById("availability").value = '사용불가';
+							}
+							document.getElementById("description").value = data.statusDesc;
+						})
+			})
+		} else if(i === 2){
+			allDivTag[i].addEventListener('click', ()=>{
+				document.getElementById("name").value = '${pool.facilities.name}';
+				document.getElementById("number_of_p").value = '${pool.facilities.location}';
+				if(${pool.availability}) {
 					document.getElementById("availability").value = '사용가능';
 				} else {
 					document.getElementById("availability").value = '사용불가';
 				}
-				document.getElementById("statusDesc").value = data.statusDesc;
+				document.getElementById("description").value = '${pool.statusDesc}';
 			})
-		})
-	})
+		} else if(i === 3){
+			allDivTag[i].addEventListener('click', ()=>{
+				document.getElementById("name").value = '${spa.facilities.name}';
+				document.getElementById("number_of_p").value = '${spa.facilities.location}';
+				if(${spa.availability}) {
+					document.getElementById("availability").value = '사용가능';
+				} else {
+					document.getElementById("availability").value = '사용불가';
+				}
+				document.getElementById("description").value = '${spa.statusDesc}';
+			})
+		} else{
+			allDivTag[i].addEventListener('click', ()=>{
+				document.getElementById("name").value = '${fitness.facilities.name}';
+				document.getElementById("number_of_p").value = '${fitness.facilities.location}'
+				if(${fitness.availability}) {
+					document.getElementById("availability").value = '사용가능';
+				} else {
+					document.getElementById("availability").value = '사용불가';
+				}
+				document.getElementById("description").value = '${fitness.statusDesc}';
+			})
+		}
+	}
+
 	
 	let roomStatus = document.getElementById("availability");
 	roomStatus.addEventListener("keyup", function() {
