@@ -50,9 +50,9 @@ public class KakaoPay implements PayInterface {
 		parameters.add("vat_amount",
 				typeConverKakaoRequestDto.getVat_amount() != null ? typeConverKakaoRequestDto.getVat_amount() : "0");
 		parameters.add("tax_free_amount", "0");
-		parameters.add("approval_url", "http://localhost:8080/pay/kakao/success");
-		parameters.add("fail_url", "http://localhost:8080/pay/kakao/fail");
-		parameters.add("cancel_url", "http://localhost:8080/pay/kakao/cancel");
+		parameters.add("approval_url", "http://192.168.0.84:8080/pay/kakao/success");
+		parameters.add("fail_url", "http://192.168.0.84:8080/pay/kakao/fail");
+		parameters.add("cancel_url", "http://192.168.0.84:8080/pay/kakao/cancel");
 
 		HttpEntity<MultiValueMap<String, String>> reqEntity = new HttpEntity<>(parameters, headers);
 

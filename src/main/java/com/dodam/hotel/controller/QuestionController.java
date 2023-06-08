@@ -137,6 +137,7 @@ public class QuestionController {
     	}
 		Question responseQuestion = questionService.readById(id);
 		if(responseQuestion != null) {
+			model.addAttribute("principal", session.getAttribute(Define.MANAGERPRINCIPAL));
 			model.addAttribute("question", responseQuestion);
 		}
 		return "/board/questionDetail";

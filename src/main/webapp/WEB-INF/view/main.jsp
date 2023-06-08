@@ -438,21 +438,21 @@ main {
 }
 
 #pool {
-	background-image: url("http://localhost:8080/images/pool.jpg");
+	background-image: url("http://192.168.0.84:8080/images/pool.jpg");
 	background-size: cover;
 	display: flex;
 	flex: 1;
 }
 
 #spa {
-	background-image: url("http://localhost:8080/images/spa.jpg");
+	background-image: url("http://192.168.0.84:8080/images/spa.jpg");
 	background-size: cover;
 	display: flex;
 	flex: 1;
 }
 
 #fitness {
-	background-image: url("http://localhost:8080/images/fitness.jpg");
+	background-image: url("http://192.168.0.84:8080/images/fitness.jpg");
 	background-size: cover;
 	display: flex;
 	flex: 1;
@@ -652,8 +652,8 @@ main {
 		</div>
 		<div id="discount--box">
 			<span class="material-symbols-outlined membership--icon">calculate</span>
-			<p class="membership--desc">멤버십 회원만을 위해</p>
-			<p class="membership--desc">할인된 가격을 제공합니다</p>
+			<p class="membership--desc">멤버십 회원만을 위한</p>
+			<p class="membership--desc">숙박 쿠폰을 제공합니다</p>
 		</div>
 		<div id="point--box">
 			<span class="material-symbols-outlined membership--icon">monetization_on</span>

@@ -194,7 +194,7 @@ public class ReservationService {
 			String subject = (String)((UserResponseDto.LoginResponseDto)session.getAttribute("principal")).getName() + "님의 새로운 예약이 들어왔습니다";
 			String content = "<p>예약 현황을 숙지하여 차질이 없도록 하세요.</p> <br> <h2>호텔 도담 이사회</h2>";
 			String from = Define.ADMIN_EMAIL;
-			String to = Define.MANAGER_EMAIL;
+			String to = (String)((UserResponseDto.LoginResponseDto)session.getAttribute("principal")).getEmail();
 			
 			String api_key = "NCSYYRDX9Y5UNIO7";
 			String api_secret = "YEHIFZWNUP9GCLPXD9SHND2DWEOQRIQP";

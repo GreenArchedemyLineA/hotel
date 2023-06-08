@@ -32,7 +32,7 @@
 	<select id="findNowEvent" resultType="com.dodam.hotel.repository.model.Event">
 	         SELECT * 
 	         FROM event_tb
-	         WHERE end_date <![CDATA[>=]]> now() 
+	         WHERE end_date <![CDATA[>=]]> now()
 	         ORDER BY id DESC 
 	</select>
 	

@@ -86,7 +86,7 @@
 				</div>
 				</div>
 				<form action="/question/reply/${question.id}/${principal.id}" method="post" class="reply--form">
-				<input type="text" name="content" class="reply--box" placeholder="답변을 작성해주세요">
+				<input type="text" name="content" class="reply--box" placeholder="답변을 작성해주세요" autocomplete="off">
 				<button type="submit" class="sub-button">답변 작성</button>
 				</form>
 				</div>
