@@ -28,5 +28,7 @@ public class ReservationRequestDto {
 	private Integer poolCount;
 	private Integer fitnessCount;
 
+	private Integer coupon;
+
 	private String tid;
 }
