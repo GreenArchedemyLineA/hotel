@@ -59,7 +59,7 @@ public class KakaoController {
 //      String TOKEN_URI = "https://kauth.kakao.com/oauth/token";
       String GRANT_TYPE = "authorization_code";
       String CLIENT_ID = "9b1b097488dc5873535e6b706d20920d";
-      String REDIRECT_URI = "http://localhost:8080/auth/kakaoLogin";
+      String REDIRECT_URI = "http://192.168.0.84:8080/auth/kakaoLogin";
       String CLIENT_SECRET = "OjxZYU91ABul5Fbl3GYZxgRf1BAFaUN5";
       String APP_ADMIN_KEY = "5b5a2f726cd2aad3adc4b7a568f3c0d4";
 

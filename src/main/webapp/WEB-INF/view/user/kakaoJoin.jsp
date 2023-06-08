@@ -9,7 +9,7 @@
 	<div class="title--container">
 		<div class="title--logo">
 			<span class="material-symbols-outlined back--icon" onclick="history.back()">arrow_back</span>
-			<img alt="" src="/images/logo_white.png" id="logo--image" onclick="location.href='/'">
+			<img alt="" src="/images/dodam_wlogo.png" id="logo--image" onclick="location.href='/'">
 		</div>
 		<div class="title--text">
 			<p>추가 정보를</p>

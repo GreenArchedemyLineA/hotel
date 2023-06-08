@@ -82,21 +82,25 @@
 	</div>
 	<script type="text/javascript">
 	    function deleteReservation(tid,totalPrice){
-		    	location.href = "/pay/kakao/refund/"+tid+"/"+totalPrice; 
+	    	if(confirm('정말 취소 하시겠습니까?')){
+		    	location.href = "/pay/kakao/refund/"+tid+"/"+totalPrice;
+	    	}
 	    }
 	    
 	    function diningCancel(id) {
-	    	fetch("/api/deleteDining?reservationId=" + id, ({
-	    		method: "delete"
-	    	})).then(async response => {
-	    		let result = await response.json();
-               	if(result.status_code == 200) {
-                    alert(result.msg);
-                } else {
-                    alert(result.msg);
-                }
-                location.reload();
-	    	});
+	    	if(confirm('정말 취소 하시겠습니까?')){
+		    	fetch("/api/deleteDining?reservationId=" + id, ({
+		    		method: "delete"
+		    	})).then(async response => {
+		    		let result = await response.json();
+	               	if(result.status_code == 200) {
+	                    alert(result.msg);
+	                } else {
+	                    alert(result.msg);
+	                }
+	                location.reload();
+		    	});
+	    	}
 	    }
 	</script>
 </body>

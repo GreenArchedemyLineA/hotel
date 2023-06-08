@@ -102,6 +102,7 @@
 							</div>
 							<div class="room-content">
 								<div id="room--status">${diningList.availability == true ? "사용가능" : "사용불가"}</div>
+								<div id="room--status">${diningList.statusDesc}</div>
 							</div>	
 						</div>
 					</c:forEach>
@@ -112,6 +113,7 @@
 						</div>
 						<div class="room-content">
 							<div id="room--status">${pool.availability == true ? "사용가능" : "사용불가"}</div>
+							<div id="room--status">${pool.statusDesc}</div>
 						</div>
 					</div>
 					<div class="room--box" data-toggle="modal" data-target="#facModal" style="${spa.availability == true ? "border: 4px solid #9ACBF1" : "border: 4px solid #FF8D6B"}">	
@@ -121,6 +123,7 @@
 						</div>
 						<div class="room-content">
 							<div id="room--status">${spa.availability == true ? "사용가능" : "사용불가"}</div>
+							<div id="room--status">${spa.statusDesc}</div>
 						</div>
 					</div>
 					<div class="room--box" data-toggle="modal" data-target="#facModal" style="${fitness.availability == true ? "border: 4px solid #9ACBF1" : "border: 4px solid #FF8D6B"}">
@@ -130,6 +133,7 @@
 						</div>
 						<div class="room-content">
 							<div id="room--status">${fitness.availability == true ? "사용가능" : "사용불가"}</div>
+							<div id="room--status">${fitness.statusDesc}</div>
 						</div>
 					</div>
 				</div>
@@ -184,8 +188,8 @@
 	for(let i = 0; i < divTagNum; i++){
 		if(i === 0 || i === 1){
 			allDivTag[i].addEventListener('click', ()=>{
-				fetch("/api/findDiningInfo/"+allDivTag[i].id)
 				document.getElementById("target").value = "식당"
+				fetch("/api/findDiningInfo/"+allDivTag[i].id)
 						.then(async(response)=>{
 							let data = await response.json();
 							let modalFormTag = document.getElementById("modal--form");
@@ -243,9 +247,9 @@
 
 	function statusValueChange(status){
 		if(status === '사용가능') {
-			roomStatus.value = true;
+			return true;
 		} else if(status === '사용불가') {
-			roomStatus.value = false;
+			return false;
 		}
 		return status;
 	}
@@ -261,11 +265,7 @@
 
 	function updateSubmit(){
 		let form = document.getElementById('facilties--update');
-		if(statusValueChange(form.availability.value)){
-			form.availability.value = true;
-		}else{
-			form.availability.value = false;
-		}
+
 
 		form.submit();
 	}
