@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dodam.hotel.dto.UserResponseDto;
 import com.dodam.hotel.dto.api.ResponseMsg;
+import com.dodam.hotel.repository.model.Dining;
 import com.dodam.hotel.repository.model.MembershipInfo;
 import com.dodam.hotel.repository.model.Reservation;
 import com.dodam.hotel.repository.model.Room;
 import com.dodam.hotel.repository.model.User;
 import com.dodam.hotel.service.ChatService;
+import com.dodam.hotel.service.DiningService;
 import com.dodam.hotel.service.ManagerReservationService;
 import com.dodam.hotel.service.ManagerService;
 import com.dodam.hotel.service.ReservationService;
@@ -54,6 +56,9 @@ public class ApiController {
 	
 	@Autowired
 	private ChatService chatService;
+	
+	@Autowired
+	private DiningService diningService;
 	
 	// 회원 정보 수정
 	@GetMapping("/myInfo")
@@ -140,6 +145,12 @@ public class ApiController {
 	public Room findRoomInfo(@PathVariable Integer id) {
 		Room room = managerService.readByRoom(id);
 		return room;
+	}
+	
+	@GetMapping("/findDiningInfo/{id}")
+	public Dining findDiningInfo(@PathVariable Integer id) {
+		Dining dining = diningService.readDiningById(id);
+		return dining;
 	}
 	
 	@GetMapping("/checkNewMessage")

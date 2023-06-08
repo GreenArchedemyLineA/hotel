@@ -39,5 +39,10 @@ public class DiningService {
 		int resultRowCount = diningRepository.findStatusBar();
 		return resultRowCount;
 	}
+	
+	public Dining readDiningById(Integer id) {
+		Dining dining = diningRepository.findDiningById(id);
+		return dining;
+	}
 
 } // end of class

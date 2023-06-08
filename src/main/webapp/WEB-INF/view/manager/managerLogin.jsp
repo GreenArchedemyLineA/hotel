@@ -83,6 +83,9 @@ main {
 	border-bottom: 2px solid black;
 	background-color: #64c5f3;
 }
+#username:focus, #password:focus {
+	outline: none;
+}
 </style>
 </head>
 <body>
@@ -94,10 +97,10 @@ main {
 			<div class="login-form">
 				<form action="/manager/managerSignInProc" method="post" id="login--box">
 					<div class="id--box">
-						<input type="text" id="username" name="username" value="dodam@manager.com" placeholder="아이디를 입력해주세요">
+						<input type="text" id="username" name="username" placeholder="아이디를 입력해주세요" autocomplete="off">
 					</div>
 					<div class="password--box">
-						<input type="text" id="password" name="password" value="dodam1234" placeholder="비밀번호를 입력해주세요">
+						<input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요" autocomplete="off">
 					</div>
 					<div class="btn--box">
 						<button type="submit" class="sub--button">로그인</button>

@@ -184,14 +184,14 @@
 	for(let i = 0; i < divTagNum; i++){
 		if(i === 0 || i === 1){
 			allDivTag[i].addEventListener('click', ()=>{
-				fetch("/api/findRoomInfo/"+allDivTag[i].id)
+				fetch("/api/findDiningInfo/"+allDivTag[i].id)
 						.then(async(response)=>{
 							let data = await response.json();
 							let modalFormTag = document.getElementById("modal--form");
 							// modalFormTag.action = "/manager/facilitiesStatus/" + data.id;
 							console.log(data)
-							document.getElementById("name").value = data.roomType.name;
-							document.getElementById("number_of_p").value = data.roomType.numberOfP;
+							document.getElementById("name").value = data.name;
+							document.getElementById("number_of_p").value = data.location;
 							if(data.availability == true) {
 								document.getElementById("availability").value = '사용가능';
 							} else {

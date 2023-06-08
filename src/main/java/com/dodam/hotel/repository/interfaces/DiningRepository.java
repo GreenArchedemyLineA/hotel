@@ -23,4 +23,6 @@ public interface DiningRepository {
     
     // 라운지&바 상태 확인
     public int findStatusBar();
+    
+    public Dining findDiningById(Integer id);
 }

@@ -47,6 +47,9 @@
 	height: 200px;
 }
 
+#event--box:hover {
+	cursor: pointer;
+}
 #title--box {
 	margin: 3px;
 }
@@ -151,7 +154,7 @@ a:hover {
 			</div>
 		</div>
 		<div class="center--content">
-			<div class="content--box" id="event--box">
+			<div class="content--box" id="event--box" onclick="location.href='/event/notice'">
 				<b class="title--box">이벤트</b>
 				<div class="event--box">
 					<c:forEach items="${event}" var="list">
