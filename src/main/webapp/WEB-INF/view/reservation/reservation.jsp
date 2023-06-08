@@ -378,10 +378,10 @@ input[type="number"]::-webkit-inner-spin-button {
 				<div id="select--box--wrap">
 					<c:choose>
 						<c:when test="${couponList != null}">
-							<select id="coupon--result">
+							<select id="coupon--result" name="coupon">
 								<option value="0">쿠폰을 선택하세요</option>
 								<c:forEach var="couponList" items="${couponList}">
-									<option value="${couponList.couponInfo.name}">${couponList.couponInfo.name}</option>
+									<option value="${couponList.couponInfo.id}">${couponList.couponInfo.name}</option>
 								</c:forEach>
 							</select>
 						</c:when>
