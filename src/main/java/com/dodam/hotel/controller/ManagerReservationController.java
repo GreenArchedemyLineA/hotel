@@ -51,7 +51,7 @@ public class ManagerReservationController {
 			model.addAttribute("paging", obj);
 			model.addAttribute("reservationList", managerReservationService.readTodayReservationPaging(obj));
 		} else {
-			int total = managerService.findByNameCount(name);
+			int total = managerService.readByNameCount(name);
 			PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 			model.addAttribute("paging", obj);
 			model.addAttribute("reservationList", managerReservationService.readUserReservation(name));
@@ -93,7 +93,7 @@ public class ManagerReservationController {
 			model.addAttribute("paging", obj);
 			model.addAttribute("reservationList", managerReservationService.readAllReservationPaging(obj));
 		} else {
-			int total = managerService.findByNameCount(name);
+			int total = managerService.readByNameCount(name);
 			PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 			model.addAttribute("paging", obj);
 			model.addAttribute("reservationList", managerService.readUserByNameForManager(obj, name));

@@ -1,5 +1,6 @@
 package com.dodam.hotel.controller;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.mail.internet.MimeMessage;
@@ -57,9 +58,6 @@ public class UserController {
 
 	@Autowired
 	private QuestionService questionService;
-
-	@Autowired
-	private JavaMailSenderImpl mailSender;
 	
 	@Autowired
 	private EventService eventService;
@@ -88,11 +86,13 @@ public class UserController {
 		GradeInfo responseGrade = gradeService.readGradeByUserId(principal.getId());
 		// 포인트 정보 불러오기
 		Integer point = userService.readPointInfo(principal.getId());
+		DecimalFormat df = new DecimalFormat("###,###");
+		String formatPoint = df.format(point);
 		// 회원 정보 불러오기
 		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
 		model.addAttribute("responseGrade", responseGrade);
 		model.addAttribute("coupons", responseCoupons);
-		model.addAttribute("point", point);
+		model.addAttribute("point", formatPoint);
 		model.addAttribute("responseUser", responseUser);
 		return "/user/myPage";
 	}
@@ -286,36 +286,9 @@ public class UserController {
 				throw new CustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
 			});
 		}
-		// 랜덤 비밀번호 생성
-		String randomStr = CreateRandomStr.createRandomString();
-
-		pwInquiryRequestDto.setPassword(randomStr);
 
 		int resultRow = userService.updatePwByUserInfo(pwInquiryRequestDto);
 
-		if (resultRow == 1) {
-			String subject = pwInquiryRequestDto.getName() + "님의 임시 비밀번호 입니다.";
-			String content = "<p>로그인 후 비밀번호를 변경해주시길 바랍니다.</p> <br> <h2>임시 비밀번호</h2> <br> <p>" + randomStr + "</p>";
-			String from = Define.ADMIN_EMAIL;
-			String to = pwInquiryRequestDto.getEmail();
-			try {
-				MimeMessage mail = mailSender.createMimeMessage();
-				MimeMessageHelper mailHelper = new MimeMessageHelper(mail, "UTF-8");
-
-				mailHelper.setFrom(from);
-				mailHelper.setTo(to);
-				mailHelper.setSubject(subject);
-				mailHelper.setText(content, true);
-
-				mailSender.send(mail);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			// 예외처리 이메일 전송 실패
-			System.out.println("이메일 전송 실패");
-		}
 		return "redirect:/pwInquiryPage";
 	}
 

@@ -22,7 +22,6 @@ public class QuestionRequestDto {
 		private MultipartFile file;
 		private String uploadFile;
 		private String originFile;
-		
 	}
 	
 }

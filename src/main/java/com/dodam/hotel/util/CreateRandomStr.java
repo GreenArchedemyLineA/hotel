@@ -7,7 +7,7 @@ public class CreateRandomStr {
 	public static String createRandomString() {
 		Random random = new Random();
 		StringBuffer randomBuf = new StringBuffer();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 6; i++) {
 			// 랜덤으로 true, false 리턴 (true : 랜덤 소문자 영어, false : 랜덤 숫자)
 			if (random.nextBoolean()) {
 				// 26 : a-z 알파벳 개수

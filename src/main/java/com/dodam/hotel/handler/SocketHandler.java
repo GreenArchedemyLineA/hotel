@@ -129,6 +129,10 @@ public class SocketHandler extends TextWebSocketHandler {
 //            message = new TextMessage("");
 //        }
 //        managerSession.sendMessage(message);
+    	UserResponseDto.LoginResponseDto userSession = (UserResponseDto.LoginResponseDto) session.getAttributes().get(Define.PRINCIPAL);
+    	if(userSession != null) {
+    		chatRepository.updateUserMessageStatus(userSession.getId());
+    	}
         roomMap.remove(session);
         userSessions.remove(session);
         awaitMessageList.remove(session);

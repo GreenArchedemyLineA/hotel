@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -216,7 +217,7 @@ public class ReservationService {
 
 				mailSender.send(mail);
 				//문자 횟수 제한 때문에 임시 주석 걸어둠
-//				JSONObject obj = (JSONObject)coolsms.send(params);
+				JSONObject obj = (JSONObject)coolsms.send(params);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -228,24 +229,30 @@ public class ReservationService {
 		return resultRowCount;
 	}
 	
-	public Reservation findReservationByUserIdSuccessful(Integer userId) {
+	public Integer deleteDiningReservation(Integer reservationId) {
+		Integer resultRow = reservationRepository.deleteDiningByReservationId(reservationId);
+		return resultRow;
+	}
+	
+	
+	public Reservation readReservationByUserIdSuccessful(Integer userId) {
 		return reservationRepository.findReservationByUserIdSuccessful(userId);
 	}
 	
 	//객실 예약시 띄워줄 부대시설 상태값 서비스들
-	public List<Dining> diningStatus(){
+	public List<Dining> readDiningStatus(){
 		return diningRepository.findAllDining();
 	}
 	
-	public List<Spa> spaStatus(){
+	public List<Spa> readSpaStatus(){
 		return facilitiesRepository.findByAllSpa();
 	}
 	
-	public List<Fitness> fitnessStatus(){
+	public List<Fitness> readFitnessStatus(){
 		return facilitiesRepository.findByAllFitness();
 	}
 	
-	public List<Pool> poolStatus(){
+	public List<Pool> readPoolStatus(){
 		return facilitiesRepository.findByAllPool();
 	}
 }

@@ -117,7 +117,7 @@ public class QuestionService {
 	
 	// 문의 카테고리로 검색
 	@Transactional
-	public List<Question> findByCategory(String category){
+	public List<Question> readByCategory(String category){
 		List<Question> questionCategoryEntity = questionRepository.findByCategory(category);
 		return questionCategoryEntity;
 	}

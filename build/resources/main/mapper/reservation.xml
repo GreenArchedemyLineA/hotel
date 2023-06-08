@@ -814,7 +814,9 @@
 		where date_format(start_date, "%Y-%m-%d") = CURDATE() - INTERVAL #{count} DAY;
 	</select>
 
-	
+	<delete id="deleteDiningByReservationId">
+		delete from reservation_tb where id = #{reservationId};
+	</delete>
 
 
 </mapper>

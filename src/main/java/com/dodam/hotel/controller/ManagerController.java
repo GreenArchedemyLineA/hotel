@@ -146,10 +146,10 @@ public class ManagerController {
 		if (todayJoinMembership != null) {
 			model.addAttribute("membershipTodayCount", todayJoinMembershipCount);
 		}
-		int total = managerService.findByAllCount();
+		int total = managerService.readByAllCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		model.addAttribute("paging", obj);
-		model.addAttribute("viewAll",managerService.managerUserListAllPaging(obj));
+		model.addAttribute("viewAll",managerService.readManagerUserListAllPaging(obj));
 		return "/manager/userList";
 	}
 
@@ -158,7 +158,7 @@ public class ManagerController {
 	public String mUserList(String name, Model model
 			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage){
-		int total = managerService.findByNameCount(name);
+		int total = managerService.readByNameCount(name);
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		List<MUser> responseUsers = managerService.readUserByNameForManager(obj,name);
 		model.addAttribute("paging", obj);
@@ -171,7 +171,7 @@ public class ManagerController {
 	public String mUserGradeList(Integer gradeId, Model model
 			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage) {
-		int total = managerService.findByGradeAllCount(gradeId);
+		int total = managerService.readByGradeAllCount(gradeId);
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		List<GradeInfo> responseUserGrades = managerService.readUserGradeListForManager(obj, gradeId);
 		if (responseUserGrades != null) {
@@ -207,7 +207,7 @@ public class ManagerController {
 	public String membershipUserList(Model model
 			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage) {
-		int total = managerService.findByMembershipAllCount();
+		int total = managerService.readByMembershipAllCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		List<MembershipInfo> responseMembershipUsers = managerService.readByMembershipUserList(obj);
 		if (responseMembershipUsers != null) {
@@ -223,7 +223,7 @@ public class ManagerController {
 	public String mUserBlackList(Model model
 			,@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "5", required = false)String cntPerPage){
-		int total = managerService.findByBlackListCount();
+		int total = managerService.readByBlackListCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		List<MUser> userBlackList =  managerService.readUserBlackListForManager(obj);
 		if (userBlackList != null) {

@@ -6,8 +6,8 @@
 
 	<insert id="insert">
 		insert into
-		event_tb(start_date,end_date,title,content)
-		values(#{startDate},#{endDate},#{title},#{content});
+		event_tb(start_date,end_date,title,content,upload_file,origin_file)
+		values(#{startDate},#{endDate},#{title},#{content},#{uploadFile},#{originFile});
 	</insert>
 
 	<select id="findByAll"

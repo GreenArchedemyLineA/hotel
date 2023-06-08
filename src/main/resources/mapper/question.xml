@@ -143,7 +143,7 @@
 	
 	<delete id="deleteQuestion">
 		delete from question_tb
-    		where user_id = #{userId};
+    		where id = #{questionId};
 	</delete>
 	
 	<select id="findAllFaq" resultMap="Faq">

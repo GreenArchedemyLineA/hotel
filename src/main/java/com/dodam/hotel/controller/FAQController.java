@@ -21,6 +21,7 @@ import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
 import com.dodam.hotel.repository.model.FAQ;
 import com.dodam.hotel.repository.model.Manager;
 import com.dodam.hotel.service.ManagerFAQService;
+import com.dodam.hotel.util.Define;
 
 @Controller
 public class FAQController {
@@ -88,7 +89,7 @@ public class FAQController {
 		if (id == null) {
 			throw new ManagerCustomRestFullException("아이디가 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
 		}
-		Manager manager = (Manager) session.getAttribute("manager");
+		Manager manager = (Manager) session.getAttribute(Define.MANAGERPRINCIPAL);
 		if (manager == null) {
 			ResponseMsg failMsg = ResponseMsg.builder().status_code(HttpStatus.FORBIDDEN.value()).msg("사용 인증 권한이 없습니다")
 					.redirect_uri("/manager/faq/" + id).build();

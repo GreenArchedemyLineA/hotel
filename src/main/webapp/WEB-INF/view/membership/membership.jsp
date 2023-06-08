@@ -113,7 +113,7 @@
 		color: #ccc;
 		margin: 40px 0;
 	}
-	.modal--wrap{
+	/* .modal--wrap{
         display: none;
         width: 500px;
         height: 500px;
@@ -123,7 +123,7 @@
         margin: -250px 0 0 -250px;
         background:#eee;
         z-index: 2;
-    }
+    } */
     .black--bg{
         display: none;
         position: absolute;
@@ -135,7 +135,7 @@
         left: 0;
         z-index: 1;
     }
-    .modal--close{
+    /* .modal--close{
         width: 26px;
         height: 26px;
         position: absolute;
@@ -148,7 +148,7 @@
         height: 100%;
         background:url(https://img.icons8.com/metro/26/000000/close-window.png);
         text-indent: -9999px;
-    }
+    } */
     
 	.back--icon {
 		display: flex;
@@ -156,7 +156,10 @@
 		align-items: center;
 		cursor: pointer;
 	}
-	#grade {
+	.modal {
+		top: 90px;
+	}
+	.modal-content {
 		width: 800px;
 		height: 400px;
 	}
@@ -166,17 +169,18 @@
 		margin: 10px;
 		justify-content: center;
 		align-items: center;
+		height: 100%;
 	}
 	#grade-desc {
 		border-bottom: 1px solid #ebebeb;
-		margin-bottom: 10px;
+		margin-bottom: 20px;
 	}
 	.pay{
 		margin-top: 50px;
 	}
-	.modal--content {
-		width: 1000px;
-		height: 500px;
+	.content {
+		font-size: 15px;
+		margin: 20px 0;
 	}
 </style>
 </head>
@@ -234,7 +238,13 @@
 			<button onclick="membershipJoin()" class="sub--button">멤버쉽 가입하기</button>
 		</div>
 	</div>
+	
+	
+	
+	
+	
 		<div class="modal" id="grade">
+			<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">등급별 혜택 바로보기</h4>
@@ -242,10 +252,11 @@
 				</div>
 				<div class="modal--box">	
 					<c:forEach var="grade" items="${gradeList}">
-						<span><b>${grade.name}</b></span>
+						<span style="font-size: 20px;"><b>${grade.name}</b></span>
 						<span id="grade-desc">${grade.description}</span>
 					</c:forEach>				
 				</div>
+			</div>
 		</div>
 	</div>
 	<div class="modal" id="membership">
@@ -256,10 +267,10 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal--box">					
-					<span><b>${membership.price}</b></span>
-					<span>${membership.content1}</span>
-					<span>${membership.content2}</span>
-					<span>${membership.content3}</span>
+					<span style="font-size: 40px;"><b>${membership.price}</b></span>
+						<span class="content">🎈${membership.content1}</span>
+						<span class="content">🎈${membership.content2}</span>
+						<span class="content">🎈${membership.content3}</span>
 				</div>
 			</div>
 		</div>

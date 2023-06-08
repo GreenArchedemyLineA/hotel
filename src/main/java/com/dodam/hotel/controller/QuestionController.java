@@ -81,6 +81,10 @@ public class QuestionController {
 		MultipartFile file = question.getFile();
 		if(file.isEmpty() ==false) {
 			
+			if (file.getSize() > Define.MAX_FILE_SIZE) {
+				throw new CustomRestFullException("파일 크기가 50MB 이상일 수 없습니다.", HttpStatus.BAD_REQUEST);
+			}
+			
 			// 파일 최대 크기 지정 -- 추후 추가 예정
 			try {
 				String saveDirectory = Define.UPLOAD_DIRECTORY;
@@ -101,7 +105,7 @@ public class QuestionController {
 				question.setUploadFile(fileName);
 			} catch (Exception e) {
 				e.printStackTrace();
-				System.out.println("파일 업로드 오류");
+				throw new CustomRestFullException("파일 업로드 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
 		
@@ -166,7 +170,7 @@ public class QuestionController {
 	// 매니저
 	@GetMapping("/category")
 	public String questionCategory(String category,Model model) {
-		List<Question> responseQuestions = questionService.findByCategory(category);
+		List<Question> responseQuestions = questionService.readByCategory(category);
 		if(responseQuestions != null) {
 			model.addAttribute("questionList", responseQuestions);
 		}

@@ -1,7 +1,8 @@
 package com.dodam.hotel.controller;
 
+import java.io.File;
 import java.util.List;
-
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dodam.hotel.handler.exception.CustomRestFullException;
 import com.dodam.hotel.handler.exception.ManagerCustomRestFullException;
 import com.dodam.hotel.dto.EventInsertForm;
 import com.dodam.hotel.repository.model.Event;
 import com.dodam.hotel.service.EventService;
+import com.dodam.hotel.util.Define;
 import com.dodam.hotel.util.PagingObj;
 
 @Controller
@@ -47,7 +50,7 @@ public class EventController {
 	public String onGoingEventBoard(Model model, 
 			@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "4", required=false)String cntPerPage) {
-		int total = eventService.onGoingEventCount();
+		int total = eventService.readOnGoingEventCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		List<Event> responseEvents = eventService.readOnGoingEvent(obj);
 		model.addAttribute("paging", obj);
@@ -60,7 +63,7 @@ public class EventController {
 	public String closedEventBoard(Model model, 
 			@RequestParam(name ="nowPage", defaultValue = "1", required = false)String nowPage
 			,@RequestParam(name ="cntPerPage", defaultValue = "4", required=false)String cntPerPage) {
-		int total = eventService.closedEventCount();
+		int total = eventService.readClosedEventCount();
 		PagingObj obj = new PagingObj(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		List<Event> responseEvents = eventService.readClosedEvent(obj);
 		model.addAttribute("paging", obj);
@@ -71,11 +74,41 @@ public class EventController {
 	// 매니저 insert
 	@PostMapping("/event-insert")
 	public String eventWrite(@Validated EventInsertForm eventInsertForm, BindingResult bindingResult) {
-	if(bindingResult.hasErrors()) {
-		bindingResult.getAllErrors().forEach(e -> {
-			throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
-		});
-	}
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(e -> {
+				throw new ManagerCustomRestFullException(e.getDefaultMessage(), HttpStatus.BAD_REQUEST);
+			});
+		}
+		MultipartFile file = eventInsertForm.getFile();
+		if(file.isEmpty() ==false) {
+			
+			if (file.getSize() > Define.MAX_FILE_SIZE) {
+				throw new ManagerCustomRestFullException("파일 크기가 50MB 이상일 수 없습니다.", HttpStatus.BAD_REQUEST);
+			}
+			
+			// 파일 최대 크기 지정 -- 추후 추가 예정
+			try {
+				String saveDirectory = Define.UPLOAD_DIRECTORY;
+				File dir = new File(saveDirectory);
+				
+				if(dir.exists() == false) {
+					dir.mkdirs();
+				}
+				
+				UUID uuid = UUID.randomUUID();
+				String fileName = uuid + "_" + file.getOriginalFilename();
+				String uploadPath = Define.UPLOAD_DIRECTORY + File.separator + fileName;
+				
+				File destination = new File(uploadPath);
+				file.transferTo(destination);
+				
+				eventInsertForm.setOriginFile(file.getOriginalFilename());
+				eventInsertForm.setUploadFile(fileName);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new ManagerCustomRestFullException("파일 업로드 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
 		eventService.insertEvent(eventInsertForm);
 		return "redirect:/event/notice";
 	}

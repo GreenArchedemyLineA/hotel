@@ -30,7 +30,7 @@ body {
 }
 
 .send--msg--div {
-	width: 100px;
+	width: 120px;
 	background-color: yellow;
 	border-radius: 5px;
 	padding: 5px;
@@ -39,7 +39,7 @@ body {
 }
 
 .recieve--msg--div {
-	width: 100px;
+	width: 120px;
 	background-color: yellow;
 	border-radius: 5px;
 	padding: 5px;

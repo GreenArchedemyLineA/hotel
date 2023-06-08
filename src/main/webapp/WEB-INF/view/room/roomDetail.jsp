@@ -104,7 +104,7 @@
 				</div>
 				<div class="desc--box--2">
 					<p>${room.numberOfP} 인</p>
-					<p>가격(1박 기준) : ${room.price}원</p>
+					<p>가격(1박 기준) : ${room.formatPrice()}원</p>
 				</div>
 				<div class="desc--box3">
 					<p>${room.description}</p>
