@@ -68,4 +68,10 @@
 		where id = 2;
 	</select>
 
+	<update id="updateDiningStatus">
+		update dining_tb
+		set availability = #{availability},
+		    status_desc = #{description}
+		where name = #{name}
+	</update>
 </mapper>

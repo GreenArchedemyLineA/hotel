@@ -144,9 +144,10 @@
 					<h4 class="modal-title">부대시설 상태 변경</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-	
+
 				<div>
-				<form action="#" method="post" class="modal--box">
+				<form action="/manager/facilities/update" method="post" class="modal--box" id="facilties--update">
+					<input type="hidden" name="target" id="target">
 					<div>
 						<label for="roomname">이름</label> 
 						<input type="text" name="name" id="name" value="${dining.name}" class="input--box"> 
@@ -166,7 +167,7 @@
 						<label for="description">상태</label>
 						<input type="text" name="description" id="description" value="${dining.statusDesc}" class="input--box"> 
 					</div>
-					<button type="submit" class="sub--button">부대시설 변경</button>
+					<button type="button" class="sub--button" onclick="updateSubmit()">부대시설 변경</button>
 				</form>
 				</div>
 	
@@ -180,16 +181,15 @@
 	
 	let allDivTag = document.querySelectorAll(".room--box");
 	const divTagNum = allDivTag.length;
-	console.log(allDivTag)
 	for(let i = 0; i < divTagNum; i++){
 		if(i === 0 || i === 1){
 			allDivTag[i].addEventListener('click', ()=>{
+				document.getElementById("target").value = "식당"
 				fetch("/api/findRoomInfo/"+allDivTag[i].id)
 						.then(async(response)=>{
 							let data = await response.json();
 							let modalFormTag = document.getElementById("modal--form");
 							// modalFormTag.action = "/manager/facilitiesStatus/" + data.id;
-							console.log(data)
 							document.getElementById("name").value = data.roomType.name;
 							document.getElementById("number_of_p").value = data.roomType.numberOfP;
 							if(data.availability == true) {
@@ -202,6 +202,7 @@
 			})
 		} else if(i === 2){
 			allDivTag[i].addEventListener('click', ()=>{
+				document.getElementById("target").value = "수영장"
 				document.getElementById("name").value = "${pool.facilities.name}";
 				document.getElementById("number_of_p").value = '${pool.facilities.location}';
 				if(${pool.availability}) {
@@ -212,9 +213,20 @@
 				document.getElementById("description").value = '${pool.statusDesc}';
 			})
 		} else if(i === 3){
-			allDivTag[i].addEventListener('click', spaValue)
+			allDivTag[i].addEventListener('click', ()=>{
+				document.getElementById("target").value = "스파"
+				document.getElementById("name").value = '${spa.facilities.name}';
+				document.getElementById("number_of_p").value = '${spa.facilities.location}';
+				if(${spa.availability}) {
+					document.getElementById("availability").value = '사용가능';
+				} else {
+					document.getElementById("availability").value = '사용불가';
+				}
+				document.getElementById("description").value = '${spa.statusDesc}';
+			})
 		} else{
 			allDivTag[i].addEventListener('click', ()=>{
+			document.getElementById("target").value = "피트니스"
 				document.getElementById("name").value = '${fitness.facilities.name}';
 				document.getElementById("number_of_p").value = '${fitness.facilities.location}'
 				if(${fitness.availability}) {
@@ -226,26 +238,34 @@
 			})
 		}
 
-		function spaValue(){
-			document.getElementById("name").value = '${spa.facilities.name}';
-			document.getElementById("number_of_p").value = '${spa.facilities.location}';
-			if(${spa.availability}) {
-				document.getElementById("availability").value = '사용가능';
-			} else {
-				document.getElementById("availability").value = '사용불가';
-			}
-			document.getElementById("description").value = '${spa.statusDesc}';
-		}
 	}
 
-	
+	function statusValueChange(status){
+		if(status === '사용가능') {
+			roomStatus.value = true;
+		} else if(status === '사용불가') {
+			roomStatus.value = false;
+		}
+		return status;
+	}
+
 	let roomStatus = document.getElementById("availability");
 	roomStatus.addEventListener("keyup", function() {
-		console.log(roomStatus.value)
 		if(roomStatus.value == '사용가능') {
 			roomStatus.value = true;
 		} else if(roomStatus.value == '사용불가') {
 			roomStatus.value = false;
 		}
 	});
+
+	function updateSubmit(){
+		let form = document.getElementById('facilties--update');
+		if(statusValueChange(form.availability.value)){
+			form.availability.value = true;
+		}else{
+			form.availability.value = false;
+		}
+
+		form.submit();
+	}
 </script>

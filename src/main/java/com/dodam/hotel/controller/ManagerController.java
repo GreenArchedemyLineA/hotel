@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.dodam.hotel.dto.FacilitiesRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -335,5 +336,12 @@ public class ManagerController {
 		model.addAttribute("roomName", roomName);
 		model.addAttribute("userName", chatRoom.getUserName());
 		return "/manager/chatRoom";
+	}
+
+	@PostMapping("/facilities/update")
+	public String updateFacilities(FacilitiesRequestDto facilitiesRequestDto){
+		System.out.println(facilitiesRequestDto);
+		int result = facilitiesService.updateFacilites(facilitiesRequestDto);
+		return "redirect:/manager/facilities";
 	}
 }
