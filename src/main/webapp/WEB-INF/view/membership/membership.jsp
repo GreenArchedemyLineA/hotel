@@ -113,7 +113,7 @@
 		color: #ccc;
 		margin: 40px 0;
 	}
-	.modal--wrap{
+	/* .modal--wrap{
         display: none;
         width: 500px;
         height: 500px;
@@ -123,7 +123,7 @@
         margin: -250px 0 0 -250px;
         background:#eee;
         z-index: 2;
-    }
+    } */
     .black--bg{
         display: none;
         position: absolute;
@@ -135,7 +135,7 @@
         left: 0;
         z-index: 1;
     }
-    .modal--close{
+    /* .modal--close{
         width: 26px;
         height: 26px;
         position: absolute;
@@ -148,7 +148,7 @@
         height: 100%;
         background:url(https://img.icons8.com/metro/26/000000/close-window.png);
         text-indent: -9999px;
-    }
+    } */
     
 	.back--icon {
 		display: flex;
@@ -156,9 +156,11 @@
 		align-items: center;
 		cursor: pointer;
 	}
-	#grade {
+	/* .modal {
 		width: 800px;
 		height: 400px;
+		top: 90px;
+		left: 740px;
 	}
 	.modal--box {
 		display: flex;
@@ -166,18 +168,22 @@
 		margin: 10px;
 		justify-content: center;
 		align-items: center;
-	}
-	#grade-desc {
+	} */
+	/* #grade-desc {
 		border-bottom: 1px solid #ebebeb;
 		margin-bottom: 10px;
-	}
+	} */
 	.pay{
 		margin-top: 50px;
 	}
-	 .modal--content {
+	/* .modal--content {
 		width: 1000px;
 		height: 500px;
 	}
+	.modal-content {
+		width: 505px;
+	} */
+	
 </style>
 </head>
 <body>
@@ -234,7 +240,13 @@
 			<button onclick="membershipJoin()" class="sub--button">멤버쉽 가입하기</button>
 		</div>
 	</div>
+	
+	
+	
+	
+	
 		<div class="modal" id="grade">
+			<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">등급별 혜택 바로보기</h4>
@@ -246,6 +258,7 @@
 						<span id="grade-desc">${grade.description}</span>
 					</c:forEach>				
 				</div>
+			</div>
 		</div>
 	</div>
 	<div class="modal" id="membership">

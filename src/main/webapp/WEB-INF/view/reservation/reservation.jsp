@@ -435,7 +435,8 @@ input[type="number"]::-webkit-inner-spin-button {
 	const fitnessPrice = ${fitnessPrice};
 	
 	
-	const roomPrice = ${selectDetail.price} * day;
+	const room = ${selectDetail.price} * day;
+	let roomPrice = Number(room).toLocaleString("ko-KR");
 	const totalPriceTag = document.getElementById("totalPrice");
 	
 	const diningDivTag = document.getElementById('diningResult')
@@ -448,8 +449,8 @@ input[type="number"]::-webkit-inner-spin-button {
 	const pointSelectTag =  document.getElementById('point--result')
 	const tagetDivArray = [diningDivTag, spaDivTag, poolDivTag, fitnessDivTag, couponSelectTag, pointSelectTag]
 	
-	let couponPrice = 0;
-	let pointPrice = 0;
+	let coupon = 0;
+	let point = 0;
 	
 	// 예약 날짜
 	const startDate = ${selectDetail.startDate};
@@ -482,7 +483,8 @@ input[type="number"]::-webkit-inner-spin-button {
 		const optionPriceNameTag = document.createElement("div");
 		const optionPriceNumTag = document.createElement("div");
 		optionPriceTag.className = "option--price";
-		const optionPrice = diningPriceResult + spaPriceResult + poolPriceResult + fitnessPriceResult;
+		const option = diningPriceResult + spaPriceResult + poolPriceResult + fitnessPriceResult;
+		let optionPrice = Number(option).toLocaleString("ko-KR");
 		optionPriceNameTag.textContent = "옵션 금액:";
 		optionPriceNumTag.textContent = optionPrice;
 		optionPriceTag.append(optionPriceNameTag);
@@ -498,6 +500,7 @@ input[type="number"]::-webkit-inner-spin-button {
 		couponPriceTag.className = "coupon--price";
 		couponPriceInfoTag.id = "coupon--price--info";
 		couponPriceNameTag.textContent = "쿠폰 할인 금액:";
+		let couponPrice = Number(coupon).toLocaleString("ko-KR");
 		couponPriceNumTag.textContent = couponPrice;
 		couponPriceTag.append(couponSelectTag);
 		couponPriceInfoTag.append(couponPriceNameTag);
@@ -512,14 +515,16 @@ input[type="number"]::-webkit-inner-spin-button {
 		pointPriceTag.className = "point--price";
 		pointPriceInfoTag.id = "point--price--info";
 		pointPriceNameTag.textContent = "포인트 사용 금액:";
+		let pointPrice = Number(point).toLocaleString("ko-KR");
 		pointPriceNumTag.textContent = pointPrice;
 		pointPriceInfoTag.append(pointPriceNameTag);
 		pointPriceInfoTag.append(pointPriceNumTag);
 		pointPriceTag.append(pointSelectTag);
 		pointPriceTag.append(pointPriceInfoTag);
 		
-		let totalPrice = roomPrice + optionPrice + couponPrice - pointPrice;			
-
+		let total = room + option + coupon - point;			
+		let totalPrice = Number(total).toLocaleString("ko-KR");
+		
 		const totalPriceDivTag = document.createElement("div");
 		totalPriceDivTag.className = "total--price";
 		const totalPriceNameTag = document.createElement("div");
@@ -551,24 +556,25 @@ input[type="number"]::-webkit-inner-spin-button {
 		const endDate = ${selectDetail.endDate};
 		let nights = endDate - startDate;
 		if(couponSelectTag.value === '1박 무료 숙박 쿠폰') {
-			couponPrice = ${selectDetail.price}
+			coupon = -${selectDetail.price}
+			
 		}
 		else if(couponSelectTag.value === "객실 10% 할인 쿠폰"){
-			couponPrice = ${(selectDetail.price * nights)} * 0.1;
+			coupon = (${selectDetail.price} * nights) * 0.1;
 		}
 		else if(couponSelectTag.value === "객실 30% 할인 쿠폰"){
-			couponPrice = ${(selectDetail.price * nights)} * 0.3;
+			coupon = (${selectDetail.price} * nights) * 0.3;
 		}
 		else if(couponSelectTag.value === "다이닝 식사권 2매 쿠폰"){
-			couponPrice = -60000;
+			coupon = -60000;
 		} else {
-			couponPrice = 0;
+			coupon = 0;
 		}
 		
 	})
 	
 	pointSelectTag.addEventListener("change", ()=> {
-		pointPrice = pointSelectTag.value
+		point = pointSelectTag.value
 	});
 	
 	
@@ -689,6 +695,7 @@ input[type="number"]::-webkit-inner-spin-button {
 <script>
 	let orderNameValue = '${orderName}';
 	let totalPriceValue = document.getElementById("total--price--input").value;
+	let totalPriceReplace = totalPriceValue.split(',').join("");
 	let form = document.getElementById("reservation");
 
 	
@@ -706,7 +713,7 @@ input[type="number"]::-webkit-inner-spin-button {
 		let popupOption = "width=800,height=800";
 		let url;
 		if(payType === "nicepay"){
-			url = "http://localhost:8080/pay/payReady?paySelect=nicepay&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
+			url = "http://localhost:8080/pay/payReady?paySelect=nicepay&total_amount="+ totalPriceReplace +"&orderName="+orderNameValue;
 			let returnPay = window.open(
 					url,
 					"popup",
@@ -714,7 +721,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			);
 			returnPay.focus();
 		}else if(payType === "kakaopay"){
-			url = "http://localhost:8080/pay/kakaopay?item_name="+ orderNameValue +"&total_amount=" +totalPriceValue
+			url = "http://localhost:8080/pay/kakaopay?item_name="+ orderNameValue +"&total_amount=" + totalPriceReplace
 			let returnPay = window.open(
 					url,
 					"popup",
@@ -722,7 +729,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			);
 			returnPay.focus();
 		}else if(payType === "tosspay"){
-			url = "http://localhost:8080/pay/payReady?paySelect=toss&total_amount="+totalPriceValue+"&orderName="+orderNameValue;
+			url = "http://localhost:8080/pay/payReady?paySelect=toss&total_amount="+ totalPriceReplace +"&orderName="+orderNameValue;
 			let returnPay = window.open(
 					url,
 					"popup",
