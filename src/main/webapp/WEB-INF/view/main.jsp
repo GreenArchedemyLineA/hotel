@@ -209,7 +209,7 @@ body {
 }
 
 main {
-	background-image: url("http://localhost:8080/images/mainImage.jpg");
+	background-image: url("http://192.168.0.84:8080/images/mainImage.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 800px;

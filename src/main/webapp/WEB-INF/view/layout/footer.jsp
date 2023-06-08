@@ -5,7 +5,7 @@
 footer {
 	width: 100%;
 	background-color: #f9f9f9;
-	margin-top: 20px;
+	margin-top: 80px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

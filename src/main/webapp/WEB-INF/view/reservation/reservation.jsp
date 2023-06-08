@@ -522,8 +522,7 @@ input[type="number"]::-webkit-inner-spin-button {
 		pointPriceTag.append(pointSelectTag);
 		pointPriceTag.append(pointPriceInfoTag);
 		
-		let total = room + option + coupon - point;			
-		let totalPrice = Number(total).toLocaleString("ko-KR");
+		let totalPrice = room + option + coupon - point;			
 		
 		const totalPriceDivTag = document.createElement("div");
 		totalPriceDivTag.className = "total--price";
@@ -695,7 +694,6 @@ input[type="number"]::-webkit-inner-spin-button {
 <script>
 	let orderNameValue = '${orderName}';
 	let totalPriceValue = document.getElementById("total--price--input").value;
-	let totalPriceReplace = totalPriceValue.split(',').join("");
 	let form = document.getElementById("reservation");
 
 	
@@ -713,7 +711,7 @@ input[type="number"]::-webkit-inner-spin-button {
 		let popupOption = "width=800,height=800";
 		let url;
 		if(payType === "nicepay"){
-			url = "http://localhost:8080/pay/payReady?paySelect=nicepay&total_amount="+ totalPriceReplace +"&orderName="+orderNameValue;
+			url = "http://192.168.0.84:8080/pay/payReady?paySelect=nicepay&total_amount="+ totalPriceValue +"&orderName="+orderNameValue;
 			let returnPay = window.open(
 					url,
 					"popup",
@@ -721,7 +719,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			);
 			returnPay.focus();
 		}else if(payType === "kakaopay"){
-			url = "http://localhost:8080/pay/kakaopay?item_name="+ orderNameValue +"&total_amount=" + totalPriceReplace
+			url = "http://192.168.0.84:8080/pay/kakaopay?item_name="+ orderNameValue +"&total_amount=" + totalPriceValue
 			let returnPay = window.open(
 					url,
 					"popup",
@@ -729,7 +727,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			);
 			returnPay.focus();
 		}else if(payType === "tosspay"){
-			url = "http://localhost:8080/pay/payReady?paySelect=toss&total_amount="+ totalPriceReplace +"&orderName="+orderNameValue;
+			url = "http://192.168.0.84:8080/pay/payReady?paySelect=toss&total_amount="+ totalPriceValue +"&orderName="+orderNameValue;
 			let returnPay = window.open(
 					url,
 					"popup",

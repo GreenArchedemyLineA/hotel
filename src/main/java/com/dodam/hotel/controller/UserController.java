@@ -1,5 +1,6 @@
 package com.dodam.hotel.controller;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.mail.internet.MimeMessage;
@@ -85,11 +86,13 @@ public class UserController {
 		GradeInfo responseGrade = gradeService.readGradeByUserId(principal.getId());
 		// 포인트 정보 불러오기
 		Integer point = userService.readPointInfo(principal.getId());
+		DecimalFormat df = new DecimalFormat("###,###");
+		String formatPoint = df.format(point);
 		// 회원 정보 불러오기
 		UserResponseDto.MyPageResponseDto responseUser = userService.readUserByEmail(principal.getEmail());
 		model.addAttribute("responseGrade", responseGrade);
 		model.addAttribute("coupons", responseCoupons);
-		model.addAttribute("point", point);
+		model.addAttribute("point", formatPoint);
 		model.addAttribute("responseUser", responseUser);
 		return "/user/myPage";
 	}

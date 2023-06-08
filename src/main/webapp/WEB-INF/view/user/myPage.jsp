@@ -32,7 +32,7 @@
 			<div class="myinfo--container">
 				<p style="font-size: 30px; border-bottom: 4px solid #64c5f3;"><b>${responseGrade.user.name}</b> 님 환영합니다 !</p>
 				<div class="myinfo--detail">
-					<p>${responseGrade.grade.name}</p>					
+					<p>${responseGrade.grade.name}</p>
 					<p>${responseGrade.grade.description}</p>
 				</div>
 				<span style="font-size: 20px;"><b>보유 포인트 : ${point} point</b></span>

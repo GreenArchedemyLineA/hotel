@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -211,7 +212,7 @@ public class ReservationService {
 
 				mailSender.send(mail);
 				//문자 횟수 제한 때문에 임시 주석 걸어둠
-//				JSONObject obj = (JSONObject)coolsms.send(params);
+				JSONObject obj = (JSONObject)coolsms.send(params);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

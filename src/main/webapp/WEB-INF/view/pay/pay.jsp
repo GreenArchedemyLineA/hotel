@@ -20,7 +20,7 @@
             orderId: '${orderId}',
             amount: ${totalAmount},
             goodsName: '${orderId}',
-            returnUrl: 'http://localhost:8080/pay/payments',
+            returnUrl: 'http://192.168.0.84:8080/pay/payments',
             fnError: function (result) {
                 alert(result.errorMsg)
             }
