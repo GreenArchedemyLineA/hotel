@@ -95,7 +95,7 @@
 			<h2>부대시설</h2>
 				<div class="room--total">
 					<c:forEach  var="diningList" items="${diningList}">
-						<div class="room--box" data-toggle="modal" data-target="#myModal" style="${diningList.availability == true ? "border: 4px solid #9ACBF1" : "border: 4px solid #FF8D6B"}" id="${diningList.id}">
+						<div class="room--box" data-toggle="modal" data-target="#facModal" style="${diningList.availability == true ? "border: 4px solid #9ACBF1" : "border: 4px solid #FF8D6B"}" id="${diningList.id}">
 							<div class="room-title">
 								<span style="color: gray;">${diningList.name}</span>
 								<span id="room-name">${diningList.location}</span> 
@@ -136,7 +136,7 @@
 				
 			</div>
 	</main>
-		<div class="modal" id="myModal">
+		<div class="modal" id="facModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 	
@@ -174,49 +174,13 @@
 		</div>
 	</div>
 	
-	<div class="modal" id="facModal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-	
-				<div class="modal-header">
-					<h4 class="modal-title">부대시설 상태 변경</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-	
-				<div>
-				<form action="#" method="post" class="modal--box">
-					<div>
-						<label for="name">이름</label>
-						<input type="text" name="name" id="name" value="" class="input--box"> 
-					</div>
-					
-					<div>
-						<label for="number_of_p">위치</label>
-						<input type="text" name="number_of_p" id="number_of_p" value="" class="input--box">
-					</div>
-					
-					<div>
-						<label for="availability">사용여부</label>
-						<input type="text" name="availability" id="availability" value="" class="input--box">
-					</div>
-					
-					<div>
-						<label for="description">상태</label>
-						<input type="text" name="description" id="description" value="" class="input--box"> 
-					</div>
-					<button type="submit" class="sub--button">부대시설 변경</button>
-				</form>
-				</div>
-	
-			</div>
-		</div>
-	</div>
+
 <script>
     
 	
 	let allDivTag = document.querySelectorAll(".room--box");
 	const divTagNum = allDivTag.length;
-
+	console.log(allDivTag)
 	for(let i = 0; i < divTagNum; i++){
 		if(i === 0 || i === 1){
 			allDivTag[i].addEventListener('click', ()=>{
@@ -238,7 +202,7 @@
 			})
 		} else if(i === 2){
 			allDivTag[i].addEventListener('click', ()=>{
-				document.getElementById("name").value = '${pool.facilities.name}';
+				document.getElementById("name").value = "${pool.facilities.name}";
 				document.getElementById("number_of_p").value = '${pool.facilities.location}';
 				if(${pool.availability}) {
 					document.getElementById("availability").value = '사용가능';
@@ -248,16 +212,7 @@
 				document.getElementById("description").value = '${pool.statusDesc}';
 			})
 		} else if(i === 3){
-			allDivTag[i].addEventListener('click', ()=>{
-				document.getElementById("name").value = '${spa.facilities.name}';
-				document.getElementById("number_of_p").value = '${spa.facilities.location}';
-				if(${spa.availability}) {
-					document.getElementById("availability").value = '사용가능';
-				} else {
-					document.getElementById("availability").value = '사용불가';
-				}
-				document.getElementById("description").value = '${spa.statusDesc}';
-			})
+			allDivTag[i].addEventListener('click', spaValue)
 		} else{
 			allDivTag[i].addEventListener('click', ()=>{
 				document.getElementById("name").value = '${fitness.facilities.name}';
@@ -269,6 +224,17 @@
 				}
 				document.getElementById("description").value = '${fitness.statusDesc}';
 			})
+		}
+
+		function spaValue(){
+			document.getElementById("name").value = '${spa.facilities.name}';
+			document.getElementById("number_of_p").value = '${spa.facilities.location}';
+			if(${spa.availability}) {
+				document.getElementById("availability").value = '사용가능';
+			} else {
+				document.getElementById("availability").value = '사용불가';
+			}
+			document.getElementById("description").value = '${spa.statusDesc}';
 		}
 	}
 
