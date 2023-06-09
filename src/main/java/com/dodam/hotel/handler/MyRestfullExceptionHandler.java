@@ -16,7 +16,7 @@ public class MyRestfullExceptionHandler {
 	public String exception(Exception e) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<script>");
-		sb.append("alert('내부 서버 에러 발생');");
+		sb.append("alert('잘못된 요청입니다');");
 		sb.append("history.back();");
 		sb.append("</script>");
 		return sb.toString();

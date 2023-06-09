@@ -190,21 +190,24 @@ public class ReservationService {
 			}
 		}
 
+		String reservation = "예약일 : "+reservationRequestDto.getStartDate() +" - "+ reservationRequestDto.getEndDate()+"<br>";
+		
 		if (resultRowCount == 1) {
-			String subject = (String)((UserResponseDto.LoginResponseDto)session.getAttribute("principal")).getName() + "님의 새로운 예약이 들어왔습니다";
-			String content = "<p>예약 현황을 숙지하여 차질이 없도록 하세요.</p> <br> <h2>호텔 도담 이사회</h2>";
-			String from = Define.ADMIN_EMAIL;
-			String to = (String)((UserResponseDto.LoginResponseDto)session.getAttribute("principal")).getEmail();
+		String subject = (String)((UserResponseDto.LoginResponseDto)session.getAttribute("principal")).getName() + "님의 예약 내역";
+		String content = "<p>"+ reservation +"<br>예약해주셔서 감사합니다.<br> 예약일을 한번 더 잘 확인해주세요.</p> <br> <h2>(주) 호텔 도담</h2>";
+		String from = Define.ADMIN_EMAIL;
+		String to = (String)((UserResponseDto.LoginResponseDto)session.getAttribute("principal")).getEmail();
+
 			
 			String api_key = "NCSYYRDX9Y5UNIO7";
-			String api_secret = "YEHIFZWNUP9GCLPXD9SHND2DWEOQRIQP";
+			String api_secret = "YEHIFZWNUP9GCLPXD9SHND2DWEOQRIQP"; 
 			Message coolsms = new Message(api_key, api_secret);
 			HashMap<String, String> params = new HashMap<String, String>();
 			
 			params.put("to", (String)session.getAttribute("tel"));
 			params.put("from", "01038379096");
 			params.put("type", "SMS");
-			params.put("text", (String)((UserResponseDto.LoginResponseDto)session.getAttribute("principal")).getName()+"예약 완료 되셨습니다");
+			params.put("text", (String)((UserResponseDto.LoginResponseDto)session.getAttribute("principal")).getName()+"님의 예약이 완료되었습니다.  - 호텔 도담");
 			params.put("app_version", "test app 1.2");
 			try {
 				MimeMessage mail = mailSender.createMimeMessage();

@@ -310,7 +310,7 @@
 		let popupOption = "width=800,height=800";
 		let url;
 		if(payType === "nicepay"){
-			url = "http://localhost:8080/pay/payReady?paySelect=nicepay&total_amount="+totalPriceValue+"&orderName="+orderName;
+			url = "http://192.168.0.84:8080/pay/payReady?paySelect=nicepay&total_amount="+totalPriceValue+"&orderName="+orderName;
 			let returnPay = window.open(
 					url,
 					"popup",
@@ -318,7 +318,7 @@
 			);
 			returnPay.focus();
 		}else if(payType === "kakaopay"){
-			url = "http://localhost:8080/pay/kakaopay?item_name="+ orderName +"&total_amount=" +totalPriceValue
+			url = "http://192.168.0.84:8080/pay/kakaopay?item_name="+ orderName +"&total_amount=" +totalPriceValue
 			let returnPay = window.open(
 					url,
 					"popup",
@@ -326,7 +326,7 @@
 			);
 			returnPay.focus();
 		}else if(payType === "tosspay"){
-			url = "http://localhost:8080/pay/payReady?paySelect=toss&total_amount="+totalPriceValue+"&orderName="+orderName;
+			url = "http://192.168.0.84:8080/pay/payReady?paySelect=toss&total_amount="+totalPriceValue+"&orderName="+orderName;
 			let returnPay = window.open(
 					url,
 					"popup",

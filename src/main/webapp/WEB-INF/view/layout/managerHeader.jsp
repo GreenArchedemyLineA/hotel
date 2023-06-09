@@ -145,7 +145,7 @@ li:hover {
 		});
 		
 		
-		let checkNewMessage = (30 * 1000);
+		let checkNewMessage = (5 * 1000);
 		const checkMsg = function(){
 		    // 통신
 		    fetch("/api/checkNewMessage", ({
