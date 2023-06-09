@@ -378,7 +378,7 @@ input[type="number"]::-webkit-inner-spin-button {
 				<div id="select--box--wrap">
 					<c:choose>
 						<c:when test="${couponList != null}">
-							<select id="coupon--result">
+							<select id="coupon--result" name="coupon">
 								<option value="0">쿠폰을 선택하세요</option>
 								<c:forEach var="couponList" items="${couponList}">
 									<option value="${couponList.couponInfo.name}">${couponList.couponInfo.name}</option>
@@ -696,6 +696,7 @@ input[type="number"]::-webkit-inner-spin-button {
 	let orderNameValue = '${orderName}';
 	let totalPriceValue = document.getElementById("total--price--input").value;
 	let totalPriceReplace = totalPriceValue.split(',').join("");
+	console.log(totalPriceReplace)
 	let form = document.getElementById("reservation");
 
 	

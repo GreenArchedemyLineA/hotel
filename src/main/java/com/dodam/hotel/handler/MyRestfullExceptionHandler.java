@@ -12,6 +12,15 @@ import com.dodam.hotel.handler.exception.ManagerLoginException;
 @RestControllerAdvice
 public class MyRestfullExceptionHandler {
 	
+	@ExceptionHandler(Exception.class)
+	public String exception(Exception e) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		sb.append("alert('내부 서버 에러 발생');");
+		sb.append("history.back();");
+		sb.append("</script>");
+		return sb.toString();
+	}
 	
 	@ExceptionHandler(CustomRestFullException.class)
 	public String basicException(CustomRestFullException e) {

@@ -79,6 +79,7 @@ public class ReservationController {
 		if(selectReserveDetail == null) {
 			throw new CustomRestFullException("예약 정보가 제대로 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
 		}
+		
 		model.addAttribute("selectDetail", selectReserveDetail);
 		model.addAttribute("diningPrice", reservationOptionPrice.getDiningPrice());
 		model.addAttribute("spaPrice", reservationOptionPrice.getSpaPrice());
@@ -105,6 +106,7 @@ public class ReservationController {
 		if(requestDto == null) {
 			throw new CustomRestFullException("예약 정보가 제대로 입력되지 않았습니다.", HttpStatus.BAD_REQUEST);
 		}
+		System.out.println(requestDto.getTotalPrice().replaceAll(",", ""));
 		UserResponseDto.LoginResponseDto principal = (UserResponseDto.LoginResponseDto)session.getAttribute(Define.PRINCIPAL);
 		reservationService.createReserveRoom(requestDto, principal.getId());
 		return "redirect:/reservationSuccessful";

@@ -104,14 +104,15 @@
 	                method: "delete",
 	            }).then(async(res) => {
 	                let response = await res.json();
-	                console.log(response)
-	                switch (response.status_code == 200){
+	                if (response.status_code == 200) {
 	                        alert("삭제 완료가 되었습니다");
 	                } else {
-	                        alert("재 로그인 해주세요!")
+	                        alert("재 로그인 해주세요!");
 	                }
 	                location.href = "/manager/faq";
 	            });
 	        }
 	    };
 </script>
+</body>
+</html>

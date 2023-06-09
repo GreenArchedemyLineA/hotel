@@ -149,12 +149,13 @@ public class ReservationService {
 			count += dayCount.intValue();
 		});
 
+		Integer totalPrice = Integer.parseInt(reservationRequestDto.getTotalPrice());
+		reservationRequestDto.setParsIntPrice(totalPrice);
 		int resultRowCount = reservationRepository.insertReserveRoom(reservationRequestDto);
 
 
 		// 포인트 처리
 		// 다이아 일때 처리
-		Integer totalPrice = reservationRequestDto.getTotalPrice();
 		if(userGrade.getGrade().getId() == Grade.DIA.getGrade()){
 			pointRepository.insertPoint(Integer.valueOf((int) Math.round(totalPrice * 0.07)), userId);
 		}

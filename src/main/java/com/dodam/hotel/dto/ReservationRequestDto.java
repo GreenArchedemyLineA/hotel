@@ -19,8 +19,10 @@ public class ReservationRequestDto {
 	private Integer poolId;
 	private Integer fitnessId;
 	private Integer price;
+	private String coupon;
 	private String name;
-	private Integer totalPrice;
+	private String totalPrice;
+	private Integer parsIntPrice;
 	private Integer day;
 	// 부대시설 사용 여부 체크
 	private Integer diningCount;

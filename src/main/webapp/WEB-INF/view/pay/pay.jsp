@@ -37,8 +37,8 @@
         paymentWidget.requestPayment({
             orderId: '${orderId}',
             orderName: '${orderId}',
-            successUrl: 'http://192.168.0.84:8080/pay/toss/success',
-            failUrl: 'http://192.168.0.84:8080/pay/fail'
+            successUrl: 'http://localhost:8080/pay/toss/success',
+            failUrl: 'http://localhost:8080/pay/fail'
         }).catch((error)=>{
             //window.close();
         })
